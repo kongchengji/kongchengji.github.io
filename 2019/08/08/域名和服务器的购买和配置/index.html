@@ -1,0 +1,223 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>域名和服务器的购买和配置 | 空城机</title><meta name="description" content="最近我耗费了两天去自己购买了一个域名和打折的学生服务器。问了人和网上找资料终于弄了个半成品出来，因为没有备案，所以不能使用域名访问，只能使用我的服务器IP去访问，页面是自己找的一个页面。  我买的服务器和域名都是在阿里云里面买的，需要自己去注册一下，并且需要实名认证。至于学生认证的话倒是没有那么严格，只要在24岁一下都是学生（^.^)  效果如下：       因为现在我还算一个学生，所以我去"><meta name="keywords" content="个人网页创建 服务器 域名"><meta name="author" content="空城机"><meta name="copyright" content="空城机"><meta name="format-detection" content="telephone=no"><link rel="shortcut icon" href="/img/favicon.png"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="dns-prefetch" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="https://fonts.googleapis.com" crossorigin="crossorigin"/><link rel="dns-prefetch" href="https://fonts.googleapis.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="dns-prefetch" href="//busuanzi.ibruce.info"/><meta name="twitter:card" content="summary"><meta name="twitter:title" content="域名和服务器的购买和配置"><meta name="twitter:description" content="最近我耗费了两天去自己购买了一个域名和打折的学生服务器。问了人和网上找资料终于弄了个半成品出来，因为没有备案，所以不能使用域名访问，只能使用我的服务器IP去访问，页面是自己找的一个页面。  我买的服务器和域名都是在阿里云里面买的，需要自己去注册一下，并且需要实名认证。至于学生认证的话倒是没有那么严格，只要在24岁一下都是学生（^.^)  效果如下：       因为现在我还算一个学生，所以我去"><meta name="twitter:image" content="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg"><meta property="og:type" content="article"><meta property="og:title" content="域名和服务器的购买和配置"><meta property="og:url" content="http://yoursite.com/2019/08/08/%E5%9F%9F%E5%90%8D%E5%92%8C%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9A%84%E8%B4%AD%E4%B9%B0%E5%92%8C%E9%85%8D%E7%BD%AE/"><meta property="og:site_name" content="空城机"><meta property="og:description" content="最近我耗费了两天去自己购买了一个域名和打折的学生服务器。问了人和网上找资料终于弄了个半成品出来，因为没有备案，所以不能使用域名访问，只能使用我的服务器IP去访问，页面是自己找的一个页面。  我买的服务器和域名都是在阿里云里面买的，需要自己去注册一下，并且需要实名认证。至于学生认证的话倒是没有那么严格，只要在24岁一下都是学生（^.^)  效果如下：       因为现在我还算一个学生，所以我去"><meta property="og:image" content="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg"><meta property="article:published_time" content="2019-08-08T01:55:50.000Z"><meta property="article:modified_time" content="2020-05-10T11:05:27.807Z"><script src="https://cdn.jsdelivr.net/npm/js-cookie/dist/js.cookie.min.js"></script><script>var autoChangeMode = '1'
+var t = Cookies.get("theme")
+if (autoChangeMode == '1'){
+  var isDarkMode = window.matchMedia("(prefers-color-scheme: dark)").matches
+  var isLightMode = window.matchMedia("(prefers-color-scheme: light)").matches
+  var isNotSpecified = window.matchMedia("(prefers-color-scheme: no-preference)").matches
+  var hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+  if (t === undefined){
+    if (isLightMode) activateLightMode()
+    else if (isDarkMode) activateDarkMode()
+    else if (isNotSpecified || hasNoSupport){
+      console.log('You specified no preference for a color scheme or your browser does not support it. I Schedule dark mode during night time.')
+      var now = new Date()
+      var hour = now.getHours()
+      var isNight = hour < 6 || hour >= 18
+      isNight ? activateDarkMode() : activateLightMode()
+  }
+  } else if (t == 'light') activateLightMode()
+  else activateDarkMode()
+
+} else if (autoChangeMode == '2'){
+  now = new Date();
+  hour = now.getHours();
+  isNight = hour < 6 || hour >= 18
+  if(t === undefined) isNight? activateDarkMode() : activateLightMode()
+  else if (t === 'light') activateLightMode()
+  else activateDarkMode() 
+} else {
+  if ( t == 'dark' ) activateDarkMode()
+  else if ( t == 'light') activateLightMode()
+}
+
+function activateDarkMode(){
+  document.documentElement.setAttribute('data-theme', 'dark')
+  if (document.querySelector('meta[name="theme-color"]') !== null){
+    document.querySelector('meta[name="theme-color"]').setAttribute('content','#000')
+  }
+}
+function activateLightMode(){
+  document.documentElement.setAttribute('data-theme', 'light')
+  if (document.querySelector('meta[name="theme-color"]') !== null){
+  document.querySelector('meta[name="theme-color"]').setAttribute('content','#fff')
+  }
+}</script><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@latest/css/font-awesome.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css"><link rel="canonical" href="http://yoursite.com/2019/08/08/%E5%9F%9F%E5%90%8D%E5%92%8C%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9A%84%E8%B4%AD%E4%B9%B0%E5%92%8C%E9%85%8D%E7%BD%AE/"><link rel="prev" title="JavaScript（三十七）——移动端、多媒体、CSS动画" href="http://yoursite.com/2019/08/10/JavaScript%EF%BC%88%E4%B8%89%E5%8D%81%E4%B8%83%EF%BC%89%E2%80%94%E2%80%94%E7%A7%BB%E5%8A%A8%E7%AB%AF%E3%80%81%E5%A4%9A%E5%AA%92%E4%BD%93%E3%80%81CSS%E5%8A%A8%E7%94%BB/"><link rel="next" title="JavaScript（三十六）——JavaScript编写的轮播页面" href="http://yoursite.com/2019/08/05/JavaScript%EF%BC%88%E4%B8%89%E5%8D%81%E5%85%AD%EF%BC%89%E2%80%94%E2%80%94JavaScript%E7%BC%96%E5%86%99%E7%9A%84%E8%BD%AE%E6%92%AD%E9%A1%B5%E9%9D%A2/"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Titillium+Web"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: {"defaultEncoding":2,"translateDelay":0,"cookieDomain":"https://xxx/","msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"簡"},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  bookmark: {
+    message_prev: '按',
+    message_next: '键将本页加入书签'
+  },
+  runtime_unit: '天',
+  runtime: true,
+  copyright: undefined,
+  ClickShowText: undefined,
+  medium_zoom: false,
+  fancybox: true,
+  Snackbar: undefined,
+  baiduPush: false,
+  highlightCopy: true,
+  highlightLang: true,
+  highlightShrink: 'false',
+  isFontAwesomeV5: false,
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+  
+}</script><script>var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isSidebar: false  
+  }</script><noscript><style>
+#page-header {
+  opacity: 1
+}
+.justified-gallery img{
+  opacity: 1
+}
+</style></noscript><meta name="generator" content="Hexo 4.2.0"></head><body><div id="mobile-sidebar"><div id="menu_mask"></div><div id="mobile-sidebar-menus"><div class="mobile_author_icon"><img class="avatar-img" src="/img/avatar.png" onerror="onerror=null;src='/img/tou5.jpg'" alt="avatar"/></div><div class="mobile_post_data"><div class="mobile_data_item is-center"><div class="mobile_data_link"><a href="/archives/"><div class="headline">文章</div><div class="length_num">154</div></a></div></div><div class="mobile_data_item is-center">      <div class="mobile_data_link"><a href="/tags/"><div class="headline">标签</div><div class="length_num">45</div></a></div></div><div class="mobile_data_item is-center">     <div class="mobile_data_link"><a href="/categories/"><div class="headline">分类</div><div class="length_num">15</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fa fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fa fa-heart"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page"><i class="fa-fw fa fa-list" aria-hidden="true"></i><span> 清单</span><i class="fa fa-chevron-down menus-expand" aria-hidden="true"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/music/"><i class="fa-fw fa fa-music"></i><span> 音乐</span></a></li><li><a class="site-page" href="/movies/"><i class="fa-fw fa fa-film"></i><span> 电影</span></a></li></ul></div></div></div></div><div id="body-wrap"><div class="post-bg" id="nav" style="background-image: url(https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg)"><div id="page-header"><span class="pull_left" id="blog_name"><a class="blog_title" id="site-name" href="/">空城机</a></span><span class="pull_right menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fa fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fa fa-heart"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page"><i class="fa-fw fa fa-list" aria-hidden="true"></i><span> 清单</span><i class="fa fa-chevron-down menus-expand" aria-hidden="true"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/music/"><i class="fa-fw fa fa-music"></i><span> 音乐</span></a></li><li><a class="site-page" href="/movies/"><i class="fa-fw fa fa-film"></i><span> 电影</span></a></li></ul></div></div><span class="toggle-menu close"><a class="site-page"><i class="fa fa-bars fa-fw" aria-hidden="true"></i></a></span></span></div><div id="post-info"><div id="post-title"><div class="posttitle">域名和服务器的购买和配置</div></div><div id="post-meta"><div class="meta-firstline"><time class="post-meta__date"><span class="post-meta__date-created" title="发表于 2019-08-08 09:55:50"><i class="fa fa-calendar" aria-hidden="true"></i> 发表于 2019-08-08</span><span class="post-meta__separator">|</span><span class="post-meta__date-updated" title="更新于 2020-05-10 19:05:27"><i class="fa fa-history" aria-hidden="true"></i> 更新于 2020-05-10</span></time><span class="post-meta__categories"><span class="post-meta__separator">|</span><i class="fa fa-inbox post-meta__icon" aria-hidden="true"></i><a class="post-meta__categories" href="/categories/%E7%A8%8B%E5%BA%8F%E4%BA%BA%E7%94%9F/">程序人生</a></span></div><div class="meta-secondline"> </div><div class="meta-thirdline"><span class="post-meta-pv-cv"><i class="fa fa-eye post-meta__icon" aria-hidden="true"> </i><span>阅读量:</span><span id="busuanzi_value_page_pv"></span></span><span class="post-meta-commentcount"></span></div></div></div></div><main class="layout_post" id="content-inner"><article id="post"><div class="post-content" id="article-container"><a id="more"></a>
+
+<p>最近我耗费了两天去自己购买了一个域名和打折的学生服务器。问了人和网上找资料终于弄了个半成品出来，因为没有备案，所以不能使用域名访问，只能使用我的服务器IP去访问，页面是自己找的一个页面。</p>
+
+<p>我买的服务器和域名都是在阿里云里面买的，需要自己去注册一下，并且需要实名认证。至于学生认证的话倒是没有那么严格，只要在24岁一下都是学生（^.^)</p>
+
+<p>效果如下：</p>
+
+<p style="text-align:center;"><img alt="" class="has" height="523" src="https://img-blog.csdnimg.cn/20190806223859665.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2MTcxMjg3,size_16,color_FFFFFF,t_70" width="877" /></p>
+
+<p> </p>
+
+<p>因为现在我还算一个学生，所以我去购买了阿里云的云翼计划服务器，针对学生的，一个月只需要9.5元。</p>
+
+<p>可以在阿里的官网下面找到：<span style="color:#ffbb66;">更多推荐——学生机</span></p>
+
+<p style="text-align:center;"><img alt="" class="has" height="281" src="https://img-blog.csdnimg.cn/20190806224053457.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2MTcxMjg3,size_16,color_FFFFFF,t_70" width="883" /></p>
+
+<p><img alt="" class="has" height="344" src="https://img-blog.csdnimg.cn/20190806224130723.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2MTcxMjg3,size_16,color_FFFFFF,t_70" width="876" /></p>
+
+<p><strong>云翼计划入口：<a href="https://promotion.aliyun.com/ntms/act/campus2018.html" target="_blank" rel="noopener">https://promotion.aliyun.com/ntms/act/campus2018.html</a></strong></p>
+
+<p>我购买的是轻量应用服务器，像之后的<span style="color:#f33b45;">应用镜像和系统镜像如果不对还可以重置这两个镜像</span>，不需要加钱</p>
+
+<p style="text-align:center;"><img alt="" class="has" height="453" src="https://img-blog.csdnimg.cn/20190806224250541.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2MTcxMjg3,size_16,color_FFFFFF,t_70" width="857" /></p>
+
+<p> </p>
+
+<p>购买之后你就可以去轻量应用服务器里面了，可以看到已经存在了WordPress了。</p>
+
+<p style="text-align:center;"><img alt="" class="has" height="359" src="https://img-blog.csdnimg.cn/20190806224836114.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2MTcxMjg3,size_16,color_FFFFFF,t_70" width="804" /></p>
+
+<p>具体可以参考阿里官方文档：<a href="https://help.aliyun.com/product/58607.html?spm=a2c4g.750001.list.7.75467b13I4aMNd" target="_blank" rel="noopener">https://help.aliyun.com/product/58607.html?spm=a2c4g.750001.list.7.75467b13I4aMNd</a></p>
+
+<p>在快速入门中可以找怎样创建实施</p>
+
+<p style="text-align:center;"><img alt="" class="has" height="521" src="https://img-blog.csdnimg.cn/20190806225045599.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2MTcxMjg3,size_16,color_FFFFFF,t_70" width="799" /></p>
+
+<p>然后购买域名：<a href="https://help.aliyun.com/document_detail/54068.html" target="_blank" rel="noopener">https://help.aliyun.com/document_detail/54068.html</a></p>
+
+<p>域名解析：<a href="https://help.aliyun.com/document_detail/106669.html?spm=a2c4g.11186623.2.44.2de028acFS1YzN" target="_blank" rel="noopener">https://help.aliyun.com/document_detail/106669.html?spm=a2c4g.11186623.2.44.2de028acFS1YzN</a></p>
+
+<p> </p>
+
+<p><span style="color:#e579b6;">如果一开始没有对系统镜像进行设置的话，你现在的系统镜像是CentOS 7.3，我在后面配置的时候使用的是Windows2012 R2</span></p>
+
+<p><span style="color:#7c79e5;">所以需要进行我之前购买服务器时提到的重置系统，在轻量应用服务器中详情进入，服务器运维下面找到重置系统</span></p>
+
+<p style="text-align:center;"><img alt="" class="has" height="350" src="https://img-blog.csdnimg.cn/20190806225520192.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2MTcxMjg3,size_16,color_FFFFFF,t_70" width="754" /></p>
+
+<p style="text-align:center;"><img alt="" class="has" height="492" src="https://img-blog.csdnimg.cn/20190806225647990.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2MTcxMjg3,size_16,color_FFFFFF,t_70" width="817" /></p>
+
+<p>在概览中看到镜像信息，还有右上角的远程连接也不同了，需要重新设置远程连接的密码 </p>
+
+<p style="text-align:center;"><img alt="" class="has" height="230" src="https://img-blog.csdnimg.cn/20190806225800127.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2MTcxMjg3,size_16,color_FFFFFF,t_70" width="555" /></p>
+
+<p>如果你密码设置有误，可以重新设置，在服务器运维——远程连接中</p>
+
+<p style="text-align:center;"><img alt="" class="has" height="364" src="https://img-blog.csdnimg.cn/20190806230334681.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2MTcxMjg3,size_16,color_FFFFFF,t_70" width="744" /></p>
+
+<p> </p>
+
+<p>后面远程连接配置时可以参考一下这两篇博客：</p>
+
+<p><a href="https://blog.csdn.net/qq_38830964/article/details/98504804" target="_blank" rel="noopener">https://blog.csdn.net/qq_38830964/article/details/98504804</a></p>
+
+<p><a href="https://blog.csdn.net/blank_tt/article/details/90759891" target="_blank" rel="noopener">https://blog.csdn.net/blank_tt/article/details/90759891</a></p>
+
+<p> </p>
+
+<p>之后可以将自己电脑上的数据传输到远程控制桌面上</p>
+
+<p style="text-align:center;"><img alt="" class="has" height="379" src="https://img-blog.csdnimg.cn/20190806232121520.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2MTcxMjg3,size_16,color_FFFFFF,t_70" width="610" /></p>
+
+<p><strong>远程桌面的连接：命令提示符mstsc</strong></p>
+
+<p><a href="https://yq.aliyun.com/articles/68550" target="_blank" rel="noopener">https://yq.aliyun.com/articles/68550</a></p>
+
+<p> </p>
+
+<p><strong><span style="color:#f33b45;">在连接远程桌面时，我遇到了一个花了很长时间才解决的问题，远程桌面连接发生身份验证错误，提示要求的函数不受支持，注意：我使用的是Windows家庭版</span></strong></p>
+
+<p style="text-align:center;"><img alt="" class="has" height="245" src="https://img-blog.csdnimg.cn/2019080623122770.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2MTcxMjg3,size_16,color_FFFFFF,t_70" width="624" /></p>
+
+<p><strong>后来我在网上找到的大多数是关于企业版的解决方法，而家庭版没有本地组策略管理器。后来我还是找到了方法，心累啊</strong></p>
+
+<p>企业版解决方法：<a href="https://blog.csdn.net/zheng_weichao/article/details/80269467" target="_blank" rel="noopener">https://blog.csdn.net/zheng_weichao/article/details/80269467</a></p>
+
+<p>家庭版解决方法：<a href="https://blog.csdn.net/weixin_39129504/article/details/80303615" target="_blank" rel="noopener">https://blog.csdn.net/weixin_39129504/article/details/80303615</a> </p>
+
+<p> </p>
+
+<p> </p>
+
+<p>现在在远程桌面上需要安装一下环境：<a href="https://blog.csdn.net/phpzhi/article/details/80564381" target="_blank" rel="noopener">https://blog.csdn.net/phpzhi/article/details/80564381</a></p>
+
+<p><span style="color:#86ca5e;"><strong>友情提醒：安装Apache时我用了很久的时间，删除装好的Apache的语句是sc delete Apache24</strong></span></p>
+
+<p>之后我们需要安装一下IIS插件，在远程桌面左下角有服务器管理器</p>
+
+<p style="text-align:center;"><img alt="" class="has" height="213" src="https://img-blog.csdnimg.cn/20190806232315806.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2MTcxMjg3,size_16,color_FFFFFF,t_70" width="321" /></p>
+
+<p>可以参考：</p>
+
+<p><a href="https://blog.csdn.net/qq_38830964/article/details/98508331" target="_blank" rel="noopener">https://blog.csdn.net/qq_38830964/article/details/98508331</a></p>
+
+<p><a href="https://blog.csdn.net/cplvfx/article/details/77771068" target="_blank" rel="noopener">https://blog.csdn.net/cplvfx/article/details/77771068</a></p>
+
+<p><a href="https://www.cnblogs.com/yangjinhan/p/8022618.html" target="_blank" rel="noopener">https://www.cnblogs.com/yangjinhan/p/8022618.html</a></p>
+
+<p> </p>
+
+<p><strong>安装好的IIS： </strong></p>
+
+<p style="text-align:center;"><img alt="" class="has" height="626" src="https://img-blog.csdnimg.cn/20190806232223941.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2MTcxMjg3,size_16,color_FFFFFF,t_70" width="697" /></p>
+
+<p><strong>配置好的页面：</strong></p>
+
+<p style="text-align:center;"><img alt="" class="has" height="438" src="https://img-blog.csdnimg.cn/20190806232448173.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2MTcxMjg3,size_16,color_FFFFFF,t_70" width="792" /></p>
+
+<p style="text-align:center;"><img alt="" class="has" height="309" src="https://img-blog.csdnimg.cn/20190806232529388.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2MTcxMjg3,size_16,color_FFFFFF,t_70" width="410" /></p>
+
+<p style="text-align:center;"><img alt="" class="has" height="576" src="https://img-blog.csdnimg.cn/20190806232559418.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2MTcxMjg3,size_16,color_FFFFFF,t_70" width="891" /></p>
+
+<p>然后可以在其他的电脑上使用你购买的域名IP进行访问了</p>
+
+<p>手机上访问：</p>
+
+<p style="text-align:center;"><img alt="" class="has" height="735" src="https://img-blog.csdnimg.cn/20190806232915625.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2MTcxMjg3,size_16,color_FFFFFF,t_70" width="557" /></p>
+
+<p> </p>
+
+<p> </p>
+
+<p> </p>
+
+<p><strong>一起学习，一起进步 -.- ，如有错误，可以发评论</strong> </p>
+</div><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">空城机</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://yoursite.com/2019/08/08/%E5%9F%9F%E5%90%8D%E5%92%8C%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9A%84%E8%B4%AD%E4%B9%B0%E5%92%8C%E9%85%8D%E7%BD%AE/">http://yoursite.com/2019/08/08/%E5%9F%9F%E5%90%8D%E5%92%8C%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9A%84%E8%B4%AD%E4%B9%B0%E5%92%8C%E9%85%8D%E7%BD%AE/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://yoursite.com" target="_blank">空城机</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E4%B8%AA%E4%BA%BA%E7%BD%91%E9%A1%B5%E5%88%9B%E5%BB%BA-%E6%9C%8D%E5%8A%A1%E5%99%A8-%E5%9F%9F%E5%90%8D/">个人网页创建 服务器 域名</a></div><div class="post_share"><div class="social-share" data-image="https://i.loli.net/2019/07/21/5d33d5dc1531213134.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css"/><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js"></script></div></div><div class="post-reward"><a class="reward-button button--primary button--animated"> <i class="fa fa-qrcode"></i> 打赏<div class="reward-main"><ul class="reward-all"><li class="reward-item"><img class="post-qr-code__img" src="/img/wechat.jpg" alt="微信"/><div class="post-qr-code__desc">微信</div></li><li class="reward-item"><img class="post-qr-code__img" src="/img/alipay.jpg" alt="支付寶"/><div class="post-qr-code__desc">支付寶</div></li></ul></div></a></div><nav class="pagination_post" id="pagination"><div class="prev-post pull_left"><a href="/2019/08/10/JavaScript%EF%BC%88%E4%B8%89%E5%8D%81%E4%B8%83%EF%BC%89%E2%80%94%E2%80%94%E7%A7%BB%E5%8A%A8%E7%AB%AF%E3%80%81%E5%A4%9A%E5%AA%92%E4%BD%93%E3%80%81CSS%E5%8A%A8%E7%94%BB/"><img class="prev_cover" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">JavaScript（三十七）——移动端、多媒体、CSS动画</div></div></a></div><div class="next-post pull_right"><a href="/2019/08/05/JavaScript%EF%BC%88%E4%B8%89%E5%8D%81%E5%85%AD%EF%BC%89%E2%80%94%E2%80%94JavaScript%E7%BC%96%E5%86%99%E7%9A%84%E8%BD%AE%E6%92%AD%E9%A1%B5%E9%9D%A2/"><img class="next_cover" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">JavaScript（三十六）——JavaScript编写的轮播页面</div></div></a></div></nav></article></main><footer id="footer" data-type="color"><div id="footer-wrap"><div class="copyright">&copy;2018 - 2020 By 空城机</div><div class="framework-info"><span>驱动 </span><a href="https://hexo.io" target="_blank" rel="noopener"><span>Hexo</span></a><span class="footer-separator">|</span><span>主题 </span><a href="https://github.com/jerryc127/hexo-theme-butterfly" target="_blank" rel="noopener"><span>Butterfly</span></a></div></div></footer></div><section class="rightside" id="rightside"><div id="rightside-config-hide"><i class="fa fa-book" id="readmode" title="阅读模式"></i><i class="fa fa-plus" id="font_plus" title="放大字体"></i><i class="fa fa-minus" id="font_minus" title="缩小字体"></i><a class="translate_chn_to_cht" id="translateLink" href="javascript:translatePage();" title="简繁转换" target="_self">繁</a><i class="darkmode fa fa-moon-o" id="darkmode" title="夜间模式"></i></div><div id="rightside-config-show"><div id="rightside_config" title="设置"><i class="fa fa-cog" aria-hidden="true"></i></div><i class="fa fa-arrow-up" id="go-up" title="回到顶部" aria-hidden="true"></i></div></section><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page@latest/instantpage.min.js" type="module"></script></body></html>

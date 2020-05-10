@@ -1,0 +1,339 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>JavaScript学习（二十八）——表单和表单元素 | 空城机</title><meta name="description" content="表单的用处很多，在制作网页，特别是制作动态网页时常常会用到。表单是实现动态网页的一种主要的外在形式。  什么是表单  一个HTML文档中，当用户填写完信息后做提交操作，将表上，经过服务器处理程序后，再将用户所需信息传送回客户HTML表单是HTML页面与浏览器实现交互的重要手段。是收集信息，具体说是收集测览者的信息。例如，在网上活提供的表单网页，如用户名、密码、联系方式等信息，如图要包括文本框、"><meta name="author" content="空城机"><meta name="copyright" content="空城机"><meta name="format-detection" content="telephone=no"><link rel="shortcut icon" href="/img/favicon.png"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="dns-prefetch" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="https://fonts.googleapis.com" crossorigin="crossorigin"/><link rel="dns-prefetch" href="https://fonts.googleapis.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="dns-prefetch" href="//busuanzi.ibruce.info"/><meta name="twitter:card" content="summary"><meta name="twitter:title" content="JavaScript学习（二十八）——表单和表单元素"><meta name="twitter:description" content="表单的用处很多，在制作网页，特别是制作动态网页时常常会用到。表单是实现动态网页的一种主要的外在形式。  什么是表单  一个HTML文档中，当用户填写完信息后做提交操作，将表上，经过服务器处理程序后，再将用户所需信息传送回客户HTML表单是HTML页面与浏览器实现交互的重要手段。是收集信息，具体说是收集测览者的信息。例如，在网上活提供的表单网页，如用户名、密码、联系方式等信息，如图要包括文本框、"><meta name="twitter:image" content="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg"><meta property="og:type" content="article"><meta property="og:title" content="JavaScript学习（二十八）——表单和表单元素"><meta property="og:url" content="http://yoursite.com/2019/01/28/JavaScript%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%BA%8C%E5%8D%81%E5%85%AB%EF%BC%89%E2%80%94%E2%80%94%E8%A1%A8%E5%8D%95%E5%92%8C%E8%A1%A8%E5%8D%95%E5%85%83%E7%B4%A0/"><meta property="og:site_name" content="空城机"><meta property="og:description" content="表单的用处很多，在制作网页，特别是制作动态网页时常常会用到。表单是实现动态网页的一种主要的外在形式。  什么是表单  一个HTML文档中，当用户填写完信息后做提交操作，将表上，经过服务器处理程序后，再将用户所需信息传送回客户HTML表单是HTML页面与浏览器实现交互的重要手段。是收集信息，具体说是收集测览者的信息。例如，在网上活提供的表单网页，如用户名、密码、联系方式等信息，如图要包括文本框、"><meta property="og:image" content="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg"><meta property="article:published_time" content="2019-01-28T13:55:23.000Z"><meta property="article:modified_time" content="2020-05-10T11:33:40.641Z"><script src="https://cdn.jsdelivr.net/npm/js-cookie/dist/js.cookie.min.js"></script><script>var autoChangeMode = '1'
+var t = Cookies.get("theme")
+if (autoChangeMode == '1'){
+  var isDarkMode = window.matchMedia("(prefers-color-scheme: dark)").matches
+  var isLightMode = window.matchMedia("(prefers-color-scheme: light)").matches
+  var isNotSpecified = window.matchMedia("(prefers-color-scheme: no-preference)").matches
+  var hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+  if (t === undefined){
+    if (isLightMode) activateLightMode()
+    else if (isDarkMode) activateDarkMode()
+    else if (isNotSpecified || hasNoSupport){
+      console.log('You specified no preference for a color scheme or your browser does not support it. I Schedule dark mode during night time.')
+      var now = new Date()
+      var hour = now.getHours()
+      var isNight = hour < 6 || hour >= 18
+      isNight ? activateDarkMode() : activateLightMode()
+  }
+  } else if (t == 'light') activateLightMode()
+  else activateDarkMode()
+
+} else if (autoChangeMode == '2'){
+  now = new Date();
+  hour = now.getHours();
+  isNight = hour < 6 || hour >= 18
+  if(t === undefined) isNight? activateDarkMode() : activateLightMode()
+  else if (t === 'light') activateLightMode()
+  else activateDarkMode() 
+} else {
+  if ( t == 'dark' ) activateDarkMode()
+  else if ( t == 'light') activateLightMode()
+}
+
+function activateDarkMode(){
+  document.documentElement.setAttribute('data-theme', 'dark')
+  if (document.querySelector('meta[name="theme-color"]') !== null){
+    document.querySelector('meta[name="theme-color"]').setAttribute('content','#000')
+  }
+}
+function activateLightMode(){
+  document.documentElement.setAttribute('data-theme', 'light')
+  if (document.querySelector('meta[name="theme-color"]') !== null){
+  document.querySelector('meta[name="theme-color"]').setAttribute('content','#fff')
+  }
+}</script><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@latest/css/font-awesome.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css"><link rel="canonical" href="http://yoursite.com/2019/01/28/JavaScript%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%BA%8C%E5%8D%81%E5%85%AB%EF%BC%89%E2%80%94%E2%80%94%E8%A1%A8%E5%8D%95%E5%92%8C%E8%A1%A8%E5%8D%95%E5%85%83%E7%B4%A0/"><link rel="prev" title="JavaScript学习（二十九）——页面打印" href="http://yoursite.com/2019/01/31/JavaScript%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%BA%8C%E5%8D%81%E4%B9%9D%EF%BC%89%E2%80%94%E2%80%94%E9%A1%B5%E9%9D%A2%E6%89%93%E5%8D%B0/"><link rel="next" title="JavaScript学习(二十七)——级联样式表" href="http://yoursite.com/2019/01/26/JavaScript%E5%AD%A6%E4%B9%A0(%E4%BA%8C%E5%8D%81%E4%B8%83)%E2%80%94%E2%80%94%E7%BA%A7%E8%81%94%E6%A0%B7%E5%BC%8F%E8%A1%A8/"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Titillium+Web"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: {"defaultEncoding":2,"translateDelay":0,"cookieDomain":"https://xxx/","msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"簡"},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  bookmark: {
+    message_prev: '按',
+    message_next: '键将本页加入书签'
+  },
+  runtime_unit: '天',
+  runtime: true,
+  copyright: undefined,
+  ClickShowText: undefined,
+  medium_zoom: false,
+  fancybox: true,
+  Snackbar: undefined,
+  baiduPush: false,
+  highlightCopy: true,
+  highlightLang: true,
+  highlightShrink: 'false',
+  isFontAwesomeV5: false,
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+  
+}</script><script>var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isSidebar: true  
+  }</script><noscript><style>
+#page-header {
+  opacity: 1
+}
+.justified-gallery img{
+  opacity: 1
+}
+</style></noscript><meta name="generator" content="Hexo 4.2.0"></head><body><div id="mobile-sidebar"><div id="menu_mask"></div><div id="mobile-sidebar-menus"><div class="mobile_author_icon"><img class="avatar-img" src="/img/avatar.png" onerror="onerror=null;src='/img/tou5.jpg'" alt="avatar"/></div><div class="mobile_post_data"><div class="mobile_data_item is-center"><div class="mobile_data_link"><a href="/archives/"><div class="headline">文章</div><div class="length_num">154</div></a></div></div><div class="mobile_data_item is-center">      <div class="mobile_data_link"><a href="/tags/"><div class="headline">标签</div><div class="length_num">45</div></a></div></div><div class="mobile_data_item is-center">     <div class="mobile_data_link"><a href="/categories/"><div class="headline">分类</div><div class="length_num">15</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fa fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fa fa-heart"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page"><i class="fa-fw fa fa-list" aria-hidden="true"></i><span> 清单</span><i class="fa fa-chevron-down menus-expand" aria-hidden="true"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/music/"><i class="fa-fw fa fa-music"></i><span> 音乐</span></a></li><li><a class="site-page" href="/movies/"><i class="fa-fw fa fa-film"></i><span> 电影</span></a></li></ul></div></div></div></div><i class="fa fa-arrow-right on" id="toggle-sidebar" aria-hidden="true">     </i><div id="sidebar"><div class="sidebar-toc"><div class="sidebar-toc__title">目录</div><div class="sidebar-toc__progress"><span class="progress-notice">你已经读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar">     </div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#"><span class="toc-number">1.</span> <span class="toc-text">什么是表单</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#"><span class="toc-number">2.</span> <span class="toc-text">表单标记&lt;form&gt;</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#"><span class="toc-number">2.1.</span> <span class="toc-text">处理程序action属性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#"><span class="toc-number">2.2.</span> <span class="toc-text">表单名称name属性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#"><span class="toc-number">2.3.</span> <span class="toc-text">提交方式method属性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#"><span class="toc-number">2.4.</span> <span class="toc-text">编码方式enctype属性</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#"><span class="toc-number">3.</span> <span class="toc-text">输入标记&lt;input&gt;</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#"><span class="toc-number">3.0.1.</span> <span class="toc-text">输入类控件的type可选值</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#"><span class="toc-number">3.1.</span> <span class="toc-text">文字域text</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#"><span class="toc-number">3.2.</span> <span class="toc-text"> </span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#"><span class="toc-number">3.3.</span> <span class="toc-text">密码域password</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#"><span class="toc-number">3.4.</span> <span class="toc-text">重置按钮reset</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#"><span class="toc-number">4.</span> <span class="toc-text">文本域标记&lt;textarea&gt;</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#"><span class="toc-number">5.</span> <span class="toc-text"> </span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#"><span class="toc-number">6.</span> <span class="toc-text">菜单和列表标记&lt;select&gt;和&lt;option&gt;</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#"><span class="toc-number">7.</span> <span class="toc-text">表单验证</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#"><span class="toc-number">7.0.1.</span> <span class="toc-text">1. 验证表单内容是否为空</span></a></li></ol></li></ol></li></ol></div></div></div><div id="body-wrap"><div class="post-bg" id="nav" style="background-image: url(https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg)"><div id="page-header"><span class="pull_left" id="blog_name"><a class="blog_title" id="site-name" href="/">空城机</a></span><span class="pull_right menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fa fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fa fa-heart"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page"><i class="fa-fw fa fa-list" aria-hidden="true"></i><span> 清单</span><i class="fa fa-chevron-down menus-expand" aria-hidden="true"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/music/"><i class="fa-fw fa fa-music"></i><span> 音乐</span></a></li><li><a class="site-page" href="/movies/"><i class="fa-fw fa fa-film"></i><span> 电影</span></a></li></ul></div></div><span class="toggle-menu close"><a class="site-page"><i class="fa fa-bars fa-fw" aria-hidden="true"></i></a></span></span></div><div id="post-info"><div id="post-title"><div class="posttitle">JavaScript学习（二十八）——表单和表单元素</div></div><div id="post-meta"><div class="meta-firstline"><time class="post-meta__date"><span class="post-meta__date-created" title="发表于 2019-01-28 21:55:23"><i class="fa fa-calendar" aria-hidden="true"></i> 发表于 2019-01-28</span><span class="post-meta__separator">|</span><span class="post-meta__date-updated" title="更新于 2020-05-10 19:33:40"><i class="fa fa-history" aria-hidden="true"></i> 更新于 2020-05-10</span></time><span class="post-meta__categories"><span class="post-meta__separator">|</span><i class="fa fa-inbox post-meta__icon" aria-hidden="true"></i><a class="post-meta__categories" href="/categories/JavaScript/">JavaScript</a></span></div><div class="meta-secondline"> </div><div class="meta-thirdline"><span class="post-meta-pv-cv"><i class="fa fa-eye post-meta__icon" aria-hidden="true"> </i><span>阅读量:</span><span id="busuanzi_value_page_pv"></span></span><span class="post-meta-commentcount"></span></div></div></div></div><main class="layout_post" id="content-inner"><article id="post"><div class="post-content" id="article-container"><a id="more"></a>
+
+<p><strong>表单的用处很多，在制作网页，特别是制作动态网页时常常会用到。表单是实现动态网页的一种主要的外在形式。</strong></p>
+
+<h1><strong>什么是表单</strong></h1>
+
+<p><strong>一个HTML文档中，当用户填写完信息后做提交操作，将表上，经过服务器处理程序后，再将用户所需信息传送回客户HTML表单是HTML页面与浏览器实现交互的重要手段。是收集信息，具体说是收集测览者的信息。例如，在网上活提供的表单网页，如用户名、密码、联系方式等信息，如图要包括文本框、单选按钮、复选框、按钮等。</strong></p>
+
+<h1>表单标记&lt;form&gt;</h1>
+
+<p><strong>表单是网页上的一个特定区域。这个区域是由一对&lt;form&gt;标记定 义的。在&lt;form&gt;与&lt;/form&gt;之间的一切都属于表单的内容。 在表单的&lt;form&gt;标记中，还可以设置表单的基本属性，包括表单的名称、处重起序、传送方式等。一般情况下， 表单的处理程序action和提交方式method是必不可少的参数。</strong><br />
+ </p>
+
+<h2>处理程序action属性</h2>
+
+<p><strong>真正处理表单的数据脚本或程序在 action属性里，这个值可以是程序或者脚本的一个完整URL.具体语法如下：</strong></p>
+
+<p><strong>&lt;form action="URL"&gt;..&lt;/form&gt;<br />
+参数说明:<br />
+URL:表单提交的地址。</strong></p>
+
+<p><strong>说明<br />
+在该语法中，表单的处理程序定义的是表单要提交的地址，也就是表单中收集到的资料将要传递的程序地址。这一地址可以是绝对地址，也可以是相对地址，还可以是一些其他的地址，如发送E-mail等。<br />
+&lt;form action="mailto:mingsoft@mingsoft.com"&gt;&lt;/form&gt;<br />
+上面定义了表单规交的地址为一个邮件， 当程序运行后会将表单中收集到的内容以电子邮件的形式发送出去。</strong><br />
+ </p>
+
+<h2>表单名称name属性</h2>
+
+<p><strong>名称属性name用于给表单命名。这一属性不是表单的必选属性，但是为了防止表单信息在提交到后台处理程序时出现混乱，一般要设置一个与表单功能符合的名称，如登录的表单可以命名为login。不同的表单尽量用不同的名称，以避免混乱。具体语法如下:<br />
+&lt;form name="form name"&gt;... &lt;/form&gt;参数说明:<br />
+form name: 为表单起的名字。</strong><br />
+ </p>
+
+<h2>提交方式method属性</h2>
+
+<p><strong>表单的method属性用来定义处理程序从表单中获得信息的方式，可取值为get或post,它决定了表单中已收集的数据是用什么方式提交到服务器的。具体语法如下:<br />
+&lt;form method=" method"&gt; ... &lt;/form&gt;</strong></p>
+
+<p><strong>method=get:使用这种方式提交表单时，表单数据会被视为CGI或ASP的参数发送，也就是来访者输入的数据会附加在URL之后，由用户端直接发送至服务器，所以速度会比post快，但缺点是数据长度不能太长。在没有指定method的情形下，一般都会视get为默认值。<br />
+method=post:  使用这种设置时，表单数据是与URL分开发送的，用户端的计算机会通知服务器来读取数据，所以通常没有数据长度上的限制。缺点是速度会比get慢。</strong><br />
+ </p>
+
+<h2>编码方式enctype属性</h2>
+
+<p><strong>表单中的enctype参数用于设置表单信息提交的编码方式。具体语法如下:<br />
+&lt;form enctype="value"...&lt;/form&gt;参数说明.</strong></p>
+
+<p><strong>value的取值</strong></p>
+
+<table border="1" cellpadding="1" cellspacing="1" style="width:500px;"><tbody><tr><td style="text-align:center;"><strong>取值</strong></td>
+            <td style="text-align:center;"><strong>描述</strong></td>
+        </tr><tr><td style="text-align:center;"><strong>Test/plain</strong></td>
+            <td style="text-align:center;"><strong>以纯文本的形式传送</strong></td>
+        </tr><tr><td style="text-align:center;"><strong>application/x-www-form-urlencoded</strong></td>
+            <td style="text-align:center;"><strong>默认的编码形式</strong></td>
+        </tr><tr><td style="text-align:center;"><strong>multipart/form-data</strong></td>
+            <td style="text-align:center;"><strong>MIME编码，上传文件的表单必须选择该项</strong></td>
+        </tr></tbody></table><p> </p>
+
+<h1>输入标记&lt;input&gt;</h1>
+
+<p><strong>输入标记&lt;input&gt;是表单中最常用的标记之一。常用的文本域、按钮等都使用这个标记。语法如下：</strong></p>
+
+<p><strong>&lt;form&gt;</strong></p>
+
+<p><strong>      &lt;input name="field_name" type="type_name"&gt;</strong></p>
+
+<p><strong>&lt;/form&gt;</strong></p>
+
+<p><strong>field_name:控件名称</strong></p>
+
+<p><strong>type_name：控件类型</strong></p>
+
+<h3><strong>输入类控件的type可选值</strong></h3>
+
+<table border="1" cellpadding="1" cellspacing="1" style="width:500px;"><tbody><tr><td style="text-align:center;"><strong>取值</strong></td>
+            <td style="text-align:center;"><strong>描述</strong></td>
+            <td style="text-align:center;"><strong>取值</strong></td>
+            <td style="text-align:center;"><strong>描述</strong></td>
+        </tr><tr><td style="text-align:center;"><strong>text</strong></td>
+            <td style="text-align:center;"><strong>文字域</strong></td>
+            <td style="text-align:center;"><strong>submit</strong></td>
+            <td style="text-align:center;"><strong>提交按钮</strong></td>
+        </tr><tr><td style="text-align:center;"><strong>password</strong></td>
+            <td style="text-align:center;"><strong>密码域，用户在页面输入时不显示具体的内容，以*代替</strong></td>
+            <td style="text-align:center;"><strong>reset</strong></td>
+            <td style="text-align:center;"><strong>重置按钮</strong></td>
+        </tr><tr><td style="text-align:center;"><strong>radio</strong></td>
+            <td style="text-align:center;"><strong>单选按钮</strong></td>
+            <td style="text-align:center;"><strong>image</strong></td>
+            <td style="text-align:center;"><strong>图像域，图像提交按钮</strong></td>
+        </tr><tr><td style="text-align:center;"><strong>checkbox</strong></td>
+            <td style="text-align:center;"><strong>复选框</strong></td>
+            <td style="text-align:center;"><strong>hidden</strong></td>
+            <td style="text-align:center;"><strong>隐藏域，不显示在页面上，只将内容传递到服务器上</strong></td>
+        </tr><tr><td style="text-align:center;"><strong>button</strong></td>
+            <td style="text-align:center;"><strong>普通按钮</strong></td>
+            <td style="text-align:center;"><strong>file</strong></td>
+            <td style="text-align:center;"><strong>文件域</strong></td>
+        </tr></tbody></table><h2>文字域text</h2>
+
+<p><strong>text属性用来设定在表单的文本域中，输入任何类型的文本、数字和字母。输入的内容以单行显示。语法如下：</strong></p>
+
+<p><strong>&lt;input type="text" name="field_name" maxlength=max_value size=size_value value="field_value"&gt;</strong></p>
+
+<p><strong>例子：在页面中使用文字域，做一个人口调查的页面。</strong></p>
+
+<pre class="has">
+<code class="language-javascript">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+    &lt;head&gt;
+        &lt;meta charset="utf-8"&gt;
+        &lt;title&gt;&lt;/title&gt;
+
+    &lt;/head&gt;
+    &lt;body &gt;    
+        &lt;form&gt;
+            &lt;h3 align="center"&gt;人口调查&lt;/h3&gt;
+            姓名：&lt;input type="text" name="username" size=20 /&gt;&lt;br /&gt;
+            性别：&lt;input type="text" name="sex" size=4 maxlength="1"/&gt;&amp;nbsp;&amp;nbsp;
+            年龄：&lt;input type="text" name="age" size=4 maxlength="3"/&gt;&lt;br /&gt;
+            居住地址：&lt;input type="text" name="address" size=50 /&gt;
+        &lt;/form&gt;
+    &lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+
+<p><img alt="" class="has" height="173" src="https://img-blog.csdnimg.cn/20190128210625223.png" width="1061" /></p>
+
+<h2> </h2>
+
+<h2>密码域password</h2>
+
+<p><strong>在表单中还有一种文本域的形式为密码域，输入到文本域中的文字均以*或圆点显示。</strong></p>
+
+<p><strong>例子：创建一个修改密码的页面</strong></p>
+
+<pre class="has">
+<code class="language-javascript">&lt;form&gt;
+            &lt;h3 align="center"&gt;修改密码&lt;/h3&gt;
+            用户名：&lt;input type="text" name="username" size=15 /&gt;&lt;br /&gt;
+            原密码：&lt;input type="password" name="oldpassword" maxlength="8" size="15"/&gt;&lt;br /&gt;
+            新密码：&lt;input type="text" name="newpassword" maxlength="8" size="15"/&gt;&lt;br /&gt;
+            确认新密码：&lt;input type="text" name="newpassword2" maxlength="8" size=15 /&gt;
+        &lt;/form&gt;</code></pre>
+
+<p><img alt="" class="has" height="193" src="https://img-blog.csdnimg.cn/20190128211636226.png" width="1070" /></p>
+
+<p> </p>
+
+<h2>重置按钮reset</h2>
+
+<p><strong>单击重置按钮后，可以清除表单的内容，恢复默认的表单内容设定。</strong></p>
+
+<pre class="has">
+<code class="language-javascript">&lt;form &gt;
+            &lt;h3 align="center"&gt;人口调查&lt;/h3&gt;
+            姓名：&lt;input type="text" name="username" size=20 /&gt;&lt;br /&gt;
+            性别：&lt;input type="text" name="sex" size=4 maxlength="1"/&gt;&amp;nbsp;&amp;nbsp;
+            年龄：&lt;input type="text" name="age" size=4 maxlength="3"/&gt;&lt;br /&gt;
+            居住地址：&lt;input type="text" name="address" size=50 /&gt;
+            &lt;input type="submit" value="提交" /&gt;
+            &lt;input type="reset" value="重置" /&gt;
+&lt;/form&gt;</code></pre>
+
+<p><img alt="" class="has" height="282" src="https://img-blog.csdnimg.cn/20190128212059817.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2MTcxMjg3,size_16,color_FFFFFF,t_70" width="301" /></p>
+
+<p> </p>
+
+<h1>文本域标记&lt;textarea&gt;</h1>
+
+<p><strong>在HTML中还有一种特殊定义的文本样式，称为文本域。它与文字字段的区别在于可以添加多行文字，从而输入更多的文本。语法如下：</strong></p>
+
+<p><strong>&lt;textarea name="textname" value="text_value" rows=rows_value cols=cols_value&gt;&lt;/textarea&gt;</strong></p>
+
+<table border="1" cellpadding="1" cellspacing="1" style="width:500px;"><tbody><tr><td style="text-align:center;"><strong>属性</strong></td>
+            <td style="text-align:center;"><strong>描述</strong></td>
+            <td style="text-align:center;"><strong>属性</strong></td>
+            <td style="text-align:center;"><strong>描述</strong></td>
+        </tr><tr><td style="text-align:center;"><strong>name</strong></td>
+            <td style="text-align:center;"><strong>文本域的名称</strong></td>
+            <td style="text-align:center;"><strong>cols</strong></td>
+            <td style="text-align:center;"><strong>文本域的列数</strong></td>
+        </tr><tr><td style="text-align:center;"><strong>rows</strong></td>
+            <td style="text-align:center;"><strong>文本域的行数</strong></td>
+            <td style="text-align:center;"><strong>value</strong></td>
+            <td style="text-align:center;"><strong>文本域的默认值</strong></td>
+        </tr></tbody></table><h1> </h1>
+
+<h1>菜单和列表标记&lt;select&gt;和&lt;option&gt;</h1>
+
+<p><strong>菜单列表类的控件主要用来选择给定答案中的一种， 这类选择往往答案比较多，使用单选按钮比较浪费空间。可以说，菜单列表类的控件主要是为了节省页面空间而设计的。菜单和列表都是通过&lt;select&gt;和&lt;option&gt;标记来实现的。<br />
+菜单是种最节省空间的方式，正常状态下只能看到个选项，单击按钮打开菜单后才能看到部的选项。</strong></p>
+
+<p><strong>列表可以显示一定数量的选项，如果超过了这个数量，会自动出现滚动条。具体语法如下:</strong></p>
+
+<p><strong>&lt;select name="select_name" size=select_size multiple="multiple"&gt;<br />
+            &lt;option value="option_value" selected="selected"&gt;选项&lt;/option&gt;<br />
+            &lt;option value="option_value"&gt;选项&lt;/option&gt;<br />
+&lt;/select&gt;</strong></p>
+
+<p> </p>
+
+<h1><strong>表单验证</strong></h1>
+
+<p><strong>验证表单中输入的内容是否符合要求是JavaScript 最常用的功能之一.。在提交表单前进行表单验证，可以节约服务器的处理器周期，为用户节省等待的时间。<br />
+表单验证通常发生在内容输入结束，表单提交之前。表单的onsubmit事件处理器中有一组函数负责验证。如果输入中包含非法数据，处理器会返回false,显示一条信息，同时取消提交。如果输入的内容合法，则返回true,提交正常进行。本节将介绍一些表单验证常用的技术。</strong></p>
+
+<h3><strong>1. 验证表单内容是否为空</strong></h3>
+
+<p><strong>下面制作一个简单的用户登录界面，并且验证用户名和密码不能为空，如果为空则给出提示。运行结果如图所示。</strong></p>
+
+<pre class="has">
+<code class="language-javascript">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+    &lt;head&gt;
+        &lt;meta charset="utf-8"&gt;
+        &lt;title&gt;&lt;/title&gt;
+        &lt;script type="text/javascript"&gt;
+            function check(){
+                if(form1.value==""){
+                    alert("请输入用户名！");
+                    return false;
+                }
+                if(form2.value==""){
+                    alert("请输入密码！");
+                    return false;
+                }
+                return true;
+            }
+        &lt;/script&gt;
+    &lt;/head&gt;
+    &lt;body &gt;    
+        &lt;form&gt;
+            用户名：&lt;input type="text" name="form1" id="form1"/&gt; &lt;br /&gt;
+            密  &amp;nbsp;&amp;nbsp;  码：&lt;input type="text" name="form2" id="form2"/&gt;&lt;br /&gt;
+        &lt;/form&gt;
+        &lt;input type="button" name="enter" onclick="check()" value="登录" /&gt;
+        &lt;input type="button" name="close" onclick="" value="取消"/&gt;
+    &lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+
+<p><img alt="" class="has" height="356" src="https://img-blog.csdnimg.cn/20190128215440188.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2MTcxMjg3,size_16,color_FFFFFF,t_70" width="531" /></p>
+
+<p><img alt="" class="has" height="329" src="https://img-blog.csdnimg.cn/20190128215503908.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2MTcxMjg3,size_16,color_FFFFFF,t_70" width="476" /></p>
+
+<p> </p>
+
+<p><br />
+ </p>
+
+<p> </p></div><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">空城机</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://yoursite.com/2019/01/28/JavaScript%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%BA%8C%E5%8D%81%E5%85%AB%EF%BC%89%E2%80%94%E2%80%94%E8%A1%A8%E5%8D%95%E5%92%8C%E8%A1%A8%E5%8D%95%E5%85%83%E7%B4%A0/">http://yoursite.com/2019/01/28/JavaScript%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%BA%8C%E5%8D%81%E5%85%AB%EF%BC%89%E2%80%94%E2%80%94%E8%A1%A8%E5%8D%95%E5%92%8C%E8%A1%A8%E5%8D%95%E5%85%83%E7%B4%A0/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://yoursite.com" target="_blank">空城机</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="https://i.loli.net/2019/07/21/5d33d5dc1531213134.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css"/><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js"></script></div></div><div class="post-reward"><a class="reward-button button--primary button--animated"> <i class="fa fa-qrcode"></i> 打赏<div class="reward-main"><ul class="reward-all"><li class="reward-item"><img class="post-qr-code__img" src="/img/wechat.jpg" alt="微信"/><div class="post-qr-code__desc">微信</div></li><li class="reward-item"><img class="post-qr-code__img" src="/img/alipay.jpg" alt="支付寶"/><div class="post-qr-code__desc">支付寶</div></li></ul></div></a></div><nav class="pagination_post" id="pagination"><div class="prev-post pull_left"><a href="/2019/01/31/JavaScript%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%BA%8C%E5%8D%81%E4%B9%9D%EF%BC%89%E2%80%94%E2%80%94%E9%A1%B5%E9%9D%A2%E6%89%93%E5%8D%B0/"><img class="prev_cover" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">JavaScript学习（二十九）——页面打印</div></div></a></div><div class="next-post pull_right"><a href="/2019/01/26/JavaScript%E5%AD%A6%E4%B9%A0(%E4%BA%8C%E5%8D%81%E4%B8%83)%E2%80%94%E2%80%94%E7%BA%A7%E8%81%94%E6%A0%B7%E5%BC%8F%E8%A1%A8/"><img class="next_cover" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">JavaScript学习(二十七)——级联样式表</div></div></a></div></nav></article></main><footer id="footer" data-type="color"><div id="footer-wrap"><div class="copyright">&copy;2018 - 2020 By 空城机</div><div class="framework-info"><span>驱动 </span><a href="https://hexo.io" target="_blank" rel="noopener"><span>Hexo</span></a><span class="footer-separator">|</span><span>主题 </span><a href="https://github.com/jerryc127/hexo-theme-butterfly" target="_blank" rel="noopener"><span>Butterfly</span></a></div></div></footer></div><section class="rightside" id="rightside"><div id="rightside-config-hide"><i class="fa fa-book" id="readmode" title="阅读模式"></i><i class="fa fa-plus" id="font_plus" title="放大字体"></i><i class="fa fa-minus" id="font_minus" title="缩小字体"></i><a class="translate_chn_to_cht" id="translateLink" href="javascript:translatePage();" title="简繁转换" target="_self">繁</a><i class="darkmode fa fa-moon-o" id="darkmode" title="夜间模式"></i></div><div id="rightside-config-show"><div id="rightside_config" title="设置"><i class="fa fa-cog" aria-hidden="true"></i></div><i class="fa fa-list-ul close" id="mobile-toc-button" title="目录" aria-hidden="true"></i><i class="fa fa-arrow-up" id="go-up" title="回到顶部" aria-hidden="true"></i></div></section><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page@latest/instantpage.min.js" type="module"></script></body></html>

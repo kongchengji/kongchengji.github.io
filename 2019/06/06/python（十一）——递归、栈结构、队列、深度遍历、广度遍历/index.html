@@ -1,0 +1,334 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>python（十一）——递归、栈结构、队列、深度遍历、广度遍历 | 空城机</title><meta name="description" content="目录     递归  写递归方式：  模拟栈结构  队列  递归遍历目录  栈模拟递归遍历目录（深度遍历）  队列模拟递归（广度遍历）  递归  递归调用：一个函数，如果调用了自身，这种调用称为递归调用，一个会调用自身的函数称为递归函数  凡是循环能做的，递归都能做     写递归方式：  写出临界条件     找这一次和上一次的关系     假设当前函数已经能用，调用自身计算上一次的结果，再"><meta name="keywords" content="python"><meta name="author" content="空城机"><meta name="copyright" content="空城机"><meta name="format-detection" content="telephone=no"><link rel="shortcut icon" href="/img/favicon.png"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="dns-prefetch" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="https://fonts.googleapis.com" crossorigin="crossorigin"/><link rel="dns-prefetch" href="https://fonts.googleapis.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="dns-prefetch" href="//busuanzi.ibruce.info"/><meta name="twitter:card" content="summary"><meta name="twitter:title" content="python（十一）——递归、栈结构、队列、深度遍历、广度遍历"><meta name="twitter:description" content="目录     递归  写递归方式：  模拟栈结构  队列  递归遍历目录  栈模拟递归遍历目录（深度遍历）  队列模拟递归（广度遍历）  递归  递归调用：一个函数，如果调用了自身，这种调用称为递归调用，一个会调用自身的函数称为递归函数  凡是循环能做的，递归都能做     写递归方式：  写出临界条件     找这一次和上一次的关系     假设当前函数已经能用，调用自身计算上一次的结果，再"><meta name="twitter:image" content="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg"><meta property="og:type" content="article"><meta property="og:title" content="python（十一）——递归、栈结构、队列、深度遍历、广度遍历"><meta property="og:url" content="http://yoursite.com/2019/06/06/python%EF%BC%88%E5%8D%81%E4%B8%80%EF%BC%89%E2%80%94%E2%80%94%E9%80%92%E5%BD%92%E3%80%81%E6%A0%88%E7%BB%93%E6%9E%84%E3%80%81%E9%98%9F%E5%88%97%E3%80%81%E6%B7%B1%E5%BA%A6%E9%81%8D%E5%8E%86%E3%80%81%E5%B9%BF%E5%BA%A6%E9%81%8D%E5%8E%86/"><meta property="og:site_name" content="空城机"><meta property="og:description" content="目录     递归  写递归方式：  模拟栈结构  队列  递归遍历目录  栈模拟递归遍历目录（深度遍历）  队列模拟递归（广度遍历）  递归  递归调用：一个函数，如果调用了自身，这种调用称为递归调用，一个会调用自身的函数称为递归函数  凡是循环能做的，递归都能做     写递归方式：  写出临界条件     找这一次和上一次的关系     假设当前函数已经能用，调用自身计算上一次的结果，再"><meta property="og:image" content="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg"><meta property="article:published_time" content="2019-06-06T09:03:25.000Z"><meta property="article:modified_time" content="2020-05-10T11:05:27.848Z"><script src="https://cdn.jsdelivr.net/npm/js-cookie/dist/js.cookie.min.js"></script><script>var autoChangeMode = '1'
+var t = Cookies.get("theme")
+if (autoChangeMode == '1'){
+  var isDarkMode = window.matchMedia("(prefers-color-scheme: dark)").matches
+  var isLightMode = window.matchMedia("(prefers-color-scheme: light)").matches
+  var isNotSpecified = window.matchMedia("(prefers-color-scheme: no-preference)").matches
+  var hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+  if (t === undefined){
+    if (isLightMode) activateLightMode()
+    else if (isDarkMode) activateDarkMode()
+    else if (isNotSpecified || hasNoSupport){
+      console.log('You specified no preference for a color scheme or your browser does not support it. I Schedule dark mode during night time.')
+      var now = new Date()
+      var hour = now.getHours()
+      var isNight = hour < 6 || hour >= 18
+      isNight ? activateDarkMode() : activateLightMode()
+  }
+  } else if (t == 'light') activateLightMode()
+  else activateDarkMode()
+
+} else if (autoChangeMode == '2'){
+  now = new Date();
+  hour = now.getHours();
+  isNight = hour < 6 || hour >= 18
+  if(t === undefined) isNight? activateDarkMode() : activateLightMode()
+  else if (t === 'light') activateLightMode()
+  else activateDarkMode() 
+} else {
+  if ( t == 'dark' ) activateDarkMode()
+  else if ( t == 'light') activateLightMode()
+}
+
+function activateDarkMode(){
+  document.documentElement.setAttribute('data-theme', 'dark')
+  if (document.querySelector('meta[name="theme-color"]') !== null){
+    document.querySelector('meta[name="theme-color"]').setAttribute('content','#000')
+  }
+}
+function activateLightMode(){
+  document.documentElement.setAttribute('data-theme', 'light')
+  if (document.querySelector('meta[name="theme-color"]') !== null){
+  document.querySelector('meta[name="theme-color"]').setAttribute('content','#fff')
+  }
+}</script><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@latest/css/font-awesome.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css"><link rel="canonical" href="http://yoursite.com/2019/06/06/python%EF%BC%88%E5%8D%81%E4%B8%80%EF%BC%89%E2%80%94%E2%80%94%E9%80%92%E5%BD%92%E3%80%81%E6%A0%88%E7%BB%93%E6%9E%84%E3%80%81%E9%98%9F%E5%88%97%E3%80%81%E6%B7%B1%E5%BA%A6%E9%81%8D%E5%8E%86%E3%80%81%E5%B9%BF%E5%BA%A6%E9%81%8D%E5%8E%86/"><link rel="prev" title="python（十二）——模块一（time模块,datetime模块,calendar模块）" href="http://yoursite.com/2019/06/07/python%EF%BC%88%E5%8D%81%E4%BA%8C%EF%BC%89%E2%80%94%E2%80%94%E6%A8%A1%E5%9D%97%E4%B8%80%EF%BC%88time%E6%A8%A1%E5%9D%97,datetime%E6%A8%A1%E5%9D%97,calendar%E6%A8%A1%E5%9D%97%EF%BC%89/"><link rel="next" title="python中的@" href="http://yoursite.com/2019/06/06/python%E4%B8%AD%E7%9A%84@/"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Titillium+Web"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: {"defaultEncoding":2,"translateDelay":0,"cookieDomain":"https://xxx/","msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"簡"},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  bookmark: {
+    message_prev: '按',
+    message_next: '键将本页加入书签'
+  },
+  runtime_unit: '天',
+  runtime: true,
+  copyright: undefined,
+  ClickShowText: undefined,
+  medium_zoom: false,
+  fancybox: true,
+  Snackbar: undefined,
+  baiduPush: false,
+  highlightCopy: true,
+  highlightLang: true,
+  highlightShrink: 'false',
+  isFontAwesomeV5: false,
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+  
+}</script><script>var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isSidebar: true  
+  }</script><noscript><style>
+#page-header {
+  opacity: 1
+}
+.justified-gallery img{
+  opacity: 1
+}
+</style></noscript><meta name="generator" content="Hexo 4.2.0"></head><body><div id="mobile-sidebar"><div id="menu_mask"></div><div id="mobile-sidebar-menus"><div class="mobile_author_icon"><img class="avatar-img" src="/img/avatar.png" onerror="onerror=null;src='/img/tou5.jpg'" alt="avatar"/></div><div class="mobile_post_data"><div class="mobile_data_item is-center"><div class="mobile_data_link"><a href="/archives/"><div class="headline">文章</div><div class="length_num">154</div></a></div></div><div class="mobile_data_item is-center">      <div class="mobile_data_link"><a href="/tags/"><div class="headline">标签</div><div class="length_num">45</div></a></div></div><div class="mobile_data_item is-center">     <div class="mobile_data_link"><a href="/categories/"><div class="headline">分类</div><div class="length_num">15</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fa fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fa fa-heart"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page"><i class="fa-fw fa fa-list" aria-hidden="true"></i><span> 清单</span><i class="fa fa-chevron-down menus-expand" aria-hidden="true"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/music/"><i class="fa-fw fa fa-music"></i><span> 音乐</span></a></li><li><a class="site-page" href="/movies/"><i class="fa-fw fa fa-film"></i><span> 电影</span></a></li></ul></div></div></div></div><i class="fa fa-arrow-right on" id="toggle-sidebar" aria-hidden="true">     </i><div id="sidebar"><div class="sidebar-toc"><div class="sidebar-toc__title">目录</div><div class="sidebar-toc__progress"><span class="progress-notice">你已经读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar">     </div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%80%92%E5%BD%92"><span class="toc-number">1.</span> <span class="toc-text">递归</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%86%99%E9%80%92%E5%BD%92%E6%96%B9%E5%BC%8F%EF%BC%9A"><span class="toc-number">1.1.</span> <span class="toc-text">写递归方式：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A8%A1%E6%8B%9F%E6%A0%88%E7%BB%93%E6%9E%84"><span class="toc-number">1.2.</span> <span class="toc-text">模拟栈结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%98%9F%E5%88%97"><span class="toc-number">1.3.</span> <span class="toc-text">队列</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%92%E5%BD%92%E9%81%8D%E5%8E%86%E7%9B%AE%E5%BD%95"><span class="toc-number">1.4.</span> <span class="toc-text">递归遍历目录</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%88%E6%A8%A1%E6%8B%9F%E9%80%92%E5%BD%92%E9%81%8D%E5%8E%86%E7%9B%AE%E5%BD%95%EF%BC%88%E6%B7%B1%E5%BA%A6%E9%81%8D%E5%8E%86%EF%BC%89"><span class="toc-number">1.5.</span> <span class="toc-text">栈模拟递归遍历目录（深度遍历）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%98%9F%E5%88%97%E6%A8%A1%E6%8B%9F%E9%80%92%E5%BD%92%EF%BC%88%E5%B9%BF%E5%BA%A6%E9%81%8D%E5%8E%86%EF%BC%89"><span class="toc-number">1.6.</span> <span class="toc-text">队列模拟递归（广度遍历）</span></a></li></ol></li></ol></div></div></div><div id="body-wrap"><div class="post-bg" id="nav" style="background-image: url(https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg)"><div id="page-header"><span class="pull_left" id="blog_name"><a class="blog_title" id="site-name" href="/">空城机</a></span><span class="pull_right menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fa fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fa fa-heart"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page"><i class="fa-fw fa fa-list" aria-hidden="true"></i><span> 清单</span><i class="fa fa-chevron-down menus-expand" aria-hidden="true"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/music/"><i class="fa-fw fa fa-music"></i><span> 音乐</span></a></li><li><a class="site-page" href="/movies/"><i class="fa-fw fa fa-film"></i><span> 电影</span></a></li></ul></div></div><span class="toggle-menu close"><a class="site-page"><i class="fa fa-bars fa-fw" aria-hidden="true"></i></a></span></span></div><div id="post-info"><div id="post-title"><div class="posttitle">python（十一）——递归、栈结构、队列、深度遍历、广度遍历</div></div><div id="post-meta"><div class="meta-firstline"><time class="post-meta__date"><span class="post-meta__date-created" title="发表于 2019-06-06 17:03:25"><i class="fa fa-calendar" aria-hidden="true"></i> 发表于 2019-06-06</span><span class="post-meta__separator">|</span><span class="post-meta__date-updated" title="更新于 2020-05-10 19:05:27"><i class="fa fa-history" aria-hidden="true"></i> 更新于 2020-05-10</span></time><span class="post-meta__categories"><span class="post-meta__separator">|</span><i class="fa fa-inbox post-meta__icon" aria-hidden="true"></i><a class="post-meta__categories" href="/categories/python/">python</a></span></div><div class="meta-secondline"> </div><div class="meta-thirdline"><span class="post-meta-pv-cv"><i class="fa fa-eye post-meta__icon" aria-hidden="true"> </i><span>阅读量:</span><span id="busuanzi_value_page_pv"></span></span><span class="post-meta-commentcount"></span></div></div></div></div><main class="layout_post" id="content-inner"><article id="post"><div class="post-content" id="article-container"><a id="more"></a>
+
+<p id="main-toc"><strong>目录</strong></p>
+
+<p id="-toc" style="margin-left:40px;"> </p>
+
+<p id="%E9%80%92%E5%BD%92-toc" style="margin-left:40px;"><a href="#%E9%80%92%E5%BD%92">递归</a></p>
+
+<p id="%E5%86%99%E9%80%92%E5%BD%92%E6%96%B9%E5%BC%8F%EF%BC%9A-toc" style="margin-left:80px;"><a href="#%E5%86%99%E9%80%92%E5%BD%92%E6%96%B9%E5%BC%8F%EF%BC%9A">写递归方式：</a></p>
+
+<p id="%E6%A8%A1%E6%8B%9F%E6%A0%88%E7%BB%93%E6%9E%84-toc" style="margin-left:80px;"><a href="#%E6%A8%A1%E6%8B%9F%E6%A0%88%E7%BB%93%E6%9E%84">模拟栈结构</a></p>
+
+<p id="%E9%98%9F%E5%88%97-toc" style="margin-left:80px;"><a href="#%E9%98%9F%E5%88%97">队列</a></p>
+
+<p id="%E9%80%92%E5%BD%92%E9%81%8D%E5%8E%86%E7%9B%AE%E5%BD%95-toc" style="margin-left:80px;"><a href="#%E9%80%92%E5%BD%92%E9%81%8D%E5%8E%86%E7%9B%AE%E5%BD%95">递归遍历目录</a></p>
+
+<p id="%E6%A0%88%E6%A8%A1%E6%8B%9F%E9%80%92%E5%BD%92%E9%81%8D%E5%8E%86%E7%9B%AE%E5%BD%95%EF%BC%88%E6%B7%B1%E5%BA%A6%E9%81%8D%E5%8E%86%EF%BC%89-toc" style="margin-left:80px;"><a href="#%E6%A0%88%E6%A8%A1%E6%8B%9F%E9%80%92%E5%BD%92%E9%81%8D%E5%8E%86%E7%9B%AE%E5%BD%95%EF%BC%88%E6%B7%B1%E5%BA%A6%E9%81%8D%E5%8E%86%EF%BC%89">栈模拟递归遍历目录（深度遍历）</a></p>
+
+<p id="%E9%98%9F%E5%88%97%E6%A8%A1%E6%8B%9F%E9%80%92%E5%BD%92%EF%BC%88%E5%B9%BF%E5%BA%A6%E9%81%8D%E5%8E%86%EF%BC%89-toc" style="margin-left:80px;"><a href="#%E9%98%9F%E5%88%97%E6%A8%A1%E6%8B%9F%E9%80%92%E5%BD%92%EF%BC%88%E5%B9%BF%E5%BA%A6%E9%81%8D%E5%8E%86%EF%BC%89">队列模拟递归（广度遍历）</a></p>
+
+<hr id="hr-toc" /><h2 id="%E9%80%92%E5%BD%92">递归</h2>
+
+<p>递归调用：一个函数，如果调用了自身，这种调用称为递归调用，一个会调用自身的函数称为递归函数</p>
+
+<p>凡是循环能做的，递归都能做</p>
+
+<p> </p>
+
+<h3 id="%E5%86%99%E9%80%92%E5%BD%92%E6%96%B9%E5%BC%8F%EF%BC%9A">写递归方式：</h3>
+
+<ol><li>写出临界条件</li>
+    <li>找这一次和上一次的关系</li>
+    <li>假设当前函数已经能用，调用自身计算上一次的结果，再求出本次的结果</li>
+</ol><p><strong>输入n，求1+2+3+......+n的值</strong></p>
+
+<p><strong>方法1：</strong></p>
+
+<pre class="has">
+<code class="language-python">a = int(input("请输入一个数："))
+b = 0
+def fun(a,b):
+    if a&gt;0:
+        b += a
+        a = a-1
+        fun(a,b)
+    else:
+        print(b)
+
+fun(a,b)</code></pre>
+
+<p><strong>方法2：</strong></p>
+
+<p><strong>相当于fun(1)+2 = fun(2)</strong></p>
+
+<p><strong>fun(2) + 3 = fun(3)</strong></p>
+
+<p><strong>fun(3) + 4 = fun(4)</strong></p>
+
+<p><strong>fun(4) + 5 = fun(5)</strong></p>
+
+<pre class="has">
+<code class="language-python">a = int(input("请输入一个数："))
+def fun(a):
+    if(a==1):
+        return a
+    return a + fun(a-1)
+
+print(fun(a))</code></pre>
+
+<p> </p>
+
+<h3 id="%E6%A8%A1%E6%8B%9F%E6%A0%88%E7%BB%93%E6%9E%84">模拟栈结构</h3>
+
+<p><strong>先进后出</strong></p>
+
+<p style="text-align:center;"><img alt="" class="has" height="350" src="https://img-blog.csdnimg.cn/20190606170153911.png" width="220" /></p>
+
+<pre class="has">
+<code class="language-python">#模拟栈结构
+stack = []
+
+#压栈（向栈中存入数据）
+stack.append('a')
+stack.append('b')
+stack.append('c')
+print(stack)
+
+#出栈（在栈里取数据）
+res = stack.pop()
+print(res)
+print(stack)
+res = stack.pop()
+print(res)
+print(stack)</code></pre>
+
+<p style="text-align:center;"><img alt="" class="has" height="136" src="https://img-blog.csdnimg.cn/20190606144732535.png" width="256" /></p>
+
+<p> </p>
+
+<h3 id="%E9%98%9F%E5%88%97">队列</h3>
+
+<p><strong>先进先出</strong></p>
+
+<pre class="has">
+<code class="language-python">import collections
+
+#创建一个队列
+queue = collections.deque()
+print(queue)
+
+#进队（数据存入队列）
+queue.append('a')
+queue.append('b')
+queue.append('c')
+print(queue)
+
+#出队（在队列里取数据）
+res = queue.popleft()
+print(res)
+print(queue)
+res = queue.popleft()
+print(res)
+print(queue)</code></pre>
+
+<p style="text-align:center;"><img alt="" class="has" height="199" src="https://img-blog.csdnimg.cn/20190606150638205.png" width="356" /></p>
+
+<h3 id="%E9%80%92%E5%BD%92%E9%81%8D%E5%8E%86%E7%9B%AE%E5%BD%95">递归遍历目录</h3>
+
+<pre class="has">
+<code class="language-python">import os
+
+#递归调用得到当前目录下所有文件
+def get(path):
+    #得到当前目录下的文件列表
+    file = os.listdir(path)
+    #处理每一个文件
+    for name in file:
+        #判断文件是否是目录，要使用绝对路径
+        if os.path.isdir(os.path.join(path,name)):
+            print("目录：",name)
+            get(os.path.join(path,name))
+        else:
+            print("普通文件：",name)
+get(r"F:\pycharm")</code></pre>
+
+<p style="text-align:center;"><img alt="" class="has" height="236" src="https://img-blog.csdnimg.cn/20190606152316373.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2MTcxMjg3,size_16,color_FFFFFF,t_70" width="365" /></p>
+
+<pre class="has">
+<code class="language-python">import os
+
+#递归调用得到当前目录下所有文件
+def get(path,sp):
+    #得到当前目录下的文件列表
+    file = os.listdir(path)
+    #处理每一个文件
+    sp += "   "
+    for name in file:
+        #判断文件是否是目录，要使用绝对路径
+        if os.path.isdir(os.path.join(path,name)):
+            print(sp+"目录：",name)
+            get(os.path.join(path,name),sp)
+        else:
+            print(sp+"普通文件：",name)
+get(r"F:\pycharm","")</code></pre>
+
+<p style="text-align:center;"><img alt="" class="has" height="230" src="https://img-blog.csdnimg.cn/20190606152950641.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2MTcxMjg3,size_16,color_FFFFFF,t_70" width="438" /></p>
+
+<p> </p>
+
+<h3 id="%E6%A0%88%E6%A8%A1%E6%8B%9F%E9%80%92%E5%BD%92%E9%81%8D%E5%8E%86%E7%9B%AE%E5%BD%95%EF%BC%88%E6%B7%B1%E5%BA%A6%E9%81%8D%E5%8E%86%EF%BC%89">栈模拟递归遍历目录（深度遍历）</h3>
+
+<p>深度优先遍历(Depth-First Traversal)</p>
+
+<p>假设给定图G的初态是所有顶点均未曾访问过。在G中任选一顶点v为初始出发点(源点)，则深度优先遍历可定义如下:首先访问出发点v，并将其标记为已访问过;然后依次从v出发搜索v的每个邻接点w。若w未曾访问过，则以w为新的出发点继续进行深度优先遍历，直至图中所有和源点v有路径相通的顶点(亦称为从源点可达的顶点)均已被访问为止。若此时图中仍有未访问的顶点，则另选一个尚未访问的顶点作为新的源点重复上述过程，直至图中所有顶点均已被访问为止。</p>
+
+<p>图的深度优先遍历类似于树的前序遍历。采用的搜索方法的特点是尽可能先对纵深方向进行搜索。这种搜索方法称为深度优先搜索(Depth-First Search)。相应地，用此方法遍历图就很自然地称之为图的深度优先遍历。</p>
+
+<p>设x是当前被访问顶点，在对x做过访问标记后，选择一条从x出发的未检测过的边(x，y)。若发现顶点y已访问过，则重新选择另一条从x出发的未检测过的边，否则沿边(x，y)到达未曾访问过的y，对y访问并将其标记为已访问过;然后从y开始搜索，直到搜索完从y出发的所有路径，即访问完所有从y出发可达的顶点之后，才回溯到顶点x，并且再选择一条从x出发的未检测过的边。上述过程直至从x出发的所有边都已检测过为止。此时，若x不是源点，则回溯到在x之前被访问过的顶点;否则图中所有和源点有路径相通的顶点(即从源点可达的所有顶点)都已被访问过，若图G是连通图，则遍历过程结束，否则继续选择一个尚未被访问的顶点作为新的顶点，继续遍历。</p>
+
+<p style="text-align:center;"><img alt="" class="has" src="https://img-blog.csdnimg.cn/20190606164047561.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2MTcxMjg3,size_16,color_FFFFFF,t_70" /></p>
+
+<pre class="has">
+<code class="language-python">import os
+def get(path):
+    stack = []
+    stack.append(path)
+    #处理栈，当栈为空时结束循环
+    while len(stack) != 0:
+        #从栈里取出数据
+        dirpath = stack.pop()
+        #目录下所有文件
+        dirlist = os.listdir(dirpath)
+        #print(dirlist)
+        #处理每一个文件，如果是普通文件打印出来，如果是目录，则将该目录地址再压栈
+        for filename in dirlist:
+            filepath = os.path.join(dirpath,filename)
+            if os.path.isdir(filepath):
+                #是目录，压栈
+                print("目录：",filename)
+                stack.append(filepath)
+            else:
+                #不是目录，打印
+                print("普通文件：",filename)
+
+get(r"F:\pycharm")</code></pre>
+
+<p style="text-align:center;"><img alt="" class="has" height="249" src="https://img-blog.csdnimg.cn/20190606161823773.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2MTcxMjg3,size_16,color_FFFFFF,t_70" width="481" /></p>
+
+<p> </p>
+
+<h3 id="%E9%98%9F%E5%88%97%E6%A8%A1%E6%8B%9F%E9%80%92%E5%BD%92%EF%BC%88%E5%B9%BF%E5%BA%A6%E9%81%8D%E5%8E%86%EF%BC%89">队列模拟递归（广度遍历）</h3>
+
+<p style="text-align:center;"><img alt="" class="has" src="https://img-blog.csdnimg.cn/20190606164400366.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2MTcxMjg3,size_16,color_FFFFFF,t_70" /></p>
+
+<pre class="has">
+<code class="language-python">import os
+import collections
+def get(path):
+    queue = collections.deque()
+    #进队
+    queue.append(path)
+
+    while len(queue) != 0:
+        #出队数据
+        dirpath = queue.popleft()
+
+        #找出所有的文件
+        filelist = os.listdir(dirpath)
+        for filename in filelist:
+            #绝对路径
+            filepath = os.path.join(dirpath, filename)
+            if os.path.isdir(filepath):
+                # 是目录，压栈
+                print("目录：", filename)
+                queue.append(filepath)
+            else:
+                # 不是目录，打印
+                print("普通文件：", filename)
+
+get(r"F:\pycharm")</code></pre>
+
+<p style="text-align:center;"><img alt="" class="has" height="254" src="https://img-blog.csdnimg.cn/20190606165500290.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2MTcxMjg3,size_16,color_FFFFFF,t_70" width="483" /></p>
+
+<p> </p>
+
+<p> </p>
+
+<p><strong>一起学习，一起进步 -.- ，如有错误，可以发评论</strong> </p>
+</div><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">空城机</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://yoursite.com/2019/06/06/python%EF%BC%88%E5%8D%81%E4%B8%80%EF%BC%89%E2%80%94%E2%80%94%E9%80%92%E5%BD%92%E3%80%81%E6%A0%88%E7%BB%93%E6%9E%84%E3%80%81%E9%98%9F%E5%88%97%E3%80%81%E6%B7%B1%E5%BA%A6%E9%81%8D%E5%8E%86%E3%80%81%E5%B9%BF%E5%BA%A6%E9%81%8D%E5%8E%86/">http://yoursite.com/2019/06/06/python%EF%BC%88%E5%8D%81%E4%B8%80%EF%BC%89%E2%80%94%E2%80%94%E9%80%92%E5%BD%92%E3%80%81%E6%A0%88%E7%BB%93%E6%9E%84%E3%80%81%E9%98%9F%E5%88%97%E3%80%81%E6%B7%B1%E5%BA%A6%E9%81%8D%E5%8E%86%E3%80%81%E5%B9%BF%E5%BA%A6%E9%81%8D%E5%8E%86/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://yoursite.com" target="_blank">空城机</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/python/">python</a></div><div class="post_share"><div class="social-share" data-image="https://i.loli.net/2019/07/21/5d33d5dc1531213134.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css"/><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js"></script></div></div><div class="post-reward"><a class="reward-button button--primary button--animated"> <i class="fa fa-qrcode"></i> 打赏<div class="reward-main"><ul class="reward-all"><li class="reward-item"><img class="post-qr-code__img" src="/img/wechat.jpg" alt="微信"/><div class="post-qr-code__desc">微信</div></li><li class="reward-item"><img class="post-qr-code__img" src="/img/alipay.jpg" alt="支付寶"/><div class="post-qr-code__desc">支付寶</div></li></ul></div></a></div><nav class="pagination_post" id="pagination"><div class="prev-post pull_left"><a href="/2019/06/07/python%EF%BC%88%E5%8D%81%E4%BA%8C%EF%BC%89%E2%80%94%E2%80%94%E6%A8%A1%E5%9D%97%E4%B8%80%EF%BC%88time%E6%A8%A1%E5%9D%97,datetime%E6%A8%A1%E5%9D%97,calendar%E6%A8%A1%E5%9D%97%EF%BC%89/"><img class="prev_cover" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">python（十二）——模块一（time模块,datetime模块,calendar模块）</div></div></a></div><div class="next-post pull_right"><a href="/2019/06/06/python%E4%B8%AD%E7%9A%84@/"><img class="next_cover" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">python中的@</div></div></a></div></nav><div class="relatedPosts"><div class="relatedPosts_headline"><i class="fa fa-fw fa-thumbs-up" aria-hidden="true"></i><span> 相关推荐</span></div><div class="relatedPosts_list"><div class="relatedPosts_item"><a href="/2019/06/16/python（十六）——对象属性与类属性，运算符重载，发送邮件程序/" title="python（十六）——对象属性与类属性，运算符重载，发送邮件程序"><img class="relatedPosts_cover" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg"><div class="relatedPosts_main is-center"><div class="relatedPosts_date"><i class="fa fa-calendar fa-fw" aria-hidden="true"></i> 2019-06-16</div><div class="relatedPosts_title">python（十六）——对象属性与类属性，运算符重载，发送邮件程序</div></div></a></div><div class="relatedPosts_item"><a href="/2019/05/02/python 中没有i++或者i--/" title="python 中没有i++或者i--"><img class="relatedPosts_cover" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg"><div class="relatedPosts_main is-center"><div class="relatedPosts_date"><i class="fa fa-calendar fa-fw" aria-hidden="true"></i> 2019-05-02</div><div class="relatedPosts_title">python 中没有i++或者i--</div></div></a></div><div class="relatedPosts_item"><a href="/2019/07/12/python（二十五）——JSON、抓取Ajas请求数据/" title="python（二十五）——JSON、抓取Ajas请求数据"><img class="relatedPosts_cover" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg"><div class="relatedPosts_main is-center"><div class="relatedPosts_date"><i class="fa fa-calendar fa-fw" aria-hidden="true"></i> 2019-07-12</div><div class="relatedPosts_title">python（二十五）——JSON、抓取Ajas请求数据</div></div></a></div><div class="relatedPosts_item"><a href="/2019/08/03/python（三十）——从数据库查询应用、MongoDB数据库/" title="python（三十）——从数据库查询应用、MongoDB数据库"><img class="relatedPosts_cover" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg"><div class="relatedPosts_main is-center"><div class="relatedPosts_date"><i class="fa fa-calendar fa-fw" aria-hidden="true"></i> 2019-08-03</div><div class="relatedPosts_title">python（三十）——从数据库查询应用、MongoDB数据库</div></div></a></div><div class="relatedPosts_item"><a href="/2019/04/20/python（二）——python安装与配置/" title="python（二）——python安装与配置"><img class="relatedPosts_cover" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg"><div class="relatedPosts_main is-center"><div class="relatedPosts_date"><i class="fa fa-calendar fa-fw" aria-hidden="true"></i> 2019-04-20</div><div class="relatedPosts_title">python（二）——python安装与配置</div></div></a></div><div class="relatedPosts_item"><a href="/2019/06/08/python（十三）——模块二（模块概述、模块优点、__name__属性）/" title="python（十三）——模块二（模块概述、模块优点、__name__属性）"><img class="relatedPosts_cover" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg"><div class="relatedPosts_main is-center"><div class="relatedPosts_date"><i class="fa fa-calendar fa-fw" aria-hidden="true"></i> 2019-06-08</div><div class="relatedPosts_title">python（十三）——模块二（模块概述、模块优点、__name__属性）</div></div></a></div></div><div class="clear_both"></div></div></article></main><footer id="footer" data-type="color"><div id="footer-wrap"><div class="copyright">&copy;2018 - 2020 By 空城机</div><div class="framework-info"><span>驱动 </span><a href="https://hexo.io" target="_blank" rel="noopener"><span>Hexo</span></a><span class="footer-separator">|</span><span>主题 </span><a href="https://github.com/jerryc127/hexo-theme-butterfly" target="_blank" rel="noopener"><span>Butterfly</span></a></div></div></footer></div><section class="rightside" id="rightside"><div id="rightside-config-hide"><i class="fa fa-book" id="readmode" title="阅读模式"></i><i class="fa fa-plus" id="font_plus" title="放大字体"></i><i class="fa fa-minus" id="font_minus" title="缩小字体"></i><a class="translate_chn_to_cht" id="translateLink" href="javascript:translatePage();" title="简繁转换" target="_self">繁</a><i class="darkmode fa fa-moon-o" id="darkmode" title="夜间模式"></i></div><div id="rightside-config-show"><div id="rightside_config" title="设置"><i class="fa fa-cog" aria-hidden="true"></i></div><i class="fa fa-list-ul close" id="mobile-toc-button" title="目录" aria-hidden="true"></i><i class="fa fa-arrow-up" id="go-up" title="回到顶部" aria-hidden="true"></i></div></section><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page@latest/instantpage.min.js" type="module"></script></body></html>

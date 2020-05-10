@@ -1,0 +1,699 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>JavaScript（三十九）——鼠标滚轮、滚动窗口制作 | 空城机</title><meta name="description" content="鼠标滚轮事件  滚轮就是鼠标上的滚轮，它滚动时触发的事件   oDiv.onmousewheel &#x3D; function(event){     oDiv.innerHTML &#x3D; event.wheelDelta; }  onmousewheel就是鼠标滚动事件，mouse鼠标，wheel就是轮子  event参数最重要的事就是event.wheelDelta属性，表示了滚动的方向，这是浏览器的"><meta name="keywords" content="javascript 前端"><meta name="author" content="空城机"><meta name="copyright" content="空城机"><meta name="format-detection" content="telephone=no"><link rel="shortcut icon" href="/img/favicon.png"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="dns-prefetch" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="https://fonts.googleapis.com" crossorigin="crossorigin"/><link rel="dns-prefetch" href="https://fonts.googleapis.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="dns-prefetch" href="//busuanzi.ibruce.info"/><meta name="twitter:card" content="summary"><meta name="twitter:title" content="JavaScript（三十九）——鼠标滚轮、滚动窗口制作"><meta name="twitter:description" content="鼠标滚轮事件  滚轮就是鼠标上的滚轮，它滚动时触发的事件   oDiv.onmousewheel &#x3D; function(event){     oDiv.innerHTML &#x3D; event.wheelDelta; }  onmousewheel就是鼠标滚动事件，mouse鼠标，wheel就是轮子  event参数最重要的事就是event.wheelDelta属性，表示了滚动的方向，这是浏览器的"><meta name="twitter:image" content="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg"><meta property="og:type" content="article"><meta property="og:title" content="JavaScript（三十九）——鼠标滚轮、滚动窗口制作"><meta property="og:url" content="http://yoursite.com/2020/02/29/JavaScript%EF%BC%88%E4%B8%89%E5%8D%81%E4%B9%9D%EF%BC%89%E2%80%94%E2%80%94%E9%BC%A0%E6%A0%87%E6%BB%9A%E8%BD%AE%E3%80%81%E6%BB%9A%E5%8A%A8%E7%AA%97%E5%8F%A3%E5%88%B6%E4%BD%9C/"><meta property="og:site_name" content="空城机"><meta property="og:description" content="鼠标滚轮事件  滚轮就是鼠标上的滚轮，它滚动时触发的事件   oDiv.onmousewheel &#x3D; function(event){     oDiv.innerHTML &#x3D; event.wheelDelta; }  onmousewheel就是鼠标滚动事件，mouse鼠标，wheel就是轮子  event参数最重要的事就是event.wheelDelta属性，表示了滚动的方向，这是浏览器的"><meta property="og:image" content="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg"><meta property="article:published_time" content="2020-02-29T10:28:57.000Z"><meta property="article:modified_time" content="2020-05-10T11:32:52.204Z"><script src="https://cdn.jsdelivr.net/npm/js-cookie/dist/js.cookie.min.js"></script><script>var autoChangeMode = '1'
+var t = Cookies.get("theme")
+if (autoChangeMode == '1'){
+  var isDarkMode = window.matchMedia("(prefers-color-scheme: dark)").matches
+  var isLightMode = window.matchMedia("(prefers-color-scheme: light)").matches
+  var isNotSpecified = window.matchMedia("(prefers-color-scheme: no-preference)").matches
+  var hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+  if (t === undefined){
+    if (isLightMode) activateLightMode()
+    else if (isDarkMode) activateDarkMode()
+    else if (isNotSpecified || hasNoSupport){
+      console.log('You specified no preference for a color scheme or your browser does not support it. I Schedule dark mode during night time.')
+      var now = new Date()
+      var hour = now.getHours()
+      var isNight = hour < 6 || hour >= 18
+      isNight ? activateDarkMode() : activateLightMode()
+  }
+  } else if (t == 'light') activateLightMode()
+  else activateDarkMode()
+
+} else if (autoChangeMode == '2'){
+  now = new Date();
+  hour = now.getHours();
+  isNight = hour < 6 || hour >= 18
+  if(t === undefined) isNight? activateDarkMode() : activateLightMode()
+  else if (t === 'light') activateLightMode()
+  else activateDarkMode() 
+} else {
+  if ( t == 'dark' ) activateDarkMode()
+  else if ( t == 'light') activateLightMode()
+}
+
+function activateDarkMode(){
+  document.documentElement.setAttribute('data-theme', 'dark')
+  if (document.querySelector('meta[name="theme-color"]') !== null){
+    document.querySelector('meta[name="theme-color"]').setAttribute('content','#000')
+  }
+}
+function activateLightMode(){
+  document.documentElement.setAttribute('data-theme', 'light')
+  if (document.querySelector('meta[name="theme-color"]') !== null){
+  document.querySelector('meta[name="theme-color"]').setAttribute('content','#fff')
+  }
+}</script><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@latest/css/font-awesome.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css"><link rel="canonical" href="http://yoursite.com/2020/02/29/JavaScript%EF%BC%88%E4%B8%89%E5%8D%81%E4%B9%9D%EF%BC%89%E2%80%94%E2%80%94%E9%BC%A0%E6%A0%87%E6%BB%9A%E8%BD%AE%E3%80%81%E6%BB%9A%E5%8A%A8%E7%AA%97%E5%8F%A3%E5%88%B6%E4%BD%9C/"><link rel="prev" title="JavaScript学习（四十）——模拟图片验证" href="http://yoursite.com/2020/03/01/JavaScript%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%9B%9B%E5%8D%81%EF%BC%89%E2%80%94%E2%80%94%E6%A8%A1%E6%8B%9F%E5%9B%BE%E7%89%87%E9%AA%8C%E8%AF%81/"><link rel="next" title="JavaScript 知识巩固——内存、调用函数、回调函数" href="http://yoursite.com/2020/02/26/JavaScript%20%E7%9F%A5%E8%AF%86%E5%B7%A9%E5%9B%BA%E2%80%94%E2%80%94%E5%86%85%E5%AD%98%E3%80%81%E8%B0%83%E7%94%A8%E5%87%BD%E6%95%B0%E3%80%81%E5%9B%9E%E8%B0%83%E5%87%BD%E6%95%B0/"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Titillium+Web"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: {"defaultEncoding":2,"translateDelay":0,"cookieDomain":"https://xxx/","msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"簡"},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  bookmark: {
+    message_prev: '按',
+    message_next: '键将本页加入书签'
+  },
+  runtime_unit: '天',
+  runtime: true,
+  copyright: undefined,
+  ClickShowText: undefined,
+  medium_zoom: false,
+  fancybox: true,
+  Snackbar: undefined,
+  baiduPush: false,
+  highlightCopy: true,
+  highlightLang: true,
+  highlightShrink: 'false',
+  isFontAwesomeV5: false,
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+  
+}</script><script>var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isSidebar: true  
+  }</script><noscript><style>
+#page-header {
+  opacity: 1
+}
+.justified-gallery img{
+  opacity: 1
+}
+</style></noscript><meta name="generator" content="Hexo 4.2.0"></head><body><div id="mobile-sidebar"><div id="menu_mask"></div><div id="mobile-sidebar-menus"><div class="mobile_author_icon"><img class="avatar-img" src="/img/avatar.png" onerror="onerror=null;src='/img/tou5.jpg'" alt="avatar"/></div><div class="mobile_post_data"><div class="mobile_data_item is-center"><div class="mobile_data_link"><a href="/archives/"><div class="headline">文章</div><div class="length_num">154</div></a></div></div><div class="mobile_data_item is-center">      <div class="mobile_data_link"><a href="/tags/"><div class="headline">标签</div><div class="length_num">45</div></a></div></div><div class="mobile_data_item is-center">     <div class="mobile_data_link"><a href="/categories/"><div class="headline">分类</div><div class="length_num">15</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fa fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fa fa-heart"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page"><i class="fa-fw fa fa-list" aria-hidden="true"></i><span> 清单</span><i class="fa fa-chevron-down menus-expand" aria-hidden="true"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/music/"><i class="fa-fw fa fa-music"></i><span> 音乐</span></a></li><li><a class="site-page" href="/movies/"><i class="fa-fw fa fa-film"></i><span> 电影</span></a></li></ul></div></div></div></div><i class="fa fa-arrow-right on" id="toggle-sidebar" aria-hidden="true">     </i><div id="sidebar"><div class="sidebar-toc"><div class="sidebar-toc__title">目录</div><div class="sidebar-toc__progress"><span class="progress-notice">你已经读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar">     </div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#"><span class="toc-number">1.</span> <span class="toc-text">鼠标滚轮事件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#"><span class="toc-number">1.1.</span> <span class="toc-text">制作一个新闻滚动页面</span></a></li></ol></li></ol></div></div></div><div id="body-wrap"><div class="post-bg" id="nav" style="background-image: url(https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg)"><div id="page-header"><span class="pull_left" id="blog_name"><a class="blog_title" id="site-name" href="/">空城机</a></span><span class="pull_right menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fa fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fa fa-heart"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page"><i class="fa-fw fa fa-list" aria-hidden="true"></i><span> 清单</span><i class="fa fa-chevron-down menus-expand" aria-hidden="true"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/music/"><i class="fa-fw fa fa-music"></i><span> 音乐</span></a></li><li><a class="site-page" href="/movies/"><i class="fa-fw fa fa-film"></i><span> 电影</span></a></li></ul></div></div><span class="toggle-menu close"><a class="site-page"><i class="fa fa-bars fa-fw" aria-hidden="true"></i></a></span></span></div><div id="post-info"><div id="post-title"><div class="posttitle">JavaScript（三十九）——鼠标滚轮、滚动窗口制作</div></div><div id="post-meta"><div class="meta-firstline"><time class="post-meta__date"><span class="post-meta__date-created" title="发表于 2020-02-29 18:28:57"><i class="fa fa-calendar" aria-hidden="true"></i> 发表于 2020-02-29</span><span class="post-meta__separator">|</span><span class="post-meta__date-updated" title="更新于 2020-05-10 19:32:52"><i class="fa fa-history" aria-hidden="true"></i> 更新于 2020-05-10</span></time><span class="post-meta__categories"><span class="post-meta__separator">|</span><i class="fa fa-inbox post-meta__icon" aria-hidden="true"></i><a class="post-meta__categories" href="/categories/JavaScript/">JavaScript</a></span></div><div class="meta-secondline"> </div><div class="meta-thirdline"><span class="post-meta-pv-cv"><i class="fa fa-eye post-meta__icon" aria-hidden="true"> </i><span>阅读量:</span><span id="busuanzi_value_page_pv"></span></span><span class="post-meta-commentcount"></span></div></div></div></div><main class="layout_post" id="content-inner"><article id="post"><div class="post-content" id="article-container"><a id="more"></a>
+
+<h2>鼠标滚轮事件</h2>
+
+<p>滚轮就是鼠标上的滚轮，它滚动时触发的事件</p>
+
+<pre>
+<code class="language-javascript">oDiv.onmousewheel = function(event){
+    oDiv.innerHTML = event.wheelDelta;
+}</code></pre>
+
+<p>onmousewheel就是鼠标滚动事件，mouse鼠标，wheel就是轮子</p>
+
+<p>event参数最重要的事就是event.wheelDelta属性，表示了滚动的方向，这是浏览器的规定：</p>
+
+<ul><li>鼠标往上滚：120</li>
+    <li>鼠标往下滚：-120</li>
+</ul><p> </p>
+
+<p>火狐浏览器不兼容,火狐使用自己的专用事件DOMMouseScroll ,并且这个事件只能通过标准的DOM2级的事件绑定方式添加。</p>
+
+<p>火狐添加的事件,是它自己的专门]事件DOMMouseScroll ,表示滚动方向的事件的属性叫做event.detail.<br />
+detail就是细节的意思。反着的,滚动方向往上，-3 ;滚动方向往下, 3。</p>
+
+<p>例子：</p>
+
+<pre>
+<code class="language-html">&lt;body&gt;
+        &lt;div style="width:300px;height:300px;background-color:yellow;" class="box"&gt;
+
+        &lt;/div&gt;
+        &lt;script&gt;
+            var box = document.getElementsByClassName("box")[0];
+
+            box.onmousewheel = function(e){
+                var event = e || window.event;
+                box.innerHTML = event.wheelDelta;
+            }
+        &lt;/script&gt;
+    &lt;/body&gt;</code></pre>
+
+<p>效果：</p>
+
+<p style="text-align:center;"><img alt="" height="415" src="https://img-blog.csdnimg.cn/20200229141121560.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2MTcxMjg3,size_16,color_FFFFFF,t_70" width="536" /></p>
+
+<p> </p>
+
+<h3>制作一个新闻滚动页面</h3>
+
+<p><img alt="" height="163" src="https://img-blog.csdnimg.cn/20200229144308149.png" width="560" /></p>
+
+<pre>
+<code class="language-html">&lt;head&gt;
+        &lt;meta charset="utf-8"&gt;
+        &lt;title&gt;&lt;/title&gt;
+        &lt;style&gt;
+            *{
+                margin: 0;
+                padding: 0;
+            }
+            .box{
+                width: 500px;
+                height: 500px;
+                border: 1px solid yellowgreen;
+                position: relative;
+                margin: 20px auto;
+            }
+            .bar{
+                height: 500px;
+                width: 20px;
+                background-color: gray;
+                position: absolute;
+                right: 0;
+                top: 0;
+            }
+            .content{
+                padding: 20px;
+                position: absolute;
+                top: 0;
+                left: 0;
+            }
+            .slidebar{
+                width: 20px;
+                height: 40px;
+                background-color: orange;
+                position: absolute;
+                right: 0;
+                top: 0;
+            }
+        &lt;/style&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+        &lt;div class="box"&gt;
+            &lt;div class="content"&gt;
+                &lt;p&gt;
+为啥突然要写这么一个题目呢？
+
+　　因为职业并不是HRor猎头的倪叔，过去的2年一直都在帮朋友找工作，而其中很多人都是拥有互联网大厂背景的。
+
+　　当然，倪叔的朋友们最终都找到了下家，但除开个别在企业核心岗位，掌握稀缺资源的幸运儿之外，对于大多数人来说：
+
+　　一方面，过程普遍都很漫长，互联网进入寒冬之后，家家都在精简人员，招聘的需求相当有限，核心岗位更是一坑难求，因而当大家跳出来的时候，发现远没有想象中那么受欢迎；
+
+　　另一方面，最终的归属，无论从待遇，还是公司发展，还是团队人员质素，相比于前东家来说也谈不上理想，往往只能作为个人在这两年动荡时期的过渡选择。而且，薪资待遇上大部分都只能做到平薪调动，这个时节还能涨薪的也是少数。
+
+　　在过去的两年中，对于身边还在大厂工作的朋友，倪叔给出的工作建议都是:能不出来就尽量不要出来，在整个行业的下行时期，大厂是最好的避风港。
+
+
+　　但建议归建议，整个19年发生工作变动的朋友还是不少的。因为整个互联网行业下行的变动必然深刻的影响着每一家公司，创业公司倒闭裁员自是不在话下，而身处大厂，虽然未必有裁员优化的威胁，但市场变化对行业巨头的业绩影响是惊人，而要对抗这种影响，就势必造成内部压强的放大：难以完成的业绩目标，极其严苛的考核要求，长期的熬夜加班等等都会给个体施加巨大的压力，再结合上长期以来的上升空间受限，人事关系复杂等等老问题就非常容易促使人做出离职的决定，但结合外部环境来看，这时候决定往往不是好的选择。
+
+　　原本以为熬过了2019年就是胜利，哪知道2020年又是一个“地狱模式”的开局，很多与线下有关的业务都面临冲击，再加上财年末的末尾淘汰和组织架构调整带来的人事变动，又造成了新一波的人员变动。
+
+　　就在这几天，倪叔又开始接到一些朋友的电话，说想通过倪叔看看外面的机会，然后倪叔又开始balabala，苦口婆心的劝对方不要乱动，保住现在的工作……而在接到了第四通类似主题的电话之后，倪叔觉得有必要通过一篇文章来让大家意识到：
+
+　　虽然大家都是大厂员工，都非常优秀，但这一次外界的环境真的不同了，企业和人才之间的供需关系发生根本性的改变，以前是企业需要人才，现在是人才更需要企业的历史时期。
+
+　　1
+
+　　为了加深大家对“现在人才更需要企业”这个结论的理解，说几个倪叔自己的亲身经历：
+
+　　在19年，一个有BAT背景，后在独角兽担任高级总监的朋友，因为家庭原因要换城市，让倪叔帮忙找工作，而让倪叔没有想到的是：当倪叔把简历发送给某厂HR的时候，对方只看了30秒，就说：不要！
+
+　　为此倪叔差点跟这个HR打起来，但最终HR给出了一个让倪叔浑身发凉又不得不接受的答案：他已经超过35岁了，这是我们的硬指标……
+
+
+　　同样的19年，倪叔的挚友，一个拥有外企+BAT背景，无论是个人能力还是职业操守都非常出众的高级市场人才，因为家庭的原因要换城市，要换工作，在帮她沟通意向职位，HR告诉我的却是：不是说公司出不起这100万的年薪，而是要发挥一个年薪百万的市场人员的价值，至少要对应2个亿的市场预算，现在这个环境公司拿不出2个亿市场预算……
+
+　　还有朋友，明明已经有了十几年的工作经验，却因为当年没有本科文凭被拒绝，这在过去根本就不是问题，但在19年，成为了企业刷掉他简历的主因。
+
+　　这几年，一直在写互联网观察的倪叔算是见证了整个互联网行业的剧烈变化：
+
+　　在15-16年，整个互联网资本泡沫上升到顶峰的时候，你只要亮出一张互联网大厂的工牌或许就可以换得一笔不菲的融资，出任CEO，走上人生巅峰；
+
+　　17年，当整个大势还在的时候，大厂资深员工跳槽也是年薪百万起步，城市金领光芒熠熠生辉；
+
+　　但在泡沫破灭18-19年，一切都在回归原点，而曾经天之骄子的大厂员工也逐渐显露出城市打工仔的底色，顶着老婆孩子房贷的压力，只求不要被公司优化。
+
+　　短短几年时间，一切天翻地覆。
+
+　　在只要买房就能赚钱的泡沫时代，互联网人会说老板不要跟我谈理想，我的理想就是不上班；但如今疫情一来，四面八方传来的都是企业停工停产，降薪裁员声音的时候，互联网人们才忽然发现：我们中的大部分人没有了工作，都是活不下去的。
+
+　　所以，作为曾经的互联网大厂员工，现在正在创业苦海中浮沉的倪叔才想要给互联网大厂的员工们写下这句真心话：
+
+　　2020年，别瞎折腾！
+
+　　2
+
+　　最近一个让倪叔帮忙找工作的是鹿小姐（化名），她的故事很典型也很可惜，在征得她本人同意后，也拿出来跟大家分享一下：
+
+　　鹿小姐原本就职于某互联网大厂，是一个P7的设计师，因为从头到尾参与了某某生鲜的创立过程，因而颇为被业内看重。
+
+　　19年下半年，她冲刺P8失败，有阵子心情低落，就这个时候有外部的创业公司CEO趁虚而入，多次和她联系要求加盟，许诺给了她一个高官职位和很多公司的期权，也对公司未来描绘了一个非常诱人的上市计划，她原本是拒绝的，但经不起对方多番的诱惑，她最终选择了加盟该公司。
+
+　　然后狗血的是，鹿小姐加盟不到3个月，公司就因为B轮融资失败，宣布解散。而原本该高管承诺给鹿小姐的一切回报与美好未来也就都烟消云散。
+
+　　而更尴尬的是，从大厂离职才短短三个月就又要找工作，鹿小姐因为加盟直接竞品的公司，有泄露原部门机密的嫌疑，暂时也不能返回原有的大厂；在杭州又找不到同等薪资水平的工作，摆在面前的选择就只要：要么就奔赴一线城市去找匹配的工作机会，要么就接受薪水打折先去创业公司历练。
+
+　　和倪叔聊起当初的选择，鹿小姐也是悔不当初，直言是受了对方CEO的欺骗，觉得对方怎么说也是一个江湖上小名气的人物，公司又有知名基金的支持，怎么看都不像是三个月就倒闭的公司，哪知道会是这样……
+
+
+　　作为曾经的大厂员工，我很理解鹿小姐为什么会上当受骗，总体来说有二个大的原因：
+
+　　第一个，过分关注自己手上的工作，而对外部的大环境不够了解，尤其是对资本环境不了解。
+
+　　这个话题如果想要完全说明白，可能需要三天三夜，在这里简单的说明就是，鹿小姐们应该要明白两个问题：第一.互联网以及它所对应的新经济模式是存在泡沫的；第二.这几年总体发生的变化就是：互联网模式越来越难找到接盘侠了。
+
+　　先说第一个问题：泡沫。互联网行业之所以被称之为新经济，因为其逻辑本身是反传统经济的，不同于传统企业，推出产品-盈利-扩大再生产的慢速发展模式，早年的互联网公司一上来推行免费的产品模式，然后通过免费的产品聚合流量以后再嫁接成熟的商业模式，最终实现规模化变现。
+
+　　正因为互联网玩的是与传统商业完全不同的一套，因而互联网公司也往往是媒体的宠儿，是资本热钱追逐的对象，而上一代以BAT为代表的互联网公司，在完全证明其商业价值之前也一直是饱受现金流问题之苦，因而才有了马化腾差点300万卖掉QQ，马云为了养活公司去义乌批发鲜花这些江湖轶事，但最终BAT崛起，成为了垄断中国“社交-电商-搜索”的互联网三座大山，展现了惊人的盈利能力。
+
+　　自此后续的互联网创投，就在投出下一个BAT的梦想指引下，催生出一个又一个的新经济独角兽，而在此前的文章《小米美团的上市背后，是互联网创投模式的落幕》中倪叔已经解读过，在这一轮的创投模式的游戏规则之下，所有的独角兽公司都是以巨额的亏损来换取爆炸式的增长，然后以每一轮的高估值将所有的投资方裹挟其中，大家共同寻找下一棒的接盘侠，直至上市让股民接盘……
+
+　　因而虽然在BAT之后，又再诞生了美团，小米，拼多多等一系列的互联网巨头，但无一例外的是这些巨头依然还在亏损。
+
+
+　　而在过去这2-3年，在资本市场发生的变化就是：为这些新经济巨头的亏损买单的接盘侠越来越少了。
+
+　　2019年，很多互联网巨头面临的资本情况就是A股上市通道变窄，美国中概股低迷，港股也低迷，互联网巨头上市即破发，后续至少要被挤掉30%水分才能吸引到资金。
+
+　　这一方面意味着：游戏规则的改变，一级市场再也无法割二级市场韭菜，另一方面也意味着之前试图割二级市场韭菜的投资人们纷纷被套，血本无归，而整个互联网点石成金的游戏也就宣告破产了。
+
+　　自此，互联网创业的“市梦率”让位于“市盈率”，所有的创业项目都不能再烧钱，要开始盈利，于是整个行业开始裁撤不赚钱的边缘业务，收紧预算，精简人员……
+
+　　而过去很多创业公司之所以也能支付与互联网大厂同水准，甚至更高水准的薪资，完全依靠的就是“市梦率”的逻辑，可以大把大把的烧钱，但一旦回归到“市盈率”的逻辑就无法承受这么高的人员成本，在创投模式落幕之后，资本也不会再疯狂烧钱，像过去那样烧钱换发展空间的做法也一去不复返了。
+
+　　因而在这样的一个资本背景之下，当一家创业公司不惜成本的来高薪挖鹿小姐的时候，鹿小姐们所关注不应该是他所承诺的这个数字和抬头，而是数字背后所代表的巨大风险：
+
+　　要么它是一家既然在这样难融资环境下，依然敢于大手大脚乱花钱的公司，那么像这样的公司也走不了多远；
+
+　　要么它就在你身上倾注了过多不实际的期望，使得同样的100万或许要你比在大厂遭遇更多的困难与压力才能拿到。
+
+　　尤其是当对方还是公司竞对的时候，你所背负的可能都不只是道德风险，因为泄露机密导致身陷囹圄的不在少数。
+
+　　而无论是以上的哪一种结果，这样的邀约都称不上是好的选择。
+
+　　总体来说，在当前的资本环境下，放弃大厂职位加盟创业公司是一件高风险的事情，选择之前必须慎重。
+
+　　第二个，过去大厂的环境把大家都保护的太好了，导致鹿小姐们没有保护自己的能力和意识，太容易相信别人了。
+
+　　尤其是像倪叔和鹿小姐这样的，大学毕业不久就加入大厂的人，一直都是受大厂企业文化的熏陶成长起来的，大厂内部为了提升效率，内部提倡都是“保持真诚，互相信任”的企业文化，但这个文化一旦接触到外部尔虞我诈的社会环境就非常容易出现受骗上当的情况。
+
+　　在大厂的时候，因为有光环存在，所以所有的合伙伙伴都会来讨好你，都不敢欺骗你，因为既然成功欺骗了你个人，大厂也有反制对方，让对方承受损失的能力；但一旦回归到个人身份，不管你是什么出身，一律骗你没有商量，因为你不再具备反制对方的能力了。
+
+　　就像这位CEO骗了鹿小姐，并且对鹿小姐的职业生涯的发展造成了很不好的影响，但如今木已成舟了，鹿小姐也没有太多的方法可以来报复这位CEO。
+
+　　因而，如果真要考虑加盟创业公司，也一定要好好的考察公司，了解这个公司所处的赛道是否有足够的前景，公司的融资能力强不强，现金流到底如何。否则就会像鹿小姐一样，一脚摔进坑里，哭都来不及。
+
+　　3
+
+　　除开被忽悠加入创业公司之外，还有一种离职选择也非常危险，那就是加盟公司的直接竞争对手，比如百度腾讯跳头条，阿里跳京东，拼多多这样子的都在此列。
+
+　　这种选择其实并不鲜见，很多人在原单位职业发展受阻之后就容易动这样的念头。一方面，因为是竞对关系，自己也研究关注，与其加入不知根底的创业公司，不如加入对手，至少对公司的未来看的更清晰；另一方面，也因为同业竞争的关系，自身的技能和资源都能完整平移过去，这样被重用的机会也会更多，再加上对手高薪一挖，很多人就这么过去了。
+
+
+　　但很多人并没有想清楚，对方要的究竟是什么？是不是真的那么看重你这个人？还是别有所求？
+
+　　事实上，大厂的薪资水平就是按照别人轻易挖不动你的标准来设定的，而一旦大幅超出这个设定则必有特殊的所求，而相较于欣赏你个人的能力，更多的情况还是看重你原本在公司携带的资源和信息，甚至有的仅是为了打击竞争对手的布局，是看重你的岗位而非个人，而这样的背景之下，选择跳槽去直接竞对那边是一个有风险的选择。。
+
+　　倪叔曾经专门就【要不要跳槽去竞对公司】这个话题请教过一年为几百个高端人才提供岗位机会的，猎头公司老板陆海天，他告诉我从他的经验来看：
+
+　　1）跳槽在互联网行业还是比较普遍，跳来跳去也是行业兴盛的标志，而跳槽去直接竞对在没有竞业协议or没有把柄在前公司手上的情况下，是合理合法的；
+
+　　2）但在实际的运行过程之中，真实会跳槽去竞对公司的人远没有想象中的多，甚至是个少数人的选择。因为很多候选人自身就会在意跳槽去竞对公司的舆论压力，毕竟越往上走行业的圈子越是狭小，而越是成功的经理人越会在意自身的业内口碑和圈子资源。
+
+　　一旦跳槽竞对很可能导致过去自己在厂内积累的所有人脉报废。
+
+　　3）很多候选人跳槽去直接竞对的要求往往都是很直接的：三倍薪水，因为候选人自身也明白，在这样的情况下，在不确定对方真正要的是你这个人，还是这个原公司的资源信息的情况下，许诺股权，许诺未来发展空间这些都是没有意义的，只有现金才能保障自己的利益，但往往在这样的交易之中能到的也只有这些现金。
+
+　　因而说很多人因为自身在原单位的发展受限而考虑去竞对公司，但实际上未必可以如愿，毕竟没有任何一个组织会真心的欢迎一个”投降派“，即使老板不以为意，但下面的员工很难保证不会挤兑。
+
+　　如果真正是因为缺钱，想要去竞争对手那边赚一波快钱，跳槽竞对倒是一个求仁得仁的选择。不过如果不小心，遇上了某多多，期权要7年才能兑付，忍着就是每天99 6，不忍就是被0成本收回的话，那就只能苦笑了。
+
+　　当然，不管怎样选择都是个人的事，但是跳槽总归是大事，需要谨慎选择。
+
+　　而倪叔我能说的就是：倪叔我个人绝不会做这样的选择。
+
+　　4
+
+　　最后来聊聊，倪叔最没有立场去谈的方向：创业。
+
+　　作为一个在某大厂7年，最终在18年年底选择自主创业，至今还在苦海里漂浮的创业者，倪叔我的个人感悟是说：
+
+　　如果你把创业当做是人生必经的一个阶段，是一段早晚要尝试的奇特人生经历，那么你什么时候选择创业都是对的，因为你做了你想做的事情；
+
+　　而如果你把创业当做是追求财富名誉地位的一种手段，则在任何时间创业都是危险的。
+
+　　创业不等于赚钱，很多时候创业最终走向的是赚钱的反面。
+
+　　我告诉你一个数字，全中国工商注册的经营单位差不多有3千万个，其中240万个是国企、政府企业，剩下的全是民营和外资企业。这么多企业，存活率是多少呢？平均下来，存活5年以上的不到7%，能活到10年以上的不到3%，这就是生死规律。
+
+　　换句话说，平均算下来，100 家公司，10年以后，就只剩下3家了。所以，创业能等于赚钱吗？甚至可以这么说，创业在大概率上等于失败。
+
+　　那为什么要创业？如倪叔上面所说的，这是一种人生体验和选择。
+
+
+　　如果你认为创业是你自己的使命，你有创业的梦想，那么你去创业，你会是快乐的，你也能在困难面前坚持下去。如果你是想去赚钱而创业，很可能你会天天后悔。
+
+　　但话又说回来了，如果你知道创业是你生命中迟早要发生的一件事，那么早发生和晚发生都一样，何必要急于一时呢？
+
+　　回首18年的这一次创业，我并不后悔，但如果说有不如意的地方：就是我选择了在大环境最糟糕的时候创业。
+
+　　雷军用前半生的时间告诉了我们一件事：要顺势而为，你真的愿意观察你就会知道BAT都在1999年前后诞生，很多事情要成还是有它的天地是地利人和。
+
+　　同样的大厂背景，同样的创业方向，或许在15年-16年选择创业，你会得到资本支持，既然今天你没有成功，也已经获得了操盘1-2个互联网项目的经验与资源，如果愿意选择做一个不那么烧钱的业务，那么现在一年赚个一千万也并不是什么难事。而在18年19年选择的朋友可能就缺少了获得资本加持的机会。
+
+　　但这样没有什么好抱怨的，自己选择的路，哪怕跪着也要走完。
+
+　　在过去的18，19年中，互联网行业面对着重大的转折，在这个不断下行的过程之中，我们中的不少人失去了很多东西，但每一个灾年都有它的深意，只有失去才让我们意识到哪些才是真正重要的东西。
+
+　　2020年，生活还要继续，但或许是换个活法的时候了。
+                &lt;/p&gt;
+            &lt;/div&gt;
+            &lt;div class="bar"&gt;&lt;/div&gt;
+            &lt;div class="slidebar"&gt;&lt;/div&gt;
+        &lt;/div&gt;
+&lt;/body&gt;</code></pre>
+
+<p style="text-align:center;"><img alt="" height="684" src="https://img-blog.csdnimg.cn/20200229182844691.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2MTcxMjg3,size_16,color_FFFFFF,t_70" width="677" /></p>
+
+<p>然后编写JavaScript语言</p>
+
+<p>完整代码：</p>
+
+<pre>
+<code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+    &lt;head&gt;
+        &lt;meta charset="utf-8"&gt;
+        &lt;title&gt;&lt;/title&gt;
+        &lt;style&gt;
+            *{
+                margin: 0;
+                padding: 0;
+            }
+            .box{
+                width: 500px;
+                height: 500px;
+                border: 1px solid yellowgreen;
+                position: relative;
+                margin: 20px auto;
+                /*超出部分隐藏*/
+                overflow: hidden;
+            }
+            .bar{
+                height: 500px;
+                width: 20px;
+                background-color: gray;
+                position: absolute;
+                right: 0;
+                top: 0;
+            }
+            .content{
+                padding: 20px;
+                position: absolute;
+                top: 0;
+                left: 0;
+            }
+            .slidebar{
+                width: 20px;
+                height: 40px;
+                background-color: orange;
+                position: absolute;
+                right: 0;
+                top: 0;
+            }
+            body{
+                height: 2000px;
+            }
+        &lt;/style&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+        &lt;div class="box"&gt;
+            &lt;div class="content"&gt;
+                &lt;p&gt;
+为啥突然要写这么一个题目呢？
+
+　　因为职业并不是HRor猎头的倪叔，过去的2年一直都在帮朋友找工作，而其中很多人都是拥有互联网大厂背景的。
+
+　　当然，倪叔的朋友们最终都找到了下家，但除开个别在企业核心岗位，掌握稀缺资源的幸运儿之外，对于大多数人来说：
+
+　　一方面，过程普遍都很漫长，互联网进入寒冬之后，家家都在精简人员，招聘的需求相当有限，核心岗位更是一坑难求，因而当大家跳出来的时候，发现远没有想象中那么受欢迎；
+
+　　另一方面，最终的归属，无论从待遇，还是公司发展，还是团队人员质素，相比于前东家来说也谈不上理想，往往只能作为个人在这两年动荡时期的过渡选择。而且，薪资待遇上大部分都只能做到平薪调动，这个时节还能涨薪的也是少数。
+
+　　在过去的两年中，对于身边还在大厂工作的朋友，倪叔给出的工作建议都是:能不出来就尽量不要出来，在整个行业的下行时期，大厂是最好的避风港。
+
+
+　　但建议归建议，整个19年发生工作变动的朋友还是不少的。因为整个互联网行业下行的变动必然深刻的影响着每一家公司，创业公司倒闭裁员自是不在话下，而身处大厂，虽然未必有裁员优化的威胁，但市场变化对行业巨头的业绩影响是惊人，而要对抗这种影响，就势必造成内部压强的放大：难以完成的业绩目标，极其严苛的考核要求，长期的熬夜加班等等都会给个体施加巨大的压力，再结合上长期以来的上升空间受限，人事关系复杂等等老问题就非常容易促使人做出离职的决定，但结合外部环境来看，这时候决定往往不是好的选择。
+
+　　原本以为熬过了2019年就是胜利，哪知道2020年又是一个“地狱模式”的开局，很多与线下有关的业务都面临冲击，再加上财年末的末尾淘汰和组织架构调整带来的人事变动，又造成了新一波的人员变动。
+
+　　就在这几天，倪叔又开始接到一些朋友的电话，说想通过倪叔看看外面的机会，然后倪叔又开始balabala，苦口婆心的劝对方不要乱动，保住现在的工作……而在接到了第四通类似主题的电话之后，倪叔觉得有必要通过一篇文章来让大家意识到：
+
+　　虽然大家都是大厂员工，都非常优秀，但这一次外界的环境真的不同了，企业和人才之间的供需关系发生根本性的改变，以前是企业需要人才，现在是人才更需要企业的历史时期。
+
+　　1
+
+　　为了加深大家对“现在人才更需要企业”这个结论的理解，说几个倪叔自己的亲身经历：
+
+　　在19年，一个有BAT背景，后在独角兽担任高级总监的朋友，因为家庭原因要换城市，让倪叔帮忙找工作，而让倪叔没有想到的是：当倪叔把简历发送给某厂HR的时候，对方只看了30秒，就说：不要！
+
+　　为此倪叔差点跟这个HR打起来，但最终HR给出了一个让倪叔浑身发凉又不得不接受的答案：他已经超过35岁了，这是我们的硬指标……
+
+
+　　同样的19年，倪叔的挚友，一个拥有外企+BAT背景，无论是个人能力还是职业操守都非常出众的高级市场人才，因为家庭的原因要换城市，要换工作，在帮她沟通意向职位，HR告诉我的却是：不是说公司出不起这100万的年薪，而是要发挥一个年薪百万的市场人员的价值，至少要对应2个亿的市场预算，现在这个环境公司拿不出2个亿市场预算……
+
+　　还有朋友，明明已经有了十几年的工作经验，却因为当年没有本科文凭被拒绝，这在过去根本就不是问题，但在19年，成为了企业刷掉他简历的主因。
+
+　　这几年，一直在写互联网观察的倪叔算是见证了整个互联网行业的剧烈变化：
+
+　　在15-16年，整个互联网资本泡沫上升到顶峰的时候，你只要亮出一张互联网大厂的工牌或许就可以换得一笔不菲的融资，出任CEO，走上人生巅峰；
+
+　　17年，当整个大势还在的时候，大厂资深员工跳槽也是年薪百万起步，城市金领光芒熠熠生辉；
+
+　　但在泡沫破灭18-19年，一切都在回归原点，而曾经天之骄子的大厂员工也逐渐显露出城市打工仔的底色，顶着老婆孩子房贷的压力，只求不要被公司优化。
+
+　　短短几年时间，一切天翻地覆。
+
+　　在只要买房就能赚钱的泡沫时代，互联网人会说老板不要跟我谈理想，我的理想就是不上班；但如今疫情一来，四面八方传来的都是企业停工停产，降薪裁员声音的时候，互联网人们才忽然发现：我们中的大部分人没有了工作，都是活不下去的。
+
+　　所以，作为曾经的互联网大厂员工，现在正在创业苦海中浮沉的倪叔才想要给互联网大厂的员工们写下这句真心话：
+
+　　2020年，别瞎折腾！
+
+　　2
+
+　　最近一个让倪叔帮忙找工作的是鹿小姐（化名），她的故事很典型也很可惜，在征得她本人同意后，也拿出来跟大家分享一下：
+
+　　鹿小姐原本就职于某互联网大厂，是一个P7的设计师，因为从头到尾参与了某某生鲜的创立过程，因而颇为被业内看重。
+
+　　19年下半年，她冲刺P8失败，有阵子心情低落，就这个时候有外部的创业公司CEO趁虚而入，多次和她联系要求加盟，许诺给了她一个高官职位和很多公司的期权，也对公司未来描绘了一个非常诱人的上市计划，她原本是拒绝的，但经不起对方多番的诱惑，她最终选择了加盟该公司。
+
+　　然后狗血的是，鹿小姐加盟不到3个月，公司就因为B轮融资失败，宣布解散。而原本该高管承诺给鹿小姐的一切回报与美好未来也就都烟消云散。
+
+　　而更尴尬的是，从大厂离职才短短三个月就又要找工作，鹿小姐因为加盟直接竞品的公司，有泄露原部门机密的嫌疑，暂时也不能返回原有的大厂；在杭州又找不到同等薪资水平的工作，摆在面前的选择就只要：要么就奔赴一线城市去找匹配的工作机会，要么就接受薪水打折先去创业公司历练。
+
+　　和倪叔聊起当初的选择，鹿小姐也是悔不当初，直言是受了对方CEO的欺骗，觉得对方怎么说也是一个江湖上小名气的人物，公司又有知名基金的支持，怎么看都不像是三个月就倒闭的公司，哪知道会是这样……
+
+
+　　作为曾经的大厂员工，我很理解鹿小姐为什么会上当受骗，总体来说有二个大的原因：
+
+　　第一个，过分关注自己手上的工作，而对外部的大环境不够了解，尤其是对资本环境不了解。
+
+　　这个话题如果想要完全说明白，可能需要三天三夜，在这里简单的说明就是，鹿小姐们应该要明白两个问题：第一.互联网以及它所对应的新经济模式是存在泡沫的；第二.这几年总体发生的变化就是：互联网模式越来越难找到接盘侠了。
+
+　　先说第一个问题：泡沫。互联网行业之所以被称之为新经济，因为其逻辑本身是反传统经济的，不同于传统企业，推出产品-盈利-扩大再生产的慢速发展模式，早年的互联网公司一上来推行免费的产品模式，然后通过免费的产品聚合流量以后再嫁接成熟的商业模式，最终实现规模化变现。
+
+　　正因为互联网玩的是与传统商业完全不同的一套，因而互联网公司也往往是媒体的宠儿，是资本热钱追逐的对象，而上一代以BAT为代表的互联网公司，在完全证明其商业价值之前也一直是饱受现金流问题之苦，因而才有了马化腾差点300万卖掉QQ，马云为了养活公司去义乌批发鲜花这些江湖轶事，但最终BAT崛起，成为了垄断中国“社交-电商-搜索”的互联网三座大山，展现了惊人的盈利能力。
+
+　　自此后续的互联网创投，就在投出下一个BAT的梦想指引下，催生出一个又一个的新经济独角兽，而在此前的文章《小米美团的上市背后，是互联网创投模式的落幕》中倪叔已经解读过，在这一轮的创投模式的游戏规则之下，所有的独角兽公司都是以巨额的亏损来换取爆炸式的增长，然后以每一轮的高估值将所有的投资方裹挟其中，大家共同寻找下一棒的接盘侠，直至上市让股民接盘……
+
+　　因而虽然在BAT之后，又再诞生了美团，小米，拼多多等一系列的互联网巨头，但无一例外的是这些巨头依然还在亏损。
+
+
+　　而在过去这2-3年，在资本市场发生的变化就是：为这些新经济巨头的亏损买单的接盘侠越来越少了。
+
+　　2019年，很多互联网巨头面临的资本情况就是A股上市通道变窄，美国中概股低迷，港股也低迷，互联网巨头上市即破发，后续至少要被挤掉30%水分才能吸引到资金。
+
+　　这一方面意味着：游戏规则的改变，一级市场再也无法割二级市场韭菜，另一方面也意味着之前试图割二级市场韭菜的投资人们纷纷被套，血本无归，而整个互联网点石成金的游戏也就宣告破产了。
+
+　　自此，互联网创业的“市梦率”让位于“市盈率”，所有的创业项目都不能再烧钱，要开始盈利，于是整个行业开始裁撤不赚钱的边缘业务，收紧预算，精简人员……
+
+　　而过去很多创业公司之所以也能支付与互联网大厂同水准，甚至更高水准的薪资，完全依靠的就是“市梦率”的逻辑，可以大把大把的烧钱，但一旦回归到“市盈率”的逻辑就无法承受这么高的人员成本，在创投模式落幕之后，资本也不会再疯狂烧钱，像过去那样烧钱换发展空间的做法也一去不复返了。
+
+　　因而在这样的一个资本背景之下，当一家创业公司不惜成本的来高薪挖鹿小姐的时候，鹿小姐们所关注不应该是他所承诺的这个数字和抬头，而是数字背后所代表的巨大风险：
+
+　　要么它是一家既然在这样难融资环境下，依然敢于大手大脚乱花钱的公司，那么像这样的公司也走不了多远；
+
+　　要么它就在你身上倾注了过多不实际的期望，使得同样的100万或许要你比在大厂遭遇更多的困难与压力才能拿到。
+
+　　尤其是当对方还是公司竞对的时候，你所背负的可能都不只是道德风险，因为泄露机密导致身陷囹圄的不在少数。
+
+　　而无论是以上的哪一种结果，这样的邀约都称不上是好的选择。
+
+　　总体来说，在当前的资本环境下，放弃大厂职位加盟创业公司是一件高风险的事情，选择之前必须慎重。
+
+　　第二个，过去大厂的环境把大家都保护的太好了，导致鹿小姐们没有保护自己的能力和意识，太容易相信别人了。
+
+　　尤其是像倪叔和鹿小姐这样的，大学毕业不久就加入大厂的人，一直都是受大厂企业文化的熏陶成长起来的，大厂内部为了提升效率，内部提倡都是“保持真诚，互相信任”的企业文化，但这个文化一旦接触到外部尔虞我诈的社会环境就非常容易出现受骗上当的情况。
+
+　　在大厂的时候，因为有光环存在，所以所有的合伙伙伴都会来讨好你，都不敢欺骗你，因为既然成功欺骗了你个人，大厂也有反制对方，让对方承受损失的能力；但一旦回归到个人身份，不管你是什么出身，一律骗你没有商量，因为你不再具备反制对方的能力了。
+
+　　就像这位CEO骗了鹿小姐，并且对鹿小姐的职业生涯的发展造成了很不好的影响，但如今木已成舟了，鹿小姐也没有太多的方法可以来报复这位CEO。
+
+　　因而，如果真要考虑加盟创业公司，也一定要好好的考察公司，了解这个公司所处的赛道是否有足够的前景，公司的融资能力强不强，现金流到底如何。否则就会像鹿小姐一样，一脚摔进坑里，哭都来不及。
+
+　　3
+
+　　除开被忽悠加入创业公司之外，还有一种离职选择也非常危险，那就是加盟公司的直接竞争对手，比如百度腾讯跳头条，阿里跳京东，拼多多这样子的都在此列。
+
+　　这种选择其实并不鲜见，很多人在原单位职业发展受阻之后就容易动这样的念头。一方面，因为是竞对关系，自己也研究关注，与其加入不知根底的创业公司，不如加入对手，至少对公司的未来看的更清晰；另一方面，也因为同业竞争的关系，自身的技能和资源都能完整平移过去，这样被重用的机会也会更多，再加上对手高薪一挖，很多人就这么过去了。
+
+
+　　但很多人并没有想清楚，对方要的究竟是什么？是不是真的那么看重你这个人？还是别有所求？
+
+　　事实上，大厂的薪资水平就是按照别人轻易挖不动你的标准来设定的，而一旦大幅超出这个设定则必有特殊的所求，而相较于欣赏你个人的能力，更多的情况还是看重你原本在公司携带的资源和信息，甚至有的仅是为了打击竞争对手的布局，是看重你的岗位而非个人，而这样的背景之下，选择跳槽去直接竞对那边是一个有风险的选择。。
+
+　　倪叔曾经专门就【要不要跳槽去竞对公司】这个话题请教过一年为几百个高端人才提供岗位机会的，猎头公司老板陆海天，他告诉我从他的经验来看：
+
+　　1）跳槽在互联网行业还是比较普遍，跳来跳去也是行业兴盛的标志，而跳槽去直接竞对在没有竞业协议or没有把柄在前公司手上的情况下，是合理合法的；
+
+　　2）但在实际的运行过程之中，真实会跳槽去竞对公司的人远没有想象中的多，甚至是个少数人的选择。因为很多候选人自身就会在意跳槽去竞对公司的舆论压力，毕竟越往上走行业的圈子越是狭小，而越是成功的经理人越会在意自身的业内口碑和圈子资源。
+
+　　一旦跳槽竞对很可能导致过去自己在厂内积累的所有人脉报废。
+
+　　3）很多候选人跳槽去直接竞对的要求往往都是很直接的：三倍薪水，因为候选人自身也明白，在这样的情况下，在不确定对方真正要的是你这个人，还是这个原公司的资源信息的情况下，许诺股权，许诺未来发展空间这些都是没有意义的，只有现金才能保障自己的利益，但往往在这样的交易之中能到的也只有这些现金。
+
+　　因而说很多人因为自身在原单位的发展受限而考虑去竞对公司，但实际上未必可以如愿，毕竟没有任何一个组织会真心的欢迎一个”投降派“，即使老板不以为意，但下面的员工很难保证不会挤兑。
+
+　　如果真正是因为缺钱，想要去竞争对手那边赚一波快钱，跳槽竞对倒是一个求仁得仁的选择。不过如果不小心，遇上了某多多，期权要7年才能兑付，忍着就是每天99 6，不忍就是被0成本收回的话，那就只能苦笑了。
+
+　　当然，不管怎样选择都是个人的事，但是跳槽总归是大事，需要谨慎选择。
+
+　　而倪叔我能说的就是：倪叔我个人绝不会做这样的选择。
+
+　　4
+
+　　最后来聊聊，倪叔最没有立场去谈的方向：创业。
+
+　　作为一个在某大厂7年，最终在18年年底选择自主创业，至今还在苦海里漂浮的创业者，倪叔我的个人感悟是说：
+
+　　如果你把创业当做是人生必经的一个阶段，是一段早晚要尝试的奇特人生经历，那么你什么时候选择创业都是对的，因为你做了你想做的事情；
+
+　　而如果你把创业当做是追求财富名誉地位的一种手段，则在任何时间创业都是危险的。
+
+　　创业不等于赚钱，很多时候创业最终走向的是赚钱的反面。
+
+　　我告诉你一个数字，全中国工商注册的经营单位差不多有3千万个，其中240万个是国企、政府企业，剩下的全是民营和外资企业。这么多企业，存活率是多少呢？平均下来，存活5年以上的不到7%，能活到10年以上的不到3%，这就是生死规律。
+
+　　换句话说，平均算下来，100 家公司，10年以后，就只剩下3家了。所以，创业能等于赚钱吗？甚至可以这么说，创业在大概率上等于失败。
+
+　　那为什么要创业？如倪叔上面所说的，这是一种人生体验和选择。
+
+
+　　如果你认为创业是你自己的使命，你有创业的梦想，那么你去创业，你会是快乐的，你也能在困难面前坚持下去。如果你是想去赚钱而创业，很可能你会天天后悔。
+
+　　但话又说回来了，如果你知道创业是你生命中迟早要发生的一件事，那么早发生和晚发生都一样，何必要急于一时呢？
+
+　　回首18年的这一次创业，我并不后悔，但如果说有不如意的地方：就是我选择了在大环境最糟糕的时候创业。
+
+　　雷军用前半生的时间告诉了我们一件事：要顺势而为，你真的愿意观察你就会知道BAT都在1999年前后诞生，很多事情要成还是有它的天地是地利人和。
+
+　　同样的大厂背景，同样的创业方向，或许在15年-16年选择创业，你会得到资本支持，既然今天你没有成功，也已经获得了操盘1-2个互联网项目的经验与资源，如果愿意选择做一个不那么烧钱的业务，那么现在一年赚个一千万也并不是什么难事。而在18年19年选择的朋友可能就缺少了获得资本加持的机会。
+
+　　但这样没有什么好抱怨的，自己选择的路，哪怕跪着也要走完。
+
+　　在过去的18，19年中，互联网行业面对着重大的转折，在这个不断下行的过程之中，我们中的不少人失去了很多东西，但每一个灾年都有它的深意，只有失去才让我们意识到哪些才是真正重要的东西。
+
+　　2020年，生活还要继续，但或许是换个活法的时候了。
+                &lt;/p&gt;
+            &lt;/div&gt;
+            &lt;div class="bar"&gt;&lt;/div&gt;
+            &lt;div class="slidebar"&gt;&lt;/div&gt;
+        &lt;/div&gt;
+        &lt;script&gt;
+            //1.获取页面元素
+            var box = document.querySelector(".box");
+            var content = document.querySelector(".content");
+            var bar = document.querySelector(".bar");
+            var slidebar = document.querySelector(".slidebar");
+
+            var rate = box.clientHeight / content.clientHeight;
+            //2.确定滚动条长度
+            var barHeight = rate * box.clientHeight;
+            slidebar.style.height = barHeight + "px";
+            //3.事件一个开关
+            //判断是否应该移动
+            var flag = false;
+            //鼠标按下事件
+            var delY = 0;
+            slidebar.onmousedown = function(e){
+                var event = e || window.event;
+                flag = true;
+
+                delY = event.clientY - slidebar.offsetTop;
+                //防止鼠标选择文章内容
+                event.preventDefault();
+            }
+            //鼠标移动事件
+            var topx = 0;
+            document.onmousemove = function(e){
+                if(flag){
+                    var event = e || window.event;
+                    topx = event.clientY - delY;
+                    //改变距离
+                    changeDistance();
+                }
+            }
+            function changeDistance(){
+                //确定边界
+                if(topx&lt;0){
+                    topx = 0;
+                }
+                if(topx&gt;bar.clientHeight - slidebar.clientHeight){
+                    topx = bar.clientHeight - slidebar.clientHeight;
+                }
+
+                slidebar.style.top = topx + "px";
+                content.style.top = -topx/rate + "px";
+            }
+            //鼠标抬起事件
+            document.onmouseup = function(){
+                flag = false;
+            } 
+            //定义函数处理滚轮事件
+            function handerMiddle(e) {
+                var event = e || window.event;
+                //取消外部默认联动
+                if(event.preventDefault){
+                    event.preventDefault();
+                }else{
+                    event.returnValue = false;
+                }
+                //判断浏览器类型
+                var direction = 0;
+                if(event.wheelDelta){
+                    //IE
+                    direction = event.wheelDelta&gt;0?1:-1;
+                }else{
+                    //火狐
+                    direction = event.detail&lt;0?1:-1;
+                }
+                //向下滚动时
+                topx += -direction*10;
+                changeDistance();
+            }
+            //IE
+            box.onmousewheel = handerMiddle;
+            //火狐
+            try{
+                box.addEventListener('DOMMouseScroll',handerMiddle);
+            }catch(error){
+                console.log(error);
+            }
+
+        &lt;/script&gt;
+    &lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+
+<p>效果：</p>
+
+<p style="text-align:center;"><img alt="" height="511" src="https://img-blog.csdnimg.cn/20200229182452243.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2MTcxMjg3,size_16,color_FFFFFF,t_70" width="513" /></p>
+
+<p style="text-align:center;"><img alt="" height="511" src="https://img-blog.csdnimg.cn/20200229182510875.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2MTcxMjg3,size_16,color_FFFFFF,t_70" width="506" /></p>
+
+<p style="text-align:center;"><img alt="" height="509" src="https://img-blog.csdnimg.cn/20200229182527125.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2MTcxMjg3,size_16,color_FFFFFF,t_70" width="511" /></p>
+
+<p> </p>
+
+<p> </p>
+
+<p>一起学习，一起进步 -.- ，如有错误，可以发评论</p>
+</div><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">空城机</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://yoursite.com/2020/02/29/JavaScript%EF%BC%88%E4%B8%89%E5%8D%81%E4%B9%9D%EF%BC%89%E2%80%94%E2%80%94%E9%BC%A0%E6%A0%87%E6%BB%9A%E8%BD%AE%E3%80%81%E6%BB%9A%E5%8A%A8%E7%AA%97%E5%8F%A3%E5%88%B6%E4%BD%9C/">http://yoursite.com/2020/02/29/JavaScript%EF%BC%88%E4%B8%89%E5%8D%81%E4%B9%9D%EF%BC%89%E2%80%94%E2%80%94%E9%BC%A0%E6%A0%87%E6%BB%9A%E8%BD%AE%E3%80%81%E6%BB%9A%E5%8A%A8%E7%AA%97%E5%8F%A3%E5%88%B6%E4%BD%9C/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://yoursite.com" target="_blank">空城机</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/javascript-%E5%89%8D%E7%AB%AF/">javascript 前端</a></div><div class="post_share"><div class="social-share" data-image="https://i.loli.net/2019/07/21/5d33d5dc1531213134.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css"/><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js"></script></div></div><div class="post-reward"><a class="reward-button button--primary button--animated"> <i class="fa fa-qrcode"></i> 打赏<div class="reward-main"><ul class="reward-all"><li class="reward-item"><img class="post-qr-code__img" src="/img/wechat.jpg" alt="微信"/><div class="post-qr-code__desc">微信</div></li><li class="reward-item"><img class="post-qr-code__img" src="/img/alipay.jpg" alt="支付寶"/><div class="post-qr-code__desc">支付寶</div></li></ul></div></a></div><nav class="pagination_post" id="pagination"><div class="prev-post pull_left"><a href="/2020/03/01/JavaScript%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%9B%9B%E5%8D%81%EF%BC%89%E2%80%94%E2%80%94%E6%A8%A1%E6%8B%9F%E5%9B%BE%E7%89%87%E9%AA%8C%E8%AF%81/"><img class="prev_cover" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">JavaScript学习（四十）——模拟图片验证</div></div></a></div><div class="next-post pull_right"><a href="/2020/02/26/JavaScript%20%E7%9F%A5%E8%AF%86%E5%B7%A9%E5%9B%BA%E2%80%94%E2%80%94%E5%86%85%E5%AD%98%E3%80%81%E8%B0%83%E7%94%A8%E5%87%BD%E6%95%B0%E3%80%81%E5%9B%9E%E8%B0%83%E5%87%BD%E6%95%B0/"><img class="next_cover" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">JavaScript 知识巩固——内存、调用函数、回调函数</div></div></a></div></nav><div class="relatedPosts"><div class="relatedPosts_headline"><i class="fa fa-fw fa-thumbs-up" aria-hidden="true"></i><span> 相关推荐</span></div><div class="relatedPosts_list"><div class="relatedPosts_item"><a href="/2020/03/01/JavaScript学习（四十）——模拟图片验证/" title="JavaScript学习（四十）——模拟图片验证"><img class="relatedPosts_cover" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg"><div class="relatedPosts_main is-center"><div class="relatedPosts_date"><i class="fa fa-calendar fa-fw" aria-hidden="true"></i> 2020-03-01</div><div class="relatedPosts_title">JavaScript学习（四十）——模拟图片验证</div></div></a></div></div><div class="clear_both"></div></div></article></main><footer id="footer" data-type="color"><div id="footer-wrap"><div class="copyright">&copy;2018 - 2020 By 空城机</div><div class="framework-info"><span>驱动 </span><a href="https://hexo.io" target="_blank" rel="noopener"><span>Hexo</span></a><span class="footer-separator">|</span><span>主题 </span><a href="https://github.com/jerryc127/hexo-theme-butterfly" target="_blank" rel="noopener"><span>Butterfly</span></a></div></div></footer></div><section class="rightside" id="rightside"><div id="rightside-config-hide"><i class="fa fa-book" id="readmode" title="阅读模式"></i><i class="fa fa-plus" id="font_plus" title="放大字体"></i><i class="fa fa-minus" id="font_minus" title="缩小字体"></i><a class="translate_chn_to_cht" id="translateLink" href="javascript:translatePage();" title="简繁转换" target="_self">繁</a><i class="darkmode fa fa-moon-o" id="darkmode" title="夜间模式"></i></div><div id="rightside-config-show"><div id="rightside_config" title="设置"><i class="fa fa-cog" aria-hidden="true"></i></div><i class="fa fa-list-ul close" id="mobile-toc-button" title="目录" aria-hidden="true"></i><i class="fa fa-arrow-up" id="go-up" title="回到顶部" aria-hidden="true"></i></div></section><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page@latest/instantpage.min.js" type="module"></script></body></html>

@@ -1,0 +1,316 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>使用JavaScript解析XML文件 | 空城机</title><meta name="description" content="使用JavaScript的方式去解析xml文件  xml文件内容：    &lt;?xml version&#x3D;&quot;1.0&quot; encoding&#x3D;&quot;gb2312&quot;?&gt; &lt;interface name&#x3D;&quot;0101&quot; type&#x3D;&quot;interface&quot; title&#x3D;&quot;0101-Current account opening-活期开户&quot; align&#x3D;&quot;0&quot; left&#x3D;&quot;10&quot; top&#x3D;&quot;10&quot; h"><meta name="keywords" content="xml解析"><meta name="author" content="空城机"><meta name="copyright" content="空城机"><meta name="format-detection" content="telephone=no"><link rel="shortcut icon" href="/img/favicon.png"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="dns-prefetch" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="https://fonts.googleapis.com" crossorigin="crossorigin"/><link rel="dns-prefetch" href="https://fonts.googleapis.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="dns-prefetch" href="//busuanzi.ibruce.info"/><meta name="twitter:card" content="summary"><meta name="twitter:title" content="使用JavaScript解析XML文件"><meta name="twitter:description" content="使用JavaScript的方式去解析xml文件  xml文件内容：    &lt;?xml version&#x3D;&quot;1.0&quot; encoding&#x3D;&quot;gb2312&quot;?&gt; &lt;interface name&#x3D;&quot;0101&quot; type&#x3D;&quot;interface&quot; title&#x3D;&quot;0101-Current account opening-活期开户&quot; align&#x3D;&quot;0&quot; left&#x3D;&quot;10&quot; top&#x3D;&quot;10&quot; h"><meta name="twitter:image" content="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg"><meta property="og:type" content="article"><meta property="og:title" content="使用JavaScript解析XML文件"><meta property="og:url" content="http://yoursite.com/2019/10/20/%E4%BD%BF%E7%94%A8JavaScript%E8%A7%A3%E6%9E%90XML%E6%96%87%E4%BB%B6/"><meta property="og:site_name" content="空城机"><meta property="og:description" content="使用JavaScript的方式去解析xml文件  xml文件内容：    &lt;?xml version&#x3D;&quot;1.0&quot; encoding&#x3D;&quot;gb2312&quot;?&gt; &lt;interface name&#x3D;&quot;0101&quot; type&#x3D;&quot;interface&quot; title&#x3D;&quot;0101-Current account opening-活期开户&quot; align&#x3D;&quot;0&quot; left&#x3D;&quot;10&quot; top&#x3D;&quot;10&quot; h"><meta property="og:image" content="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg"><meta property="article:published_time" content="2019-10-20T10:46:07.000Z"><meta property="article:modified_time" content="2020-05-10T11:05:27.642Z"><script src="https://cdn.jsdelivr.net/npm/js-cookie/dist/js.cookie.min.js"></script><script>var autoChangeMode = '1'
+var t = Cookies.get("theme")
+if (autoChangeMode == '1'){
+  var isDarkMode = window.matchMedia("(prefers-color-scheme: dark)").matches
+  var isLightMode = window.matchMedia("(prefers-color-scheme: light)").matches
+  var isNotSpecified = window.matchMedia("(prefers-color-scheme: no-preference)").matches
+  var hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+  if (t === undefined){
+    if (isLightMode) activateLightMode()
+    else if (isDarkMode) activateDarkMode()
+    else if (isNotSpecified || hasNoSupport){
+      console.log('You specified no preference for a color scheme or your browser does not support it. I Schedule dark mode during night time.')
+      var now = new Date()
+      var hour = now.getHours()
+      var isNight = hour < 6 || hour >= 18
+      isNight ? activateDarkMode() : activateLightMode()
+  }
+  } else if (t == 'light') activateLightMode()
+  else activateDarkMode()
+
+} else if (autoChangeMode == '2'){
+  now = new Date();
+  hour = now.getHours();
+  isNight = hour < 6 || hour >= 18
+  if(t === undefined) isNight? activateDarkMode() : activateLightMode()
+  else if (t === 'light') activateLightMode()
+  else activateDarkMode() 
+} else {
+  if ( t == 'dark' ) activateDarkMode()
+  else if ( t == 'light') activateLightMode()
+}
+
+function activateDarkMode(){
+  document.documentElement.setAttribute('data-theme', 'dark')
+  if (document.querySelector('meta[name="theme-color"]') !== null){
+    document.querySelector('meta[name="theme-color"]').setAttribute('content','#000')
+  }
+}
+function activateLightMode(){
+  document.documentElement.setAttribute('data-theme', 'light')
+  if (document.querySelector('meta[name="theme-color"]') !== null){
+  document.querySelector('meta[name="theme-color"]').setAttribute('content','#fff')
+  }
+}</script><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@latest/css/font-awesome.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css"><link rel="canonical" href="http://yoursite.com/2019/10/20/%E4%BD%BF%E7%94%A8JavaScript%E8%A7%A3%E6%9E%90XML%E6%96%87%E4%BB%B6/"><link rel="prev" title="秋招前端面试问题记录" href="http://yoursite.com/2019/10/24/%E7%A7%8B%E6%8B%9B%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95/"><link rel="next" title="git和GitHub的使用（五）" href="http://yoursite.com/2019/10/02/git%E5%92%8CGitHub%E7%9A%84%E4%BD%BF%E7%94%A8%EF%BC%88%E4%BA%94%EF%BC%89/"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Titillium+Web"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: {"defaultEncoding":2,"translateDelay":0,"cookieDomain":"https://xxx/","msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"簡"},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  bookmark: {
+    message_prev: '按',
+    message_next: '键将本页加入书签'
+  },
+  runtime_unit: '天',
+  runtime: true,
+  copyright: undefined,
+  ClickShowText: undefined,
+  medium_zoom: false,
+  fancybox: true,
+  Snackbar: undefined,
+  baiduPush: false,
+  highlightCopy: true,
+  highlightLang: true,
+  highlightShrink: 'false',
+  isFontAwesomeV5: false,
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+  
+}</script><script>var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isSidebar: false  
+  }</script><noscript><style>
+#page-header {
+  opacity: 1
+}
+.justified-gallery img{
+  opacity: 1
+}
+</style></noscript><meta name="generator" content="Hexo 4.2.0"></head><body><div id="mobile-sidebar"><div id="menu_mask"></div><div id="mobile-sidebar-menus"><div class="mobile_author_icon"><img class="avatar-img" src="/img/avatar.png" onerror="onerror=null;src='/img/tou5.jpg'" alt="avatar"/></div><div class="mobile_post_data"><div class="mobile_data_item is-center"><div class="mobile_data_link"><a href="/archives/"><div class="headline">文章</div><div class="length_num">154</div></a></div></div><div class="mobile_data_item is-center">      <div class="mobile_data_link"><a href="/tags/"><div class="headline">标签</div><div class="length_num">45</div></a></div></div><div class="mobile_data_item is-center">     <div class="mobile_data_link"><a href="/categories/"><div class="headline">分类</div><div class="length_num">15</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fa fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fa fa-heart"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page"><i class="fa-fw fa fa-list" aria-hidden="true"></i><span> 清单</span><i class="fa fa-chevron-down menus-expand" aria-hidden="true"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/music/"><i class="fa-fw fa fa-music"></i><span> 音乐</span></a></li><li><a class="site-page" href="/movies/"><i class="fa-fw fa fa-film"></i><span> 电影</span></a></li></ul></div></div></div></div><div id="body-wrap"><div class="post-bg" id="nav" style="background-image: url(https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg)"><div id="page-header"><span class="pull_left" id="blog_name"><a class="blog_title" id="site-name" href="/">空城机</a></span><span class="pull_right menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fa fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fa fa-heart"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page"><i class="fa-fw fa fa-list" aria-hidden="true"></i><span> 清单</span><i class="fa fa-chevron-down menus-expand" aria-hidden="true"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/music/"><i class="fa-fw fa fa-music"></i><span> 音乐</span></a></li><li><a class="site-page" href="/movies/"><i class="fa-fw fa fa-film"></i><span> 电影</span></a></li></ul></div></div><span class="toggle-menu close"><a class="site-page"><i class="fa fa-bars fa-fw" aria-hidden="true"></i></a></span></span></div><div id="post-info"><div id="post-title"><div class="posttitle">使用JavaScript解析XML文件</div></div><div id="post-meta"><div class="meta-firstline"><time class="post-meta__date"><span class="post-meta__date-created" title="发表于 2019-10-20 18:46:07"><i class="fa fa-calendar" aria-hidden="true"></i> 发表于 2019-10-20</span><span class="post-meta__separator">|</span><span class="post-meta__date-updated" title="更新于 2020-05-10 19:05:27"><i class="fa fa-history" aria-hidden="true"></i> 更新于 2020-05-10</span></time><span class="post-meta__categories"><span class="post-meta__separator">|</span><i class="fa fa-inbox post-meta__icon" aria-hidden="true"></i><a class="post-meta__categories" href="/categories/JavaScript-%E7%AE%97%E6%B3%95%E7%BB%83%E4%B9%A0/">JavaScript 算法练习</a></span></div><div class="meta-secondline"> </div><div class="meta-thirdline"><span class="post-meta-pv-cv"><i class="fa fa-eye post-meta__icon" aria-hidden="true"> </i><span>阅读量:</span><span id="busuanzi_value_page_pv"></span></span><span class="post-meta-commentcount"></span></div></div></div></div><main class="layout_post" id="content-inner"><article id="post"><div class="post-content" id="article-container"><a id="more"></a>
+
+<p>使用JavaScript的方式去解析xml文件</p>
+
+<p>xml文件内容： </p>
+
+<pre class="has">
+<code class="language-html">&lt;?xml version="1.0" encoding="gb2312"?&gt;
+&lt;interface name="0101" type="interface" title="0101-Current account opening-活期开户" align="0" left="10" top="10" height="578" width="824" background="#b4b4b4" foreground="#000000" fontname="宋体" fontstyle="0" fontsize="14" allowscrollbar="true" showtitle="true" defaultfocused="false" sendthedata="false" enabled="true" tranid="" triggerif=""&gt;
+  &lt;basic-info&gt;
+    &lt;name&gt;int_0101.ui&lt;/name&gt;
+    &lt;author /&gt;
+    &lt;date&gt;2012/03/12 11:51:40&lt;/date&gt;
+    &lt;modifier /&gt;
+    &lt;modifyDate&gt;2019/10/16 16:32:56&lt;/modifyDate&gt;
+  &lt;/basic-info&gt;
+  &lt;form&gt;
+    &lt;input type="text" name="cstm_no" namespace="" oldid="cstm_no" ctrldesc="客户号" align="0" alignindex="-1" left="188" top="28" height="22" width="149" verfiyprocess="" autoupdatesize="false" help="" background="#ffafaf" foreground="#000000" fontname="Dialog.plain" fontstyle="0" fontsize="12" defaultfocused="true" sendthedata="true" enabled="true" visible="true" prtscmask="false" text="" minlength="14" tipmessage="" maxlength="14" formater="com.nantian.abs40.text.formater.FormatNumber" textalign="alLeft" outputprocess="" iscurrencysrc="false" start="" length="" sensitivedata="false" amountfield="false" currencysource="" needvalue="true" autotransferfocus="false" editable="false" checkable="false" doubleinput="false" downlink="true"&gt;
+      &lt;events class="abs01/com.nantian.abs40.transaction.typical.T0101.T0101$UIint_0101"&gt;
+        &lt;event name="OnExit" function="cstm_no_OnExit" /&gt;
+      &lt;/events&gt;
+    &lt;/input&gt;
+    &lt;label name="jGLabel0" namespace="" oldid="jGLabel0" ctrldesc="" align="0" alignindex="-1" left="65" top="29" height="20" width="114" verfiyprocess="" autoupdatesize="true" help="" background="#b4b4b4" foreground="#000000" fontname="Dialog.plain" fontstyle="0" fontsize="12" defaultfocused="false" sendthedata="false" enabled="true" visible="true" prtscmask="false" text="Customer No-客户号" icon="" iconfilepath="" downlink="true" /&gt;
+    &lt;input type="text" name="cstm_name" namespace="" oldid="cstm_name" ctrldesc="户名" align="0" alignindex="-1" left="188" top="57" height="22" width="577" verfiyprocess="" autoupdatesize="false" help="" background="#ffffff" foreground="#000000" fontname="Dialog.plain" fontstyle="0" fontsize="12" defaultfocused="false" sendthedata="true" enabled="true" visible="true" prtscmask="false" text="" minlength="2" tipmessage="" maxlength="300" formater="actUnlimit" textalign="alLeft" outputprocess="" iscurrencysrc="false" start="" length="" sensitivedata="false" amountfield="false" currencysource="" needvalue="false" autotransferfocus="false" editable="false" checkable="false" doubleinput="false" downlink="true" /&gt;
+    &lt;label name="jGLabel1" namespace="" oldid="jGLabel1" ctrldesc="" align="0" alignindex="-1" left="59" top="58" height="20" width="120" verfiyprocess="" autoupdatesize="true" help="" background="#b4b4b4" foreground="#000000" fontname="Dialog.plain" fontstyle="0" fontsize="12" defaultfocused="false" sendthedata="false" enabled="true" visible="true" prtscmask="false" text="Customer Name-户名" icon="" iconfilepath="" downlink="true" /&gt;
+    &lt;filterlist name="paper_type" namespace="" oldid="paper_type" ctrldesc="证件类型" align="0" alignindex="-1" left="188" top="86" height="22" width="150" verfiyprocess="" autoupdatesize="false" help="" background="#ffafaf" foreground="#000000" fontname="Dialog.plain" fontstyle="0" fontsize="13" defaultfocused="false" sendthedata="true" enabled="false" visible="true" prtscmask="false" popupmode="true" outputprocess="" datasourcetype="1" dynamicconf="com.nantian.abs40.transaction.menu.paper_type.xml" affection="" trancode="" parsevarname="" sqlwhere="" datasourcehandleclass="" defaultvalue="" needvalue="true" fuzzymatch="false" editable="false" downlink="false"&gt;
+      &lt;events class="abs01/com.nantian.abs40.transaction.typical.T0101.T0101$UIint_0101"&gt;
+        &lt;event name="OnSelectionChanged" function="paper_type_OnSelectionChanged" /&gt;
+      &lt;/events&gt;
+    &lt;/filterlist&gt;
+    &lt;input type="text" name="paper_no" namespace="" oldid="paper_no" ctrldesc="证件号码" align="0" alignindex="-1" left="524" top="86" height="22" width="241" verfiyprocess="" autoupdatesize="false" help="" background="#ffafaf" foreground="#000000" fontname="Dialog.plain" fontstyle="0" fontsize="13" defaultfocused="false" sendthedata="true" enabled="true" visible="true" prtscmask="false" text="" minlength="0" tipmessage="" maxlength="24" formater="actUnlimit" textalign="alLeft" outputprocess="" iscurrencysrc="false" start="" length="" sensitivedata="false" amountfield="false" currencysource="" needvalue="true" autotransferfocus="false" editable="false" checkable="false" doubleinput="false" downlink="true"&gt;
+      &lt;events class="abs01/com.nantian.abs40.transaction.typical.T0101.T0101$UIint_0101"&gt;
+        &lt;event name="OnVailidate" function="paper_no_OnVailidate" /&gt;
+      &lt;/events&gt;
+    &lt;/input&gt;
+    &lt;label name="jGLabel2" namespace="" oldid="jGLabel2" ctrldesc="" align="0" alignindex="-1" left="65" top="87" height="20" width="114" verfiyprocess="" autoupdatesize="true" help="" background="#b4b4b4" foreground="#000000" fontname="Dialog.plain" fontstyle="0" fontsize="12" defaultfocused="false" sendthedata="false" enabled="true" visible="true" prtscmask="false" text="Paper Type-证件类型" icon="" iconfilepath="" downlink="true" /&gt;
+    &lt;label name="jGLabel3" namespace="" oldid="jGLabel3" ctrldesc="" align="0" alignindex="-1" left="409" top="87" height="20" width="104" verfiyprocess="" autoupdatesize="true" help="" background="#b4b4b4" foreground="#000000" fontname="Dialog.plain" fontstyle="0" fontsize="12" defaultfocused="false" sendthedata="false" enabled="true" visible="true" prtscmask="false" text="Paper No-证件号码" icon="" iconfilepath="" downlink="true" /&gt;
+    &lt;input type="text" name="phone" namespace="" oldid="phone" ctrldesc="" align="0" alignindex="-1" left="564" top="114" height="22" width="109" verfiyprocess="" autoupdatesize="false" help="" background="#ffffff" foreground="#000000" fontname="Dialog.plain" fontstyle="0" fontsize="13" defaultfocused="false" sendthedata="true" enabled="true" visible="true" prtscmask="false" text="" minlength="0" tipmessage="" maxlength="17" formater="com.nantian.abs40.text.formater.FormatNumber" textalign="alLeft" outputprocess="" iscurrencysrc="false" start="" length="" sensitivedata="false" amountfield="false" currencysource="" needvalue="false" autotransferfocus="false" editable="true" checkable="false" doubleinput="false" downlink="true" /&gt;
+    &lt;input type="text" name="addr" namespace="" oldid="addr" ctrldesc="" align="0" alignindex="-1" left="188" top="115" height="22" width="228" verfiyprocess="" autoupdatesize="false" help="" background="#ffffff" foreground="#000000" fontname="Dialog.plain" fontstyle="0" fontsize="13" defaultfocused="false" sendthedata="true" enabled="true" visible="true" prtscmask="false" text="" minlength="0" tipmessage="" maxlength="33" formater="actUnlimit" textalign="alLeft" outputprocess="" iscurrencysrc="false" start="" length="" sensitivedata="false" amountfield="false" currencysource="" needvalue="false" autotransferfocus="false" editable="true" checkable="false" doubleinput="false" downlink="true" /&gt;
+    &lt;label name="jGLabel4" namespace="" oldid="jGLabel4" ctrldesc="" align="0" alignindex="-1" left="105" top="116" height="20" width="74" verfiyprocess="" autoupdatesize="true" help="" background="#b4b4b4" foreground="#000000" fontname="Dialog.plain" fontstyle="0" fontsize="12" defaultfocused="false" sendthedata="false" enabled="true" visible="true" prtscmask="false" text="Address-地址" icon="" iconfilepath="" downlink="true" /&gt;
+    &lt;label name="jGLabel5" namespace="" oldid="jGLabel5" ctrldesc="" align="0" alignindex="-1" left="438" top="116" height="20" width="111" verfiyprocess="" autoupdatesize="true" help="" background="#b4b4b4" foreground="#000000" fontname="Dialog.plain" fontstyle="0" fontsize="12" defaultfocused="false" sendthedata="false" enabled="true" visible="true" prtscmask="false" text="Telephone-联系电话" icon="" iconfilepath="" downlink="true" /&gt;
+    &lt;filterlist name="curr_type" namespace="" oldid="curr_type" ctrldesc="币    种" align="0" alignindex="-1" left="189" top="144" height="22" width="118" verfiyprocess="" autoupdatesize="false" help="" background="#ffafaf" foreground="#000000" fontname="Dialog.plain" fontstyle="0" fontsize="12" defaultfocused="false" sendthedata="true" enabled="true" visible="true" prtscmask="false" popupmode="true" outputprocess="" datasourcetype="0" dynamicconf="" affection="" trancode="" parsevarname="" sqlwhere="" datasourcehandleclass="" defaultvalue="" needvalue="true" fuzzymatch="false" editable="false" downlink="false"&gt;
+      &lt;events class="abs01/com.nantian.abs40.transaction.typical.T0101.T0101$UIint_0101"&gt;
+        &lt;event name="OnSelectionChanged" function="curr_type_OnSelectionChanged" /&gt;
+      &lt;/events&gt;
+    &lt;/filterlist&gt;
+    &lt;label name="jGLabel8" namespace="" oldid="jGLabel8" ctrldesc="" align="0" alignindex="-1" left="102" top="145" height="20" width="77" verfiyprocess="" autoupdatesize="true" help="" background="#b4b4b4" foreground="#000000" fontname="Dialog.plain" fontstyle="0" fontsize="12" defaultfocused="false" sendthedata="false" enabled="true" visible="true" prtscmask="false" text="Currency-币种" icon="" iconfilepath="" downlink="true" /&gt;
+    &lt;filterlist name="acc_flag" namespace="" oldid="acc_flag" ctrldesc="帐户属性" align="0" alignindex="-1" left="189" top="173" height="22" width="204" verfiyprocess="" autoupdatesize="false" help="" background="#ffafaf" foreground="#000000" fontname="Dialog.plain" fontstyle="0" fontsize="13" defaultfocused="false" sendthedata="true" enabled="true" visible="true" prtscmask="false" popupmode="true" outputprocess="" datasourcetype="1" dynamicconf="com.nantian.abs40.transaction.menu.MACCFLAG.xml" affection="" trancode="" parsevarname="" sqlwhere="" datasourcehandleclass="" defaultvalue="" needvalue="true" fuzzymatch="false" editable="true" downlink="true"&gt;
+      &lt;events class="abs01/com.nantian.abs40.transaction.typical.T0101.T0101$UIint_0101"&gt;
+        &lt;event name="OnExit" function="acc_flag_OnExit" /&gt;
+      &lt;/events&gt;
+    &lt;/filterlist&gt;
+    &lt;label name="jGLabel7" namespace="" oldid="jGLabel7" ctrldesc="" align="0" alignindex="-1" left="36" top="174" height="20" width="143" verfiyprocess="" autoupdatesize="true" help="" background="#b4b4b4" foreground="#000000" fontname="Dialog.plain" fontstyle="0" fontsize="12" defaultfocused="false" sendthedata="false" enabled="true" visible="true" prtscmask="false" text="Account Property-帐户属性" icon="" iconfilepath="" downlink="true" /&gt;
+    &lt;filterlist name="prd_no" namespace="" oldid="prd_no" ctrldesc="产品号" align="0" alignindex="-1" left="189" top="202" height="22" width="349" verfiyprocess="" autoupdatesize="false" help="" background="#d4d0c8" foreground="#000000" fontname="Dialog.plain" fontstyle="0" fontsize="12" defaultfocused="false" sendthedata="true" enabled="true" visible="true" prtscmask="false" popupmode="true" outputprocess="" datasourcetype="0" dynamicconf="" affection="" trancode="" parsevarname="" sqlwhere="" datasourcehandleclass="" defaultvalue="" needvalue="true" fuzzymatch="false" editable="true" downlink="true" /&gt;
+    &lt;label name="jGLabel6" namespace="" oldid="jGLabel6" ctrldesc="" align="0" alignindex="-1" left="78" top="203" height="20" width="101" verfiyprocess="" autoupdatesize="true" help="" background="#b4b4b4" foreground="#000000" fontname="Dialog.plain" fontstyle="0" fontsize="12" defaultfocused="false" sendthedata="false" enabled="true" visible="true" prtscmask="false" text="Product No-产品号" icon="" iconfilepath="" downlink="true" /&gt;
+    &lt;input type="text" name="nat" namespace="" oldid="nat" ctrldesc="冠字号" align="0" alignindex="-1" left="188" top="231" height="22" width="48" verfiyprocess="" autoupdatesize="false" help="" background="#ffafaf" foreground="#000000" fontname="Dialog.plain" fontstyle="0" fontsize="13" defaultfocused="false" sendthedata="true" enabled="true" visible="true" prtscmask="false" text="" minlength="0" tipmessage="" maxlength="4" formater="com.nantian.abs40.text.formater.FormatNumber" textalign="alLeft" outputprocess="" iscurrencysrc="false" start="" length="" sensitivedata="false" amountfield="false" currencysource="" needvalue="true" autotransferfocus="false" editable="true" checkable="false" doubleinput="false" downlink="true" /&gt;
+    &lt;input type="text" name="psbk_no" namespace="" oldid="psbk_no" ctrldesc="存折/存单号码" align="0" alignindex="-1" left="432" top="231" height="22" width="108" verfiyprocess="" autoupdatesize="false" help="" background="#ffafaf" foreground="#000000" fontname="Dialog.plain" fontstyle="0" fontsize="13" defaultfocused="false" sendthedata="true" enabled="true" visible="true" prtscmask="false" text="" minlength="0" tipmessage="" maxlength="9" formater="com.nantian.abs40.text.formater.FormatNumber" textalign="alLeft" outputprocess="" iscurrencysrc="false" start="" length="" sensitivedata="false" amountfield="false" currencysource="" needvalue="true" autotransferfocus="false" editable="true" checkable="false" doubleinput="false" downlink="true" /&gt;
+    &lt;label name="jGLabel9" namespace="" oldid="jGLabel9" ctrldesc="" align="0" alignindex="-1" left="75" top="232" height="20" width="104" verfiyprocess="" autoupdatesize="true" help="" background="#b4b4b4" foreground="#000000" fontname="Dialog.plain" fontstyle="0" fontsize="12" defaultfocused="false" sendthedata="false" enabled="true" visible="true" prtscmask="false" text="Prefix Letter-冠字号" icon="" iconfilepath="" downlink="true" /&gt;
+    &lt;label name="jGLabel10" namespace="" oldid="jGLabel10" ctrldesc="" align="0" alignindex="-1" left="273" top="232" height="20" width="154" verfiyprocess="" autoupdatesize="true" help="" background="#b4b4b4" foreground="#000000" fontname="Dialog.plain" fontstyle="0" fontsize="12" defaultfocused="false" sendthedata="false" enabled="true" visible="true" prtscmask="false" text="Passbook No-存折/存单号码" icon="" iconfilepath="" downlink="true" /&gt;
+    &lt;input type="text" name="amt" namespace="" oldid="amt" ctrldesc="开户金额" align="0" alignindex="-1" left="188" top="260" height="22" width="150" verfiyprocess="" autoupdatesize="false" help="" background="#ffafaf" foreground="#000000" fontname="Dialog.plain" fontstyle="0" fontsize="13" defaultfocused="false" sendthedata="true" enabled="true" visible="true" prtscmask="false" text="" minlength="0" tipmessage="" maxlength="16" formater="actAmount" textalign="alRight" outputprocess="" iscurrencysrc="false" start="" length="" sensitivedata="false" amountfield="true" currencysource="" needvalue="true" autotransferfocus="false" editable="true" checkable="false" doubleinput="false" downlink="true"&gt;
+      &lt;events class="abs01/com.nantian.abs40.transaction.typical.T0101.T0101$UIint_0101"&gt;
+        &lt;event name="OnEnter" function="amt_OnEnter" /&gt;
+      &lt;/events&gt;
+    &lt;/input&gt;
+    &lt;label name="jGLabel11" namespace="" oldid="jGLabel11" ctrldesc="" align="0" alignindex="-1" left="35" top="261" height="20" width="144" verfiyprocess="" autoupdatesize="true" help="" background="#b4b4b4" foreground="#000000" fontname="Dialog.plain" fontstyle="0" fontsize="12" defaultfocused="false" sendthedata="false" enabled="true" visible="true" prtscmask="false" text="Opening Amount-开户金额" icon="" iconfilepath="" downlink="true" /&gt;
+    &lt;filterlist name="csh_tsf_flag" namespace="" oldid="csh_tsf_flag" ctrldesc="" align="0" alignindex="-1" left="188" top="289" height="22" width="118" verfiyprocess="" autoupdatesize="false" help="" background="#ffafaf" foreground="#000000" fontname="Dialog.plain" fontstyle="0" fontsize="13" defaultfocused="false" sendthedata="true" enabled="true" visible="true" prtscmask="false" popupmode="true" outputprocess="" datasourcetype="1" dynamicconf="com.nantian.abs40.transaction.menu.csh_tsf_flag.xml" affection="" trancode="" parsevarname="" sqlwhere="" datasourcehandleclass="" defaultvalue="" needvalue="true" fuzzymatch="false" editable="true" downlink="true"&gt;
+      &lt;events class="abs01/com.nantian.abs40.transaction.typical.T0101.T0101$UIint_0101"&gt;
+        &lt;event name="OnSelectionChanged" function="csh_tsf_flag_OnSelectionChanged" /&gt;
+      &lt;/events&gt;
+    &lt;/filterlist&gt;
+    &lt;input type="text" name="acc_other" namespace="" oldid="acc_other" ctrldesc="" align="0" alignindex="-1" left="498" top="289" height="22" width="201" verfiyprocess="" autoupdatesize="false" help="" background="#ffffff" foreground="#000000" fontname="Dialog.plain" fontstyle="0" fontsize="13" defaultfocused="false" sendthedata="true" enabled="true" visible="true" prtscmask="false" text="" minlength="0" tipmessage="" maxlength="25" formater="com.nantian.abs40.text.formater.FormatNumber" textalign="alLeft" outputprocess="" iscurrencysrc="false" start="" length="" sensitivedata="false" amountfield="false" currencysource="" needvalue="false" autotransferfocus="false" editable="true" checkable="false" doubleinput="false" downlink="true" /&gt;
+    &lt;label name="jGLabel12" namespace="" oldid="jGLabel12" ctrldesc="" align="0" alignindex="-1" left="7" top="290" height="20" width="172" verfiyprocess="" autoupdatesize="true" help="" background="#b4b4b4" foreground="#000000" fontname="Dialog.plain" fontstyle="0" fontsize="12" defaultfocused="false" sendthedata="false" enabled="true" visible="true" prtscmask="false" text="Cash or Transfer Flag-现转标志" icon="" iconfilepath="" downlink="true" /&gt;
+    &lt;label name="jGLabel13" namespace="" oldid="jGLabel13" ctrldesc="" align="0" alignindex="-1" left="336" top="290" height="20" width="152" verfiyprocess="" autoupdatesize="true" help="" background="#b4b4b4" foreground="#000000" fontname="Dialog.plain" fontstyle="0" fontsize="12" defaultfocused="false" sendthedata="false" enabled="true" visible="true" prtscmask="false" text="Target Account No-对方帐号" icon="" iconfilepath="" downlink="true" /&gt;
+    &lt;filterlist name="csh_anal_code" namespace="" oldid="csh_anal_code" ctrldesc="" align="0" alignindex="-1" left="188" top="318" height="22" width="510" verfiyprocess="" autoupdatesize="false" help="" background="#ffafaf" foreground="#000000" fontname="Dialog.plain" fontstyle="0" fontsize="12" defaultfocused="false" sendthedata="true" enabled="true" visible="true" prtscmask="false" popupmode="true" outputprocess="" datasourcetype="0" dynamicconf="" affection="" trancode="" parsevarname="" sqlwhere="" datasourcehandleclass="" defaultvalue="" needvalue="true" fuzzymatch="false" editable="true" downlink="true" /&gt;
+    &lt;label name="jGLabel14" namespace="" oldid="jGLabel14" ctrldesc="" align="0" alignindex="-1" left="3" top="319" height="20" width="176" verfiyprocess="" autoupdatesize="true" help="" background="#b4b4b4" foreground="#000000" fontname="Dialog.plain" fontstyle="0" fontsize="12" defaultfocused="false" sendthedata="false" enabled="true" visible="true" prtscmask="false" text="Cash Analysis Code-现金分析码" icon="" iconfilepath="" downlink="true" /&gt;
+    &lt;filterlist name="draw_type" namespace="" oldid="draw_type" ctrldesc="支取方式" align="0" alignindex="-1" left="188" top="347" height="22" width="175" verfiyprocess="" autoupdatesize="false" help="" background="#d4d0c8" foreground="#000000" fontname="Dialog.plain" fontstyle="0" fontsize="13" defaultfocused="false" sendthedata="true" enabled="true" visible="true" prtscmask="false" popupmode="true" outputprocess="" datasourcetype="1" dynamicconf="com.nantian.abs40.transaction.menu.draw_type.xml" affection="" trancode="" parsevarname="" sqlwhere="" datasourcehandleclass="" defaultvalue="" needvalue="true" fuzzymatch="false" editable="true" downlink="true"&gt;
+      &lt;events class="abs01/com.nantian.abs40.transaction.typical.T0101.T0101$UIint_0101"&gt;
+        &lt;event name="OnSelectionChanged" function="draw_type_OnSelectionChanged" /&gt;
+      &lt;/events&gt;
+    &lt;/filterlist&gt;
+    &lt;input type="password" name="pwd_other" namespace="" oldid="pwd_other" ctrldesc="" align="0" alignindex="-1" left="529" top="347" height="22" width="100" verfiyprocess="" autoupdatesize="false" help="" background="#f0f0f0" foreground="#000000" fontname="微软雅黑" fontstyle="0" fontsize="12" defaultfocused="false" sendthedata="true" enabled="false" visible="true" prtscmask="false" text="" minlength="0" tipmessage="" maxlength="6" formater="com.nantian.abs40.text.formater.FormatNumber" pinencode="0" acctname="" acctnamespace="" outputprocess="com.nantian.abs40.transaction.TlrEncrpt.encrpt_acc" sensitivedata="false" needvalue="false" autotransferfocus="false" editable="false" checkable="false" doubleinput="false" downlink="true"&gt;
+      &lt;events class="abs01/com.nantian.abs40.transaction.typical.T0101.T0101$UIint_0101"&gt;
+        &lt;event name="OnEnter" function="pwd_other_OnEnter" /&gt;
+      &lt;/events&gt;
+    &lt;/input&gt;
+    &lt;label name="jGLabel15" namespace="" oldid="jGLabel15" ctrldesc="" align="0" alignindex="-1" left="69" top="348" height="20" width="110" verfiyprocess="" autoupdatesize="true" help="" background="#b4b4b4" foreground="#000000" fontname="Dialog.plain" fontstyle="0" fontsize="12" defaultfocused="false" sendthedata="false" enabled="true" visible="true" prtscmask="false" text="Draw Type-支取方式" icon="" iconfilepath="" downlink="true" /&gt;
+    &lt;label name="jGLabel16" namespace="" oldid="jGLabel16" ctrldesc="" align="0" alignindex="-1" left="434" top="348" height="20" width="84" verfiyprocess="" autoupdatesize="true" help="" background="#b4b4b4" foreground="#000000" fontname="Dialog.plain" fontstyle="0" fontsize="12" defaultfocused="false" sendthedata="false" enabled="true" visible="true" prtscmask="false" text="Password-密码" icon="" iconfilepath="" downlink="true" /&gt;
+    &lt;filterlist name="fc_fe_flag" namespace="" oldid="fc_fe_flag" ctrldesc="钞汇标志" align="0" alignindex="-1" left="188" top="376" height="22" width="175" verfiyprocess="" autoupdatesize="false" help="" background="#d4d0c8" foreground="#000000" fontname="Dialog.plain" fontstyle="0" fontsize="13" defaultfocused="false" sendthedata="true" enabled="true" visible="true" prtscmask="false" popupmode="true" outputprocess="" datasourcetype="1" dynamicconf="com.nantian.abs40.transaction.menu.MFCFE.xml" affection="" trancode="" parsevarname="" sqlwhere="" datasourcehandleclass="" defaultvalue="" needvalue="false" fuzzymatch="false" editable="true" downlink="true" /&gt;
+    &lt;input type="text" name="norm_fratio" namespace="" oldid="norm_fratio" ctrldesc="" align="0" alignindex="-1" left="566" top="376" height="22" width="138" verfiyprocess="" autoupdatesize="false" help="" background="#ffffff" foreground="#000000" fontname="Dialog.plain" fontstyle="0" fontsize="13" defaultfocused="false" sendthedata="true" enabled="true" visible="true" prtscmask="false" text="0.000000" minlength="0" tipmessage="" maxlength="16" formater="com.nantian.abs40.text.formater.FormatDecimal" textalign="alLeft" outputprocess="" iscurrencysrc="false" start="" length="" sensitivedata="false" amountfield="true" currencysource="" needvalue="false" autotransferfocus="false" editable="true" checkable="false" doubleinput="false" downlink="true" /&gt;
+    &lt;label name="jGLabel17" namespace="" oldid="jGLabel17" ctrldesc="" align="0" alignindex="-1" left="75" top="377" height="20" width="104" verfiyprocess="" autoupdatesize="true" help="" background="#b4b4b4" foreground="#000000" fontname="Dialog.plain" fontstyle="0" fontsize="12" defaultfocused="false" sendthedata="false" enabled="true" visible="true" prtscmask="false" text="Banknote-钞汇标志" icon="" iconfilepath="" downlink="true" /&gt;
+    &lt;label name="jGLabel18" namespace="" oldid="jGLabel18" ctrldesc="" align="0" alignindex="-1" left="379" top="377" height="20" width="176" verfiyprocess="" autoupdatesize="true" help="" background="#b4b4b4" foreground="#000000" fontname="Dialog.plain" fontstyle="0" fontsize="12" defaultfocused="false" sendthedata="false" enabled="true" visible="true" prtscmask="false" text="Normal Float Rate-正常浮动比例" icon="" iconfilepath="" downlink="true" /&gt;
+    &lt;label name="jGLabel19" namespace="" oldid="jGLabel19" ctrldesc="" align="0" alignindex="-1" left="17" top="408" height="21" width="744" verfiyprocess="" autoupdatesize="true" help="" background="#b4b4b4" foreground="#000000" fontname="Dialog.plain" fontstyle="0" fontsize="13" defaultfocused="false" sendthedata="false" enabled="true" visible="true" prtscmask="false" text="------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------" icon="" iconfilepath="" downlink="true" /&gt;
+    &lt;input type="text" name="acc" namespace="" oldid="acc" ctrldesc="" align="0" alignindex="-1" left="188" top="435" height="22" width="200" verfiyprocess="" autoupdatesize="false" help="" background="#f0f0f0" foreground="#000000" fontname="Dialog.plain" fontstyle="0" fontsize="13" defaultfocused="false" sendthedata="true" enabled="true" visible="true" prtscmask="false" text="" minlength="0" tipmessage="" maxlength="30" formater="com.nantian.abs40.text.formater.FormatNumber" textalign="alLeft" outputprocess="" iscurrencysrc="false" start="" length="" sensitivedata="false" amountfield="false" currencysource="" needvalue="false" autotransferfocus="false" editable="false" checkable="false" doubleinput="false" downlink="true" /&gt;
+    &lt;input type="text" name="acc_id" namespace="" oldid="acc_id" ctrldesc="" align="0" alignindex="-1" left="537" top="435" height="22" width="49" verfiyprocess="" autoupdatesize="false" help="" background="#f0f0f0" foreground="#000000" fontname="Dialog.plain" fontstyle="0" fontsize="13" defaultfocused="false" sendthedata="true" enabled="true" visible="true" prtscmask="false" text="" minlength="0" tipmessage="" maxlength="3" formater="com.nantian.abs40.text.formater.FormatNumber" textalign="alLeft" outputprocess="" iscurrencysrc="false" start="" length="" sensitivedata="false" amountfield="false" currencysource="" needvalue="false" autotransferfocus="false" editable="false" checkable="false" doubleinput="false" downlink="true" /&gt;
+    &lt;label name="jGLabel20" namespace="" oldid="jGLabel20" ctrldesc="" align="0" alignindex="-1" left="89" top="436" height="20" width="90" verfiyprocess="" autoupdatesize="true" help="" background="#b4b4b4" foreground="#000000" fontname="Dialog.plain" fontstyle="0" fontsize="12" defaultfocused="false" sendthedata="false" enabled="true" visible="true" prtscmask="false" text="Account No-帐号" icon="" iconfilepath="" downlink="true" /&gt;
+    &lt;label name="jGLabel21" namespace="" oldid="jGLabel21" ctrldesc="" align="0" alignindex="-1" left="402" top="436" height="20" width="110" verfiyprocess="" autoupdatesize="true" help="" background="#b4b4b4" foreground="#000000" fontname="Dialog.plain" fontstyle="0" fontsize="12" defaultfocused="false" sendthedata="false" enabled="true" visible="true" prtscmask="false" text="Account ID-帐户ID号" icon="" iconfilepath="" downlink="true" /&gt;
+    &lt;input type="text" name="bal" namespace="" oldid="bal" ctrldesc="" align="0" alignindex="-1" left="188" top="464" height="22" width="150" verfiyprocess="" autoupdatesize="false" help="" background="#f0f0f0" foreground="#000000" fontname="Dialog.plain" fontstyle="0" fontsize="13" defaultfocused="false" sendthedata="true" enabled="true" visible="true" prtscmask="false" text="" minlength="0" tipmessage="" maxlength="19" formater="actAmount" textalign="alRight" outputprocess="" iscurrencysrc="false" start="" length="" sensitivedata="false" amountfield="true" currencysource="" needvalue="false" autotransferfocus="false" editable="false" checkable="false" doubleinput="false" downlink="true" /&gt;
+    &lt;label name="jGLabel22" namespace="" oldid="jGLabel22" ctrldesc="" align="0" alignindex="-1" left="106" top="465" height="20" width="73" verfiyprocess="" autoupdatesize="true" help="" background="#b4b4b4" foreground="#000000" fontname="Dialog.plain" fontstyle="0" fontsize="12" defaultfocused="false" sendthedata="false" enabled="true" visible="true" prtscmask="false" text="Balance-余额" icon="" iconfilepath="" downlink="true" /&gt;
+    &lt;input type="text" name="clt_seqno" namespace="" oldid="clt_seqno" ctrldesc="" align="0" alignindex="-1" left="188" top="493" height="22" width="150" verfiyprocess="" autoupdatesize="false" help="" background="#f0f0f0" foreground="#000000" fontname="Dialog.plain" fontstyle="0" fontsize="13" defaultfocused="false" sendthedata="true" enabled="true" visible="true" prtscmask="false" text="" minlength="0" tipmessage="" maxlength="10" formater="actUnlimit" textalign="alLeft" outputprocess="" iscurrencysrc="false" start="" length="" sensitivedata="false" amountfield="false" currencysource="" needvalue="false" autotransferfocus="false" editable="false" checkable="false" doubleinput="false" downlink="true" /&gt;
+    &lt;label name="jGLabel23" namespace="" oldid="jGLabel23" ctrldesc="" align="0" alignindex="-1" left="42" top="494" height="20" width="137" verfiyprocess="" autoupdatesize="true" help="" background="#b4b4b4" foreground="#000000" fontname="Dialog.plain" fontstyle="0" fontsize="12" defaultfocused="false" sendthedata="false" enabled="true" visible="true" prtscmask="false" text="Teller Serial No-柜员流水" icon="" iconfilepath="" downlink="true" /&gt;
+    &lt;button name="jGButton_submit" namespace="" oldid="jGButton_submit" ctrldesc="" align="0" alignindex="-1" left="208" top="537" height="22" width="117" verfiyprocess="" autoupdatesize="true" help="提交" background="#b4b4b4" foreground="#000000" fontname="Dialog.plain" fontstyle="0" fontsize="12" defaultfocused="false" sendthedata="false" enabled="true" visible="true" prtscmask="false" text="Submit-提交" icon="" iconfilepath="" defaultbutton="false" toolbarmode="false"&gt;
+      &lt;events class="abs01/com.nantian.abs40.transaction.typical.T0101.T0101$UIint_0101"&gt;
+        &lt;event name="OnClicked" function="jGButton_submit_OnClicked" /&gt;
+      &lt;/events&gt;
+    &lt;/button&gt;
+    &lt;button name="jGButton_close" namespace="" oldid="jGButton_close" ctrldesc="" align="0" alignindex="-1" left="457" top="537" height="22" width="100" verfiyprocess="" autoupdatesize="true" help="关闭" background="#b4b4b4" foreground="#000000" fontname="Dialog.plain" fontstyle="0" fontsize="12" defaultfocused="false" sendthedata="false" enabled="true" visible="true" prtscmask="false" text="Close-关闭" icon="" iconfilepath="" defaultbutton="false" toolbarmode="false"&gt;
+      &lt;events class="abs01/com.nantian.abs40.transaction.typical.T0101.T0101$UIint_0101"&gt;
+        &lt;event name="OnClicked" function="jGButton_close_OnClicked" /&gt;
+      &lt;/events&gt;
+    &lt;/button&gt;
+  &lt;/form&gt;
+&lt;/interface&gt;
+
+</code></pre>
+
+<p>JavaScript代码：</p>
+
+<p>使用递归的方法去解析xml文件</p>
+
+<pre class="has">
+<code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+    &lt;head&gt;
+        &lt;meta charset="utf-8"&gt;
+        &lt;title&gt;&lt;/title&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+
+        &lt;script type="text/javascript"&gt;
+
+            xhttp=new XMLHttpRequest();   //读取xml文件
+            xhttp.open("GET","./source/int_0101.xml",false);
+            xhttp.send();
+            xmlDoc=xhttp.responseXML;
+
+            var root=xmlDoc.documentElement;        //获取根节点
+            console.log(root)
+//            console.log(root.nodeType)
+//            console.log(root.children[0].nodeName)
+            for (var i = 0; i &lt; root.children.length; i++) {
+                if(root.children[i].hasChildNodes()){
+                    document.write(root.children[i].nodeName+":&lt;br /&gt;");
+
+                    var x = root.children[i];
+                    console.log(x)
+//                    console.log(x.attributes)
+                    var len = x.attributes.length;
+                    console.log(len)
+                    if(len&gt;0){
+                        for(var i=0;i&lt;len;i++){
+                            var it = x.attributes[i];
+//                            console.log(x.attributes[i])
+                            //属性名
+                            var localName = it.localName;
+                            //属性值
+                            var value = it.value;
+                            document.write("属性名："+localName+"==属性值："+value+'&lt;br /&gt;');
+                        }
+                    }
+
+
+                    Recursion(x);
+                }else{
+                    document.write(root.children[i].nodeName+"&lt;br /&gt;");
+                }
+
+            }
+            var k = 0;
+            function Recursion(item) {
+
+//                console.log(item)
+//                console.log(item.children[0].nodeName+"--"+item.children[0].hasChildNodes()+"***")
+                if (item.children.length &gt; 0) {
+//                    alert(123);
+//                    console.log("item.children.length: "+item.children.length)
+
+                    for (var i = 0; i &lt; item.children.length; i++) {
+                        document.write(item.children[i].nodeName+"---&lt;br /&gt;");
+                        len = item.children[i].attributes.length;
+//                        console.log(item.children[i].attributes[0])
+//                        document.write(len+"***"+item.children[i].attributes[0]+"&lt;br /&gt;");
+//                        for(var j = 0;j&lt;2;j++){
+//                            it = item.children[i].attributes[i];
+//                            console.log(it)
+//                        }
+                        if(len != 0){
+                            for(var j=0;j&lt;len;j++){
+                                it = item.children[i].attributes[j];
+//                                console.log(it)
+                                var localName = it.localName;
+                                var value = it.value;
+                                document.write("属性名："+localName+"==属性值："+value+'&lt;br /&gt;');
+                            }
+                        }
+
+//                        if(len&gt;0){
+//                            for(var i=0;i&lt;len;i++){
+//                                it = item.children[i].attributes[i];
+//                                console.log(item.children[i].attributes[i])
+////                                //属性名
+////                                localName = it.localName;
+////                                //属性值
+////                                value = it.value;
+////                                document.write(localName+"&amp;&amp;"+value+'&lt;br /&gt;');
+//                            }
+//                        }
+//                        console.log(item.children[i])
+//                        console.log(item.children[i].nodeName+"--"+item.children[i].hasChildNodes())
+
+                        if (item.children[i].hasChildNodes()) {  //判断一个节点是否含有子节点
+//                            document.write("****")
+                            Recursion(item.children[i]);  
+//                            document.write("&lt;br /&gt;")
+                        }
+                    }
+
+                }
+            }
+        &lt;/script&gt;
+    &lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+
+<p>在网页中显示xml文件的解析结果</p>
+
+<p style="text-align:center;"><img alt="" class="has" height="888" src="https://img-blog.csdnimg.cn/20191020184349744.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2MTcxMjg3,size_16,color_FFFFFF,t_70" width="677" /></p>
+
+<p style="text-align:center;"><img alt="" class="has" height="811" src="https://img-blog.csdnimg.cn/20191020184414986.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2MTcxMjg3,size_16,color_FFFFFF,t_70" width="742" /></p>
+
+<p> </p>
+</div><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">空城机</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://yoursite.com/2019/10/20/%E4%BD%BF%E7%94%A8JavaScript%E8%A7%A3%E6%9E%90XML%E6%96%87%E4%BB%B6/">http://yoursite.com/2019/10/20/%E4%BD%BF%E7%94%A8JavaScript%E8%A7%A3%E6%9E%90XML%E6%96%87%E4%BB%B6/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://yoursite.com" target="_blank">空城机</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/xml%E8%A7%A3%E6%9E%90/">xml解析</a></div><div class="post_share"><div class="social-share" data-image="https://i.loli.net/2019/07/21/5d33d5dc1531213134.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css"/><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js"></script></div></div><div class="post-reward"><a class="reward-button button--primary button--animated"> <i class="fa fa-qrcode"></i> 打赏<div class="reward-main"><ul class="reward-all"><li class="reward-item"><img class="post-qr-code__img" src="/img/wechat.jpg" alt="微信"/><div class="post-qr-code__desc">微信</div></li><li class="reward-item"><img class="post-qr-code__img" src="/img/alipay.jpg" alt="支付寶"/><div class="post-qr-code__desc">支付寶</div></li></ul></div></a></div><nav class="pagination_post" id="pagination"><div class="prev-post pull_left"><a href="/2019/10/24/%E7%A7%8B%E6%8B%9B%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95/"><img class="prev_cover" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">秋招前端面试问题记录</div></div></a></div><div class="next-post pull_right"><a href="/2019/10/02/git%E5%92%8CGitHub%E7%9A%84%E4%BD%BF%E7%94%A8%EF%BC%88%E4%BA%94%EF%BC%89/"><img class="next_cover" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">git和GitHub的使用（五）</div></div></a></div></nav></article></main><footer id="footer" data-type="color"><div id="footer-wrap"><div class="copyright">&copy;2018 - 2020 By 空城机</div><div class="framework-info"><span>驱动 </span><a href="https://hexo.io" target="_blank" rel="noopener"><span>Hexo</span></a><span class="footer-separator">|</span><span>主题 </span><a href="https://github.com/jerryc127/hexo-theme-butterfly" target="_blank" rel="noopener"><span>Butterfly</span></a></div></div></footer></div><section class="rightside" id="rightside"><div id="rightside-config-hide"><i class="fa fa-book" id="readmode" title="阅读模式"></i><i class="fa fa-plus" id="font_plus" title="放大字体"></i><i class="fa fa-minus" id="font_minus" title="缩小字体"></i><a class="translate_chn_to_cht" id="translateLink" href="javascript:translatePage();" title="简繁转换" target="_self">繁</a><i class="darkmode fa fa-moon-o" id="darkmode" title="夜间模式"></i></div><div id="rightside-config-show"><div id="rightside_config" title="设置"><i class="fa fa-cog" aria-hidden="true"></i></div><i class="fa fa-arrow-up" id="go-up" title="回到顶部" aria-hidden="true"></i></div></section><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page@latest/instantpage.min.js" type="module"></script></body></html>

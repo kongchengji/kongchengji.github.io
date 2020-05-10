@@ -1,0 +1,559 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Java基础（十）——网络编程、Lambda表达式、函数式接口、Stream流 | 空城机</title><meta name="description" content="目录  网络编程  网络编程概述  计算机网络   网络编程  网络编程三要素  IP地址  端口  协议  TCP协议  UDP协议  Lambda表达式  函数式编程思想概述  Lambda表达式标准格式  Lambda表达式的格式  函数式接口  概述  函数式接口作为方法的参数  Supplier接口  Stream流  Stream流生成方式  Stream流的常见生成方式"><meta name="keywords" content="java intellij idea"><meta name="author" content="空城机"><meta name="copyright" content="空城机"><meta name="format-detection" content="telephone=no"><link rel="shortcut icon" href="/img/favicon.png"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="dns-prefetch" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="https://fonts.googleapis.com" crossorigin="crossorigin"/><link rel="dns-prefetch" href="https://fonts.googleapis.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="dns-prefetch" href="//busuanzi.ibruce.info"/><meta name="twitter:card" content="summary"><meta name="twitter:title" content="Java基础（十）——网络编程、Lambda表达式、函数式接口、Stream流"><meta name="twitter:description" content="目录  网络编程  网络编程概述  计算机网络   网络编程  网络编程三要素  IP地址  端口  协议  TCP协议  UDP协议  Lambda表达式  函数式编程思想概述  Lambda表达式标准格式  Lambda表达式的格式  函数式接口  概述  函数式接口作为方法的参数  Supplier接口  Stream流  Stream流生成方式  Stream流的常见生成方式"><meta name="twitter:image" content="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg"><meta property="og:type" content="article"><meta property="og:title" content="Java基础（十）——网络编程、Lambda表达式、函数式接口、Stream流"><meta property="og:url" content="http://yoursite.com/2020/03/24/Java%E5%9F%BA%E7%A1%80%EF%BC%88%E5%8D%81%EF%BC%89%E2%80%94%E2%80%94%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B%E3%80%81Lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F%E3%80%81%E5%87%BD%E6%95%B0%E5%BC%8F%E6%8E%A5%E5%8F%A3%E3%80%81Stream%E6%B5%81/"><meta property="og:site_name" content="空城机"><meta property="og:description" content="目录  网络编程  网络编程概述  计算机网络   网络编程  网络编程三要素  IP地址  端口  协议  TCP协议  UDP协议  Lambda表达式  函数式编程思想概述  Lambda表达式标准格式  Lambda表达式的格式  函数式接口  概述  函数式接口作为方法的参数  Supplier接口  Stream流  Stream流生成方式  Stream流的常见生成方式"><meta property="og:image" content="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg"><meta property="article:published_time" content="2020-03-24T06:59:52.000Z"><meta property="article:modified_time" content="2020-05-10T11:05:27.825Z"><script src="https://cdn.jsdelivr.net/npm/js-cookie/dist/js.cookie.min.js"></script><script>var autoChangeMode = '1'
+var t = Cookies.get("theme")
+if (autoChangeMode == '1'){
+  var isDarkMode = window.matchMedia("(prefers-color-scheme: dark)").matches
+  var isLightMode = window.matchMedia("(prefers-color-scheme: light)").matches
+  var isNotSpecified = window.matchMedia("(prefers-color-scheme: no-preference)").matches
+  var hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+  if (t === undefined){
+    if (isLightMode) activateLightMode()
+    else if (isDarkMode) activateDarkMode()
+    else if (isNotSpecified || hasNoSupport){
+      console.log('You specified no preference for a color scheme or your browser does not support it. I Schedule dark mode during night time.')
+      var now = new Date()
+      var hour = now.getHours()
+      var isNight = hour < 6 || hour >= 18
+      isNight ? activateDarkMode() : activateLightMode()
+  }
+  } else if (t == 'light') activateLightMode()
+  else activateDarkMode()
+
+} else if (autoChangeMode == '2'){
+  now = new Date();
+  hour = now.getHours();
+  isNight = hour < 6 || hour >= 18
+  if(t === undefined) isNight? activateDarkMode() : activateLightMode()
+  else if (t === 'light') activateLightMode()
+  else activateDarkMode() 
+} else {
+  if ( t == 'dark' ) activateDarkMode()
+  else if ( t == 'light') activateLightMode()
+}
+
+function activateDarkMode(){
+  document.documentElement.setAttribute('data-theme', 'dark')
+  if (document.querySelector('meta[name="theme-color"]') !== null){
+    document.querySelector('meta[name="theme-color"]').setAttribute('content','#000')
+  }
+}
+function activateLightMode(){
+  document.documentElement.setAttribute('data-theme', 'light')
+  if (document.querySelector('meta[name="theme-color"]') !== null){
+  document.querySelector('meta[name="theme-color"]').setAttribute('content','#fff')
+  }
+}</script><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@latest/css/font-awesome.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css"><link rel="canonical" href="http://yoursite.com/2020/03/24/Java%E5%9F%BA%E7%A1%80%EF%BC%88%E5%8D%81%EF%BC%89%E2%80%94%E2%80%94%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B%E3%80%81Lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F%E3%80%81%E5%87%BD%E6%95%B0%E5%BC%8F%E6%8E%A5%E5%8F%A3%E3%80%81Stream%E6%B5%81/"><link rel="prev" title="Java基础（十一）——类加载、反射、XML概述" href="http://yoursite.com/2020/03/29/Java%E5%9F%BA%E7%A1%80%EF%BC%88%E5%8D%81%E4%B8%80%EF%BC%89%E2%80%94%E2%80%94%E7%B1%BB%E5%8A%A0%E8%BD%BD%E3%80%81%E5%8F%8D%E5%B0%84%E3%80%81XML%E6%A6%82%E8%BF%B0/"><link rel="next" title="Java基础（九）——线程同步、线程安全的类、生产者消费者" href="http://yoursite.com/2020/03/22/Java%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B9%9D%EF%BC%89%E2%80%94%E2%80%94%E7%BA%BF%E7%A8%8B%E5%90%8C%E6%AD%A5%E3%80%81%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%E7%9A%84%E7%B1%BB%E3%80%81%E7%94%9F%E4%BA%A7%E8%80%85%E6%B6%88%E8%B4%B9%E8%80%85/"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Titillium+Web"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: {"defaultEncoding":2,"translateDelay":0,"cookieDomain":"https://xxx/","msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"簡"},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  bookmark: {
+    message_prev: '按',
+    message_next: '键将本页加入书签'
+  },
+  runtime_unit: '天',
+  runtime: true,
+  copyright: undefined,
+  ClickShowText: undefined,
+  medium_zoom: false,
+  fancybox: true,
+  Snackbar: undefined,
+  baiduPush: false,
+  highlightCopy: true,
+  highlightLang: true,
+  highlightShrink: 'false',
+  isFontAwesomeV5: false,
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+  
+}</script><script>var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isSidebar: true  
+  }</script><noscript><style>
+#page-header {
+  opacity: 1
+}
+.justified-gallery img{
+  opacity: 1
+}
+</style></noscript><meta name="generator" content="Hexo 4.2.0"></head><body><div id="mobile-sidebar"><div id="menu_mask"></div><div id="mobile-sidebar-menus"><div class="mobile_author_icon"><img class="avatar-img" src="/img/avatar.png" onerror="onerror=null;src='/img/tou5.jpg'" alt="avatar"/></div><div class="mobile_post_data"><div class="mobile_data_item is-center"><div class="mobile_data_link"><a href="/archives/"><div class="headline">文章</div><div class="length_num">154</div></a></div></div><div class="mobile_data_item is-center">      <div class="mobile_data_link"><a href="/tags/"><div class="headline">标签</div><div class="length_num">45</div></a></div></div><div class="mobile_data_item is-center">     <div class="mobile_data_link"><a href="/categories/"><div class="headline">分类</div><div class="length_num">15</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fa fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fa fa-heart"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page"><i class="fa-fw fa fa-list" aria-hidden="true"></i><span> 清单</span><i class="fa fa-chevron-down menus-expand" aria-hidden="true"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/music/"><i class="fa-fw fa fa-music"></i><span> 音乐</span></a></li><li><a class="site-page" href="/movies/"><i class="fa-fw fa fa-film"></i><span> 电影</span></a></li></ul></div></div></div></div><i class="fa fa-arrow-right on" id="toggle-sidebar" aria-hidden="true">     </i><div id="sidebar"><div class="sidebar-toc"><div class="sidebar-toc__title">目录</div><div class="sidebar-toc__progress"><span class="progress-notice">你已经读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar">     </div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B"><span class="toc-number">1.</span> <span class="toc-text">网络编程</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B%E6%A6%82%E8%BF%B0"><span class="toc-number">1.1.</span> <span class="toc-text">网络编程概述</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C"><span class="toc-number">1.1.1.</span> <span class="toc-text">计算机网络</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%C2%A0%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B"><span class="toc-number">1.1.2.</span> <span class="toc-text"> 网络编程</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B%E4%B8%89%E8%A6%81%E7%B4%A0"><span class="toc-number">1.2.</span> <span class="toc-text">网络编程三要素</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#IP%E5%9C%B0%E5%9D%80"><span class="toc-number">1.2.1.</span> <span class="toc-text">IP地址</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AB%AF%E5%8F%A3"><span class="toc-number">1.2.2.</span> <span class="toc-text">端口</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%8F%E8%AE%AE"><span class="toc-number">1.2.3.</span> <span class="toc-text">协议</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#TCP%E5%8D%8F%E8%AE%AE"><span class="toc-number">1.2.4.</span> <span class="toc-text">TCP协议</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#UDP%E5%8D%8F%E8%AE%AE"><span class="toc-number">1.2.5.</span> <span class="toc-text">UDP协议</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="toc-number">2.</span> <span class="toc-text">Lambda表达式</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B%E6%80%9D%E6%83%B3%E6%A6%82%E8%BF%B0"><span class="toc-number">2.1.</span> <span class="toc-text">函数式编程思想概述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%A0%87%E5%87%86%E6%A0%BC%E5%BC%8F"><span class="toc-number">2.2.</span> <span class="toc-text">Lambda表达式标准格式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F%E7%9A%84%E6%A0%BC%E5%BC%8F"><span class="toc-number">2.2.1.</span> <span class="toc-text">Lambda表达式的格式</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%87%BD%E6%95%B0%E5%BC%8F%E6%8E%A5%E5%8F%A3"><span class="toc-number">3.</span> <span class="toc-text">函数式接口</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A6%82%E8%BF%B0"><span class="toc-number">3.1.</span> <span class="toc-text">概述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%87%BD%E6%95%B0%E5%BC%8F%E6%8E%A5%E5%8F%A3%E4%BD%9C%E4%B8%BA%E6%96%B9%E6%B3%95%E7%9A%84%E5%8F%82%E6%95%B0"><span class="toc-number">3.2.</span> <span class="toc-text">函数式接口作为方法的参数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Supplier%E6%8E%A5%E5%8F%A3"><span class="toc-number">3.2.1.</span> <span class="toc-text">Supplier接口</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Stream%E6%B5%81"><span class="toc-number">4.</span> <span class="toc-text">Stream流</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Stream%E6%B5%81%E7%94%9F%E6%88%90%E6%96%B9%E5%BC%8F"><span class="toc-number">4.1.</span> <span class="toc-text">Stream流生成方式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Stream%E6%B5%81%E7%9A%84%E5%B8%B8%E8%A7%81%E7%94%9F%E6%88%90%E6%96%B9%E5%BC%8F"><span class="toc-number">4.1.1.</span> <span class="toc-text">Stream流的常见生成方式</span></a></li></ol></li></ol></li></ol></div></div></div><div id="body-wrap"><div class="post-bg" id="nav" style="background-image: url(https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg)"><div id="page-header"><span class="pull_left" id="blog_name"><a class="blog_title" id="site-name" href="/">空城机</a></span><span class="pull_right menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fa fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fa fa-heart"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page"><i class="fa-fw fa fa-list" aria-hidden="true"></i><span> 清单</span><i class="fa fa-chevron-down menus-expand" aria-hidden="true"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/music/"><i class="fa-fw fa fa-music"></i><span> 音乐</span></a></li><li><a class="site-page" href="/movies/"><i class="fa-fw fa fa-film"></i><span> 电影</span></a></li></ul></div></div><span class="toggle-menu close"><a class="site-page"><i class="fa fa-bars fa-fw" aria-hidden="true"></i></a></span></span></div><div id="post-info"><div id="post-title"><div class="posttitle">Java基础（十）——网络编程、Lambda表达式、函数式接口、Stream流</div></div><div id="post-meta"><div class="meta-firstline"><time class="post-meta__date"><span class="post-meta__date-created" title="发表于 2020-03-24 14:59:52"><i class="fa fa-calendar" aria-hidden="true"></i> 发表于 2020-03-24</span><span class="post-meta__separator">|</span><span class="post-meta__date-updated" title="更新于 2020-05-10 19:05:27"><i class="fa fa-history" aria-hidden="true"></i> 更新于 2020-05-10</span></time><span class="post-meta__categories"><span class="post-meta__separator">|</span><i class="fa fa-inbox post-meta__icon" aria-hidden="true"></i><a class="post-meta__categories" href="/categories/Java/">Java</a></span></div><div class="meta-secondline"> </div><div class="meta-thirdline"><span class="post-meta-pv-cv"><i class="fa fa-eye post-meta__icon" aria-hidden="true"> </i><span>阅读量:</span><span id="busuanzi_value_page_pv"></span></span><span class="post-meta-commentcount"></span></div></div></div></div><main class="layout_post" id="content-inner"><article id="post"><div class="post-content" id="article-container"><a id="more"></a>
+
+<p id="main-toc"><strong>目录</strong></p>
+
+<p id="%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-toc" style="margin-left:0px;"><a href="#%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B">网络编程</a></p>
+
+<p id="%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B%E6%A6%82%E8%BF%B0-toc" style="margin-left:40px;"><a href="#%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B%E6%A6%82%E8%BF%B0">网络编程概述</a></p>
+
+<p id="%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C-toc" style="margin-left:80px;"><a href="#%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C">计算机网络</a></p>
+
+<p id="%C2%A0%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-toc" style="margin-left:80px;"><a href="#%C2%A0%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B"> 网络编程</a></p>
+
+<p id="%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B%E4%B8%89%E8%A6%81%E7%B4%A0-toc" style="margin-left:40px;"><a href="#%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B%E4%B8%89%E8%A6%81%E7%B4%A0">网络编程三要素</a></p>
+
+<p id="IP%E5%9C%B0%E5%9D%80-toc" style="margin-left:80px;"><a href="#IP%E5%9C%B0%E5%9D%80">IP地址</a></p>
+
+<p id="%E7%AB%AF%E5%8F%A3-toc" style="margin-left:80px;"><a href="#%E7%AB%AF%E5%8F%A3">端口</a></p>
+
+<p id="%E5%8D%8F%E8%AE%AE-toc" style="margin-left:80px;"><a href="#%E5%8D%8F%E8%AE%AE">协议</a></p>
+
+<p id="TCP%E5%8D%8F%E8%AE%AE-toc" style="margin-left:80px;"><a href="#TCP%E5%8D%8F%E8%AE%AE">TCP协议</a></p>
+
+<p id="UDP%E5%8D%8F%E8%AE%AE-toc" style="margin-left:80px;"><a href="#UDP%E5%8D%8F%E8%AE%AE">UDP协议</a></p>
+
+<p id="Lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F-toc" style="margin-left:0px;"><a href="#Lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F">Lambda表达式</a></p>
+
+<p id="%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B%E6%80%9D%E6%83%B3%E6%A6%82%E8%BF%B0-toc" style="margin-left:40px;"><a href="#%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B%E6%80%9D%E6%83%B3%E6%A6%82%E8%BF%B0">函数式编程思想概述</a></p>
+
+<p id="Lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%A0%87%E5%87%86%E6%A0%BC%E5%BC%8F-toc" style="margin-left:40px;"><a href="#Lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%A0%87%E5%87%86%E6%A0%BC%E5%BC%8F">Lambda表达式标准格式</a></p>
+
+<p id="Lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F%E7%9A%84%E6%A0%BC%E5%BC%8F-toc" style="margin-left:80px;"><a href="#Lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F%E7%9A%84%E6%A0%BC%E5%BC%8F">Lambda表达式的格式</a></p>
+
+<p id="%E5%87%BD%E6%95%B0%E5%BC%8F%E6%8E%A5%E5%8F%A3-toc" style="margin-left:0px;"><a href="#%E5%87%BD%E6%95%B0%E5%BC%8F%E6%8E%A5%E5%8F%A3">函数式接口</a></p>
+
+<p id="%E6%A6%82%E8%BF%B0-toc" style="margin-left:40px;"><a href="#%E6%A6%82%E8%BF%B0">概述</a></p>
+
+<p id="%E5%87%BD%E6%95%B0%E5%BC%8F%E6%8E%A5%E5%8F%A3%E4%BD%9C%E4%B8%BA%E6%96%B9%E6%B3%95%E7%9A%84%E5%8F%82%E6%95%B0-toc" style="margin-left:40px;"><a href="#%E5%87%BD%E6%95%B0%E5%BC%8F%E6%8E%A5%E5%8F%A3%E4%BD%9C%E4%B8%BA%E6%96%B9%E6%B3%95%E7%9A%84%E5%8F%82%E6%95%B0">函数式接口作为方法的参数</a></p>
+
+<p id="Supplier%E6%8E%A5%E5%8F%A3-toc" style="margin-left:80px;"><a href="#Supplier%E6%8E%A5%E5%8F%A3">Supplier接口</a></p>
+
+<p id="Stream%E6%B5%81-toc" style="margin-left:0px;"><a href="#Stream%E6%B5%81">Stream流</a></p>
+
+<p id="Stream%E6%B5%81%E7%94%9F%E6%88%90%E6%96%B9%E5%BC%8F-toc" style="margin-left:40px;"><a href="#Stream%E6%B5%81%E7%94%9F%E6%88%90%E6%96%B9%E5%BC%8F">Stream流生成方式</a></p>
+
+<p id="Stream%E6%B5%81%E7%9A%84%E5%B8%B8%E8%A7%81%E7%94%9F%E6%88%90%E6%96%B9%E5%BC%8F-toc" style="margin-left:80px;"><a href="#Stream%E6%B5%81%E7%9A%84%E5%B8%B8%E8%A7%81%E7%94%9F%E6%88%90%E6%96%B9%E5%BC%8F">Stream流的常见生成方式</a></p>
+
+<hr id="hr-toc" /><p> </p>
+
+<h1 id="%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B">网络编程</h1>
+
+<h2 id="%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B%E6%A6%82%E8%BF%B0">网络编程概述</h2>
+
+<h3 id="%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C">计算机网络</h3>
+
+<p>是指将地理位置不同的具有独立功能的多台计算机及其外部设备，通过通信线路连接起来，在网络操作系统，网络管理软件及网络通信协议的管理和协调下，实现资源共享和信息传递的计算机系统</p>
+
+<p style="text-align:center;"><img alt="" height="198" src="https://img-blog.csdnimg.cn/20200322130506334.png" width="347" /></p>
+
+<h3 id="%C2%A0%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B"> 网络编程</h3>
+
+<p>在网络通信协议下，实现网络互连的不同计算机上运行的程序间可以进行数据交换</p>
+
+<p>具体概述可以去看看</p>
+
+<p><a href="https://blog.csdn.net/qq_36171287/article/details/95670584" target="_blank" rel="noopener">https://blog.csdn.net/qq_36171287/article/details/95670584</a></p>
+
+<p><a href="https://blog.csdn.net/qq_36171287/article/details/99580141" target="_blank" rel="noopener">https://blog.csdn.net/qq_36171287/article/details/99580141</a></p>
+
+<p> </p>
+
+<h2 id="%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B%E4%B8%89%E8%A6%81%E7%B4%A0">网络编程三要素</h2>
+
+<h3 id="IP%E5%9C%B0%E5%9D%80">IP地址</h3>
+
+<p>要想让网络中的计算机能够互相通信，必须为每台计算机指定一个标识号, 通过这个标识号来指定要接收数据的计算机和识别发送的计算机，而IP地址就是这个标识号。也就是设备的标识</p>
+
+<p><span style="color:#f33b45;"><strong>Java中有InetAddress类</strong></span></p>
+
+<pre>
+<code class="language-html">public class InetAddress
+extends Object
+implements Serializable</code></pre>
+
+<p>此类表示Internet协议（IP）地址。</p>
+
+<p>IP地址是由IP使用的32位或128位无符号数字，构建UDP和TCP协议的低级协议。 IP地址结构由定义<a href="http://www.ietf.org/rfc/rfc790.txt" target="_blank" rel="noopener"><em>RFC 790: Assigned Numbers</em></a> ， <a href="http://www.ietf.org/rfc/rfc1918.txt" target="_blank" rel="noopener"><em>RFC 1918: Address Allocation for Private Internets</em></a> ， <a href="http://www.ietf.org/rfc/rfc2365.txt" target="_blank" rel="noopener"><em>RFC 2365: Administratively Scoped IP Multicast</em></a>和<a href="http://www.ietf.org/rfc/rfc2373.txt" target="_blank" rel="noopener"><em>RFC 2373: IP Version 6 Addressing Architecture</em></a> 。 InetAddress的一个实例由一个IP地址和可能的相应主机名组成（取决于它是用主机名构造还是已经完成了反向主机名解析）。</p>
+
+<p>例子：</p>
+
+<pre>
+<code class="language-java">public class InetAddressDemo {
+    public static void main(String[] args) throws UnknownHostException {
+        //确定主机名称的IP地址
+        InetAddress address = InetAddress.getByName("192.168.0.101");
+        //获取IP地址主机名
+        String name = address.getHostName();
+        //返回文本显示中的IP地址字符串
+        String ip = address.getHostAddress();
+
+        System.out.println("主机名：" + ip);
+        System.out.println("IP地址：" + ip);
+    }
+}</code></pre>
+
+<p style="text-align:center;"><img alt="" height="160" src="https://img-blog.csdnimg.cn/20200322133847963.png" width="425" /></p>
+
+<p> </p>
+
+<h3 id="%E7%AB%AF%E5%8F%A3">端口</h3>
+
+<p>网络的通信，本质上是两个应用程序的通信。每台计算机都有很多的应用程序，那么在网络通信时，如何区分这些应用程序呢?如果说IP地址可以唯一标识网络中的设备, 那么端口号就可以唯标识设备中的应用程序了。也就是应用程序的标识</p>
+
+<h3 id="%E5%8D%8F%E8%AE%AE">协议</h3>
+
+<p>通过计算机网络可以使多 台计算机实现连接，位于同一个网络中的计算机在进行连接和通信时需要遵守一定的规则，这就好比在道路中行驶的汽车一定要遵守交通规则- 样。在计算机网络中，这些连接和通信的规则被称为网络通信协议，它对数据的传输格式、传输速率、传输步骤等做了统-规定， 通信双方必须同时遵守才能完成数据交换。常见的协议有UDP协议和TCP协议</p>
+
+<h3 id="TCP%E5%8D%8F%E8%AE%AE">TCP协议</h3>
+
+<ul><li>传输控制协议 (Transmission Control Protocol)
+    <ul><li>TCP协议是<span style="color:#f33b45;">面向连接</span>的通信协议，即传输数据之前，在发送端和接收端建立逻辑连接，然后再传输数据,</li>
+        <li>它提供了两台计算机之间<span style="color:#f33b45;">可靠无差错</span>的数据传输。在TCP连接中必须要明确客户端与服务器端，由客户端</li>
+        <li>向服务端发出连接请求，每次连接的创建都需要经过“三次握手"</li>
+    </ul></li>
+    <li>三次握手: TCP协议中,在发送数据的准备阶段，客户端与服务器之间的三次交互，以保证连接的可靠
+    <ul><li>第一次握手,客户端向服务器端发出连接请求，等待服务器确认</li>
+        <li>第二次握手，服务器端向客户端回送-一个响应， 通知客户端收到了连接请求</li>
+        <li>第三次握手，客户端再次向服务器端发送确认信息，确认连接</li>
+    </ul></li>
+</ul><p>TCP通信协议是一种可靠的网络协议，它在通信的两端各建立一一个Socket对象，从而在通信的两端形成网络虚拟链路，一旦建立了虚拟的网络链路,两端的程序就可以通过虚拟链路进行通信<br />
+Java对基于TCP协议的的网络提供了良好的封装，使用Socket对象来代表两端的通信端口， 并通过Socket产生流来进行网络通信<br />
+Java为客户端提供了Socket类，为服务 器端提供了ServerSocket类</p>
+
+<p>发送端代码：</p>
+
+<pre>
+<code class="language-java">import java.io.IOException;
+import java.io.OutputStream;
+import java.net.InetAddress;
+import java.net.Socket;
+import java.net.UnknownHostException;
+
+public class TCPsend {
+    public static void main(String[] args) throws IOException {
+        //创建socket对象
+//        Socket sc = new Socket(InetAddress.getByName("127.0.0.1"),123456);
+        Socket s = new Socket("127.0.0.1",12345);
+        //获取输出流，写数据
+        OutputStream os = s.getOutputStream();
+        os.write("hello,TCP".getBytes());
+
+        //释放资源
+        s.close();
+    }
+}</code></pre>
+
+<p>接收端：</p>
+
+<pre>
+<code class="language-java">import java.io.IOException;
+import java.io.InputStream;
+import java.net.ServerSocket;
+import java.net.Socket;
+
+public class TCPreceive {
+    public static void main(String[] args) throws IOException {
+        ServerSocket ss = new ServerSocket(12345);
+        //accept()：侦听要连接到此套接字并接受它
+        Socket s = ss.accept();
+
+        //获取输入流，读数据
+        InputStream is = s.getInputStream();
+        byte[] bys = new byte[1024];
+        int len = is.read(bys);
+        String data = new String(bys,0,len);
+        System.out.println("数据是："+data);
+
+        s.close();
+    }
+}</code></pre>
+
+<p>运行结果：</p>
+
+<p style="text-align:center;"><img alt="" height="150" src="https://img-blog.csdnimg.cn/20200322142725252.png" width="462" /></p>
+
+<p> </p>
+
+<h3 id="UDP%E5%8D%8F%E8%AE%AE">UDP协议</h3>
+
+<ul><li>UDP协议是一种不可靠的网络协议，它在通信的两端各建立-个Socket对象,但是这两个Socket只是发送，接收数据的对象</li>
+    <li>因此对于基于UDP协议的通信双方而言,没有所谓的客户端和服务器的概念</li>
+    <li>Java提供了DatagramSocket类作为基于UDP协议的Socket</li>
+</ul><p>发送数据的步骤</p>
+
+<ul><li>①创建发送端的Socket对象(DatagramSocket)</li>
+    <li>②创建数据， 并把数据打包</li>
+    <li>③调用DatagramSocke对象的方法发送数据</li>
+    <li>④关闭发送端</li>
+</ul><pre>
+<code class="language-java">import java.io.IOException;
+import java.net.*;
+public class UDPdemo {
+    public static void main(String[] args) throws IOException {
+        //创建发送端的Socket对象(DatagramSocket)
+        DatagramSocket ds = new DatagramSocket();
+        //创建数据，把数据打包
+        //构造一个数据包，发送程度为len的数据包到指定主机的指定端口号
+        byte[] bys = "hello world,我来了".getBytes();
+        int len = bys.length;
+        InetAddress address = InetAddress.getByName("127.0.0.1");
+        int port = 10086;
+        DatagramPacket dp = new DatagramPacket(bys,len,address,port);
+
+<pre><code>    //调用DatagramSocke对象的方法发送数据
+    ds.send(dp);
+
+    //关闭发送端
+    ds.close();
+}</code></pre><p>}</code></pre></p>
+<p>UDP接收数据</p>
+
+<p>接收数据的步骤</p>
+
+<ul><li>①创建接收端的Socket对象(DatagramSocket)</li>
+    <li>②创建一个数据包， 用于接收数据</li>
+    <li>③调用DatagramSocket对象的方法接收数据</li>
+    <li>④解析数据包，并把数据在控制台显示</li>
+    <li>⑤关闭接收端</li>
+</ul><p>代码：</p>
+
+<pre>
+<code class="language-java">import java.io.IOException;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+import java.net.SocketException;
+public class UDPreceive {
+    public static void main(String[] args) throws IOException {
+        //创建socket接收端对象，参数是制定的端口
+        DatagramSocket ds = new DatagramSocket(10086);
+
+        byte[] bys = new byte[1024];
+        DatagramPacket dp = new DatagramPacket(bys,bys.length);
+
+        ds.receive(dp);
+        //解析数据包，并把数据在控制台显示
+        int len = dp.getLength();
+        byte[] data = dp.getData();
+        System.out.println("数据是:" + new String(data,0,len));
+
+        ds.close();
+    }
+}</code></pre>
+
+<p>运行接收端，然后再运行发送端，这样接收端控制台中就能够接收到发送端发送过来的数据了</p>
+
+<p style="text-align:center;"><img alt="" height="165" src="https://img-blog.csdnimg.cn/202003221406288.png" width="476" /></p>
+
+<p> </p>
+
+<h1 id="Lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F">Lambda表达式</h1>
+
+<p style="text-align:center;"><img alt="" height="165" src="https://img-blog.csdnimg.cn/20200323121820192.png" width="302" /></p>
+
+<h2 id="%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B%E6%80%9D%E6%83%B3%E6%A6%82%E8%BF%B0">函数式编程思想概述</h2>
+
+<p>在数学中，函数就是有输入量输出量的一套计算方案,也就是“拿数据做操作”<br />
+面向对象思想强调“必须通过对象的形式来做事情”<br />
+函数式思想则尽量忽略面向对象的复杂语法:“强调做什么， 而不是以什么形式去做”<br />
+而我们要学习的Lambda表达式就是函数式思想的体现</p>
+
+<p>例子：很像JavaScript中的箭头函数</p>
+
+<pre>
+<code class="language-java">public class LambdaDemo {
+    public static void main(String[] args) {
+        //实现类的方式实现需求
+//        MyRunnable my = new MyRunnable();
+//        Thread t = new Thread(my);
+//        t.start();
+
+        //匿名内部类的方式改进
+//        new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                System.out.println("多线程程序启动了");
+//            }
+//        }).start();
+
+        //Lambda表达式方式改进
+        new Thread( ()-&gt;{
+            System.out.println("多线程程序启动了");
+        } ).start();
+    }
+}</code></pre>
+
+<p style="text-align:center;"><img alt="" height="143" src="https://img-blog.csdnimg.cn/20200323122733118.png" width="320" /></p>
+
+<p> </p>
+
+<h2 id="Lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%A0%87%E5%87%86%E6%A0%BC%E5%BC%8F">Lambda表达式标准格式</h2>
+
+<p>匿名内部类中重写run()方法的代码分析</p>
+
+<ul><li>方法形式参数为空,说明调用方法时不需要传递参数</li>
+    <li>方法返回值类型为void, 说明方法执行没有结果返回</li>
+    <li>方法体中的内容， 是我们具体要做的事情</li>
+</ul><p>Lambda表达式的代码分析</p>
+
+<ul><li>(): 里面没有内容,可以看成是方法形式参数为空</li>
+    <li>-&gt;:用箭头指向后面要做的事情</li>
+    <li>{}: 包含一段代码， 我们称之为代码块，可以看成是方法体中的内容</li>
+</ul><p style="text-align:center;"><img alt="" height="220" src="https://img-blog.csdnimg.cn/20200323123028216.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2MTcxMjg3,size_16,color_FFFFFF,t_70" width="317" /></p>
+
+<p>JavaScript中箭头函数例子：</p>
+
+<pre>
+<code class="language-javascript">var fun = function(a,b){ return a+b; }
+
+var f = (a,b) =&gt; a+b</code></pre>
+
+<h3 id="Lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F%E7%9A%84%E6%A0%BC%E5%BC%8F">Lambda表达式的格式</h3>
+
+<p>格式: (形式参数)-&gt; {代码块}</p>
+
+<ul><li>形式参数:如果有多个参数，参数之间用逗号隔开;如果没有参数，留空即可</li>
+    <li>-&gt;:由英文中画线和大于符号组成，固定写法。代表指向动作</li>
+    <li>代码块:是我们具体要做的事情，也就是以前我们写的方法体内容</li>
+</ul><p>其只能有一个抽象方法，否则就不是函数时接口，就无法用Lambda表达式。</p>
+
+<p> </p>
+
+<h1 id="%E5%87%BD%E6%95%B0%E5%BC%8F%E6%8E%A5%E5%8F%A3">函数式接口</h1>
+
+<h2 id="%E6%A6%82%E8%BF%B0">概述</h2>
+
+<p>函数式接口:有且仅有一个抽象方法的接口<br />
+Java中的函数式编程体现就是Lambda表达式，所以函数式接口就是可以适用于Lambda使用的接口<br />
+只有确保接口中有且仅有一个抽象方法，Java中的Lambda才能顺利地进行推导</p>
+
+<p>如何检测一个接口是不是函数式接口呢?</p>
+
+<ul><li>@Functionallnterface</li>
+    <li>放在接口定义的上方:如果接口是函数式接口，编译通过;如果不是，编译失败</li>
+</ul><p>注意</p>
+
+<ul><li>我们自己定义函数式接口的时候，@FunctionalInterface是可选的， 就算我不写这个注解，只要保证满足函数式接口定义的条件，也照样是函数式接口。但是,建议加上该注解</li>
+</ul><p style="text-align:center;"><img alt="" height="174" src="https://img-blog.csdnimg.cn/20200323160050722.png" width="353" /></p>
+
+<p style="text-align:center;"><img alt="" height="125" src="https://img-blog.csdnimg.cn/20200323160102172.png" width="324" /></p>
+
+<h2 id="%E5%87%BD%E6%95%B0%E5%BC%8F%E6%8E%A5%E5%8F%A3%E4%BD%9C%E4%B8%BA%E6%96%B9%E6%B3%95%E7%9A%84%E5%8F%82%E6%95%B0">函数式接口作为方法的参数</h2>
+
+<p>定义一个类(RunnableDemo),在类中提供两个方法</p>
+
+<ul><li>一个方法是: startThread(Runnable r)方法 参数Runnable是一个函数式接口</li>
+    <li>一个方法是主方法，在主方法中调用start Thread方法</li>
+</ul><p style="text-align:center;"><img alt="" height="199" src="https://img-blog.csdnimg.cn/20200323160605519.png" width="360" /></p>
+
+<p>例子： </p>
+
+<pre>
+<code class="language-java">public class RunnableDemo {
+    public static void main(String[] args) {
+        //匿名内部类方式
+        startThread(new Runnable() {
+            @Override
+            public void run() {
+                System.out.println(Thread.currentThread().getName()+"线程启动了");
+            }
+        });
+
+        startThread(()-&gt; System.out.println(Thread.currentThread().getName()+"线程启动了"));
+    }
+    private static void startThread(Runnable r){
+//        Thread t = new Thread(r);
+//        t.start();
+        new Thread(r).start();
+    }
+}</code></pre>
+
+<p style="text-align:center;"><img alt="" height="160" src="https://img-blog.csdnimg.cn/20200323161022117.png" width="317" /></p>
+
+<h3 id="Supplier%E6%8E%A5%E5%8F%A3">Supplier接口</h3>
+
+<p>Supplier&lt;T&gt;:包含一个无参的方法</p>
+
+<ul><li>T get():获得结果</li>
+    <li>该方法不需要参数， 它会按照某种实现逻辑(由Lambda表达式实现)返回一个数据</li>
+</ul><p>例子：</p>
+
+<pre>
+<code class="language-java">public class SupplierDemo {
+    public static void main(String[] args) {
+        String s = getString(()-&gt;{
+            return "宝可梦";
+        });
+        System.out.println(s);
+    }
+
+    //定义一个方法，返回一个字符串数据
+    private static String getString(Supplier&lt;String&gt; sup){
+        return sup.get();
+    }
+}</code></pre>
+
+<p> </p>
+
+<h1 id="Stream%E6%B5%81">Stream流</h1>
+
+<pre>
+public interface Stream&lt;T&gt;
+extends <a href="../../../java/util/stream/BaseStream.html">BaseStream</a>&lt;T,<a href="../../../java/util/stream/Stream.html">Stream</a>&lt;T&gt;&gt;</pre>
+
+<p>使用Stream流的方式完成过滤操作<br />
+直接阅读代码的字面意思即可完美展示无关逻辑方式的语义:生成流、过滤、逐一打印<br />
+Stream流把真正的函数式编程风格引入到ava中</p>
+
+<h2 id="Stream%E6%B5%81%E7%94%9F%E6%88%90%E6%96%B9%E5%BC%8F">Stream流生成方式</h2>
+
+<p>Stream流的使用</p>
+
+<ul><li>生成流
+    <ul><li>通过数据源(集合，数组等)生成流</li>
+        <li>list.stream()</li>
+    </ul></li>
+    <li>中间操作
+    <ul><li>一个流后面可以跟随零个或多个中间操作,其目的主要是打开流，做出某种程度的数据过滤映射，然后返回一个新的流,交给下一个操作使用</li>
+        <li>filter()</li>
+    </ul></li>
+    <li>终结操作
+    <ul><li>一个流只能有一个终结操作， 当这个操作执行后，流就被使用“光” 了,无法再被操作。所以这必定是流的最后一个操作</li>
+        <li>forEach()</li>
+    </ul></li>
+</ul><h3 id="Stream%E6%B5%81%E7%9A%84%E5%B8%B8%E8%A7%81%E7%94%9F%E6%88%90%E6%96%B9%E5%BC%8F">Stream流的常见生成方式</h3>
+
+<ol><li>Collection体 系的集合可以使用默认方法stream()生成流
+    <ol><li>default Stream&lt;E&gt; stream（）</li>
+    </ol></li>
+    <li>Map体系的集合间接的生成流</li>
+    <li>数组可以通过Stream接口的静态方法of(T... values)生成流</li>
+</ol><p>例子：</p>
+
+<pre>
+<code class="language-java">public class CreateStream {
+    public static void main(String[] args) {
+//        Collection体 系的集合可以使用默认方法stream()生成流
+//        default Stream&lt;E&gt; stream（）
+        List&lt;String&gt; list = new ArrayList&lt;&gt;();
+        Stream&lt;String&gt; liststream = list.stream();
+
+        Set&lt;String&gt; set = new HashSet&lt;&gt;();
+        Stream&lt;String&gt; setstream = set.stream();
+
+//        Map体系的集合间接的生成流
+        Map&lt;Integer,String&gt; map = new HashMap&lt;&gt;();
+        Stream&lt;Integer&gt; keystream = map.keySet().stream();
+        Stream&lt;String&gt; valuestream = map.values().stream();
+        Stream&lt;Map.Entry&lt;Integer,String&gt;&gt; mapstream = map.entrySet().stream();
+
+//        数组可以通过Stream接口的静态方法of(T... values)生成流
+        String[] strarray = {"hello","hi","thank","you"};
+        Stream&lt;String&gt; strstream = Stream.of(strarray);
+        Stream&lt;String&gt; strstream2 = Stream.of("hello","hi","thank","you");
+
+    }
+}</code></pre>
+
+<p> </p>
+
+<p> </p>
+
+<p> </p>
+
+<p>一起学习，一起进步 -.- ，如有错误，可以发评论</p>
+</div><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">空城机</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://yoursite.com/2020/03/24/Java%E5%9F%BA%E7%A1%80%EF%BC%88%E5%8D%81%EF%BC%89%E2%80%94%E2%80%94%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B%E3%80%81Lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F%E3%80%81%E5%87%BD%E6%95%B0%E5%BC%8F%E6%8E%A5%E5%8F%A3%E3%80%81Stream%E6%B5%81/">http://yoursite.com/2020/03/24/Java%E5%9F%BA%E7%A1%80%EF%BC%88%E5%8D%81%EF%BC%89%E2%80%94%E2%80%94%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B%E3%80%81Lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F%E3%80%81%E5%87%BD%E6%95%B0%E5%BC%8F%E6%8E%A5%E5%8F%A3%E3%80%81Stream%E6%B5%81/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://yoursite.com" target="_blank">空城机</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/java-intellij-idea/">java intellij idea</a></div><div class="post_share"><div class="social-share" data-image="https://i.loli.net/2019/07/21/5d33d5dc1531213134.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css"/><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js"></script></div></div><div class="post-reward"><a class="reward-button button--primary button--animated"> <i class="fa fa-qrcode"></i> 打赏<div class="reward-main"><ul class="reward-all"><li class="reward-item"><img class="post-qr-code__img" src="/img/wechat.jpg" alt="微信"/><div class="post-qr-code__desc">微信</div></li><li class="reward-item"><img class="post-qr-code__img" src="/img/alipay.jpg" alt="支付寶"/><div class="post-qr-code__desc">支付寶</div></li></ul></div></a></div><nav class="pagination_post" id="pagination"><div class="prev-post pull_left"><a href="/2020/03/29/Java%E5%9F%BA%E7%A1%80%EF%BC%88%E5%8D%81%E4%B8%80%EF%BC%89%E2%80%94%E2%80%94%E7%B1%BB%E5%8A%A0%E8%BD%BD%E3%80%81%E5%8F%8D%E5%B0%84%E3%80%81XML%E6%A6%82%E8%BF%B0/"><img class="prev_cover" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">Java基础（十一）——类加载、反射、XML概述</div></div></a></div><div class="next-post pull_right"><a href="/2020/03/22/Java%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B9%9D%EF%BC%89%E2%80%94%E2%80%94%E7%BA%BF%E7%A8%8B%E5%90%8C%E6%AD%A5%E3%80%81%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%E7%9A%84%E7%B1%BB%E3%80%81%E7%94%9F%E4%BA%A7%E8%80%85%E6%B6%88%E8%B4%B9%E8%80%85/"><img class="next_cover" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Java基础（九）——线程同步、线程安全的类、生产者消费者</div></div></a></div></nav></article></main><footer id="footer" data-type="color"><div id="footer-wrap"><div class="copyright">&copy;2018 - 2020 By 空城机</div><div class="framework-info"><span>驱动 </span><a href="https://hexo.io" target="_blank" rel="noopener"><span>Hexo</span></a><span class="footer-separator">|</span><span>主题 </span><a href="https://github.com/jerryc127/hexo-theme-butterfly" target="_blank" rel="noopener"><span>Butterfly</span></a></div></div></footer></div><section class="rightside" id="rightside"><div id="rightside-config-hide"><i class="fa fa-book" id="readmode" title="阅读模式"></i><i class="fa fa-plus" id="font_plus" title="放大字体"></i><i class="fa fa-minus" id="font_minus" title="缩小字体"></i><a class="translate_chn_to_cht" id="translateLink" href="javascript:translatePage();" title="简繁转换" target="_self">繁</a><i class="darkmode fa fa-moon-o" id="darkmode" title="夜间模式"></i></div><div id="rightside-config-show"><div id="rightside_config" title="设置"><i class="fa fa-cog" aria-hidden="true"></i></div><i class="fa fa-list-ul close" id="mobile-toc-button" title="目录" aria-hidden="true"></i><i class="fa fa-arrow-up" id="go-up" title="回到顶部" aria-hidden="true"></i></div></section><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page@latest/instantpage.min.js" type="module"></script></body></html>

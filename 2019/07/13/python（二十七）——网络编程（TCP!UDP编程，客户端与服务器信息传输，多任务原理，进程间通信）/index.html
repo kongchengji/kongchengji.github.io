@@ -1,0 +1,454 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>python（二十七）——网络编程（TCP/UDP编程，客户端与服务器信息传输，多任务原理，进程间通信） | 空城机</title><meta name="description" content="目录  网络编程  TCP编程  客户端与服务器之间信息传输  UDP编程  多任务原理  启动进程池  进程间通信  网络编程  网络编程概述：  自从互联网诞生以来，现在基本上所有的程序都是网络程序，很少有单机版的程序了     计算机网络就是把各个计算机连接到一起，让网络中的计算机可以互相通信。网络编程就是如何在程序中实现两台计算机的通信     用Python进行网络编程，就是在Pyt"><meta name="keywords" content="python"><meta name="author" content="空城机"><meta name="copyright" content="空城机"><meta name="format-detection" content="telephone=no"><link rel="shortcut icon" href="/img/favicon.png"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="dns-prefetch" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="https://fonts.googleapis.com" crossorigin="crossorigin"/><link rel="dns-prefetch" href="https://fonts.googleapis.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="dns-prefetch" href="//busuanzi.ibruce.info"/><meta name="twitter:card" content="summary"><meta name="twitter:title" content="python（二十七）——网络编程（TCP/UDP编程，客户端与服务器信息传输，多任务原理，进程间通信）"><meta name="twitter:description" content="目录  网络编程  TCP编程  客户端与服务器之间信息传输  UDP编程  多任务原理  启动进程池  进程间通信  网络编程  网络编程概述：  自从互联网诞生以来，现在基本上所有的程序都是网络程序，很少有单机版的程序了     计算机网络就是把各个计算机连接到一起，让网络中的计算机可以互相通信。网络编程就是如何在程序中实现两台计算机的通信     用Python进行网络编程，就是在Pyt"><meta name="twitter:image" content="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg"><meta property="og:type" content="article"><meta property="og:title" content="python（二十七）——网络编程（TCP/UDP编程，客户端与服务器信息传输，多任务原理，进程间通信）"><meta property="og:url" content="http://yoursite.com/2019/07/13/python%EF%BC%88%E4%BA%8C%E5%8D%81%E4%B8%83%EF%BC%89%E2%80%94%E2%80%94%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B%EF%BC%88TCP!UDP%E7%BC%96%E7%A8%8B%EF%BC%8C%E5%AE%A2%E6%88%B7%E7%AB%AF%E4%B8%8E%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BF%A1%E6%81%AF%E4%BC%A0%E8%BE%93%EF%BC%8C%E5%A4%9A%E4%BB%BB%E5%8A%A1%E5%8E%9F%E7%90%86%EF%BC%8C%E8%BF%9B%E7%A8%8B%E9%97%B4%E9%80%9A%E4%BF%A1%EF%BC%89/"><meta property="og:site_name" content="空城机"><meta property="og:description" content="目录  网络编程  TCP编程  客户端与服务器之间信息传输  UDP编程  多任务原理  启动进程池  进程间通信  网络编程  网络编程概述：  自从互联网诞生以来，现在基本上所有的程序都是网络程序，很少有单机版的程序了     计算机网络就是把各个计算机连接到一起，让网络中的计算机可以互相通信。网络编程就是如何在程序中实现两台计算机的通信     用Python进行网络编程，就是在Pyt"><meta property="og:image" content="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg"><meta property="article:published_time" content="2019-07-13T12:21:19.000Z"><meta property="article:modified_time" content="2020-05-10T11:05:27.641Z"><script src="https://cdn.jsdelivr.net/npm/js-cookie/dist/js.cookie.min.js"></script><script>var autoChangeMode = '1'
+var t = Cookies.get("theme")
+if (autoChangeMode == '1'){
+  var isDarkMode = window.matchMedia("(prefers-color-scheme: dark)").matches
+  var isLightMode = window.matchMedia("(prefers-color-scheme: light)").matches
+  var isNotSpecified = window.matchMedia("(prefers-color-scheme: no-preference)").matches
+  var hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+  if (t === undefined){
+    if (isLightMode) activateLightMode()
+    else if (isDarkMode) activateDarkMode()
+    else if (isNotSpecified || hasNoSupport){
+      console.log('You specified no preference for a color scheme or your browser does not support it. I Schedule dark mode during night time.')
+      var now = new Date()
+      var hour = now.getHours()
+      var isNight = hour < 6 || hour >= 18
+      isNight ? activateDarkMode() : activateLightMode()
+  }
+  } else if (t == 'light') activateLightMode()
+  else activateDarkMode()
+
+} else if (autoChangeMode == '2'){
+  now = new Date();
+  hour = now.getHours();
+  isNight = hour < 6 || hour >= 18
+  if(t === undefined) isNight? activateDarkMode() : activateLightMode()
+  else if (t === 'light') activateLightMode()
+  else activateDarkMode() 
+} else {
+  if ( t == 'dark' ) activateDarkMode()
+  else if ( t == 'light') activateLightMode()
+}
+
+function activateDarkMode(){
+  document.documentElement.setAttribute('data-theme', 'dark')
+  if (document.querySelector('meta[name="theme-color"]') !== null){
+    document.querySelector('meta[name="theme-color"]').setAttribute('content','#000')
+  }
+}
+function activateLightMode(){
+  document.documentElement.setAttribute('data-theme', 'light')
+  if (document.querySelector('meta[name="theme-color"]') !== null){
+  document.querySelector('meta[name="theme-color"]').setAttribute('content','#fff')
+  }
+}</script><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@latest/css/font-awesome.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css"><link rel="canonical" href="http://yoursite.com/2019/07/13/python%EF%BC%88%E4%BA%8C%E5%8D%81%E4%B8%83%EF%BC%89%E2%80%94%E2%80%94%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B%EF%BC%88TCP!UDP%E7%BC%96%E7%A8%8B%EF%BC%8C%E5%AE%A2%E6%88%B7%E7%AB%AF%E4%B8%8E%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BF%A1%E6%81%AF%E4%BC%A0%E8%BE%93%EF%BC%8C%E5%A4%9A%E4%BB%BB%E5%8A%A1%E5%8E%9F%E7%90%86%EF%BC%8C%E8%BF%9B%E7%A8%8B%E9%97%B4%E9%80%9A%E4%BF%A1%EF%BC%89/"><link rel="prev" title="python（二十八）——线程通信，生产者与消费者，线程调度，协程" href="http://yoursite.com/2019/07/14/python%EF%BC%88%E4%BA%8C%E5%8D%81%E5%85%AB%EF%BC%89%E2%80%94%E2%80%94%E7%BA%BF%E7%A8%8B%E9%80%9A%E4%BF%A1%EF%BC%8C%E7%94%9F%E4%BA%A7%E8%80%85%E4%B8%8E%E6%B6%88%E8%B4%B9%E8%80%85%EF%BC%8C%E7%BA%BF%E7%A8%8B%E8%B0%83%E5%BA%A6%EF%BC%8C%E5%8D%8F%E7%A8%8B/"><link rel="next" title="python（二十六）——爬虫练习（爬取图片，爬取QQ号）" href="http://yoursite.com/2019/07/12/python%EF%BC%88%E4%BA%8C%E5%8D%81%E5%85%AD%EF%BC%89%E2%80%94%E2%80%94%E7%88%AC%E8%99%AB%E7%BB%83%E4%B9%A0%EF%BC%88%E7%88%AC%E5%8F%96%E5%9B%BE%E7%89%87%EF%BC%8C%E7%88%AC%E5%8F%96QQ%E5%8F%B7%EF%BC%89/"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Titillium+Web"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: {"defaultEncoding":2,"translateDelay":0,"cookieDomain":"https://xxx/","msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"簡"},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  bookmark: {
+    message_prev: '按',
+    message_next: '键将本页加入书签'
+  },
+  runtime_unit: '天',
+  runtime: true,
+  copyright: undefined,
+  ClickShowText: undefined,
+  medium_zoom: false,
+  fancybox: true,
+  Snackbar: undefined,
+  baiduPush: false,
+  highlightCopy: true,
+  highlightLang: true,
+  highlightShrink: 'false',
+  isFontAwesomeV5: false,
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+  
+}</script><script>var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isSidebar: true  
+  }</script><noscript><style>
+#page-header {
+  opacity: 1
+}
+.justified-gallery img{
+  opacity: 1
+}
+</style></noscript><meta name="generator" content="Hexo 4.2.0"></head><body><div id="mobile-sidebar"><div id="menu_mask"></div><div id="mobile-sidebar-menus"><div class="mobile_author_icon"><img class="avatar-img" src="/img/avatar.png" onerror="onerror=null;src='/img/tou5.jpg'" alt="avatar"/></div><div class="mobile_post_data"><div class="mobile_data_item is-center"><div class="mobile_data_link"><a href="/archives/"><div class="headline">文章</div><div class="length_num">154</div></a></div></div><div class="mobile_data_item is-center">      <div class="mobile_data_link"><a href="/tags/"><div class="headline">标签</div><div class="length_num">45</div></a></div></div><div class="mobile_data_item is-center">     <div class="mobile_data_link"><a href="/categories/"><div class="headline">分类</div><div class="length_num">15</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fa fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fa fa-heart"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page"><i class="fa-fw fa fa-list" aria-hidden="true"></i><span> 清单</span><i class="fa fa-chevron-down menus-expand" aria-hidden="true"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/music/"><i class="fa-fw fa fa-music"></i><span> 音乐</span></a></li><li><a class="site-page" href="/movies/"><i class="fa-fw fa fa-film"></i><span> 电影</span></a></li></ul></div></div></div></div><i class="fa fa-arrow-right on" id="toggle-sidebar" aria-hidden="true">     </i><div id="sidebar"><div class="sidebar-toc"><div class="sidebar-toc__title">目录</div><div class="sidebar-toc__progress"><span class="progress-notice">你已经读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar">     </div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B"><span class="toc-number">1.</span> <span class="toc-text">网络编程</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#TCP%E7%BC%96%E7%A8%8B"><span class="toc-number">1.1.</span> <span class="toc-text">TCP编程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%A2%E6%88%B7%E7%AB%AF%E4%B8%8E%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B9%8B%E9%97%B4%E4%BF%A1%E6%81%AF%E4%BC%A0%E8%BE%93"><span class="toc-number">1.2.</span> <span class="toc-text">客户端与服务器之间信息传输</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#UDP%E7%BC%96%E7%A8%8B"><span class="toc-number">1.3.</span> <span class="toc-text">UDP编程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%9A%E4%BB%BB%E5%8A%A1%E5%8E%9F%E7%90%86"><span class="toc-number">1.4.</span> <span class="toc-text">多任务原理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%AF%E5%8A%A8%E8%BF%9B%E7%A8%8B%E6%B1%A0"><span class="toc-number">1.4.1.</span> <span class="toc-text">启动进程池</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%9B%E7%A8%8B%E9%97%B4%E9%80%9A%E4%BF%A1"><span class="toc-number">1.5.</span> <span class="toc-text">进程间通信</span></a></li></ol></li></ol></div></div></div><div id="body-wrap"><div class="post-bg" id="nav" style="background-image: url(https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg)"><div id="page-header"><span class="pull_left" id="blog_name"><a class="blog_title" id="site-name" href="/">空城机</a></span><span class="pull_right menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fa fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fa fa-heart"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page"><i class="fa-fw fa fa-list" aria-hidden="true"></i><span> 清单</span><i class="fa fa-chevron-down menus-expand" aria-hidden="true"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/music/"><i class="fa-fw fa fa-music"></i><span> 音乐</span></a></li><li><a class="site-page" href="/movies/"><i class="fa-fw fa fa-film"></i><span> 电影</span></a></li></ul></div></div><span class="toggle-menu close"><a class="site-page"><i class="fa fa-bars fa-fw" aria-hidden="true"></i></a></span></span></div><div id="post-info"><div id="post-title"><div class="posttitle">python（二十七）——网络编程（TCP/UDP编程，客户端与服务器信息传输，多任务原理，进程间通信）</div></div><div id="post-meta"><div class="meta-firstline"><time class="post-meta__date"><span class="post-meta__date-created" title="发表于 2019-07-13 20:21:19"><i class="fa fa-calendar" aria-hidden="true"></i> 发表于 2019-07-13</span><span class="post-meta__separator">|</span><span class="post-meta__date-updated" title="更新于 2020-05-10 19:05:27"><i class="fa fa-history" aria-hidden="true"></i> 更新于 2020-05-10</span></time><span class="post-meta__categories"><span class="post-meta__separator">|</span><i class="fa fa-inbox post-meta__icon" aria-hidden="true"></i><a class="post-meta__categories" href="/categories/python/">python</a></span></div><div class="meta-secondline"> </div><div class="meta-thirdline"><span class="post-meta-pv-cv"><i class="fa fa-eye post-meta__icon" aria-hidden="true"> </i><span>阅读量:</span><span id="busuanzi_value_page_pv"></span></span><span class="post-meta-commentcount"></span></div></div></div></div><main class="layout_post" id="content-inner"><article id="post"><div class="post-content" id="article-container"><a id="more"></a>
+
+<p id="main-toc"><strong>目录</strong></p>
+
+<p id="%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-toc" style="margin-left:0px;"><a href="#%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B">网络编程</a></p>
+
+<p id="TCP%E7%BC%96%E7%A8%8B-toc" style="margin-left:40px;"><a href="#TCP%E7%BC%96%E7%A8%8B">TCP编程</a></p>
+
+<p id="%E5%AE%A2%E6%88%B7%E7%AB%AF%E4%B8%8E%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B9%8B%E9%97%B4%E4%BF%A1%E6%81%AF%E4%BC%A0%E8%BE%93-toc" style="margin-left:40px;"><a href="#%E5%AE%A2%E6%88%B7%E7%AB%AF%E4%B8%8E%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B9%8B%E9%97%B4%E4%BF%A1%E6%81%AF%E4%BC%A0%E8%BE%93">客户端与服务器之间信息传输</a></p>
+
+<p id="UDP%E7%BC%96%E7%A8%8B-toc" style="margin-left:40px;"><a href="#UDP%E7%BC%96%E7%A8%8B">UDP编程</a></p>
+
+<p id="%E5%A4%9A%E4%BB%BB%E5%8A%A1%E5%8E%9F%E7%90%86-toc" style="margin-left:40px;"><a href="#%E5%A4%9A%E4%BB%BB%E5%8A%A1%E5%8E%9F%E7%90%86">多任务原理</a></p>
+
+<p id="%E5%90%AF%E5%8A%A8%E8%BF%9B%E7%A8%8B%E6%B1%A0-toc" style="margin-left:80px;"><a href="#%E5%90%AF%E5%8A%A8%E8%BF%9B%E7%A8%8B%E6%B1%A0">启动进程池</a></p>
+
+<p id="%E8%BF%9B%E7%A8%8B%E9%97%B4%E9%80%9A%E4%BF%A1-toc" style="margin-left:40px;"><a href="#%E8%BF%9B%E7%A8%8B%E9%97%B4%E9%80%9A%E4%BF%A1">进程间通信</a></p>
+
+<hr id="hr-toc" /><h1 id="%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B">网络编程</h1>
+
+<p>网络编程概述：</p>
+
+<ul><li>自从互联网诞生以来，现在基本上所有的程序都是网络程序，很少有单机版的程序了</li>
+    <li>计算机网络就是把各个计算机连接到一起，让网络中的计算机可以互相通信。网络编程就是如何在程序中实现两台计算机的通信</li>
+    <li>用Python进行网络编程，就是在Python程序本身这个进程内，连接别的服务器进程的通信端口进行通信</li>
+</ul><p> </p>
+
+<h2 id="TCP%E7%BC%96%E7%A8%8B">TCP编程</h2>
+
+<p>TCP是建立可靠的链接，并且通信双方都可以以流的形式进行通信发送数据。</p>
+
+<pre class="has">
+<code class="language-html">客户端：创建TCP链接时，主动发起连接的叫做客户端
+服务端：接收客户端连接</code></pre>
+
+<p style="text-align:center;"><img alt="" class="has" height="670" src="https://img-blog.csdnimg.cn/20190712230120884.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2MTcxMjg3,size_16,color_FFFFFF,t_70" width="556" /></p>
+
+<p>socket()：创建一个socket</p>
+
+<p>bind()：绑定端口号</p>
+
+<p>listen()：负责监听，可以传一个参数</p>
+
+<p>accept()：等待连接</p>
+
+<p>connect()：连接</p>
+
+<p>write()：建立好连接之后，客户端就可以给服务器写数据了</p>
+
+<p>read()：对数据进行思考处理</p>
+
+<p> </p>
+
+<p><strong>例子：访问新浪网客户端</strong></p>
+
+<pre class="has">
+<code class="language-python"># socket库包含了网络编程的所有东西
+import socket
+
+#1.创建一个socket
+#参数1：指定协议 AF_INET或者AF_INET6
+#参数2：SOCK_STREAM执行使用面向流的TCP协议
+sk = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
+
+#2.建立连接
+#参数：是一个元组，第一个元素为要连接的服务器的IP地址，第二个参数为端口
+sk.connect(('www.sina.com',80))
+
+sk.send(b'GET / HTTP/1.1\r\nHost: www.sina.com.cn\r\nConnection: close\r\n\r\n')
+
+#等待接收数据
+data = []
+while True:
+    #每次接收1K的数据
+    tempdata = sk.recv(1024)
+    if tempdata:
+        data.append(tempdata)
+    else:
+        break
+
+dataStr = (b''.join(data)).decode('utf-8')
+
+#断开链接
+sk.close()
+print(dataStr)</code></pre>
+
+<p><strong>运行结果：访问失败，返回状态码302：在其他地址发现 了请求数据</strong></p>
+
+<p style="text-align:center;"><img alt="" class="has" height="354" src="https://img-blog.csdnimg.cn/20190712232249900.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2MTcxMjg3,size_16,color_FFFFFF,t_70" width="709" /></p>
+
+<p> </p>
+
+<h2 id="%E5%AE%A2%E6%88%B7%E7%AB%AF%E4%B8%8E%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B9%8B%E9%97%B4%E4%BF%A1%E6%81%AF%E4%BC%A0%E8%BE%93">客户端与服务器之间信息传输</h2>
+
+<p>先去cmd中获取自己的地址IP</p>
+
+<p>然后创建两个py文件，一个是客户端，一个是服务器端</p>
+
+<p>客户端代码：</p>
+
+<pre class="has">
+<code>import socket
+
+client = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
+client.connect(('你的IP地址',8081))
+
+count = 0
+while True:
+    count += 1
+    data = input('请输入给服务器发送的数据')
+    client.send(data.encode('utf-8'))
+    info = client.recv(1024)
+    print('服务器说：',info.decode('utf-8'))</code></pre>
+
+<p>服务器端代码：</p>
+
+<pre class="has">
+<code>import socket
+
+server = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
+#绑定IP端口
+server.bind(('你的地址IP',8081))
+#监听
+server.listen(5)
+#等待链接
+clientSocket,clientAddress = server.accept()
+print('服务器启动成功......')
+# print(str(clientSocket),clientAddress)
+while True:
+    data = clientSocket.recv(1024)
+    print('收到数据：'+data.decode('utf-8'))
+    clientSocket.send('你也一样'.encode('utf-8'))</code></pre>
+
+<p>然后在运行时先运行服务器端，再运行客户端</p>
+
+<p>如果先运行客户端将会报错，找不到服务器</p>
+
+<p style="text-align:center;"><img alt="" class="has" height="169" src="https://img-blog.csdnimg.cn/20190713163638332.png" width="601" /></p>
+
+<p><strong>运行结果：first是服务器端</strong></p>
+
+<p><img alt="" class="has" height="189" src="https://img-blog.csdnimg.cn/20190713163723562.png" width="328" /><img alt="" class="has" height="174" src="https://img-blog.csdnimg.cn/20190713163730827.png" width="319" /></p>
+
+<p> </p>
+
+<h2 id="UDP%E7%BC%96%E7%A8%8B">UDP编程</h2>
+
+<p>相对于TCP，UDP是面向无连接的协议。使用UDP，不需要建立链接，只需要知道对方的IP地址和端口号，就可以直接发送数据包，但不一定能够到达</p>
+
+<p>虽然UDP不可靠，但是相对于TCP，速度快，对于要求不高的数据可以使用UDP传输</p>
+
+<pre class="has">
+<code>udp = socket.socket(socket.AF_INET,socket.SOCK_DGRAM)
+udp.bind(('要发送的IP地址',对方端口号))
+udp.send('wahtaijvajvi'.encode('utf-8'))</code></pre>
+
+<p> </p>
+
+<h2 id="%E5%A4%9A%E4%BB%BB%E5%8A%A1%E5%8E%9F%E7%90%86">多任务原理</h2>
+
+<p>现代操作系统（Windows、Linux、Mac OS X、Unix等）都支持多任务<br />
+多任务：操作系统同时可以运行多个任务</p>
+
+<p>早期电脑主要是单核CPU<br />
+单核CPU实现多任务原理：操作系统轮流让各个任务交替执行，QQ执行2us（微秒），切换到微信，再执行2us，再切换到陌陌，再。。。表面上看，每个任务都反复执行下去，但是CPU调度执行速度太快了。导致我们感觉就像所有任务都在同时执行一样。</p>
+
+<p>多核CPU实现多任务原理：真正的并行执行多任务只能在多核CPU上实现，但是由于任务的数量远远多于CPU数量，所以操作系统也会自动把很多任务轮流调度到每个核心上执行<br />
+并发：看上去一起执行，任务数大于CPU核心数<br />
+并行：真正一起执行，任务数小于CPU核心数</p>
+
+<p>实现多任务的方式：</p>
+
+<ol><li>多进程模式</li>
+    <li>多线程模式</li>
+    <li>协程模式</li>
+    <li>多进程+多线程模式</li>
+</ol><pre>
+<code class="language-html hljs">multiprocessing:跨平台版本的多进程模块，提供了一个Process类来代表一个进程对象</code></pre>
+
+<p><strong>例子：</strong></p>
+
+<pre class="has">
+<code class="language-python">from multiprocessing import Process
+import time
+
+def run():
+    while True:
+        print('zk is a gay...')
+        time.sleep(1.5)
+
+if __name__=='__main__':
+    print('主进程启动')
+    #创建子进程
+    #target说明进程执行的任务
+    p = Process(target=run)
+    #启动进程
+    p.start()
+    #主进程运行
+    while True:
+        print('what happen...')
+        time.sleep(1)</code></pre>
+
+<p><strong>运行结果：</strong></p>
+
+<p style="text-align:center;"><img alt="" class="has" height="341" src="https://img-blog.csdnimg.cn/20190713182839730.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2MTcxMjg3,size_16,color_FFFFFF,t_70" width="313" /></p>
+
+<pre>
+<code class="language-html hljs">os.getpid()获取当前进程id号
+os.getppid()获取当前进程的父进程id号</code></pre>
+
+<p><strong>例子：</strong></p>
+
+<pre class="has">
+<code class="language-python">from multiprocessing import Process
+import time
+import os
+
+def run():
+    while True:
+        #os.getpid()获取当前进程id号
+        #os.getppid()获取当前进程的父进程id号
+        print('zk is a gay...'+str(os.getpid())+'父id：'+str(os.getppid()))
+        time.sleep(1.5)
+
+if __name__=='__main__':
+    print('主进程启动'+str(os.getpid()))
+    #创建子进程
+    #target说明进程执行的任务
+    p = Process(target=run)
+    #启动进程
+    p.start()
+    #主进程运行
+    while True:
+        print('what happen...'+str(os.getpid()))
+        time.sleep(1)</code></pre>
+
+<p><strong>运行结果：</strong></p>
+
+<p style="text-align:center;"><img alt="" class="has" height="323" src="https://img-blog.csdnimg.cn/20190713183630901.png" width="296" /></p>
+
+<p><strong>父进程和子进程的顺序：</strong><strong>父进程结束不能影响子进程</strong></p>
+
+<p><strong>全局变量不能在多个进程中共享</strong></p>
+
+<p>例子：兄弟进程一个改变全局变量，另一个保持不变</p>
+
+<pre class="has">
+<code class="language-python">n = 100
+def run():
+    global n
+    n += 1
+    #os.getpid()获取当前进程id号
+    #os.getppid()获取当前进程的父进程id号
+    print('zk is a gay...'+str(n))
+
+def fun():
+    global n
+    print(n)
+
+if __name__=='__main__':
+    p = Process(target=run)
+    p.start()
+    k = Process(target=fun)
+    k.start()</code></pre>
+
+<p><strong>运行结果：</strong></p>
+
+<p style="text-align:center;"><img alt="" class="has" height="111" src="https://img-blog.csdnimg.cn/20190713185722222.png" width="326" /></p>
+
+<p> </p>
+
+<h3 id="%E5%90%AF%E5%8A%A8%E8%BF%9B%E7%A8%8B%E6%B1%A0">启动进程池</h3>
+
+<p>使用进程池的方法去调用大量的子进程</p>
+
+<pre class="has">
+<code class="language-python">from multiprocessing import Pool
+import time
+import os,random
+
+
+def run(num):
+    print('子进程%d启动——%s' % (num,os.getpid()))
+    start = time.time()
+    #随机暂停时间
+    time.sleep(random.choice([1,2,3]))
+    end = time.time()
+    print('子进程%d结束——%s,耗时：%d' % (num,os.getpid(),end-start))
+
+
+if __name__=='__main__':
+    print('父进程启动')
+
+    #创建多个进程
+    #进程池,参数表示可以同时进行的进程数量，默认大小是CPU核心数量
+    pc = Pool(3)
+    for i in range(5):
+        #创建进程放入进程池统一管理
+        pc.apply_async(run,args=(i,))
+    #在调用join之前必须先调用close，调用close之后不能再继续添加新的进程了
+    pc.close()
+    #进程池对象调用join，会等待进程池中所有子进程结束完毕再去执行父进程
+    pc.join()
+
+    print('父进程结束')
+</code></pre>
+
+<p><strong>运行结果：</strong></p>
+
+<p style="text-align:center;"><img alt="" class="has" height="344" src="https://img-blog.csdnimg.cn/2019071319170355.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2MTcxMjg3,size_16,color_FFFFFF,t_70" width="314" /></p>
+
+<p> </p>
+
+<h2 id="%E8%BF%9B%E7%A8%8B%E9%97%B4%E9%80%9A%E4%BF%A1">进程间通信</h2>
+
+<p>用队列去实现两个进程之间的数据传输</p>
+
+<p>子进程1——》队列——》子进程2</p>
+
+<p>子进程1《——队列《——子进程2</p>
+
+<p><span style="color:#000000;">进程间通信，父进程需要创建一个队列，并传递给子进程</span></p>
+
+<p><strong><span style="color:#000000;">例子：</span></strong></p>
+
+<pre class="has">
+<code class="language-python">from multiprocessing import Queue,Process
+import os,time
+def write(q):
+    print('启动写子进程%s' % os.getpid())
+    for chr in ['A','B','C','D']:
+        q.put(chr)
+        time.sleep(1)
+    print('结束写子进程%s' % os.getpid())
+
+def read(q):
+    print('启动读子进程%s' % os.getpid())
+    while True:
+        value = q.get(True)
+        print('value:',value)
+    print('结束读子进程%s' % os.getpid())
+
+if __name__=='__main__':
+    #进程间通信，父进程需要创建一个队列，并传递给子进程
+    q = Queue()
+    pw = Process(target=write,args=(q,))
+    pr = Process(target=read, args=(q,))
+
+    pw.start()
+    pr.start()
+    pw.join()
+    #pr进程里是一个死循环，无法等待结束，只能强行结束terminate()，如果写进程结束，那么读进程结束
+    pr.terminate()
+    print('父进程结束')</code></pre>
+
+<p><strong>运行结果：因为读进程无限循环，所以只能强行结束</strong></p>
+
+<p style="text-align:center;"><img alt="" class="has" height="261" src="https://img-blog.csdnimg.cn/20190713201658564.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2MTcxMjg3,size_16,color_FFFFFF,t_70" width="364" /></p>
+
+<p> </p>
+
+<p> </p>
+
+<p> </p>
+
+<p> </p>
+
+<p><strong>一起学习，一起进步 -.- ，如有错误，可以发评论</strong></p>
+</div><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">空城机</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://yoursite.com/2019/07/13/python%EF%BC%88%E4%BA%8C%E5%8D%81%E4%B8%83%EF%BC%89%E2%80%94%E2%80%94%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B%EF%BC%88TCP!UDP%E7%BC%96%E7%A8%8B%EF%BC%8C%E5%AE%A2%E6%88%B7%E7%AB%AF%E4%B8%8E%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BF%A1%E6%81%AF%E4%BC%A0%E8%BE%93%EF%BC%8C%E5%A4%9A%E4%BB%BB%E5%8A%A1%E5%8E%9F%E7%90%86%EF%BC%8C%E8%BF%9B%E7%A8%8B%E9%97%B4%E9%80%9A%E4%BF%A1%EF%BC%89/">http://yoursite.com/2019/07/13/python%EF%BC%88%E4%BA%8C%E5%8D%81%E4%B8%83%EF%BC%89%E2%80%94%E2%80%94%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B%EF%BC%88TCP!UDP%E7%BC%96%E7%A8%8B%EF%BC%8C%E5%AE%A2%E6%88%B7%E7%AB%AF%E4%B8%8E%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BF%A1%E6%81%AF%E4%BC%A0%E8%BE%93%EF%BC%8C%E5%A4%9A%E4%BB%BB%E5%8A%A1%E5%8E%9F%E7%90%86%EF%BC%8C%E8%BF%9B%E7%A8%8B%E9%97%B4%E9%80%9A%E4%BF%A1%EF%BC%89/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://yoursite.com" target="_blank">空城机</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/python/">python</a></div><div class="post_share"><div class="social-share" data-image="https://i.loli.net/2019/07/21/5d33d5dc1531213134.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css"/><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js"></script></div></div><div class="post-reward"><a class="reward-button button--primary button--animated"> <i class="fa fa-qrcode"></i> 打赏<div class="reward-main"><ul class="reward-all"><li class="reward-item"><img class="post-qr-code__img" src="/img/wechat.jpg" alt="微信"/><div class="post-qr-code__desc">微信</div></li><li class="reward-item"><img class="post-qr-code__img" src="/img/alipay.jpg" alt="支付寶"/><div class="post-qr-code__desc">支付寶</div></li></ul></div></a></div><nav class="pagination_post" id="pagination"><div class="prev-post pull_left"><a href="/2019/07/14/python%EF%BC%88%E4%BA%8C%E5%8D%81%E5%85%AB%EF%BC%89%E2%80%94%E2%80%94%E7%BA%BF%E7%A8%8B%E9%80%9A%E4%BF%A1%EF%BC%8C%E7%94%9F%E4%BA%A7%E8%80%85%E4%B8%8E%E6%B6%88%E8%B4%B9%E8%80%85%EF%BC%8C%E7%BA%BF%E7%A8%8B%E8%B0%83%E5%BA%A6%EF%BC%8C%E5%8D%8F%E7%A8%8B/"><img class="prev_cover" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">python（二十八）——线程通信，生产者与消费者，线程调度，协程</div></div></a></div><div class="next-post pull_right"><a href="/2019/07/12/python%EF%BC%88%E4%BA%8C%E5%8D%81%E5%85%AD%EF%BC%89%E2%80%94%E2%80%94%E7%88%AC%E8%99%AB%E7%BB%83%E4%B9%A0%EF%BC%88%E7%88%AC%E5%8F%96%E5%9B%BE%E7%89%87%EF%BC%8C%E7%88%AC%E5%8F%96QQ%E5%8F%B7%EF%BC%89/"><img class="next_cover" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">python（二十六）——爬虫练习（爬取图片，爬取QQ号）</div></div></a></div></nav><div class="relatedPosts"><div class="relatedPosts_headline"><i class="fa fa-fw fa-thumbs-up" aria-hidden="true"></i><span> 相关推荐</span></div><div class="relatedPosts_list"><div class="relatedPosts_item"><a href="/2019/06/06/python（十一）——递归、栈结构、队列、深度遍历、广度遍历/" title="python（十一）——递归、栈结构、队列、深度遍历、广度遍历"><img class="relatedPosts_cover" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg"><div class="relatedPosts_main is-center"><div class="relatedPosts_date"><i class="fa fa-calendar fa-fw" aria-hidden="true"></i> 2019-06-06</div><div class="relatedPosts_title">python（十一）——递归、栈结构、队列、深度遍历、广度遍历</div></div></a></div><div class="relatedPosts_item"><a href="/2019/05/02/python 中没有i++或者i--/" title="python 中没有i++或者i--"><img class="relatedPosts_cover" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg"><div class="relatedPosts_main is-center"><div class="relatedPosts_date"><i class="fa fa-calendar fa-fw" aria-hidden="true"></i> 2019-05-02</div><div class="relatedPosts_title">python 中没有i++或者i--</div></div></a></div><div class="relatedPosts_item"><a href="/2019/07/12/python（二十五）——JSON、抓取Ajas请求数据/" title="python（二十五）——JSON、抓取Ajas请求数据"><img class="relatedPosts_cover" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg"><div class="relatedPosts_main is-center"><div class="relatedPosts_date"><i class="fa fa-calendar fa-fw" aria-hidden="true"></i> 2019-07-12</div><div class="relatedPosts_title">python（二十五）——JSON、抓取Ajas请求数据</div></div></a></div><div class="relatedPosts_item"><a href="/2019/08/03/python（三十）——从数据库查询应用、MongoDB数据库/" title="python（三十）——从数据库查询应用、MongoDB数据库"><img class="relatedPosts_cover" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg"><div class="relatedPosts_main is-center"><div class="relatedPosts_date"><i class="fa fa-calendar fa-fw" aria-hidden="true"></i> 2019-08-03</div><div class="relatedPosts_title">python（三十）——从数据库查询应用、MongoDB数据库</div></div></a></div><div class="relatedPosts_item"><a href="/2019/04/20/python（二）——python安装与配置/" title="python（二）——python安装与配置"><img class="relatedPosts_cover" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg"><div class="relatedPosts_main is-center"><div class="relatedPosts_date"><i class="fa fa-calendar fa-fw" aria-hidden="true"></i> 2019-04-20</div><div class="relatedPosts_title">python（二）——python安装与配置</div></div></a></div><div class="relatedPosts_item"><a href="/2019/06/08/python（十三）——模块二（模块概述、模块优点、__name__属性）/" title="python（十三）——模块二（模块概述、模块优点、__name__属性）"><img class="relatedPosts_cover" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg"><div class="relatedPosts_main is-center"><div class="relatedPosts_date"><i class="fa fa-calendar fa-fw" aria-hidden="true"></i> 2019-06-08</div><div class="relatedPosts_title">python（十三）——模块二（模块概述、模块优点、__name__属性）</div></div></a></div></div><div class="clear_both"></div></div></article></main><footer id="footer" data-type="color"><div id="footer-wrap"><div class="copyright">&copy;2018 - 2020 By 空城机</div><div class="framework-info"><span>驱动 </span><a href="https://hexo.io" target="_blank" rel="noopener"><span>Hexo</span></a><span class="footer-separator">|</span><span>主题 </span><a href="https://github.com/jerryc127/hexo-theme-butterfly" target="_blank" rel="noopener"><span>Butterfly</span></a></div></div></footer></div><section class="rightside" id="rightside"><div id="rightside-config-hide"><i class="fa fa-book" id="readmode" title="阅读模式"></i><i class="fa fa-plus" id="font_plus" title="放大字体"></i><i class="fa fa-minus" id="font_minus" title="缩小字体"></i><a class="translate_chn_to_cht" id="translateLink" href="javascript:translatePage();" title="简繁转换" target="_self">繁</a><i class="darkmode fa fa-moon-o" id="darkmode" title="夜间模式"></i></div><div id="rightside-config-show"><div id="rightside_config" title="设置"><i class="fa fa-cog" aria-hidden="true"></i></div><i class="fa fa-list-ul close" id="mobile-toc-button" title="目录" aria-hidden="true"></i><i class="fa fa-arrow-up" id="go-up" title="回到顶部" aria-hidden="true"></i></div></section><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page@latest/instantpage.min.js" type="module"></script></body></html>

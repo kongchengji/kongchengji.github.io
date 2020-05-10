@@ -1,0 +1,311 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Linux虚拟机下makefile的编写应用 | 空城机</title><meta name="description" content="目的：  1. 熟悉嵌入式 Linux 开发基本过程及基本命令。  2. 了解嵌入式 Linux 开发中各种工具的基本用途。  3. 搭建好嵌入式 Linux 的开发环境。  4. 通过对包含多文件的 Makefile 的编写，熟悉各种形式的Makefile 编写，加深对 Makefile 中用户自定义变量、自动变量及预定义变量的理解。  实验原理及基本技术路线图  1. Makefile 基"><meta name="author" content="空城机"><meta name="copyright" content="空城机"><meta name="format-detection" content="telephone=no"><link rel="shortcut icon" href="/img/favicon.png"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="dns-prefetch" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="https://fonts.googleapis.com" crossorigin="crossorigin"/><link rel="dns-prefetch" href="https://fonts.googleapis.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="dns-prefetch" href="//busuanzi.ibruce.info"/><meta name="twitter:card" content="summary"><meta name="twitter:title" content="Linux虚拟机下makefile的编写应用"><meta name="twitter:description" content="目的：  1. 熟悉嵌入式 Linux 开发基本过程及基本命令。  2. 了解嵌入式 Linux 开发中各种工具的基本用途。  3. 搭建好嵌入式 Linux 的开发环境。  4. 通过对包含多文件的 Makefile 的编写，熟悉各种形式的Makefile 编写，加深对 Makefile 中用户自定义变量、自动变量及预定义变量的理解。  实验原理及基本技术路线图  1. Makefile 基"><meta name="twitter:image" content="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg"><meta property="og:type" content="article"><meta property="og:title" content="Linux虚拟机下makefile的编写应用"><meta property="og:url" content="http://yoursite.com/2019/05/09/Linux%E8%99%9A%E6%8B%9F%E6%9C%BA%E4%B8%8Bmakefile%E7%9A%84%E7%BC%96%E5%86%99%E5%BA%94%E7%94%A8/"><meta property="og:site_name" content="空城机"><meta property="og:description" content="目的：  1. 熟悉嵌入式 Linux 开发基本过程及基本命令。  2. 了解嵌入式 Linux 开发中各种工具的基本用途。  3. 搭建好嵌入式 Linux 的开发环境。  4. 通过对包含多文件的 Makefile 的编写，熟悉各种形式的Makefile 编写，加深对 Makefile 中用户自定义变量、自动变量及预定义变量的理解。  实验原理及基本技术路线图  1. Makefile 基"><meta property="og:image" content="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg"><meta property="article:published_time" content="2019-05-09T08:17:18.000Z"><meta property="article:modified_time" content="2020-05-10T11:05:27.843Z"><script src="https://cdn.jsdelivr.net/npm/js-cookie/dist/js.cookie.min.js"></script><script>var autoChangeMode = '1'
+var t = Cookies.get("theme")
+if (autoChangeMode == '1'){
+  var isDarkMode = window.matchMedia("(prefers-color-scheme: dark)").matches
+  var isLightMode = window.matchMedia("(prefers-color-scheme: light)").matches
+  var isNotSpecified = window.matchMedia("(prefers-color-scheme: no-preference)").matches
+  var hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+  if (t === undefined){
+    if (isLightMode) activateLightMode()
+    else if (isDarkMode) activateDarkMode()
+    else if (isNotSpecified || hasNoSupport){
+      console.log('You specified no preference for a color scheme or your browser does not support it. I Schedule dark mode during night time.')
+      var now = new Date()
+      var hour = now.getHours()
+      var isNight = hour < 6 || hour >= 18
+      isNight ? activateDarkMode() : activateLightMode()
+  }
+  } else if (t == 'light') activateLightMode()
+  else activateDarkMode()
+
+} else if (autoChangeMode == '2'){
+  now = new Date();
+  hour = now.getHours();
+  isNight = hour < 6 || hour >= 18
+  if(t === undefined) isNight? activateDarkMode() : activateLightMode()
+  else if (t === 'light') activateLightMode()
+  else activateDarkMode() 
+} else {
+  if ( t == 'dark' ) activateDarkMode()
+  else if ( t == 'light') activateLightMode()
+}
+
+function activateDarkMode(){
+  document.documentElement.setAttribute('data-theme', 'dark')
+  if (document.querySelector('meta[name="theme-color"]') !== null){
+    document.querySelector('meta[name="theme-color"]').setAttribute('content','#000')
+  }
+}
+function activateLightMode(){
+  document.documentElement.setAttribute('data-theme', 'light')
+  if (document.querySelector('meta[name="theme-color"]') !== null){
+  document.querySelector('meta[name="theme-color"]').setAttribute('content','#fff')
+  }
+}</script><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@latest/css/font-awesome.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css"><link rel="canonical" href="http://yoursite.com/2019/05/09/Linux%E8%99%9A%E6%8B%9F%E6%9C%BA%E4%B8%8Bmakefile%E7%9A%84%E7%BC%96%E5%86%99%E5%BA%94%E7%94%A8/"><link rel="prev" title="python（七）——元组、字典、Set、" href="http://yoursite.com/2019/05/11/python%EF%BC%88%E4%B8%83%EF%BC%89%E2%80%94%E2%80%94%E5%85%83%E7%BB%84%E3%80%81%E5%AD%97%E5%85%B8%E3%80%81Set%E3%80%81/"><link rel="next" title="python（六）——列表，while循环，for循环，turtle画图工具" href="http://yoursite.com/2019/05/04/python%EF%BC%88%E5%85%AD%EF%BC%89%E2%80%94%E2%80%94%E5%88%97%E8%A1%A8%EF%BC%8Cwhile%E5%BE%AA%E7%8E%AF%EF%BC%8Cfor%E5%BE%AA%E7%8E%AF%EF%BC%8Cturtle%E7%94%BB%E5%9B%BE%E5%B7%A5%E5%85%B7/"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Titillium+Web"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: {"defaultEncoding":2,"translateDelay":0,"cookieDomain":"https://xxx/","msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"簡"},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  bookmark: {
+    message_prev: '按',
+    message_next: '键将本页加入书签'
+  },
+  runtime_unit: '天',
+  runtime: true,
+  copyright: undefined,
+  ClickShowText: undefined,
+  medium_zoom: false,
+  fancybox: true,
+  Snackbar: undefined,
+  baiduPush: false,
+  highlightCopy: true,
+  highlightLang: true,
+  highlightShrink: 'false',
+  isFontAwesomeV5: false,
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+  
+}</script><script>var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isSidebar: true  
+  }</script><noscript><style>
+#page-header {
+  opacity: 1
+}
+.justified-gallery img{
+  opacity: 1
+}
+</style></noscript><meta name="generator" content="Hexo 4.2.0"></head><body><div id="mobile-sidebar"><div id="menu_mask"></div><div id="mobile-sidebar-menus"><div class="mobile_author_icon"><img class="avatar-img" src="/img/avatar.png" onerror="onerror=null;src='/img/tou5.jpg'" alt="avatar"/></div><div class="mobile_post_data"><div class="mobile_data_item is-center"><div class="mobile_data_link"><a href="/archives/"><div class="headline">文章</div><div class="length_num">154</div></a></div></div><div class="mobile_data_item is-center">      <div class="mobile_data_link"><a href="/tags/"><div class="headline">标签</div><div class="length_num">45</div></a></div></div><div class="mobile_data_item is-center">     <div class="mobile_data_link"><a href="/categories/"><div class="headline">分类</div><div class="length_num">15</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fa fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fa fa-heart"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page"><i class="fa-fw fa fa-list" aria-hidden="true"></i><span> 清单</span><i class="fa fa-chevron-down menus-expand" aria-hidden="true"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/music/"><i class="fa-fw fa fa-music"></i><span> 音乐</span></a></li><li><a class="site-page" href="/movies/"><i class="fa-fw fa fa-film"></i><span> 电影</span></a></li></ul></div></div></div></div><i class="fa fa-arrow-right on" id="toggle-sidebar" aria-hidden="true">     </i><div id="sidebar"><div class="sidebar-toc"><div class="sidebar-toc__title">目录</div><div class="sidebar-toc__progress"><span class="progress-notice">你已经读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar">     </div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#"><span class="toc-number">1.</span> <span class="toc-text">目的：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#"><span class="toc-number">2.</span> <span class="toc-text">实验原理及基本技术路线图</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#"><span class="toc-number">3.</span> <span class="toc-text">实验方法、步骤</span></a></li></ol></div></div></div><div id="body-wrap"><div class="post-bg" id="nav" style="background-image: url(https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg)"><div id="page-header"><span class="pull_left" id="blog_name"><a class="blog_title" id="site-name" href="/">空城机</a></span><span class="pull_right menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fa fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fa fa-heart"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page"><i class="fa-fw fa fa-list" aria-hidden="true"></i><span> 清单</span><i class="fa fa-chevron-down menus-expand" aria-hidden="true"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/music/"><i class="fa-fw fa fa-music"></i><span> 音乐</span></a></li><li><a class="site-page" href="/movies/"><i class="fa-fw fa fa-film"></i><span> 电影</span></a></li></ul></div></div><span class="toggle-menu close"><a class="site-page"><i class="fa fa-bars fa-fw" aria-hidden="true"></i></a></span></span></div><div id="post-info"><div id="post-title"><div class="posttitle">Linux虚拟机下makefile的编写应用</div></div><div id="post-meta"><div class="meta-firstline"><time class="post-meta__date"><span class="post-meta__date-created" title="发表于 2019-05-09 16:17:18"><i class="fa fa-calendar" aria-hidden="true"></i> 发表于 2019-05-09</span><span class="post-meta__separator">|</span><span class="post-meta__date-updated" title="更新于 2020-05-10 19:05:27"><i class="fa fa-history" aria-hidden="true"></i> 更新于 2020-05-10</span></time></div><div class="meta-secondline"> </div><div class="meta-thirdline"><span class="post-meta-pv-cv"><i class="fa fa-eye post-meta__icon" aria-hidden="true"> </i><span>阅读量:</span><span id="busuanzi_value_page_pv"></span></span><span class="post-meta-commentcount"></span></div></div></div></div><main class="layout_post" id="content-inner"><article id="post"><div class="post-content" id="article-container"><a id="more"></a>
+
+<h2>目的：</h2>
+
+<p style="margin-left:0pt;">1. 熟悉嵌入式 Linux 开发基本过程及基本命令。</p>
+
+<p style="margin-left:0pt;">2. 了解嵌入式 Linux 开发中各种工具的基本用途。</p>
+
+<p style="margin-left:0pt;">3. 搭建好嵌入式 Linux 的开发环境。</p>
+
+<p style="margin-left:0pt;">4. 通过对包含多文件的 Makefile 的编写，熟悉各种形式的Makefile 编写，加深对 Makefile 中用户自定义变量、自动变量及预定义变量的理解。</p>
+
+<h2><strong><strong><strong>实验原理及基本技术路线图</strong></strong></strong></h2>
+
+<p style="margin-left:0pt;">1. Makefile 基本规则</p>
+
+<p style="margin-left:0pt;">一个简单的 Makefile 语句由目标、依赖条件、指令组成。</p>
+
+<p style="margin-left:0pt;">smdk6400_config : unconfig</p>
+
+<p style="margin-left:0pt;"> @mkdir -p $(obj)include $(obj)board/samsung/smdk6400</p>
+
+<p style="margin-left:0pt;">其中：</p>
+
+<p style="margin-left:0pt;">smdk6400_config：目标；</p>
+
+<p style="margin-left:0pt;">unconfig：先决条件；</p>
+
+<p style="margin-left:0pt;">@mkdir -p $(obj)include $(obj)board/samsung/smdk6400：指令。</p>
+
+<p style="margin-left:0pt;">这里特别注意，“@”前面是 Tab 键，并且必须是 Tab 键，而不能是空格。</p>
+
+<p style="margin-left:0pt;">目标和先决条件是依赖关系，目标是依赖于先决条件生成的。</p>
+
+<p style="margin-left:0pt;">2. Makefile 的变量</p>
+
+<p style="margin-left:0pt;">为了简化编辑和维护 Makefile，make 允许在 Makefile 中创建和使用变量。变量是在 Makefile 中定义的名字，用来代替一个文本字符串，该文本字符串称为该变量的值。在具体要求下，这些值可以代替目标体、依赖文件、命令以及 makefile 文件中的其它部分。在 Makefile中的变量定义有两种方式：递归展开方式和简单方式。</p>
+
+<h2><strong><strong><strong>实验方法、步骤</strong></strong></strong></h2>
+
+<p><strong>1.嵌套 Makefile 实验。创建如下的目录结构：</strong></p>
+
+<p><img alt="" class="has" height="292" src="https://img-blog.csdnimg.cn/20190508152008329.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2MTcxMjg3,size_16,color_FFFFFF,t_70" width="593" /></p>
+
+<p><strong>用 vim 编辑各个目录下的相关文件。</strong></p>
+
+<p><strong>用 vim 编辑顶层 Makefile</strong></p>
+
+<p><strong>用 vim 编辑各个目录下 Makefile</strong></p>
+
+<p> </p>
+
+<p style="margin-left:0pt;"><strong>1、创建目录</strong></p>
+
+<p style="margin-left:0pt;">首先在用户目录下创建 makefiletest 文件夹；创建好需用到的其它文件夹f1,f2,main,obj,include等5个文件夹。</p>
+
+<p><img alt="" class="has" height="131" src="https://img-blog.csdnimg.cn/2019050815203020.png" width="692" /></p>
+
+<p> </p>
+
+<p><strong>2、在f1文件夹下使用vim创建f1.c文件。</strong></p>
+
+<p style="margin-left:0pt;"><img alt="" class="has" height="73" src="https://img-blog.csdnimg.cn/20190508152142848.png" width="530" /><br />
+f1.c的代码如下：</p>
+
+<pre class="has">
+<code class="language-objectivec">#include "../include/myinclude.h"
+void print1()
+{
+printf("Message from f1.c...\n");
+return;
+}</code></pre>
+
+<p style="margin-left:0pt;"><img alt="" class="has" height="138" src="https://img-blog.csdnimg.cn/20190509160255715.png" width="723" /></p>
+
+<p style="margin-left:0pt;"> </p>
+
+<p><strong>3、在f2文件夹下使用vim创建f2.c文件。</strong></p>
+
+<p><img alt="" class="has" height="73" src="https://img-blog.csdnimg.cn/2019050916031271.png" width="548" /></p>
+
+<p style="margin-left:0pt;">F2.c的代码如下:</p>
+
+<pre class="has">
+<code class="language-objectivec">#include "../include/myinclude.h"
+void print2()
+{
+printf("Message from f2.c...\n");
+return;
+}</code></pre>
+
+<p><img alt="" class="has" height="155" src="https://img-blog.csdnimg.cn/20190509160330212.png" width="542" /></p>
+
+<p><br /><strong>4、在main文件夹下使用vim创建main.c文件。</strong></p>
+
+<p><img alt="" class="has" height="93" src="https://img-blog.csdnimg.cn/20190509160341421.png" width="568" /><br />
+Main.c的代码如下：</p>
+
+<pre class="has">
+<code class="language-objectivec">#include &lt;stdio.h&gt;
+int main()
+{
+    print1();
+    print2();
+    return 0;
+}</code></pre>
+
+<p><img alt="" class="has" height="165" src="https://img-blog.csdnimg.cn/20190509160351970.png" width="503" /></p>
+
+<p><br /><strong>5、在include文件夹下使用vim创建myinclude.h文件</strong></p>
+
+<p style="margin-left:0pt;"><img alt="" class="has" height="94" src="https://img-blog.csdnimg.cn/20190509160403958.png" width="582" /></p>
+
+<p style="margin-left:0pt;">Myinclude.h下的代码：</p>
+
+<pre class="has">
+<code class="language-objectivec">#include &lt;stdio.h&gt;
+</code></pre>
+
+<p style="margin-left:0pt;"><img alt="" class="has" height="77" src="https://img-blog.csdnimg.cn/20190509160414352.png" width="490" /></p>
+
+<p style="margin-left:0pt;">现在的myfiltest文件夹下的情况为：</p>
+
+<p style="margin-left:0pt;"><img alt="" class="has" height="73" src="https://img-blog.csdnimg.cn/2019050916042934.png" width="677" /></p>
+
+<p style="margin-left:0pt;"> </p>
+
+<p><strong>6、在f1文件夹下使用vim创建Makefile文件。</strong></p>
+
+<p><img alt="" class="has" height="116" src="https://img-blog.csdnimg.cn/20190509160442990.png" width="554" /></p>
+
+<p style="margin-left:0pt;">makefile代码如下：</p>
+
+<pre class="has">
+<code class="language-objectivec">../$(OBJS_DIR)/f1.o: f1.c
+$(CC) -c $^ -o $@</code></pre>
+
+<p style="margin-left:0pt;"><img alt="" class="has" height="89" src="https://img-blog.csdnimg.cn/20190509160523372.png" width="471" /></p>
+
+<p style="margin-left:0pt;"> </p>
+
+<p style="margin-left:0pt;"><strong>7、在f2文件夹下创建Makefile文件。</strong></p>
+
+<p style="margin-left:0pt;"><img alt="" class="has" height="73" src="https://img-blog.csdnimg.cn/20190509160537742.png" width="582" /></p>
+
+<p style="margin-left:0pt;">Makefile代码如下：</p>
+
+<pre class="has">
+<code class="language-objectivec">../$(OBJS_DIR)/f2.o: f2.c
+$(CC) -c $^ -o $@</code></pre>
+
+<p><img alt="" class="has" height="96" src="https://img-blog.csdnimg.cn/20190509160556531.png" width="474" /></p>
+
+<p> </p>
+
+<p><strong>8、在main和obj文件夹下进行如上操作</strong><br /><span style="color:#4f4f4f;">Main中makefile代码：</span></p>
+
+<pre class="has">
+<code class="language-objectivec">../$(OBJS_DIR)/main.o: main.c
+$(CC) -c $^ -o $@
+</code></pre>
+
+<p><img alt="" class="has" height="134" src="https://img-blog.csdnimg.cn/20190509160624489.png" width="581" /></p>
+
+<p><img alt="" class="has" height="102" src="https://img-blog.csdnimg.cn/20190509160707769.png" width="473" /><br />
+Obj中makefile代码：</p>
+
+<pre class="has">
+<code class="language-objectivec">../$(BIN_DIR)/$(BIN) : $(OBJS)
+$(CC) -o $@ $^</code></pre>
+
+<p style="margin-left:0pt;"><img alt="" class="has" height="163" src="https://img-blog.csdnimg.cn/20190509160653190.png" width="553" /></p>
+
+<p style="margin-left:0pt;"><img alt="" class="has" height="97" src="https://img-blog.csdnimg.cn/20190509160722257.png" width="452" /></p>
+
+<p style="margin-left:0pt;">现在的情况为（使用tree命令）：</p>
+
+<p style="margin-left:0pt;"><img alt="" class="has" height="300" src="https://img-blog.csdnimg.cn/20190509160748117.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2MTcxMjg3,size_16,color_FFFFFF,t_70" width="494" /></p>
+
+<p style="margin-left:0pt;"><br /><span style="color:#4f4f4f;"><strong>9、代码如下：</strong></span><strong>然后在makefiltest主文件夹下创建Makefile文件</strong></p>
+
+<pre class="has">
+<code class="language-objectivec">CC = gcc
+SUBDIRS = f1 \
+     f2 \
+     main \
+     obj
+OBJS = f1.o f2.o main.o 
+BIN = myapp
+OBJS_DIR = obj
+BIN_DIR = bin
+export CC OBJS BIN OBJS_DIR BIN_DIR
+
+all : CHECK_DIR $(SUBDIRS)
+    cp bin/myapp /source/rootfs/app
+CHECK_DIR :
+    mkdir -p $(BIN_DIR)
+$(SUBDIRS) : ECHO
+    make -C $@
+ECHO:
+    @echo $(SUBDIRS)
+    @echo begin compile
+CLEAN :
+    @$(RM) $(OBJS_DIR)/*.o
+    @rm -rf $(BIN_DIR)</code></pre>
+
+<p style="margin-left:0pt;"><img alt="" class="has" height="500" src="https://img-blog.csdnimg.cn/20190509160805400.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2MTcxMjg3,size_16,color_FFFFFF,t_70" width="598" /></p>
+
+<p><strong>10、输入make去运行makefile文件，发现错误cp无法创建普通文件</strong></p>
+
+<p style="margin-left:0pt;"><img alt="" class="has" height="207" src="https://img-blog.csdnimg.cn/20190509160820792.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2MTcxMjg3,size_16,color_FFFFFF,t_70" width="627" /><br /><span style="color:#f33b45;">然后在makefiltest中创建目录 source/rootfs/app</span></p>
+
+<p style="margin-left:0pt;"><img alt="" class="has" height="262" src="https://img-blog.csdnimg.cn/20190509160839628.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2MTcxMjg3,size_16,color_FFFFFF,t_70" width="652" /><br />
+输入make，将会出现以下结果：</p>
+
+<p><img alt="" class="has" height="403" src="https://img-blog.csdnimg.cn/20190509160857262.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2MTcxMjg3,size_16,color_FFFFFF,t_70" width="576" /><br />
+之后输入tree，将会出现myapp</p>
+
+<p><img alt="" class="has" height="364" src="https://img-blog.csdnimg.cn/20190509160912613.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2MTcxMjg3,size_16,color_FFFFFF,t_70" width="469" /></p>
+
+<p style="margin-left:0pt;"><strong>11、在bin目录下使用./myapp，将会将二进制文件运行输出f1.c和f2.c的printf结果</strong></p>
+
+<p style="margin-left:0pt;"><img alt="" class="has" height="107" src="https://img-blog.csdnimg.cn/20190509160927700.png" width="528" /></p>
+
+<p style="margin-left:0pt;"><strong>一起学习，一起进步 -.- ，如有错误，可以发评论</strong> </p>
+</div><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">空城机</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://yoursite.com/2019/05/09/Linux%E8%99%9A%E6%8B%9F%E6%9C%BA%E4%B8%8Bmakefile%E7%9A%84%E7%BC%96%E5%86%99%E5%BA%94%E7%94%A8/">http://yoursite.com/2019/05/09/Linux%E8%99%9A%E6%8B%9F%E6%9C%BA%E4%B8%8Bmakefile%E7%9A%84%E7%BC%96%E5%86%99%E5%BA%94%E7%94%A8/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://yoursite.com" target="_blank">空城机</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="https://i.loli.net/2019/07/21/5d33d5dc1531213134.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css"/><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js"></script></div></div><div class="post-reward"><a class="reward-button button--primary button--animated"> <i class="fa fa-qrcode"></i> 打赏<div class="reward-main"><ul class="reward-all"><li class="reward-item"><img class="post-qr-code__img" src="/img/wechat.jpg" alt="微信"/><div class="post-qr-code__desc">微信</div></li><li class="reward-item"><img class="post-qr-code__img" src="/img/alipay.jpg" alt="支付寶"/><div class="post-qr-code__desc">支付寶</div></li></ul></div></a></div><nav class="pagination_post" id="pagination"><div class="prev-post pull_left"><a href="/2019/05/11/python%EF%BC%88%E4%B8%83%EF%BC%89%E2%80%94%E2%80%94%E5%85%83%E7%BB%84%E3%80%81%E5%AD%97%E5%85%B8%E3%80%81Set%E3%80%81/"><img class="prev_cover" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">python（七）——元组、字典、Set、</div></div></a></div><div class="next-post pull_right"><a href="/2019/05/04/python%EF%BC%88%E5%85%AD%EF%BC%89%E2%80%94%E2%80%94%E5%88%97%E8%A1%A8%EF%BC%8Cwhile%E5%BE%AA%E7%8E%AF%EF%BC%8Cfor%E5%BE%AA%E7%8E%AF%EF%BC%8Cturtle%E7%94%BB%E5%9B%BE%E5%B7%A5%E5%85%B7/"><img class="next_cover" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">python（六）——列表，while循环，for循环，turtle画图工具</div></div></a></div></nav></article></main><footer id="footer" data-type="color"><div id="footer-wrap"><div class="copyright">&copy;2018 - 2020 By 空城机</div><div class="framework-info"><span>驱动 </span><a href="https://hexo.io" target="_blank" rel="noopener"><span>Hexo</span></a><span class="footer-separator">|</span><span>主题 </span><a href="https://github.com/jerryc127/hexo-theme-butterfly" target="_blank" rel="noopener"><span>Butterfly</span></a></div></div></footer></div><section class="rightside" id="rightside"><div id="rightside-config-hide"><i class="fa fa-book" id="readmode" title="阅读模式"></i><i class="fa fa-plus" id="font_plus" title="放大字体"></i><i class="fa fa-minus" id="font_minus" title="缩小字体"></i><a class="translate_chn_to_cht" id="translateLink" href="javascript:translatePage();" title="简繁转换" target="_self">繁</a><i class="darkmode fa fa-moon-o" id="darkmode" title="夜间模式"></i></div><div id="rightside-config-show"><div id="rightside_config" title="设置"><i class="fa fa-cog" aria-hidden="true"></i></div><i class="fa fa-list-ul close" id="mobile-toc-button" title="目录" aria-hidden="true"></i><i class="fa fa-arrow-up" id="go-up" title="回到顶部" aria-hidden="true"></i></div></section><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page@latest/instantpage.min.js" type="module"></script></body></html>

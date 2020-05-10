@@ -1,0 +1,443 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>python（十八）——图形界面Tkinter中 | 空城机</title><meta name="description" content="目录  Tkinter组件 ​  CheckButton复选框控件  语法  显示多选框内容代码：  单选框  ListBox列表框  创建一个listbox  向列表框添加元素  在列表框开头添加元素   在列表框末尾添加元素  删除列表框元素   选中列表框中的元素  获取列表框中元素的个数  返回当前选中的元素的索引项  判断列表中一个元素是否被选中  打印列表框中元素  修改列表框中元"><meta name="keywords" content="python Tkinter"><meta name="author" content="空城机"><meta name="copyright" content="空城机"><meta name="format-detection" content="telephone=no"><link rel="shortcut icon" href="/img/favicon.png"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="dns-prefetch" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="https://fonts.googleapis.com" crossorigin="crossorigin"/><link rel="dns-prefetch" href="https://fonts.googleapis.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="dns-prefetch" href="//busuanzi.ibruce.info"/><meta name="twitter:card" content="summary"><meta name="twitter:title" content="python（十八）——图形界面Tkinter中"><meta name="twitter:description" content="目录  Tkinter组件 ​  CheckButton复选框控件  语法  显示多选框内容代码：  单选框  ListBox列表框  创建一个listbox  向列表框添加元素  在列表框开头添加元素   在列表框末尾添加元素  删除列表框元素   选中列表框中的元素  获取列表框中元素的个数  返回当前选中的元素的索引项  判断列表中一个元素是否被选中  打印列表框中元素  修改列表框中元"><meta name="twitter:image" content="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg"><meta property="og:type" content="article"><meta property="og:title" content="python（十八）——图形界面Tkinter中"><meta property="og:url" content="http://yoursite.com/2019/06/22/python%EF%BC%88%E5%8D%81%E5%85%AB%EF%BC%89%E2%80%94%E2%80%94%E5%9B%BE%E5%BD%A2%E7%95%8C%E9%9D%A2Tkinter%E4%B8%AD/"><meta property="og:site_name" content="空城机"><meta property="og:description" content="目录  Tkinter组件 ​  CheckButton复选框控件  语法  显示多选框内容代码：  单选框  ListBox列表框  创建一个listbox  向列表框添加元素  在列表框开头添加元素   在列表框末尾添加元素  删除列表框元素   选中列表框中的元素  获取列表框中元素的个数  返回当前选中的元素的索引项  判断列表中一个元素是否被选中  打印列表框中元素  修改列表框中元"><meta property="og:image" content="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg"><meta property="article:published_time" content="2019-06-22T06:48:36.000Z"><meta property="article:modified_time" content="2020-05-10T11:05:27.857Z"><script src="https://cdn.jsdelivr.net/npm/js-cookie/dist/js.cookie.min.js"></script><script>var autoChangeMode = '1'
+var t = Cookies.get("theme")
+if (autoChangeMode == '1'){
+  var isDarkMode = window.matchMedia("(prefers-color-scheme: dark)").matches
+  var isLightMode = window.matchMedia("(prefers-color-scheme: light)").matches
+  var isNotSpecified = window.matchMedia("(prefers-color-scheme: no-preference)").matches
+  var hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+  if (t === undefined){
+    if (isLightMode) activateLightMode()
+    else if (isDarkMode) activateDarkMode()
+    else if (isNotSpecified || hasNoSupport){
+      console.log('You specified no preference for a color scheme or your browser does not support it. I Schedule dark mode during night time.')
+      var now = new Date()
+      var hour = now.getHours()
+      var isNight = hour < 6 || hour >= 18
+      isNight ? activateDarkMode() : activateLightMode()
+  }
+  } else if (t == 'light') activateLightMode()
+  else activateDarkMode()
+
+} else if (autoChangeMode == '2'){
+  now = new Date();
+  hour = now.getHours();
+  isNight = hour < 6 || hour >= 18
+  if(t === undefined) isNight? activateDarkMode() : activateLightMode()
+  else if (t === 'light') activateLightMode()
+  else activateDarkMode() 
+} else {
+  if ( t == 'dark' ) activateDarkMode()
+  else if ( t == 'light') activateLightMode()
+}
+
+function activateDarkMode(){
+  document.documentElement.setAttribute('data-theme', 'dark')
+  if (document.querySelector('meta[name="theme-color"]') !== null){
+    document.querySelector('meta[name="theme-color"]').setAttribute('content','#000')
+  }
+}
+function activateLightMode(){
+  document.documentElement.setAttribute('data-theme', 'light')
+  if (document.querySelector('meta[name="theme-color"]') !== null){
+  document.querySelector('meta[name="theme-color"]').setAttribute('content','#fff')
+  }
+}</script><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@latest/css/font-awesome.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css"><link rel="canonical" href="http://yoursite.com/2019/06/22/python%EF%BC%88%E5%8D%81%E5%85%AB%EF%BC%89%E2%80%94%E2%80%94%E5%9B%BE%E5%BD%A2%E7%95%8C%E9%9D%A2Tkinter%E4%B8%AD/"><link rel="prev" title="CSS回顾总结（二）——伪类、伪元素、子元素和后代元素选择器、盒子模型" href="http://yoursite.com/2019/06/22/CSS%E5%9B%9E%E9%A1%BE%E6%80%BB%E7%BB%93%EF%BC%88%E4%BA%8C%EF%BC%89%E2%80%94%E2%80%94%E4%BC%AA%E7%B1%BB%E3%80%81%E4%BC%AA%E5%85%83%E7%B4%A0%E3%80%81%E5%AD%90%E5%85%83%E7%B4%A0%E5%92%8C%E5%90%8E%E4%BB%A3%E5%85%83%E7%B4%A0%E9%80%89%E6%8B%A9%E5%99%A8%E3%80%81%E7%9B%92%E5%AD%90%E6%A8%A1%E5%9E%8B/"><link rel="next" title="CSS回顾总结（一）——CSS简介，语法规范，选择器，三元素" href="http://yoursite.com/2019/06/19/CSS%E5%9B%9E%E9%A1%BE%E6%80%BB%E7%BB%93%EF%BC%88%E4%B8%80%EF%BC%89%E2%80%94%E2%80%94CSS%E7%AE%80%E4%BB%8B%EF%BC%8C%E8%AF%AD%E6%B3%95%E8%A7%84%E8%8C%83%EF%BC%8C%E9%80%89%E6%8B%A9%E5%99%A8%EF%BC%8C%E4%B8%89%E5%85%83%E7%B4%A0/"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Titillium+Web"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: {"defaultEncoding":2,"translateDelay":0,"cookieDomain":"https://xxx/","msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"簡"},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  bookmark: {
+    message_prev: '按',
+    message_next: '键将本页加入书签'
+  },
+  runtime_unit: '天',
+  runtime: true,
+  copyright: undefined,
+  ClickShowText: undefined,
+  medium_zoom: false,
+  fancybox: true,
+  Snackbar: undefined,
+  baiduPush: false,
+  highlightCopy: true,
+  highlightLang: true,
+  highlightShrink: 'false',
+  isFontAwesomeV5: false,
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+  
+}</script><script>var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isSidebar: true  
+  }</script><noscript><style>
+#page-header {
+  opacity: 1
+}
+.justified-gallery img{
+  opacity: 1
+}
+</style></noscript><meta name="generator" content="Hexo 4.2.0"></head><body><div id="mobile-sidebar"><div id="menu_mask"></div><div id="mobile-sidebar-menus"><div class="mobile_author_icon"><img class="avatar-img" src="/img/avatar.png" onerror="onerror=null;src='/img/tou5.jpg'" alt="avatar"/></div><div class="mobile_post_data"><div class="mobile_data_item is-center"><div class="mobile_data_link"><a href="/archives/"><div class="headline">文章</div><div class="length_num">154</div></a></div></div><div class="mobile_data_item is-center">      <div class="mobile_data_link"><a href="/tags/"><div class="headline">标签</div><div class="length_num">45</div></a></div></div><div class="mobile_data_item is-center">     <div class="mobile_data_link"><a href="/categories/"><div class="headline">分类</div><div class="length_num">15</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fa fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fa fa-heart"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page"><i class="fa-fw fa fa-list" aria-hidden="true"></i><span> 清单</span><i class="fa fa-chevron-down menus-expand" aria-hidden="true"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/music/"><i class="fa-fw fa fa-music"></i><span> 音乐</span></a></li><li><a class="site-page" href="/movies/"><i class="fa-fw fa fa-film"></i><span> 电影</span></a></li></ul></div></div></div></div><i class="fa fa-arrow-right on" id="toggle-sidebar" aria-hidden="true">     </i><div id="sidebar"><div class="sidebar-toc"><div class="sidebar-toc__title">目录</div><div class="sidebar-toc__progress"><span class="progress-notice">你已经读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar">     </div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Tkinter%E7%BB%84%E4%BB%B6%C2%A0"><span class="toc-number">1.</span> <span class="toc-text">Tkinter组件 </span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E2%80%8B"><span class="toc-number">2.</span> <span class="toc-text"></span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CheckButton%E5%A4%8D%E9%80%89%E6%A1%86%E6%8E%A7%E4%BB%B6"><span class="toc-number">3.</span> <span class="toc-text">CheckButton复选框控件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%AD%E6%B3%95"><span class="toc-number">3.1.</span> <span class="toc-text">语法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%98%BE%E7%A4%BA%E5%A4%9A%E9%80%89%E6%A1%86%E5%86%85%E5%AE%B9%E4%BB%A3%E7%A0%81%EF%BC%9A"><span class="toc-number">3.2.</span> <span class="toc-text">显示多选框内容代码：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%95%E9%80%89%E6%A1%86"><span class="toc-number">4.</span> <span class="toc-text">单选框</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ListBox%E5%88%97%E8%A1%A8%E6%A1%86"><span class="toc-number">5.</span> <span class="toc-text">ListBox列表框</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AAlistbox"><span class="toc-number">5.1.</span> <span class="toc-text">创建一个listbox</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%91%E5%88%97%E8%A1%A8%E6%A1%86%E6%B7%BB%E5%8A%A0%E5%85%83%E7%B4%A0"><span class="toc-number">5.2.</span> <span class="toc-text">向列表框添加元素</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9C%A8%E5%88%97%E8%A1%A8%E6%A1%86%E5%BC%80%E5%A4%B4%E6%B7%BB%E5%8A%A0%E5%85%83%E7%B4%A0%C2%A0"><span class="toc-number">5.3.</span> <span class="toc-text">在列表框开头添加元素 </span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9C%A8%E5%88%97%E8%A1%A8%E6%A1%86%E6%9C%AB%E5%B0%BE%E6%B7%BB%E5%8A%A0%E5%85%83%E7%B4%A0"><span class="toc-number">5.4.</span> <span class="toc-text">在列表框末尾添加元素</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%A0%E9%99%A4%E5%88%97%E8%A1%A8%E6%A1%86%E5%85%83%E7%B4%A0%C2%A0"><span class="toc-number">5.5.</span> <span class="toc-text">删除列表框元素 </span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%89%E4%B8%AD%E5%88%97%E8%A1%A8%E6%A1%86%E4%B8%AD%E7%9A%84%E5%85%83%E7%B4%A0"><span class="toc-number">5.6.</span> <span class="toc-text">选中列表框中的元素</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96%E5%88%97%E8%A1%A8%E6%A1%86%E4%B8%AD%E5%85%83%E7%B4%A0%E7%9A%84%E4%B8%AA%E6%95%B0"><span class="toc-number">5.7.</span> <span class="toc-text">获取列表框中元素的个数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%94%E5%9B%9E%E5%BD%93%E5%89%8D%E9%80%89%E4%B8%AD%E7%9A%84%E5%85%83%E7%B4%A0%E7%9A%84%E7%B4%A2%E5%BC%95%E9%A1%B9"><span class="toc-number">5.8.</span> <span class="toc-text">返回当前选中的元素的索引项</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%A4%E6%96%AD%E5%88%97%E8%A1%A8%E4%B8%AD%E4%B8%80%E4%B8%AA%E5%85%83%E7%B4%A0%E6%98%AF%E5%90%A6%E8%A2%AB%E9%80%89%E4%B8%AD"><span class="toc-number">5.9.</span> <span class="toc-text">判断列表中一个元素是否被选中</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%89%93%E5%8D%B0%E5%88%97%E8%A1%A8%E6%A1%86%E4%B8%AD%E5%85%83%E7%B4%A0"><span class="toc-number">5.10.</span> <span class="toc-text">打印列表框中元素</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BF%AE%E6%94%B9%E5%88%97%E8%A1%A8%E6%A1%86%E4%B8%AD%E5%85%83%E7%B4%A0"><span class="toc-number">5.11.</span> <span class="toc-text">修改列表框中元素</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%99%E5%88%97%E8%A1%A8%E6%A1%86%E7%BB%91%E5%AE%9A%E4%BA%8B%E4%BB%B6"><span class="toc-number">5.12.</span> <span class="toc-text">给列表框绑定事件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%97%E8%A1%A8%E6%A1%86%E6%94%AF%E6%8C%81shift%E5%92%8Ccontrol"><span class="toc-number">5.13.</span> <span class="toc-text">列表框支持shift和control</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%97%E8%A1%A8%E6%A1%86%E6%94%AF%E6%8C%81%E5%A4%9A%E9%80%89MULTIPLE"><span class="toc-number">5.14.</span> <span class="toc-text">列表框支持多选MULTIPLE</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#scale%E6%8E%A7%E4%BB%B6"><span class="toc-number">6.</span> <span class="toc-text">scale控件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9B%E5%BB%BAscale"><span class="toc-number">6.1.</span> <span class="toc-text">创建scale</span></a></li></ol></li></ol></div></div></div><div id="body-wrap"><div class="post-bg" id="nav" style="background-image: url(https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg)"><div id="page-header"><span class="pull_left" id="blog_name"><a class="blog_title" id="site-name" href="/">空城机</a></span><span class="pull_right menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fa fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fa fa-heart"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page"><i class="fa-fw fa fa-list" aria-hidden="true"></i><span> 清单</span><i class="fa fa-chevron-down menus-expand" aria-hidden="true"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/music/"><i class="fa-fw fa fa-music"></i><span> 音乐</span></a></li><li><a class="site-page" href="/movies/"><i class="fa-fw fa fa-film"></i><span> 电影</span></a></li></ul></div></div><span class="toggle-menu close"><a class="site-page"><i class="fa fa-bars fa-fw" aria-hidden="true"></i></a></span></span></div><div id="post-info"><div id="post-title"><div class="posttitle">python（十八）——图形界面Tkinter中</div></div><div id="post-meta"><div class="meta-firstline"><time class="post-meta__date"><span class="post-meta__date-created" title="发表于 2019-06-22 14:48:36"><i class="fa fa-calendar" aria-hidden="true"></i> 发表于 2019-06-22</span><span class="post-meta__separator">|</span><span class="post-meta__date-updated" title="更新于 2020-05-10 19:05:27"><i class="fa fa-history" aria-hidden="true"></i> 更新于 2020-05-10</span></time><span class="post-meta__categories"><span class="post-meta__separator">|</span><i class="fa fa-inbox post-meta__icon" aria-hidden="true"></i><a class="post-meta__categories" href="/categories/python/">python</a></span></div><div class="meta-secondline"> </div><div class="meta-thirdline"><span class="post-meta-pv-cv"><i class="fa fa-eye post-meta__icon" aria-hidden="true"> </i><span>阅读量:</span><span id="busuanzi_value_page_pv"></span></span><span class="post-meta-commentcount"></span></div></div></div></div><main class="layout_post" id="content-inner"><article id="post"><div class="post-content" id="article-container"><a id="more"></a>
+
+<p id="main-toc"><strong>目录</strong></p>
+
+<p id="Tkinter%E7%BB%84%E4%BB%B6%C2%A0-toc" style="margin-left:40px;"><a href="#Tkinter%E7%BB%84%E4%BB%B6%C2%A0">Tkinter组件 </a><a href="#%E2%80%8B">​</a></p>
+
+<p id="CheckButton%E5%A4%8D%E9%80%89%E6%A1%86%E6%8E%A7%E4%BB%B6-toc" style="margin-left:40px;"><a href="#CheckButton%E5%A4%8D%E9%80%89%E6%A1%86%E6%8E%A7%E4%BB%B6">CheckButton复选框控件</a></p>
+
+<p id="%E8%AF%AD%E6%B3%95-toc" style="margin-left:80px;"><a href="#%E8%AF%AD%E6%B3%95">语法</a></p>
+
+<p id="%E6%98%BE%E7%A4%BA%E5%A4%9A%E9%80%89%E6%A1%86%E5%86%85%E5%AE%B9%E4%BB%A3%E7%A0%81%EF%BC%9A-toc" style="margin-left:80px;"><a href="#%E6%98%BE%E7%A4%BA%E5%A4%9A%E9%80%89%E6%A1%86%E5%86%85%E5%AE%B9%E4%BB%A3%E7%A0%81%EF%BC%9A">显示多选框内容代码：</a></p>
+
+<p id="%E5%8D%95%E9%80%89%E6%A1%86-toc" style="margin-left:40px;"><a href="#%E5%8D%95%E9%80%89%E6%A1%86">单选框</a></p>
+
+<p id="ListBox%E5%88%97%E8%A1%A8%E6%A1%86-toc" style="margin-left:40px;"><a href="#ListBox%E5%88%97%E8%A1%A8%E6%A1%86">ListBox列表框</a></p>
+
+<p id="%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AAlistbox-toc" style="margin-left:80px;"><a href="#%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AAlistbox">创建一个listbox</a></p>
+
+<p id="%E5%90%91%E5%88%97%E8%A1%A8%E6%A1%86%E6%B7%BB%E5%8A%A0%E5%85%83%E7%B4%A0-toc" style="margin-left:80px;"><a href="#%E5%90%91%E5%88%97%E8%A1%A8%E6%A1%86%E6%B7%BB%E5%8A%A0%E5%85%83%E7%B4%A0">向列表框添加元素</a></p>
+
+<p id="%E5%9C%A8%E5%88%97%E8%A1%A8%E6%A1%86%E5%BC%80%E5%A4%B4%E6%B7%BB%E5%8A%A0%E5%85%83%E7%B4%A0%C2%A0-toc" style="margin-left:80px;"><a href="#%E5%9C%A8%E5%88%97%E8%A1%A8%E6%A1%86%E5%BC%80%E5%A4%B4%E6%B7%BB%E5%8A%A0%E5%85%83%E7%B4%A0%C2%A0">在列表框开头添加元素 </a></p>
+
+<p id="%E5%9C%A8%E5%88%97%E8%A1%A8%E6%A1%86%E6%9C%AB%E5%B0%BE%E6%B7%BB%E5%8A%A0%E5%85%83%E7%B4%A0-toc" style="margin-left:80px;"><a href="#%E5%9C%A8%E5%88%97%E8%A1%A8%E6%A1%86%E6%9C%AB%E5%B0%BE%E6%B7%BB%E5%8A%A0%E5%85%83%E7%B4%A0">在列表框末尾添加元素</a></p>
+
+<p id="%E5%88%A0%E9%99%A4%E5%88%97%E8%A1%A8%E6%A1%86%E5%85%83%E7%B4%A0%C2%A0-toc" style="margin-left:80px;"><a href="#%E5%88%A0%E9%99%A4%E5%88%97%E8%A1%A8%E6%A1%86%E5%85%83%E7%B4%A0%C2%A0">删除列表框元素 </a></p>
+
+<p id="%E9%80%89%E4%B8%AD%E5%88%97%E8%A1%A8%E6%A1%86%E4%B8%AD%E7%9A%84%E5%85%83%E7%B4%A0-toc" style="margin-left:80px;"><a href="#%E9%80%89%E4%B8%AD%E5%88%97%E8%A1%A8%E6%A1%86%E4%B8%AD%E7%9A%84%E5%85%83%E7%B4%A0">选中列表框中的元素</a></p>
+
+<p id="%E8%8E%B7%E5%8F%96%E5%88%97%E8%A1%A8%E6%A1%86%E4%B8%AD%E5%85%83%E7%B4%A0%E7%9A%84%E4%B8%AA%E6%95%B0-toc" style="margin-left:80px;"><a href="#%E8%8E%B7%E5%8F%96%E5%88%97%E8%A1%A8%E6%A1%86%E4%B8%AD%E5%85%83%E7%B4%A0%E7%9A%84%E4%B8%AA%E6%95%B0">获取列表框中元素的个数</a></p>
+
+<p id="%E8%BF%94%E5%9B%9E%E5%BD%93%E5%89%8D%E9%80%89%E4%B8%AD%E7%9A%84%E5%85%83%E7%B4%A0%E7%9A%84%E7%B4%A2%E5%BC%95%E9%A1%B9-toc" style="margin-left:80px;"><a href="#%E8%BF%94%E5%9B%9E%E5%BD%93%E5%89%8D%E9%80%89%E4%B8%AD%E7%9A%84%E5%85%83%E7%B4%A0%E7%9A%84%E7%B4%A2%E5%BC%95%E9%A1%B9">返回当前选中的元素的索引项</a></p>
+
+<p id="%E5%88%A4%E6%96%AD%E5%88%97%E8%A1%A8%E4%B8%AD%E4%B8%80%E4%B8%AA%E5%85%83%E7%B4%A0%E6%98%AF%E5%90%A6%E8%A2%AB%E9%80%89%E4%B8%AD-toc" style="margin-left:80px;"><a href="#%E5%88%A4%E6%96%AD%E5%88%97%E8%A1%A8%E4%B8%AD%E4%B8%80%E4%B8%AA%E5%85%83%E7%B4%A0%E6%98%AF%E5%90%A6%E8%A2%AB%E9%80%89%E4%B8%AD">判断列表中一个元素是否被选中</a></p>
+
+<p id="%E6%89%93%E5%8D%B0%E5%88%97%E8%A1%A8%E6%A1%86%E4%B8%AD%E5%85%83%E7%B4%A0-toc" style="margin-left:80px;"><a href="#%E6%89%93%E5%8D%B0%E5%88%97%E8%A1%A8%E6%A1%86%E4%B8%AD%E5%85%83%E7%B4%A0">打印列表框中元素</a></p>
+
+<p id="%E4%BF%AE%E6%94%B9%E5%88%97%E8%A1%A8%E6%A1%86%E4%B8%AD%E5%85%83%E7%B4%A0-toc" style="margin-left:80px;"><a href="#%E4%BF%AE%E6%94%B9%E5%88%97%E8%A1%A8%E6%A1%86%E4%B8%AD%E5%85%83%E7%B4%A0">修改列表框中元素</a></p>
+
+<p id="%E7%BB%99%E5%88%97%E8%A1%A8%E6%A1%86%E7%BB%91%E5%AE%9A%E4%BA%8B%E4%BB%B6-toc" style="margin-left:80px;"><a href="#%E7%BB%99%E5%88%97%E8%A1%A8%E6%A1%86%E7%BB%91%E5%AE%9A%E4%BA%8B%E4%BB%B6">给列表框绑定事件</a></p>
+
+<p id="%E5%88%97%E8%A1%A8%E6%A1%86%E6%94%AF%E6%8C%81shift%E5%92%8Ccontrol-toc" style="margin-left:80px;"><a href="#%E5%88%97%E8%A1%A8%E6%A1%86%E6%94%AF%E6%8C%81shift%E5%92%8Ccontrol">列表框支持shift和control</a></p>
+
+<p id="%E5%88%97%E8%A1%A8%E6%A1%86%E6%94%AF%E6%8C%81%E5%A4%9A%E9%80%89MULTIPLE-toc" style="margin-left:80px;"><a href="#%E5%88%97%E8%A1%A8%E6%A1%86%E6%94%AF%E6%8C%81%E5%A4%9A%E9%80%89MULTIPLE">列表框支持多选MULTIPLE</a></p>
+
+<p id="scale%E6%8E%A7%E4%BB%B6-toc" style="margin-left:40px;"><a href="#scale%E6%8E%A7%E4%BB%B6">scale控件</a></p>
+
+<p id="%E5%88%9B%E5%BB%BAscale-toc" style="margin-left:80px;"><a href="#%E5%88%9B%E5%BB%BAscale">创建scale</a></p>
+
+<hr id="hr-toc" /><h2 id="Tkinter%E7%BB%84%E4%BB%B6%C2%A0">Tkinter组件 </h2>
+
+<h2 id="%E2%80%8B"><img alt="" class="has" height="442" src="https://img-blog.csdnimg.cn/20190622131709525.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2MTcxMjg3,size_16,color_FFFFFF,t_70" width="370" /></h2>
+
+<h2 id="CheckButton%E5%A4%8D%E9%80%89%E6%A1%86%E6%8E%A7%E4%BB%B6">CheckButton复选框控件</h2>
+
+<p>Python Tkinter <a href="">复选框</a>用来选取我们需要的选项，它前面有个小正方形的方块，如果选中则有一个对号，也可以再次点击以取消该对号来取消选中。</p>
+
+<h3 id="%E8%AF%AD%E6%B3%95">语法</h3>
+
+<p>语法格式如下：</p>
+
+<pre>
+<code class="language-html hljs">w = Checkbutton ( master, option=value, ... )</code></pre>
+
+<ul><li>master: 按钮的父容器。</li>
+    <li>options: 可选项，即该按钮的可设置的属性。这些选项可以用键 = 值的形式设置，并以逗号分隔。</li>
+</ul><p> </p>
+
+<h3 id="%E6%98%BE%E7%A4%BA%E5%A4%9A%E9%80%89%E6%A1%86%E5%86%85%E5%AE%B9%E4%BB%A3%E7%A0%81%EF%BC%9A">显示多选框内容代码：</h3>
+
+<pre class="has">
+<code class="language-python">import tkinter
+
+#创建主窗口
+win = tkinter.Tk()
+win.title("主界面")
+win.geometry("300x300")
+
+def updata():
+    message = ""
+    if hobby1.get() == True:
+        message += "money\n"
+    if hobby2.get() == True:
+        message += "power\n"
+    if hobby3.get() == True:
+        message += "person\n"
+    #清除text中所有的内容
+    Text.delete(0.0,tkinter.END)
+    Text.insert(tkinter.INSERT,message)
+#创建多选框
+#绑定变量
+hobby1 = tkinter.BooleanVar()
+check1 = tkinter.Checkbutton(win,text="money",variable = hobby1,command = updata)
+hobby2 = tkinter.BooleanVar()
+check2 = tkinter.Checkbutton(win,text="power",variable = hobby2,command = updata)
+hobby3 = tkinter.BooleanVar()
+check3 = tkinter.Checkbutton(win,text="person",variable = hobby3,command = updata)
+check1.pack()
+check2.pack()
+check3.pack()
+
+Text = tkinter.Text(win,width=30,height=15)
+Text.pack()
+
+win.mainloop()</code></pre>
+
+<p><img alt="" class="has" height="415" src="https://img-blog.csdnimg.cn/20190622130111825.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2MTcxMjg3,size_16,color_FFFFFF,t_70" width="377" /><img alt="" class="has" height="415" src="https://img-blog.csdnimg.cn/20190622130121862.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2MTcxMjg3,size_16,color_FFFFFF,t_70" width="377" /></p>
+
+<p><img alt="" class="has" height="415" src="https://img-blog.csdnimg.cn/20190622130135584.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2MTcxMjg3,size_16,color_FFFFFF,t_70" width="377" /></p>
+
+<p> </p>
+
+<h2 id="%E5%8D%95%E9%80%89%E6%A1%86">单选框</h2>
+
+<p>单选按钮控件；显示一个单选的按钮状态</p>
+
+<p>语法：w = Radiobutton ( master, option=value, ... )</p>
+
+<p>绘制一个单选框代码</p>
+
+<pre class="has">
+<code class="language-python">#创建多选框
+#绑定变量
+i = tkinter.IntVar()
+check1 = tkinter.Radiobutton(win,text="one",value = 1,variable = i)
+check2 = tkinter.Radiobutton(win,text="two",value = 2,variable = i)
+check3 = tkinter.Radiobutton(win,text="three",value = 3,variable = i)
+check1.pack()
+check2.pack()
+check3.pack()
+Text = tkinter.Text(win,width=30,height=15)
+Text.pack()</code></pre>
+
+<p style="text-align:center;"><img alt="" class="has" height="415" src="https://img-blog.csdnimg.cn/20190622130754985.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2MTcxMjg3,size_16,color_FFFFFF,t_70" width="377" /></p>
+
+<h2 id="ListBox%E5%88%97%E8%A1%A8%E6%A1%86">ListBox列表框</h2>
+
+<p> 列表框控件；在Listbox窗口小部件是用来显示一个字符串列表给用户</p>
+
+<p>可以包含一个或者多个文本框，可以在listbox控件的小窗口显示字符串</p>
+
+<h3 id="%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AAlistbox"><strong>创建一个listbox</strong></h3>
+
+<pre class="has">
+<code class="language-python">#创建一个listbox
+lb = tkinter.Listbox(win,selectmode = tkinter.BROWSE)
+lb.pack()
+win.mainloop()
+</code></pre>
+
+<p style="text-align:center;"><img alt="" class="has" height="299" src="https://img-blog.csdnimg.cn/20190622132153879.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2MTcxMjg3,size_16,color_FFFFFF,t_70" width="377" /></p>
+
+<h3 id="%E5%90%91%E5%88%97%E8%A1%A8%E6%A1%86%E6%B7%BB%E5%8A%A0%E5%85%83%E7%B4%A0"><strong>向列表框添加元素</strong></h3>
+
+<pre class="has">
+<code class="language-python">#创建一个listbox，添加几个元素
+lb = tkinter.Listbox(win,selectmode = tkinter.BROWSE)
+lb.pack()
+for i in ["ok","very","distance","parrlen"]:
+    #按顺序添加
+    lb.insert(tkinter.END,i)
+win.mainloop()</code></pre>
+
+<p style="text-align:center;"><img alt="" class="has" height="290" src="https://img-blog.csdnimg.cn/20190622132448822.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2MTcxMjg3,size_16,color_FFFFFF,t_70" width="377" /></p>
+
+<h3 id="%E5%9C%A8%E5%88%97%E8%A1%A8%E6%A1%86%E5%BC%80%E5%A4%B4%E6%B7%BB%E5%8A%A0%E5%85%83%E7%B4%A0%C2%A0">在列表框开头添加元素 </h3>
+
+<pre class="has">
+<code class="language-python">#在列表框开头添加
+lb.insert(tkinter.ACTIVE,"cool")</code></pre>
+
+<p style="text-align:center;"><img alt="" class="has" height="290" src="https://img-blog.csdnimg.cn/20190622132713857.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2MTcxMjg3,size_16,color_FFFFFF,t_70" width="377" /></p>
+
+<h3 id="%E5%9C%A8%E5%88%97%E8%A1%A8%E6%A1%86%E6%9C%AB%E5%B0%BE%E6%B7%BB%E5%8A%A0%E5%85%83%E7%B4%A0">在列表框末尾添加元素</h3>
+
+<pre class="has">
+<code class="language-python">lb.insert(tkinter.END,"WARM")</code></pre>
+
+<p style="text-align:center;"><img alt="" class="has" height="290" src="https://img-blog.csdnimg.cn/2019062213283596.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2MTcxMjg3,size_16,color_FFFFFF,t_70" width="377" /></p>
+
+<h3 id="%E5%88%A0%E9%99%A4%E5%88%97%E8%A1%A8%E6%A1%86%E5%85%83%E7%B4%A0%C2%A0">删除列表框元素 </h3>
+
+<p>语法: lb.delete(参数1，参数2)</p>
+
+<p>参数1为开始的索引，参数2为结束的索引,不添加参数2，就只删除第一个索引引出的内容</p>
+
+<pre class="has">
+<code class="language-python">for i in ["ok","very","distance","parrlen"]:
+    #按顺序添加
+    lb.insert(tkinter.END,i)
+#删除元素 参数1为开始的索引，参数2为结束的索引,不添加参数2，就只删除第一个索引引出的内容
+lb.delete(1,2)</code></pre>
+
+<p style="text-align:center;"><img alt="" class="has" height="290" src="https://img-blog.csdnimg.cn/20190622133106108.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2MTcxMjg3,size_16,color_FFFFFF,t_70" width="377" /></p>
+
+<h3 id="%E9%80%89%E4%B8%AD%E5%88%97%E8%A1%A8%E6%A1%86%E4%B8%AD%E7%9A%84%E5%85%83%E7%B4%A0">选中列表框中的元素</h3>
+
+<p>语法：lb.select_set(参数1，参数2)</p>
+
+<p>参数1为开始的索引，参数2为结束的索引,不添加参数2，就只选中第一个索引引出的内容</p>
+
+<pre class="has">
+<code class="language-python">for i in ["ok","very","distance","parrlen"]:
+    #按顺序添加
+    lb.insert(tkinter.END,i)
+#选中元素
+lb.select_set(1,2)</code></pre>
+
+<p style="text-align:center;"><img alt="" class="has" height="290" src="https://img-blog.csdnimg.cn/20190622133508942.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2MTcxMjg3,size_16,color_FFFFFF,t_70" width="377" /></p>
+
+<h3 id="%E8%8E%B7%E5%8F%96%E5%88%97%E8%A1%A8%E6%A1%86%E4%B8%AD%E5%85%83%E7%B4%A0%E7%9A%84%E4%B8%AA%E6%95%B0">获取列表框中元素的个数</h3>
+
+<p>语法：列表框.size()</p>
+
+<pre class="has">
+<code class="language-python">print(lb.size())</code></pre>
+
+<p><img alt="" class="has" height="290" src="https://img-blog.csdnimg.cn/20190622133744536.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2MTcxMjg3,size_16,color_FFFFFF,t_70" width="377" /><img alt="" class="has" height="50" src="https://img-blog.csdnimg.cn/20190622133751480.png" width="229" /></p>
+
+<p> </p>
+
+<h3 id="%E8%BF%94%E5%9B%9E%E5%BD%93%E5%89%8D%E9%80%89%E4%B8%AD%E7%9A%84%E5%85%83%E7%B4%A0%E7%9A%84%E7%B4%A2%E5%BC%95%E9%A1%B9">返回当前选中的元素的索引项</h3>
+
+<p>语法：lb.curselection()</p>
+
+<pre class="has">
+<code class="language-python">lb.select_set(1,2)
+#返回当前选中的元素的索引项
+print(lb.curselection())</code></pre>
+
+<p style="text-align:center;"><img alt="" class="has" height="290" src="https://img-blog.csdnimg.cn/2019062213430536.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2MTcxMjg3,size_16,color_FFFFFF,t_70" width="377" /></p>
+
+<p style="text-align:center;"><img alt="" class="has" height="80" src="https://img-blog.csdnimg.cn/20190622134432834.png" width="299" /></p>
+
+<h3 id="%E5%88%A4%E6%96%AD%E5%88%97%E8%A1%A8%E4%B8%AD%E4%B8%80%E4%B8%AA%E5%85%83%E7%B4%A0%E6%98%AF%E5%90%A6%E8%A2%AB%E9%80%89%E4%B8%AD">判断列表中一个元素是否被选中</h3>
+
+<pre class="has">
+<code class="language-python">#判断一个元素是否被选中
+print(lb.selection_includes(0))
+print(lb.selection_includes(2))</code></pre>
+
+<p style="text-align:center;"><img alt="" class="has" height="290" src="https://img-blog.csdnimg.cn/20190622134607608.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2MTcxMjg3,size_16,color_FFFFFF,t_70" width="377" /></p>
+
+<p style="text-align:center;"><img alt="" class="has" height="76" src="https://img-blog.csdnimg.cn/20190622134618196.png" width="239" /></p>
+
+<h3 id="%E6%89%93%E5%8D%B0%E5%88%97%E8%A1%A8%E6%A1%86%E4%B8%AD%E5%85%83%E7%B4%A0">打印列表框中元素</h3>
+
+<p>语法：lb.get()</p>
+
+<pre class="has">
+<code class="language-python">#绑定变量
+lbv = tkinter.StringVar()
+#SINGLE与BROWSE相似，但SINGLE不支持鼠标按住后移动选中元素，只能按下鼠标才能选中元素
+lb = tkinter.Listbox(win,selectmode = tkinter.SINGLE,listvariable = lbv)
+lb.pack()
+for i in ["ok","very","distance","parrlen"]:
+    #按顺序添加
+    lb.insert(tkinter.END,i)
+#打印当前列表中元素
+print(lbv.get())</code></pre>
+
+<p style="text-align:center;"><img alt="" class="has" height="80" src="https://img-blog.csdnimg.cn/201906221354459.png" width="335" /></p>
+
+<h3 id="%E4%BF%AE%E6%94%B9%E5%88%97%E8%A1%A8%E6%A1%86%E4%B8%AD%E5%85%83%E7%B4%A0">修改列表框中元素</h3>
+
+<p>语法：.set()</p>
+
+<pre class="has">
+<code class="language-python">#打印当前列表中元素
+print(lbv.get())
+#设置选项
+lbv.set(("1","2","3"))
+print(lbv.get())</code></pre>
+
+<p style="text-align:center;"><img alt="" class="has" height="290" src="https://img-blog.csdnimg.cn/20190622135553610.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2MTcxMjg3,size_16,color_FFFFFF,t_70" width="377" /></p>
+
+<p style="text-align:center;"><img alt="" class="has" height="53" src="https://img-blog.csdnimg.cn/20190622135620909.png" width="358" /></p>
+
+<h3 id="%E7%BB%99%E5%88%97%E8%A1%A8%E6%A1%86%E7%BB%91%E5%AE%9A%E4%BA%8B%E4%BB%B6">给列表框绑定事件</h3>
+
+<p>双击列表框内元素后，将会打印该元素的索引</p>
+
+<pre class="has">
+<code class="language-python">def fun(event):
+    print(lb.curselection())
+#绑定事件,双击
+lb.bind('&lt;Double-Button-1&gt;',fun)</code></pre>
+
+<p><img alt="" class="has" height="290" src="https://img-blog.csdnimg.cn/20190622140204232.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2MTcxMjg3,size_16,color_FFFFFF,t_70" width="377" /><img alt="" class="has" height="120" src="https://img-blog.csdnimg.cn/20190622140212851.png" width="224" /></p>
+
+<h3 id="%E5%88%97%E8%A1%A8%E6%A1%86%E6%94%AF%E6%8C%81shift%E5%92%8Ccontrol">列表框支持shift和control</h3>
+
+<p>EXTENDED 可以使列表框支持shift和control</p>
+
+<pre class="has">
+<code class="language-python">#EXTENDED 可以使列表框支持shift和control
+lb = tkinter.Listbox(win,selectmode = tkinter.EXTENDED)
+lb.pack()</code></pre>
+
+<p>按住control能继续选中元素 </p>
+
+<p style="text-align:center;"><img alt="" class="has" height="290" src="https://img-blog.csdnimg.cn/20190622140803399.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2MTcxMjg3,size_16,color_FFFFFF,t_70" width="377" /></p>
+
+<h3 id="%E5%88%97%E8%A1%A8%E6%A1%86%E6%94%AF%E6%8C%81%E5%A4%9A%E9%80%89MULTIPLE">列表框支持多选MULTIPLE</h3>
+
+<p>点击列表框中的元素，第一次选中，第二次取消</p>
+
+<p>ctrl+a全部选中</p>
+
+<pre class="has">
+<code class="language-python">#MULTIPLE 支持多选
+lb = tkinter.Listbox(win,selectmode = tkinter.MULTIPLE)
+lb.pack()
+for i in ["ok","very","distance","parrlen","ok","very","distance","parrlen","ok","very","distance","parrlen","parrlen","ok","very","distance","parrlen"]:
+    #按顺序添加
+    lb.insert(tkinter.END,i)</code></pre>
+
+<p><img alt="" class="has" height="290" src="https://img-blog.csdnimg.cn/20190622141903961.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2MTcxMjg3,size_16,color_FFFFFF,t_70" width="377" /><img alt="" class="has" height="290" src="https://img-blog.csdnimg.cn/20190622141954827.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2MTcxMjg3,size_16,color_FFFFFF,t_70" width="377" /></p>
+
+<p> </p>
+
+<h2 id="scale%E6%8E%A7%E4%BB%B6">scale控件</h2>
+
+<p>范围控件；显示一个数值刻度，为输出限定范围的数字区间</p>
+
+<p>供用户通过拖拽指示器改变变量的值，可以水平，也可以竖直，默认竖直</p>
+
+<h3 id="%E5%88%9B%E5%BB%BAscale">创建scale</h3>
+
+<pre class="has">
+<code class="language-python">#创建主窗口
+win = tkinter.Tk()
+win.title("主界面")
+win.geometry("300x200")
+#scale 起始值0，终点100
+scale = tkinter.Scale(win,from_ = 0,to = 100)
+scale.pack()</code></pre>
+
+<p><img alt="" class="has" height="290" src="https://img-blog.csdnimg.cn/2019062214331913.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2MTcxMjg3,size_16,color_FFFFFF,t_70" width="377" /><img alt="" class="has" height="290" src="https://img-blog.csdnimg.cn/20190622143327310.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2MTcxMjg3,size_16,color_FFFFFF,t_70" width="377" /></p>
+
+<p><strong>设置scale水平orient = tkinter.HORIZONTAL</strong></p>
+
+<pre class="has">
+<code class="language-python">scale = tkinter.Scale(win,from_ = 0,to = 100,orient = tkinter.HORIZONTAL)
+scale.pack()</code></pre>
+
+<p><img alt="" class="has" height="290" src="https://img-blog.csdnimg.cn/20190622143528520.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2MTcxMjg3,size_16,color_FFFFFF,t_70" width="377" /><img alt="" class="has" height="290" src="https://img-blog.csdnimg.cn/2019062214353595.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2MTcxMjg3,size_16,color_FFFFFF,t_70" width="377" /></p>
+
+<p><strong>tickinterval选择值将会为该值的倍数，length为scale长度</strong></p>
+
+<pre class="has">
+<code class="language-python">scale = tkinter.Scale(win,from_ = 0,to = 100,orient = tkinter.HORIZONTAL,tickinterval = 10,length=200)</code></pre>
+
+<p><img alt="" class="has" height="290" src="https://img-blog.csdnimg.cn/20190622143922269.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2MTcxMjg3,size_16,color_FFFFFF,t_70" width="377" /><img alt="" class="has" height="290" src="https://img-blog.csdnimg.cn/20190622144000753.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2MTcxMjg3,size_16,color_FFFFFF,t_70" width="377" /></p>
+
+<p> </p>
+
+<p><strong>一起学习，一起进步 -.- ，如有错误，可以发评论</strong> </p>
+</div><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">空城机</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://yoursite.com/2019/06/22/python%EF%BC%88%E5%8D%81%E5%85%AB%EF%BC%89%E2%80%94%E2%80%94%E5%9B%BE%E5%BD%A2%E7%95%8C%E9%9D%A2Tkinter%E4%B8%AD/">http://yoursite.com/2019/06/22/python%EF%BC%88%E5%8D%81%E5%85%AB%EF%BC%89%E2%80%94%E2%80%94%E5%9B%BE%E5%BD%A2%E7%95%8C%E9%9D%A2Tkinter%E4%B8%AD/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://yoursite.com" target="_blank">空城机</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/python-Tkinter/">python Tkinter</a></div><div class="post_share"><div class="social-share" data-image="https://i.loli.net/2019/07/21/5d33d5dc1531213134.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css"/><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js"></script></div></div><div class="post-reward"><a class="reward-button button--primary button--animated"> <i class="fa fa-qrcode"></i> 打赏<div class="reward-main"><ul class="reward-all"><li class="reward-item"><img class="post-qr-code__img" src="/img/wechat.jpg" alt="微信"/><div class="post-qr-code__desc">微信</div></li><li class="reward-item"><img class="post-qr-code__img" src="/img/alipay.jpg" alt="支付寶"/><div class="post-qr-code__desc">支付寶</div></li></ul></div></a></div><nav class="pagination_post" id="pagination"><div class="prev-post pull_left"><a href="/2019/06/22/CSS%E5%9B%9E%E9%A1%BE%E6%80%BB%E7%BB%93%EF%BC%88%E4%BA%8C%EF%BC%89%E2%80%94%E2%80%94%E4%BC%AA%E7%B1%BB%E3%80%81%E4%BC%AA%E5%85%83%E7%B4%A0%E3%80%81%E5%AD%90%E5%85%83%E7%B4%A0%E5%92%8C%E5%90%8E%E4%BB%A3%E5%85%83%E7%B4%A0%E9%80%89%E6%8B%A9%E5%99%A8%E3%80%81%E7%9B%92%E5%AD%90%E6%A8%A1%E5%9E%8B/"><img class="prev_cover" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">CSS回顾总结（二）——伪类、伪元素、子元素和后代元素选择器、盒子模型</div></div></a></div><div class="next-post pull_right"><a href="/2019/06/19/CSS%E5%9B%9E%E9%A1%BE%E6%80%BB%E7%BB%93%EF%BC%88%E4%B8%80%EF%BC%89%E2%80%94%E2%80%94CSS%E7%AE%80%E4%BB%8B%EF%BC%8C%E8%AF%AD%E6%B3%95%E8%A7%84%E8%8C%83%EF%BC%8C%E9%80%89%E6%8B%A9%E5%99%A8%EF%BC%8C%E4%B8%89%E5%85%83%E7%B4%A0/"><img class="next_cover" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">CSS回顾总结（一）——CSS简介，语法规范，选择器，三元素</div></div></a></div></nav><div class="relatedPosts"><div class="relatedPosts_headline"><i class="fa fa-fw fa-thumbs-up" aria-hidden="true"></i><span> 相关推荐</span></div><div class="relatedPosts_list"><div class="relatedPosts_item"><a href="/2019/06/19/python（十七）——图形化界面Tkinter上/" title="python（十七）——图形化界面Tkinter上"><img class="relatedPosts_cover" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg"><div class="relatedPosts_main is-center"><div class="relatedPosts_date"><i class="fa fa-calendar fa-fw" aria-hidden="true"></i> 2019-06-19</div><div class="relatedPosts_title">python（十七）——图形化界面Tkinter上</div></div></a></div></div><div class="clear_both"></div></div></article></main><footer id="footer" data-type="color"><div id="footer-wrap"><div class="copyright">&copy;2018 - 2020 By 空城机</div><div class="framework-info"><span>驱动 </span><a href="https://hexo.io" target="_blank" rel="noopener"><span>Hexo</span></a><span class="footer-separator">|</span><span>主题 </span><a href="https://github.com/jerryc127/hexo-theme-butterfly" target="_blank" rel="noopener"><span>Butterfly</span></a></div></div></footer></div><section class="rightside" id="rightside"><div id="rightside-config-hide"><i class="fa fa-book" id="readmode" title="阅读模式"></i><i class="fa fa-plus" id="font_plus" title="放大字体"></i><i class="fa fa-minus" id="font_minus" title="缩小字体"></i><a class="translate_chn_to_cht" id="translateLink" href="javascript:translatePage();" title="简繁转换" target="_self">繁</a><i class="darkmode fa fa-moon-o" id="darkmode" title="夜间模式"></i></div><div id="rightside-config-show"><div id="rightside_config" title="设置"><i class="fa fa-cog" aria-hidden="true"></i></div><i class="fa fa-list-ul close" id="mobile-toc-button" title="目录" aria-hidden="true"></i><i class="fa fa-arrow-up" id="go-up" title="回到顶部" aria-hidden="true"></i></div></section><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page@latest/instantpage.min.js" type="module"></script></body></html>

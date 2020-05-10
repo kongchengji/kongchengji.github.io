@@ -1,0 +1,532 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>python（五）——运算符、字符串、转义字符 | 空城机</title><meta name="description" content="目录     运算符  位运算符：  逻辑与运算符   成员运算符   in  和 not in   身份运算符  is 和 is not  运算符优先级  字符串  python中字符串可以进行乘法运算  访问字符串中某一个字符  截取字符串  判断一个字符串是否在另一个字符串内  判断是否为闰年小算法：  eval(str)      将字符串str当成有效的表达式来求值并返回计算结"><meta name="keywords" content="python"><meta name="author" content="空城机"><meta name="copyright" content="空城机"><meta name="format-detection" content="telephone=no"><link rel="shortcut icon" href="/img/favicon.png"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="dns-prefetch" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="https://fonts.googleapis.com" crossorigin="crossorigin"/><link rel="dns-prefetch" href="https://fonts.googleapis.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="dns-prefetch" href="//busuanzi.ibruce.info"/><meta name="twitter:card" content="summary"><meta name="twitter:title" content="python（五）——运算符、字符串、转义字符"><meta name="twitter:description" content="目录     运算符  位运算符：  逻辑与运算符   成员运算符   in  和 not in   身份运算符  is 和 is not  运算符优先级  字符串  python中字符串可以进行乘法运算  访问字符串中某一个字符  截取字符串  判断一个字符串是否在另一个字符串内  判断是否为闰年小算法：  eval(str)      将字符串str当成有效的表达式来求值并返回计算结"><meta name="twitter:image" content="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg"><meta property="og:type" content="article"><meta property="og:title" content="python（五）——运算符、字符串、转义字符"><meta property="og:url" content="http://yoursite.com/2019/05/02/python%EF%BC%88%E4%BA%94%EF%BC%89%E2%80%94%E2%80%94%E8%BF%90%E7%AE%97%E7%AC%A6%E3%80%81%E5%AD%97%E7%AC%A6%E4%B8%B2%E3%80%81%E8%BD%AC%E4%B9%89%E5%AD%97%E7%AC%A6/"><meta property="og:site_name" content="空城机"><meta property="og:description" content="目录     运算符  位运算符：  逻辑与运算符   成员运算符   in  和 not in   身份运算符  is 和 is not  运算符优先级  字符串  python中字符串可以进行乘法运算  访问字符串中某一个字符  截取字符串  判断一个字符串是否在另一个字符串内  判断是否为闰年小算法：  eval(str)      将字符串str当成有效的表达式来求值并返回计算结"><meta property="og:image" content="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg"><meta property="article:published_time" content="2019-05-02T12:11:48.000Z"><meta property="article:modified_time" content="2020-05-10T11:05:27.868Z"><script src="https://cdn.jsdelivr.net/npm/js-cookie/dist/js.cookie.min.js"></script><script>var autoChangeMode = '1'
+var t = Cookies.get("theme")
+if (autoChangeMode == '1'){
+  var isDarkMode = window.matchMedia("(prefers-color-scheme: dark)").matches
+  var isLightMode = window.matchMedia("(prefers-color-scheme: light)").matches
+  var isNotSpecified = window.matchMedia("(prefers-color-scheme: no-preference)").matches
+  var hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+  if (t === undefined){
+    if (isLightMode) activateLightMode()
+    else if (isDarkMode) activateDarkMode()
+    else if (isNotSpecified || hasNoSupport){
+      console.log('You specified no preference for a color scheme or your browser does not support it. I Schedule dark mode during night time.')
+      var now = new Date()
+      var hour = now.getHours()
+      var isNight = hour < 6 || hour >= 18
+      isNight ? activateDarkMode() : activateLightMode()
+  }
+  } else if (t == 'light') activateLightMode()
+  else activateDarkMode()
+
+} else if (autoChangeMode == '2'){
+  now = new Date();
+  hour = now.getHours();
+  isNight = hour < 6 || hour >= 18
+  if(t === undefined) isNight? activateDarkMode() : activateLightMode()
+  else if (t === 'light') activateLightMode()
+  else activateDarkMode() 
+} else {
+  if ( t == 'dark' ) activateDarkMode()
+  else if ( t == 'light') activateLightMode()
+}
+
+function activateDarkMode(){
+  document.documentElement.setAttribute('data-theme', 'dark')
+  if (document.querySelector('meta[name="theme-color"]') !== null){
+    document.querySelector('meta[name="theme-color"]').setAttribute('content','#000')
+  }
+}
+function activateLightMode(){
+  document.documentElement.setAttribute('data-theme', 'light')
+  if (document.querySelector('meta[name="theme-color"]') !== null){
+  document.querySelector('meta[name="theme-color"]').setAttribute('content','#fff')
+  }
+}</script><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@latest/css/font-awesome.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css"><link rel="canonical" href="http://yoursite.com/2019/05/02/python%EF%BC%88%E4%BA%94%EF%BC%89%E2%80%94%E2%80%94%E8%BF%90%E7%AE%97%E7%AC%A6%E3%80%81%E5%AD%97%E7%AC%A6%E4%B8%B2%E3%80%81%E8%BD%AC%E4%B9%89%E5%AD%97%E7%AC%A6/"><link rel="prev" title="python 中没有i++或者i--" href="http://yoursite.com/2019/05/02/python%20%E4%B8%AD%E6%B2%A1%E6%9C%89i++%E6%88%96%E8%80%85i--/"><link rel="next" title="python（四）——常量和变量、数学函数、随机数" href="http://yoursite.com/2019/05/01/python%EF%BC%88%E5%9B%9B%EF%BC%89%E2%80%94%E2%80%94%E5%B8%B8%E9%87%8F%E5%92%8C%E5%8F%98%E9%87%8F%E3%80%81%E6%95%B0%E5%AD%A6%E5%87%BD%E6%95%B0%E3%80%81%E9%9A%8F%E6%9C%BA%E6%95%B0/"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Titillium+Web"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: {"defaultEncoding":2,"translateDelay":0,"cookieDomain":"https://xxx/","msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"簡"},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  bookmark: {
+    message_prev: '按',
+    message_next: '键将本页加入书签'
+  },
+  runtime_unit: '天',
+  runtime: true,
+  copyright: undefined,
+  ClickShowText: undefined,
+  medium_zoom: false,
+  fancybox: true,
+  Snackbar: undefined,
+  baiduPush: false,
+  highlightCopy: true,
+  highlightLang: true,
+  highlightShrink: 'false',
+  isFontAwesomeV5: false,
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+  
+}</script><script>var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isSidebar: true  
+  }</script><noscript><style>
+#page-header {
+  opacity: 1
+}
+.justified-gallery img{
+  opacity: 1
+}
+</style></noscript><meta name="generator" content="Hexo 4.2.0"></head><body><div id="mobile-sidebar"><div id="menu_mask"></div><div id="mobile-sidebar-menus"><div class="mobile_author_icon"><img class="avatar-img" src="/img/avatar.png" onerror="onerror=null;src='/img/tou5.jpg'" alt="avatar"/></div><div class="mobile_post_data"><div class="mobile_data_item is-center"><div class="mobile_data_link"><a href="/archives/"><div class="headline">文章</div><div class="length_num">154</div></a></div></div><div class="mobile_data_item is-center">      <div class="mobile_data_link"><a href="/tags/"><div class="headline">标签</div><div class="length_num">45</div></a></div></div><div class="mobile_data_item is-center">     <div class="mobile_data_link"><a href="/categories/"><div class="headline">分类</div><div class="length_num">15</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fa fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fa fa-heart"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page"><i class="fa-fw fa fa-list" aria-hidden="true"></i><span> 清单</span><i class="fa fa-chevron-down menus-expand" aria-hidden="true"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/music/"><i class="fa-fw fa fa-music"></i><span> 音乐</span></a></li><li><a class="site-page" href="/movies/"><i class="fa-fw fa fa-film"></i><span> 电影</span></a></li></ul></div></div></div></div><i class="fa fa-arrow-right on" id="toggle-sidebar" aria-hidden="true">     </i><div id="sidebar"><div class="sidebar-toc"><div class="sidebar-toc__title">目录</div><div class="sidebar-toc__progress"><span class="progress-notice">你已经读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar">     </div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="toc-number">1.</span> <span class="toc-text">运算符</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%8D%E8%BF%90%E7%AE%97%E7%AC%A6%EF%BC%9A"><span class="toc-number">1.1.</span> <span class="toc-text">位运算符：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%BB%E8%BE%91%E4%B8%8E%E8%BF%90%E7%AE%97%E7%AC%A6%C2%A0"><span class="toc-number">1.2.</span> <span class="toc-text">逻辑与运算符  </span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%88%90%E5%91%98%E8%BF%90%E7%AE%97%E7%AC%A6%C2%A0%20%C2%A0in%C2%A0%20%E5%92%8C%20not%20in%C2%A0"><span class="toc-number">1.3.</span> <span class="toc-text">成员运算符   in  和 not in </span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BA%AB%E4%BB%BD%E8%BF%90%E7%AE%97%E7%AC%A6%C2%A0%20is%20%E5%92%8C%20is%C2%A0not"><span class="toc-number">1.4.</span> <span class="toc-text">身份运算符  is 和 is not</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%90%E7%AE%97%E7%AC%A6%E4%BC%98%E5%85%88%E7%BA%A7"><span class="toc-number">1.5.</span> <span class="toc-text">运算符优先级</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="toc-number">2.</span> <span class="toc-text">字符串</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#python%E4%B8%AD%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%8F%AF%E4%BB%A5%E8%BF%9B%E8%A1%8C%E4%B9%98%E6%B3%95%E8%BF%90%E7%AE%97"><span class="toc-number">2.1.</span> <span class="toc-text">python中字符串可以进行乘法运算</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%BF%E9%97%AE%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%AD%E6%9F%90%E4%B8%80%E4%B8%AA%E5%AD%97%E7%AC%A6"><span class="toc-number">2.2.</span> <span class="toc-text">访问字符串中某一个字符</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%88%AA%E5%8F%96%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="toc-number">2.3.</span> <span class="toc-text">截取字符串</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%A4%E6%96%AD%E4%B8%80%E4%B8%AA%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%98%AF%E5%90%A6%E5%9C%A8%E5%8F%A6%E4%B8%80%E4%B8%AA%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%86%85"><span class="toc-number">2.4.</span> <span class="toc-text">判断一个字符串是否在另一个字符串内</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%A4%E6%96%AD%E6%98%AF%E5%90%A6%E4%B8%BA%E9%97%B0%E5%B9%B4%E5%B0%8F%E7%AE%97%E6%B3%95%EF%BC%9A"><span class="toc-number">2.5.</span> <span class="toc-text">判断是否为闰年小算法：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#eval(str)%C2%A0%20%C2%A0%20%C2%A0%20%E5%B0%86%E5%AD%97%E7%AC%A6%E4%B8%B2str%E5%BD%93%E6%88%90%E6%9C%89%E6%95%88%E7%9A%84%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%9D%A5%E6%B1%82%E5%80%BC%E5%B9%B6%E8%BF%94%E5%9B%9E%E8%AE%A1%E7%AE%97%E7%BB%93%E6%9E%9C%EF%BC%8C%E4%B8%8D%E8%83%BD%E6%9C%89%E8%8B%B1%E6%96%87%E5%AD%97%E7%AC%A6"><span class="toc-number">2.6.</span> <span class="toc-text">eval(str)      将字符串str当成有效的表达式来求值并返回计算结果，不能有英文字符</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#len%EF%BC%88str)%C2%A0%20%C2%A0%20%C2%A0%20%C2%A0%E8%BF%94%E5%9B%9E%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9A%84%E9%95%BF%E5%BA%A6%EF%BC%88%E5%AD%97%E7%AC%A6%E4%B8%AA%E6%95%B0%EF%BC%89"><span class="toc-number">2.7.</span> <span class="toc-text">len（str)       返回字符串的长度（字符个数）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#str.lower()%C2%A0%20%C2%A0%20%C2%A0%E8%BD%AC%E6%8D%A2%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%AD%E7%9A%84%E5%A4%A7%E5%86%99%E5%AD%97%E6%AF%8D%E4%B8%BA%E5%B0%8F%E5%86%99%E5%AD%97%E6%AF%8D"><span class="toc-number">2.8.</span> <span class="toc-text">str.lower()     转换字符串中的大写字母为小写字母</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#str.upper()%C2%A0%20%C2%A0%20%C2%A0%20%C2%A0%C2%A0%E8%BD%AC%E6%8D%A2%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%AD%E7%9A%84%E5%B0%8F%E5%86%99%E5%AD%97%E6%AF%8D%E4%B8%BA%E5%A4%A7%E5%86%99%E5%AD%97%E6%AF%8D"><span class="toc-number">2.9.</span> <span class="toc-text">str.upper()        转换字符串中的小写字母为大写字母</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#str.swapcase()%C2%A0%20%C2%A0%20%C2%A0%C2%A0%E8%BD%AC%E6%8D%A2%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%AD%E7%9A%84%E5%A4%A7%E5%86%99%E5%AD%97%E6%AF%8D%E4%B8%BA%E5%B0%8F%E5%86%99%E5%AD%97%E6%AF%8D%2C%E8%BD%AC%E6%8D%A2%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%AD%E7%9A%84%E5%B0%8F%E5%86%99%E5%AD%97%E6%AF%8D%E4%B8%BA%E5%A4%A7%E5%86%99%E5%AD%97%E6%AF%8D"><span class="toc-number">2.10.</span> <span class="toc-text">str.swapcase()      转换字符串中的大写字母为小写字母,转换字符串中的小写字母为大写字母</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#str.capitalize()%C2%A0%20%C2%A0%20%C2%A0%C2%A0%E8%BD%AC%E6%8D%A2%E5%AD%97%E7%AC%A6%E4%B8%B2%EF%BC%8C%E4%BD%BF%E5%BE%97%E5%8F%AA%E6%9C%89%E9%A6%96%E5%AD%97%E6%AF%8D%E4%B8%BA%E5%A4%A7%E5%86%99"><span class="toc-number">2.11.</span> <span class="toc-text">str.capitalize()      转换字符串，使得只有首字母为大写</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#str.title()%C2%A0%20%C2%A0%20%C2%A0%C2%A0%E6%AF%8F%E4%B8%AA%E5%8D%95%E8%AF%8D%E7%9A%84%E9%A6%96%E5%AD%97%E6%AF%8D%E5%A4%A7%E5%86%99"><span class="toc-number">2.12.</span> <span class="toc-text">str.title()      每个单词的首字母大写</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#str.center(width%2Cfillchar)%C2%A0%20%C2%A0%E5%B0%86str%E6%94%BE%E5%9C%A8%E5%B1%85%E4%B8%AD%E7%9A%84%E4%BD%8D%E7%BD%AE%EF%BC%8Cfillchar%E4%B8%BA%E5%A1%AB%E5%85%85%E7%9A%84%E4%BD%8D%E7%BD%AE"><span class="toc-number">2.13.</span> <span class="toc-text">str.center(width,fillchar)   将str放在居中的位置，fillchar为填充的位置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#str.count('str1')%C2%A0%20%C2%A0%20%E8%AE%A1%E7%AE%97str%E4%B8%AD%E6%9C%89%E5%A4%9A%E5%B0%91%E4%B8%AAstr1"><span class="toc-number">2.14.</span> <span class="toc-text">str.count(&#39;str1&#39;)    计算str中有多少个str1</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#str.find('str1'%2Cstrat%2Cend)%C2%A0%20%C2%A0%E4%BB%8E%E5%B7%A6%E5%BE%80%E5%8F%B3%E6%A3%80%E6%B5%8Bstr1%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%98%AF%E5%90%A6%E5%8C%85%E5%90%AB%E5%9C%A8str%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%AD%EF%BC%8C%E5%8F%AF%E4%BB%A5%E6%8C%87%E5%AE%9A%E8%8C%83%E5%9B%B4%E3%80%82%E5%BE%97%E5%88%B0%E7%9A%84%E7%BB%93%E6%9E%9C%E6%98%AF%E7%AC%AC%E4%B8%80%E6%AC%A1%E5%87%BA%E7%8E%B0str1%E7%9A%84%E4%B8%8B%E6%A0%87"><span class="toc-number">2.15.</span> <span class="toc-text">str.find(&#39;str1&#39;,strat,end)   从左往右检测str1字符串是否包含在str字符串中，可以指定范围。得到的结果是第一次出现str1的下标</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#str.index(str1%2Cstart%2Cend)%C2%A0%20%C2%A0%E5%92%8Cfind%E6%96%B9%E6%B3%95%E4%B8%80%E6%A0%B7%EF%BC%8C%E5%8C%BA%E5%88%AB%E6%98%AFstr1%E4%B8%8D%E5%AD%98%E5%9C%A8%E6%97%B6%E4%BC%9A%E6%8A%A5%E9%94%99"><span class="toc-number">2.16.</span> <span class="toc-text">str.index(str1,start,end)   和find方法一样，区别是str1不存在时会报错</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#str.lstrip()%C2%A0%20%C2%A0%E6%88%AA%E5%8F%96%E6%8E%89%E5%B7%A6%E4%BE%A7%E6%8C%87%E5%AE%9A%E7%9A%84%E5%AD%97%E7%AC%A6%EF%BC%8C%E9%BB%98%E8%AE%A4%E4%BD%8D%E7%A9%BA%E6%A0%BC"><span class="toc-number">2.17.</span> <span class="toc-text">str.lstrip()   截取掉左侧指定的字符，默认位空格</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#str.strip()%C2%A0%20%E6%88%AA%E5%8F%96%E6%8E%89%E4%B8%A4%E4%BE%A7%E6%8C%87%E5%AE%9A%E7%9A%84%E5%AD%97%E7%AC%A6%EF%BC%8C%E9%BB%98%E8%AE%A4%E4%B8%BA%E7%A9%BA%E6%A0%BC"><span class="toc-number">2.18.</span> <span class="toc-text">str.strip()  截取掉两侧指定的字符，默认为空格</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#split%EF%BC%88str%3D%22%22%EF%BC%89%E6%88%AA%E5%8F%96%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="toc-number">2.19.</span> <span class="toc-text">split（str&#x3D;&quot;&quot;）截取字符串</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#splitlines()%20%E6%8C%89%E7%85%A7('%5Ct'%2C'%5Ct%5Cn'%2C'%5Cn')%E5%88%86%E9%9A%94"><span class="toc-number">2.20.</span> <span class="toc-text">splitlines() 按照(&#39;\t&#39;,&#39;\t\n&#39;,&#39;\n&#39;)分隔</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#replace(oldstr%2Cnewstr%2Ccount)%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%9B%BF%E6%8D%A2"><span class="toc-number">2.21.</span> <span class="toc-text">replace(oldstr,newstr,count)字符串替换</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#startswitch(str%2Cstart%3D0%2Cend%3Dlen(str))%20%E5%9C%A8%E7%BB%99%E5%AE%9A%E8%8C%83%E5%9B%B4%E5%86%85%E5%88%A4%E6%96%AD%E6%98%AF%E5%90%A6%E6%98%AF%E4%BB%A5%E7%BB%99%E5%AE%9Astr%E4%B8%BA%E5%BC%80%E5%A4%B4%E7%9A%84"><span class="toc-number">2.22.</span> <span class="toc-text">startswitch(str,start&#x3D;0,end&#x3D;len(str)) 在给定范围内判断是否是以给定str为开头的</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#isalpha()%20%E5%A6%82%E6%9E%9C%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%AD%E8%87%B3%E5%B0%91%E6%9C%89%E4%B8%80%E4%B8%AA%E5%AD%97%E7%AC%A6%E4%B8%94%E6%89%80%E6%9C%89%E5%AD%97%E7%AC%A6%E9%83%BD%E6%98%AF%E5%AD%97%E6%AF%8D%E8%BF%94%E5%9B%9Etrue"><span class="toc-number">2.23.</span> <span class="toc-text">isalpha() 如果字符串中至少有一个字符且所有字符都是字母返回true</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#isalnum()%C2%A0%E5%A6%82%E6%9E%9C%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%AD%E8%87%B3%E5%B0%91%E6%9C%89%E4%B8%80%E4%B8%AA%E5%AD%97%E7%AC%A6%E4%B8%94%E6%89%80%E6%9C%89%E5%AD%97%E7%AC%A6%E9%83%BD%E6%98%AF%E5%AD%97%E6%AF%8D%E6%88%96%E8%80%85%E6%95%B0%E5%AD%97%E8%BF%94%E5%9B%9Etrue"><span class="toc-number">2.24.</span> <span class="toc-text">isalnum() 如果字符串中至少有一个字符且所有字符都是字母或者数字返回true</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#isdigit()%C2%A0%20%E5%A6%82%E6%9E%9C%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%AD%E5%8F%AA%E5%8C%85%E5%90%AB%E6%95%B0%E5%AD%97%E5%88%99%E8%BF%94%E5%9B%9Etrue%C2%A0"><span class="toc-number">2.25.</span> <span class="toc-text">isdigit()  如果字符串中只包含数字则返回true </span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%BC%E5%BC%8F%E5%8C%96%E8%BE%93%E5%87%BA"><span class="toc-number">2.26.</span> <span class="toc-text">格式化输出</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BD%AC%E4%B9%89%E5%AD%97%E7%AC%A6%5C"><span class="toc-number">3.</span> <span class="toc-text">转义字符\</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8D%A2%E8%A1%8C%E7%AC%A6%5Cn"><span class="toc-number">3.1.</span> <span class="toc-text">换行符\n</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%B6%E8%A1%A8%E7%AC%A6%5Ct"><span class="toc-number">3.2.</span> <span class="toc-text">制表符\t</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#python%E5%85%81%E8%AE%B8%E7%94%A8r%E8%A1%A8%E7%A4%BA%E5%86%85%E9%83%A8%E7%9A%84%E5%AD%97%E7%AC%A6%E4%B8%B2%E9%BB%98%E8%AE%A4%E4%B8%8D%E8%BD%AC%E4%B9%89"><span class="toc-number">3.3.</span> <span class="toc-text">python允许用r表示内部的字符串默认不转义</span></a></li></ol></li></ol></div></div></div><div id="body-wrap"><div class="post-bg" id="nav" style="background-image: url(https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg)"><div id="page-header"><span class="pull_left" id="blog_name"><a class="blog_title" id="site-name" href="/">空城机</a></span><span class="pull_right menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fa fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fa fa-heart"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page"><i class="fa-fw fa fa-list" aria-hidden="true"></i><span> 清单</span><i class="fa fa-chevron-down menus-expand" aria-hidden="true"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/music/"><i class="fa-fw fa fa-music"></i><span> 音乐</span></a></li><li><a class="site-page" href="/movies/"><i class="fa-fw fa fa-film"></i><span> 电影</span></a></li></ul></div></div><span class="toggle-menu close"><a class="site-page"><i class="fa fa-bars fa-fw" aria-hidden="true"></i></a></span></span></div><div id="post-info"><div id="post-title"><div class="posttitle">python（五）——运算符、字符串、转义字符</div></div><div id="post-meta"><div class="meta-firstline"><time class="post-meta__date"><span class="post-meta__date-created" title="发表于 2019-05-02 20:11:48"><i class="fa fa-calendar" aria-hidden="true"></i> 发表于 2019-05-02</span><span class="post-meta__separator">|</span><span class="post-meta__date-updated" title="更新于 2020-05-10 19:05:27"><i class="fa fa-history" aria-hidden="true"></i> 更新于 2020-05-10</span></time><span class="post-meta__categories"><span class="post-meta__separator">|</span><i class="fa fa-inbox post-meta__icon" aria-hidden="true"></i><a class="post-meta__categories" href="/categories/python/">python</a></span></div><div class="meta-secondline"> </div><div class="meta-thirdline"><span class="post-meta-pv-cv"><i class="fa fa-eye post-meta__icon" aria-hidden="true"> </i><span>阅读量:</span><span id="busuanzi_value_page_pv"></span></span><span class="post-meta-commentcount"></span></div></div></div></div><main class="layout_post" id="content-inner"><article id="post"><div class="post-content" id="article-container"><a id="more"></a>
+
+<p id="main-toc"> </p>
+
+<p><strong>目录</strong></p>
+
+<p id="-toc" style="margin-left:40px;"> </p>
+
+<p id="%E8%BF%90%E7%AE%97%E7%AC%A6-toc" style="margin-left:40px;"><a href="#%E8%BF%90%E7%AE%97%E7%AC%A6">运算符</a></p>
+
+<p id="%E4%BD%8D%E8%BF%90%E7%AE%97%E7%AC%A6%EF%BC%9A-toc" style="margin-left:80px;"><a href="#%E4%BD%8D%E8%BF%90%E7%AE%97%E7%AC%A6%EF%BC%9A">位运算符：</a></p>
+
+<p id="%E9%80%BB%E8%BE%91%E4%B8%8E%E8%BF%90%E7%AE%97%E7%AC%A6%C2%A0-toc" style="margin-left:80px;"><a href="#%E9%80%BB%E8%BE%91%E4%B8%8E%E8%BF%90%E7%AE%97%E7%AC%A6%C2%A0">逻辑与运算符 </a></p>
+
+<p id="%E6%88%90%E5%91%98%E8%BF%90%E7%AE%97%E7%AC%A6%C2%A0%20%C2%A0in%C2%A0%20%E5%92%8C%20not%20in%C2%A0-toc" style="margin-left:80px;"><a href="#%E6%88%90%E5%91%98%E8%BF%90%E7%AE%97%E7%AC%A6%C2%A0%20%C2%A0in%C2%A0%20%E5%92%8C%20not%20in%C2%A0">成员运算符   in  和 not in </a></p>
+
+<p id="%E8%BA%AB%E4%BB%BD%E8%BF%90%E7%AE%97%E7%AC%A6%C2%A0%20is%20%E5%92%8C%20is%C2%A0not-toc" style="margin-left:80px;"><a href="#%E8%BA%AB%E4%BB%BD%E8%BF%90%E7%AE%97%E7%AC%A6%C2%A0%20is%20%E5%92%8C%20is%C2%A0not">身份运算符  is 和 is not</a></p>
+
+<p id="%E8%BF%90%E7%AE%97%E7%AC%A6%E4%BC%98%E5%85%88%E7%BA%A7-toc" style="margin-left:80px;"><a href="#%E8%BF%90%E7%AE%97%E7%AC%A6%E4%BC%98%E5%85%88%E7%BA%A7">运算符优先级</a></p>
+
+<p id="%E5%AD%97%E7%AC%A6%E4%B8%B2-toc" style="margin-left:40px;"><a href="#%E5%AD%97%E7%AC%A6%E4%B8%B2">字符串</a></p>
+
+<p id="python%E4%B8%AD%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%8F%AF%E4%BB%A5%E8%BF%9B%E8%A1%8C%E4%B9%98%E6%B3%95%E8%BF%90%E7%AE%97-toc" style="margin-left:80px;"><a href="#python%E4%B8%AD%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%8F%AF%E4%BB%A5%E8%BF%9B%E8%A1%8C%E4%B9%98%E6%B3%95%E8%BF%90%E7%AE%97">python中字符串可以进行乘法运算</a></p>
+
+<p id="%E8%AE%BF%E9%97%AE%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%AD%E6%9F%90%E4%B8%80%E4%B8%AA%E5%AD%97%E7%AC%A6-toc" style="margin-left:80px;"><a href="#%E8%AE%BF%E9%97%AE%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%AD%E6%9F%90%E4%B8%80%E4%B8%AA%E5%AD%97%E7%AC%A6">访问字符串中某一个字符</a></p>
+
+<p id="%E6%88%AA%E5%8F%96%E5%AD%97%E7%AC%A6%E4%B8%B2-toc" style="margin-left:80px;"><a href="#%E6%88%AA%E5%8F%96%E5%AD%97%E7%AC%A6%E4%B8%B2">截取字符串</a></p>
+
+<p id="%E5%88%A4%E6%96%AD%E4%B8%80%E4%B8%AA%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%98%AF%E5%90%A6%E5%9C%A8%E5%8F%A6%E4%B8%80%E4%B8%AA%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%86%85-toc" style="margin-left:80px;"><a href="#%E5%88%A4%E6%96%AD%E4%B8%80%E4%B8%AA%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%98%AF%E5%90%A6%E5%9C%A8%E5%8F%A6%E4%B8%80%E4%B8%AA%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%86%85">判断一个字符串是否在另一个字符串内</a></p>
+
+<p id="%E5%88%A4%E6%96%AD%E6%98%AF%E5%90%A6%E4%B8%BA%E9%97%B0%E5%B9%B4%E5%B0%8F%E7%AE%97%E6%B3%95%EF%BC%9A-toc" style="margin-left:80px;"><a href="#%E5%88%A4%E6%96%AD%E6%98%AF%E5%90%A6%E4%B8%BA%E9%97%B0%E5%B9%B4%E5%B0%8F%E7%AE%97%E6%B3%95%EF%BC%9A">判断是否为闰年小算法：</a></p>
+
+<p id="eval(str)%C2%A0%20%C2%A0%20%C2%A0%20%E5%B0%86%E5%AD%97%E7%AC%A6%E4%B8%B2str%E5%BD%93%E6%88%90%E6%9C%89%E6%95%88%E7%9A%84%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%9D%A5%E6%B1%82%E5%80%BC%E5%B9%B6%E8%BF%94%E5%9B%9E%E8%AE%A1%E7%AE%97%E7%BB%93%E6%9E%9C%EF%BC%8C%E4%B8%8D%E8%83%BD%E6%9C%89%E8%8B%B1%E6%96%87%E5%AD%97%E7%AC%A6-toc" style="margin-left:80px;"><a href="#eval(str)%C2%A0%20%C2%A0%20%C2%A0%20%E5%B0%86%E5%AD%97%E7%AC%A6%E4%B8%B2str%E5%BD%93%E6%88%90%E6%9C%89%E6%95%88%E7%9A%84%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%9D%A5%E6%B1%82%E5%80%BC%E5%B9%B6%E8%BF%94%E5%9B%9E%E8%AE%A1%E7%AE%97%E7%BB%93%E6%9E%9C%EF%BC%8C%E4%B8%8D%E8%83%BD%E6%9C%89%E8%8B%B1%E6%96%87%E5%AD%97%E7%AC%A6">eval(str)      将字符串str当成有效的表达式来求值并返回计算结果，不能有英文字符</a></p>
+
+<p id="len%EF%BC%88str)%C2%A0%20%C2%A0%20%C2%A0%20%C2%A0%E8%BF%94%E5%9B%9E%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9A%84%E9%95%BF%E5%BA%A6%EF%BC%88%E5%AD%97%E7%AC%A6%E4%B8%AA%E6%95%B0%EF%BC%89-toc" style="margin-left:80px;"><a href="#len%EF%BC%88str)%C2%A0%20%C2%A0%20%C2%A0%20%C2%A0%E8%BF%94%E5%9B%9E%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9A%84%E9%95%BF%E5%BA%A6%EF%BC%88%E5%AD%97%E7%AC%A6%E4%B8%AA%E6%95%B0%EF%BC%89">len（str)       返回字符串的长度（字符个数）</a></p>
+
+<p id="str.lower()%C2%A0%20%C2%A0%20%C2%A0%E8%BD%AC%E6%8D%A2%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%AD%E7%9A%84%E5%A4%A7%E5%86%99%E5%AD%97%E6%AF%8D%E4%B8%BA%E5%B0%8F%E5%86%99%E5%AD%97%E6%AF%8D-toc" style="margin-left:80px;"><a href="#str.lower()%C2%A0%20%C2%A0%20%C2%A0%E8%BD%AC%E6%8D%A2%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%AD%E7%9A%84%E5%A4%A7%E5%86%99%E5%AD%97%E6%AF%8D%E4%B8%BA%E5%B0%8F%E5%86%99%E5%AD%97%E6%AF%8D">str.lower()     转换字符串中的大写字母为小写字母</a></p>
+
+<p id="str.upper()%C2%A0%20%C2%A0%20%C2%A0%20%C2%A0%C2%A0%E8%BD%AC%E6%8D%A2%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%AD%E7%9A%84%E5%B0%8F%E5%86%99%E5%AD%97%E6%AF%8D%E4%B8%BA%E5%A4%A7%E5%86%99%E5%AD%97%E6%AF%8D-toc" style="margin-left:80px;"><a href="#str.upper()%C2%A0%20%C2%A0%20%C2%A0%20%C2%A0%C2%A0%E8%BD%AC%E6%8D%A2%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%AD%E7%9A%84%E5%B0%8F%E5%86%99%E5%AD%97%E6%AF%8D%E4%B8%BA%E5%A4%A7%E5%86%99%E5%AD%97%E6%AF%8D">str.upper()        转换字符串中的小写字母为大写字母</a></p>
+
+<p id="str.swapcase()%C2%A0%20%C2%A0%20%C2%A0%C2%A0%E8%BD%AC%E6%8D%A2%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%AD%E7%9A%84%E5%A4%A7%E5%86%99%E5%AD%97%E6%AF%8D%E4%B8%BA%E5%B0%8F%E5%86%99%E5%AD%97%E6%AF%8D%2C%E8%BD%AC%E6%8D%A2%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%AD%E7%9A%84%E5%B0%8F%E5%86%99%E5%AD%97%E6%AF%8D%E4%B8%BA%E5%A4%A7%E5%86%99%E5%AD%97%E6%AF%8D-toc" style="margin-left:80px;"><a href="#str.swapcase()%C2%A0%20%C2%A0%20%C2%A0%C2%A0%E8%BD%AC%E6%8D%A2%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%AD%E7%9A%84%E5%A4%A7%E5%86%99%E5%AD%97%E6%AF%8D%E4%B8%BA%E5%B0%8F%E5%86%99%E5%AD%97%E6%AF%8D%2C%E8%BD%AC%E6%8D%A2%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%AD%E7%9A%84%E5%B0%8F%E5%86%99%E5%AD%97%E6%AF%8D%E4%B8%BA%E5%A4%A7%E5%86%99%E5%AD%97%E6%AF%8D">str.swapcase()      转换字符串中的大写字母为小写字母,转换字符串中的小写字母为大写字母</a></p>
+
+<p id="str.capitalize()%C2%A0%20%C2%A0%20%C2%A0%C2%A0%E8%BD%AC%E6%8D%A2%E5%AD%97%E7%AC%A6%E4%B8%B2%EF%BC%8C%E4%BD%BF%E5%BE%97%E5%8F%AA%E6%9C%89%E9%A6%96%E5%AD%97%E6%AF%8D%E4%B8%BA%E5%A4%A7%E5%86%99-toc" style="margin-left:80px;"><a href="#str.capitalize()%C2%A0%20%C2%A0%20%C2%A0%C2%A0%E8%BD%AC%E6%8D%A2%E5%AD%97%E7%AC%A6%E4%B8%B2%EF%BC%8C%E4%BD%BF%E5%BE%97%E5%8F%AA%E6%9C%89%E9%A6%96%E5%AD%97%E6%AF%8D%E4%B8%BA%E5%A4%A7%E5%86%99">str.capitalize()      转换字符串，使得只有首字母为大写</a></p>
+
+<p id="str.title()%C2%A0%20%C2%A0%20%C2%A0%C2%A0%E6%AF%8F%E4%B8%AA%E5%8D%95%E8%AF%8D%E7%9A%84%E9%A6%96%E5%AD%97%E6%AF%8D%E5%A4%A7%E5%86%99-toc" style="margin-left:80px;"><a href="#str.title()%C2%A0%20%C2%A0%20%C2%A0%C2%A0%E6%AF%8F%E4%B8%AA%E5%8D%95%E8%AF%8D%E7%9A%84%E9%A6%96%E5%AD%97%E6%AF%8D%E5%A4%A7%E5%86%99">str.title()      每个单词的首字母大写</a></p>
+
+<p id="str.center(width%2Cfillchar)%C2%A0%20%C2%A0%E5%B0%86str%E6%94%BE%E5%9C%A8%E5%B1%85%E4%B8%AD%E7%9A%84%E4%BD%8D%E7%BD%AE%EF%BC%8Cfillchar%E4%B8%BA%E5%A1%AB%E5%85%85%E7%9A%84%E4%BD%8D%E7%BD%AE-toc" style="margin-left:80px;"><a href="#str.center(width%2Cfillchar)%C2%A0%20%C2%A0%E5%B0%86str%E6%94%BE%E5%9C%A8%E5%B1%85%E4%B8%AD%E7%9A%84%E4%BD%8D%E7%BD%AE%EF%BC%8Cfillchar%E4%B8%BA%E5%A1%AB%E5%85%85%E7%9A%84%E4%BD%8D%E7%BD%AE">str.center(width,fillchar)   将str放在居中的位置，fillchar为填充的位置</a></p>
+
+<p id="str.count('str1')%C2%A0%20%C2%A0%20%E8%AE%A1%E7%AE%97str%E4%B8%AD%E6%9C%89%E5%A4%9A%E5%B0%91%E4%B8%AAstr1-toc" style="margin-left:80px;"><a href="#str.count('str1')%C2%A0%20%C2%A0%20%E8%AE%A1%E7%AE%97str%E4%B8%AD%E6%9C%89%E5%A4%9A%E5%B0%91%E4%B8%AAstr1">str.count('str1')    计算str中有多少个str1</a></p>
+
+<p id="str.find('str1'%2Cstrat%2Cend)%C2%A0%20%C2%A0%E4%BB%8E%E5%B7%A6%E5%BE%80%E5%8F%B3%E6%A3%80%E6%B5%8Bstr1%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%98%AF%E5%90%A6%E5%8C%85%E5%90%AB%E5%9C%A8str%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%AD%EF%BC%8C%E5%8F%AF%E4%BB%A5%E6%8C%87%E5%AE%9A%E8%8C%83%E5%9B%B4%E3%80%82%E5%BE%97%E5%88%B0%E7%9A%84%E7%BB%93%E6%9E%9C%E6%98%AF%E7%AC%AC%E4%B8%80%E6%AC%A1%E5%87%BA%E7%8E%B0str1%E7%9A%84%E4%B8%8B%E6%A0%87-toc" style="margin-left:80px;"><a href="#str.find('str1'%2Cstrat%2Cend)%C2%A0%20%C2%A0%E4%BB%8E%E5%B7%A6%E5%BE%80%E5%8F%B3%E6%A3%80%E6%B5%8Bstr1%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%98%AF%E5%90%A6%E5%8C%85%E5%90%AB%E5%9C%A8str%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%AD%EF%BC%8C%E5%8F%AF%E4%BB%A5%E6%8C%87%E5%AE%9A%E8%8C%83%E5%9B%B4%E3%80%82%E5%BE%97%E5%88%B0%E7%9A%84%E7%BB%93%E6%9E%9C%E6%98%AF%E7%AC%AC%E4%B8%80%E6%AC%A1%E5%87%BA%E7%8E%B0str1%E7%9A%84%E4%B8%8B%E6%A0%87">str.find('str1',strat,end)   从左往右检测str1字符串是否包含在str字符串中，可以指定范围。得到的结果是第一次出现str1的下标</a></p>
+
+<p id="str.index(str1%2Cstart%2Cend)%C2%A0%20%C2%A0%E5%92%8Cfind%E6%96%B9%E6%B3%95%E4%B8%80%E6%A0%B7%EF%BC%8C%E5%8C%BA%E5%88%AB%E6%98%AFstr1%E4%B8%8D%E5%AD%98%E5%9C%A8%E6%97%B6%E4%BC%9A%E6%8A%A5%E9%94%99-toc" style="margin-left:80px;"><a href="#str.index(str1%2Cstart%2Cend)%C2%A0%20%C2%A0%E5%92%8Cfind%E6%96%B9%E6%B3%95%E4%B8%80%E6%A0%B7%EF%BC%8C%E5%8C%BA%E5%88%AB%E6%98%AFstr1%E4%B8%8D%E5%AD%98%E5%9C%A8%E6%97%B6%E4%BC%9A%E6%8A%A5%E9%94%99">str.index(str1,start,end)   和find方法一样，区别是str1不存在时会报错</a></p>
+
+<p id="str.lstrip()%C2%A0%20%C2%A0%E6%88%AA%E5%8F%96%E6%8E%89%E5%B7%A6%E4%BE%A7%E6%8C%87%E5%AE%9A%E7%9A%84%E5%AD%97%E7%AC%A6%EF%BC%8C%E9%BB%98%E8%AE%A4%E4%BD%8D%E7%A9%BA%E6%A0%BC-toc" style="margin-left:80px;"><a href="#str.lstrip()%C2%A0%20%C2%A0%E6%88%AA%E5%8F%96%E6%8E%89%E5%B7%A6%E4%BE%A7%E6%8C%87%E5%AE%9A%E7%9A%84%E5%AD%97%E7%AC%A6%EF%BC%8C%E9%BB%98%E8%AE%A4%E4%BD%8D%E7%A9%BA%E6%A0%BC">str.lstrip()   截取掉左侧指定的字符，默认位空格</a></p>
+
+<p id="str.strip()%C2%A0%20%E6%88%AA%E5%8F%96%E6%8E%89%E4%B8%A4%E4%BE%A7%E6%8C%87%E5%AE%9A%E7%9A%84%E5%AD%97%E7%AC%A6%EF%BC%8C%E9%BB%98%E8%AE%A4%E4%B8%BA%E7%A9%BA%E6%A0%BC-toc" style="margin-left:80px;"><a href="#str.strip()%C2%A0%20%E6%88%AA%E5%8F%96%E6%8E%89%E4%B8%A4%E4%BE%A7%E6%8C%87%E5%AE%9A%E7%9A%84%E5%AD%97%E7%AC%A6%EF%BC%8C%E9%BB%98%E8%AE%A4%E4%B8%BA%E7%A9%BA%E6%A0%BC">str.strip()  截取掉两侧指定的字符，默认为空格</a></p>
+
+<p id="split%EF%BC%88str%3D%22%22%EF%BC%89%E6%88%AA%E5%8F%96%E5%AD%97%E7%AC%A6%E4%B8%B2-toc" style="margin-left:80px;"><a href="#split%EF%BC%88str%3D%22%22%EF%BC%89%E6%88%AA%E5%8F%96%E5%AD%97%E7%AC%A6%E4%B8%B2">split（str=""）截取字符串</a></p>
+
+<p id="splitlines()%20%E6%8C%89%E7%85%A7('%5Ct'%2C'%5Ct%5Cn'%2C'%5Cn')%E5%88%86%E9%9A%94-toc" style="margin-left:80px;"><a href="#splitlines()%20%E6%8C%89%E7%85%A7('%5Ct'%2C'%5Ct%5Cn'%2C'%5Cn')%E5%88%86%E9%9A%94">splitlines() 按照('\t','\t\n','\n')分隔</a></p>
+
+<p id="replace(oldstr%2Cnewstr%2Ccount)%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%9B%BF%E6%8D%A2-toc" style="margin-left:80px;"><a href="#replace(oldstr%2Cnewstr%2Ccount)%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%9B%BF%E6%8D%A2">replace(oldstr,newstr,count)字符串替换</a></p>
+
+<p id="startswitch(str%2Cstart%3D0%2Cend%3Dlen(str))%20%E5%9C%A8%E7%BB%99%E5%AE%9A%E8%8C%83%E5%9B%B4%E5%86%85%E5%88%A4%E6%96%AD%E6%98%AF%E5%90%A6%E6%98%AF%E4%BB%A5%E7%BB%99%E5%AE%9Astr%E4%B8%BA%E5%BC%80%E5%A4%B4%E7%9A%84-toc" style="margin-left:80px;"><a href="#startswitch(str%2Cstart%3D0%2Cend%3Dlen(str))%20%E5%9C%A8%E7%BB%99%E5%AE%9A%E8%8C%83%E5%9B%B4%E5%86%85%E5%88%A4%E6%96%AD%E6%98%AF%E5%90%A6%E6%98%AF%E4%BB%A5%E7%BB%99%E5%AE%9Astr%E4%B8%BA%E5%BC%80%E5%A4%B4%E7%9A%84">startswitch(str,start=0,end=len(str)) 在给定范围内判断是否是以给定str为开头的</a></p>
+
+<p id="isalpha()%20%E5%A6%82%E6%9E%9C%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%AD%E8%87%B3%E5%B0%91%E6%9C%89%E4%B8%80%E4%B8%AA%E5%AD%97%E7%AC%A6%E4%B8%94%E6%89%80%E6%9C%89%E5%AD%97%E7%AC%A6%E9%83%BD%E6%98%AF%E5%AD%97%E6%AF%8D%E8%BF%94%E5%9B%9Etrue-toc" style="margin-left:80px;"><a href="#isalpha()%20%E5%A6%82%E6%9E%9C%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%AD%E8%87%B3%E5%B0%91%E6%9C%89%E4%B8%80%E4%B8%AA%E5%AD%97%E7%AC%A6%E4%B8%94%E6%89%80%E6%9C%89%E5%AD%97%E7%AC%A6%E9%83%BD%E6%98%AF%E5%AD%97%E6%AF%8D%E8%BF%94%E5%9B%9Etrue">isalpha() 如果字符串中至少有一个字符且所有字符都是字母返回true</a></p>
+
+<p id="isalnum()%C2%A0%E5%A6%82%E6%9E%9C%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%AD%E8%87%B3%E5%B0%91%E6%9C%89%E4%B8%80%E4%B8%AA%E5%AD%97%E7%AC%A6%E4%B8%94%E6%89%80%E6%9C%89%E5%AD%97%E7%AC%A6%E9%83%BD%E6%98%AF%E5%AD%97%E6%AF%8D%E6%88%96%E8%80%85%E6%95%B0%E5%AD%97%E8%BF%94%E5%9B%9Etrue-toc" style="margin-left:80px;"><a href="#isalnum()%C2%A0%E5%A6%82%E6%9E%9C%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%AD%E8%87%B3%E5%B0%91%E6%9C%89%E4%B8%80%E4%B8%AA%E5%AD%97%E7%AC%A6%E4%B8%94%E6%89%80%E6%9C%89%E5%AD%97%E7%AC%A6%E9%83%BD%E6%98%AF%E5%AD%97%E6%AF%8D%E6%88%96%E8%80%85%E6%95%B0%E5%AD%97%E8%BF%94%E5%9B%9Etrue">isalnum() 如果字符串中至少有一个字符且所有字符都是字母或者数字返回true</a></p>
+
+<p id="isdigit()%C2%A0%20%E5%A6%82%E6%9E%9C%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%AD%E5%8F%AA%E5%8C%85%E5%90%AB%E6%95%B0%E5%AD%97%E5%88%99%E8%BF%94%E5%9B%9Etrue%C2%A0-toc" style="margin-left:80px;"><a href="#isdigit()%C2%A0%20%E5%A6%82%E6%9E%9C%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%AD%E5%8F%AA%E5%8C%85%E5%90%AB%E6%95%B0%E5%AD%97%E5%88%99%E8%BF%94%E5%9B%9Etrue%C2%A0">isdigit()  如果字符串中只包含数字则返回true </a></p>
+
+<p id="%E6%A0%BC%E5%BC%8F%E5%8C%96%E8%BE%93%E5%87%BA-toc" style="margin-left:80px;"><a href="#%E6%A0%BC%E5%BC%8F%E5%8C%96%E8%BE%93%E5%87%BA">格式化输出</a></p>
+
+<p id="%E8%BD%AC%E4%B9%89%E5%AD%97%E7%AC%A6%5C-toc" style="margin-left:40px;"><a href="#%E8%BD%AC%E4%B9%89%E5%AD%97%E7%AC%A6%5C">转义字符\</a></p>
+
+<p id="%E6%8D%A2%E8%A1%8C%E7%AC%A6%5Cn-toc" style="margin-left:80px;"><a href="#%E6%8D%A2%E8%A1%8C%E7%AC%A6%5Cn">换行符\n</a></p>
+
+<p id="%E5%88%B6%E8%A1%A8%E7%AC%A6%5Ct-toc" style="margin-left:80px;"><a href="#%E5%88%B6%E8%A1%A8%E7%AC%A6%5Ct">制表符\t</a></p>
+
+<p id="python%E5%85%81%E8%AE%B8%E7%94%A8r%E8%A1%A8%E7%A4%BA%E5%86%85%E9%83%A8%E7%9A%84%E5%AD%97%E7%AC%A6%E4%B8%B2%E9%BB%98%E8%AE%A4%E4%B8%8D%E8%BD%AC%E4%B9%89-toc" style="margin-left:80px;"><a href="#python%E5%85%81%E8%AE%B8%E7%94%A8r%E8%A1%A8%E7%A4%BA%E5%86%85%E9%83%A8%E7%9A%84%E5%AD%97%E7%AC%A6%E4%B8%B2%E9%BB%98%E8%AE%A4%E4%B8%8D%E8%BD%AC%E4%B9%89">python允许用r表示内部的字符串默认不转义</a></p>
+
+<hr id="hr-toc" /><h2 id="%E8%BF%90%E7%AE%97%E7%AC%A6">运算符</h2>
+
+<h3 id="%E4%BD%8D%E8%BF%90%E7%AE%97%E7%AC%A6%EF%BC%9A">位运算符：</h3>
+
+<p><strong>按位运算符是把数字看出二进制数来进行计算</strong></p>
+
+<p><strong>&amp; 按位与运算符    print(5 &amp; 7)   结果为5</strong></p>
+
+<p><strong>1 0 1</strong></p>
+
+<p><strong>1 1 1        相应位数都为1才为1，否则为0</strong></p>
+
+<p><strong>------</strong></p>
+
+<p><strong>1 0 1</strong></p>
+
+<p><strong>| 按位或运算符    print(5 | 7)   结果为7                       相应位数有一个为 1 时，就为 1</strong></p>
+
+<p><strong>^ 按位异或运算符  print（5 ^ 7)  结果为 2                 相应位数不同时，才为 1</strong></p>
+
+<p><strong>~ 按位取反运算符  print( ~5)  结果为-6     每个数据位取反</strong></p>
+
+<p> </p>
+
+<p><strong>&lt;&lt; 左移动运算符   各二进制位向左各移动若干位   </strong></p>
+
+<pre class="has">
+<code class="language-html">print(5&lt;&lt;1)    10              101  --》  1010</code></pre>
+
+<p><strong>&gt;&gt; 右移动运算符   各二进制位向右各移动若干位   </strong></p>
+
+<pre class="has">
+<code class="language-html">print(5&gt;&gt;1)    2           101 ——》 10</code></pre>
+
+<h3 id="%E9%80%BB%E8%BE%91%E4%B8%8E%E8%BF%90%E7%AE%97%E7%AC%A6%C2%A0"><strong>逻辑与运算符  </strong></h3>
+
+<p><strong>and  ： 表达式1  and  表达式2</strong></p>
+
+<p><strong>表达式中有一个为假，则全部为假</strong></p>
+
+<p><strong>or  :  表达式1  or 表达式2        表达式全为假时，才为假</strong></p>
+
+<p><strong>not ： not 表达式      如果表达式为真，则整体逻辑非表达式为假</strong></p>
+
+<p> </p>
+
+<h3 id="%E6%88%90%E5%91%98%E8%BF%90%E7%AE%97%E7%AC%A6%C2%A0%20%C2%A0in%C2%A0%20%E5%92%8C%20not%20in%C2%A0"><strong>成员运算符   in  和 not in </strong></h3>
+
+<p><strong>in :如果在指定的序列中找到值返回True，否则返回False</strong></p>
+
+<p><strong>not in:如果在指定的序列中找到值返回False，否则返回True</strong></p>
+
+<p> </p>
+
+<h3 id="%E8%BA%AB%E4%BB%BD%E8%BF%90%E7%AE%97%E7%AC%A6%C2%A0%20is%20%E5%92%8C%20is%C2%A0not"><strong>身份运算符  is 和 is </strong><strong>not</strong></h3>
+
+<p><strong>is：判断两个标识符是不是引用同一个对象</strong></p>
+
+<p><strong>is not ：判断两个标识符是不是引用不同对象</strong></p>
+
+<p> </p>
+
+<h3 id="%E8%BF%90%E7%AE%97%E7%AC%A6%E4%BC%98%E5%85%88%E7%BA%A7"><strong>运算符优先级</strong></h3>
+
+<p><strong>**</strong></p>
+
+<p><strong>~ + - 正负号（一元加减）</strong></p>
+
+<p><strong>*  /  %  //</strong></p>
+
+<p><strong>+  -</strong></p>
+
+<p><strong>&gt;&gt;    &lt;&lt;</strong></p>
+
+<p>&amp;</p>
+
+<p><strong>^  |</strong></p>
+
+<p><strong>&lt;=  &lt;  &gt;  &gt;=</strong></p>
+
+<p><strong>==   !=</strong></p>
+
+<p><strong>=   %=   /=   +=   -=</strong></p>
+
+<p><strong>is   is not</strong></p>
+
+<p><strong>in   not in</strong></p>
+
+<p><strong>not  or   and</strong></p>
+
+<p> </p>
+
+<h2 id="%E5%AD%97%E7%AC%A6%E4%B8%B2">字符串</h2>
+
+<p><strong>字符串是以单引号或双引号括起来的任意文本，字符串不可变</strong></p>
+
+<h3 id="python%E4%B8%AD%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%8F%AF%E4%BB%A5%E8%BF%9B%E8%A1%8C%E4%B9%98%E6%B3%95%E8%BF%90%E7%AE%97"><strong>python中字符串可以进行乘法运算</strong></h3>
+
+<pre class="has">
+<code class="language-python">a = "very good"
+print(a * 3)</code></pre>
+
+<p><img alt="" class="has" height="36" src="https://img-blog.csdnimg.cn/20190501202707311.png" width="285" /></p>
+
+<h3 id="%E8%AE%BF%E9%97%AE%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%AD%E6%9F%90%E4%B8%80%E4%B8%AA%E5%AD%97%E7%AC%A6"><strong>访问字符串中某一个字符</strong></h3>
+
+<p><strong>通过索引字符下标查找字符，索引从0开始，字符串名[下标]</strong></p>
+
+<pre class="has">
+<code class="language-python">a = "very good"
+print(a[3])</code></pre>
+
+<p><img alt="" class="has" height="30" src="https://img-blog.csdnimg.cn/20190501202932170.png" width="207" /></p>
+
+<p><span style="color:#f33b45;"><strong>注意：不能使用a[3] = k这种方法去改变字符串，因为字符串不可变 </strong></span></p>
+
+<h3 id="%E6%88%AA%E5%8F%96%E5%AD%97%E7%AC%A6%E4%B8%B2"><strong>截取字符串</strong></h3>
+
+<p><strong>字符串[n : m]，截取n到m-1之间的字符 ，如果从头开始，n可以不填</strong></p>
+
+<pre class="has">
+<code class="language-python">a = "very good"
+print(a[2 : 6])</code></pre>
+
+<p><img alt="" class="has" height="33" src="https://img-blog.csdnimg.cn/20190501203554877.png" width="102" /></p>
+
+<h3 id="%E5%88%A4%E6%96%AD%E4%B8%80%E4%B8%AA%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%98%AF%E5%90%A6%E5%9C%A8%E5%8F%A6%E4%B8%80%E4%B8%AA%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%86%85"><strong>判断一个字符串是否在另一个字符串内</strong></h3>
+
+<pre class="has">
+<code class="language-python">a = "very good"
+print("good" in a)</code></pre>
+
+<p> <img alt="" class="has" height="37" src="https://img-blog.csdnimg.cn/2019050120411699.png" width="147" /></p>
+
+<h3 id="%E5%88%A4%E6%96%AD%E6%98%AF%E5%90%A6%E4%B8%BA%E9%97%B0%E5%B9%B4%E5%B0%8F%E7%AE%97%E6%B3%95%EF%BC%9A"><strong>判断是否为闰年小算法：</strong></h3>
+
+<pre class="has">
+<code class="language-python">a = int(input("请输入年份："))
+if (a % 4 == 0 and a % 100 != 0) or a % 400 == 0:
+    print("是闰年")
+else:
+    print("不是闰年")</code></pre>
+
+<p><img alt="" class="has" height="60" src="https://img-blog.csdnimg.cn/20190501204644107.png" width="197" /></p>
+
+<h3 id="eval(str)%C2%A0%20%C2%A0%20%C2%A0%20%E5%B0%86%E5%AD%97%E7%AC%A6%E4%B8%B2str%E5%BD%93%E6%88%90%E6%9C%89%E6%95%88%E7%9A%84%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%9D%A5%E6%B1%82%E5%80%BC%E5%B9%B6%E8%BF%94%E5%9B%9E%E8%AE%A1%E7%AE%97%E7%BB%93%E6%9E%9C%EF%BC%8C%E4%B8%8D%E8%83%BD%E6%9C%89%E8%8B%B1%E6%96%87%E5%AD%97%E7%AC%A6"><strong>eval(str)      将字符串str当成有效的表达式来求值并返回计算结果，不能有英文字符</strong></h3>
+
+<pre class="has">
+<code class="language-html">print(eval("123+23"))</code></pre>
+
+<p><img alt="" class="has" height="36" src="https://img-blog.csdnimg.cn/20190501211755288.png" width="157" /></p>
+
+<h3 id="len%EF%BC%88str)%C2%A0%20%C2%A0%20%C2%A0%20%C2%A0%E8%BF%94%E5%9B%9E%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9A%84%E9%95%BF%E5%BA%A6%EF%BC%88%E5%AD%97%E7%AC%A6%E4%B8%AA%E6%95%B0%EF%BC%89">len（str)       <strong>返回字符串的长度（字符个数）</strong></h3>
+
+<pre class="has">
+<code class="language-html">print(len("jjjj"))       4</code></pre>
+
+<h3 id="str.lower()%C2%A0%20%C2%A0%20%C2%A0%E8%BD%AC%E6%8D%A2%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%AD%E7%9A%84%E5%A4%A7%E5%86%99%E5%AD%97%E6%AF%8D%E4%B8%BA%E5%B0%8F%E5%86%99%E5%AD%97%E6%AF%8D">str.lower()     <strong>转换字符串中的大写字母为小写字母</strong></h3>
+
+<pre class="has">
+<code class="language-html">print("AbCDef".lower())</code></pre>
+
+<p><img alt="" class="has" height="23" src="https://img-blog.csdnimg.cn/20190502193616872.png" width="223" /></p>
+
+<h3 id="str.upper()%C2%A0%20%C2%A0%20%C2%A0%20%C2%A0%C2%A0%E8%BD%AC%E6%8D%A2%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%AD%E7%9A%84%E5%B0%8F%E5%86%99%E5%AD%97%E6%AF%8D%E4%B8%BA%E5%A4%A7%E5%86%99%E5%AD%97%E6%AF%8D">str.upper()        <strong>转换字符串中的小写字母为大写字母</strong></h3>
+
+<pre class="has">
+<code class="language-html">print("AbCDef".upper())</code></pre>
+
+<h3 id="str.swapcase()%C2%A0%20%C2%A0%20%C2%A0%C2%A0%E8%BD%AC%E6%8D%A2%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%AD%E7%9A%84%E5%A4%A7%E5%86%99%E5%AD%97%E6%AF%8D%E4%B8%BA%E5%B0%8F%E5%86%99%E5%AD%97%E6%AF%8D%2C%E8%BD%AC%E6%8D%A2%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%AD%E7%9A%84%E5%B0%8F%E5%86%99%E5%AD%97%E6%AF%8D%E4%B8%BA%E5%A4%A7%E5%86%99%E5%AD%97%E6%AF%8D">str.swapcase()      <strong>转换字符串中的大写字母为小写字母,转换字符串中的小写字母为大写字母</strong></h3>
+
+<pre class="has">
+<code class="language-html">print("AbCDef".swapcase())</code></pre>
+
+<h3 id="str.capitalize()%C2%A0%20%C2%A0%20%C2%A0%C2%A0%E8%BD%AC%E6%8D%A2%E5%AD%97%E7%AC%A6%E4%B8%B2%EF%BC%8C%E4%BD%BF%E5%BE%97%E5%8F%AA%E6%9C%89%E9%A6%96%E5%AD%97%E6%AF%8D%E4%B8%BA%E5%A4%A7%E5%86%99">str.capitalize()      <strong>转换字符串，使得只有首字母为大写</strong></h3>
+
+<pre class="has">
+<code class="language-html">print("AbCDef".capitalize())</code></pre>
+
+<h3 id="str.title()%C2%A0%20%C2%A0%20%C2%A0%C2%A0%E6%AF%8F%E4%B8%AA%E5%8D%95%E8%AF%8D%E7%9A%84%E9%A6%96%E5%AD%97%E6%AF%8D%E5%A4%A7%E5%86%99">str.title()      <strong>每个单词的首字母大写</strong></h3>
+
+<pre class="has">
+<code class="language-html">print("AbCDef good a man real".title())</code></pre>
+
+<p><img alt="" class="has" height="36" src="https://img-blog.csdnimg.cn/20190502194255271.png" width="209" /></p>
+
+<h3 id="str.center(width%2Cfillchar)%C2%A0%20%C2%A0%E5%B0%86str%E6%94%BE%E5%9C%A8%E5%B1%85%E4%B8%AD%E7%9A%84%E4%BD%8D%E7%BD%AE%EF%BC%8Cfillchar%E4%B8%BA%E5%A1%AB%E5%85%85%E7%9A%84%E4%BD%8D%E7%BD%AE">str.center(width,fillchar)   将str放在居中的位置，fillchar为填充的位置</h3>
+
+<pre class="has">
+<code class="language-html">print("good a man real".center(30,'*'))</code></pre>
+
+<p><img alt="" class="has" height="39" src="https://img-blog.csdnimg.cn/20190502194758777.png" width="300" /></p>
+
+<pre class="has">
+<code class="language-html">print("good a man real".ljust(30,"*"))</code></pre>
+
+<p><img alt="" class="has" height="33" src="https://img-blog.csdnimg.cn/20190502194924566.png" width="286" /></p>
+
+<pre class="has">
+<code class="language-html">print("good a man real".rjust(30,"*"))</code></pre>
+
+<p><img alt="" class="has" height="31" src="https://img-blog.csdnimg.cn/20190502194957468.png" width="283" /></p>
+
+<h3 id="str.count('str1')%C2%A0%20%C2%A0%20%E8%AE%A1%E7%AE%97str%E4%B8%AD%E6%9C%89%E5%A4%9A%E5%B0%91%E4%B8%AAstr1">str.count('str1')    计算str中有多少个str1</h3>
+
+<pre class="has">
+<code class="language-html">print("good a man real".count('a'))</code></pre>
+
+<pre class="has">
+<code class="language-html">print("good a man real".count('a',8,))   从第8位到结尾有多少个a，可以指定一个范围
+</code></pre>
+
+<p><img alt="" class="has" height="32" src="https://img-blog.csdnimg.cn/20190502195328208.png" width="200" /></p>
+
+<h3 id="str.find('str1'%2Cstrat%2Cend)%C2%A0%20%C2%A0%E4%BB%8E%E5%B7%A6%E5%BE%80%E5%8F%B3%E6%A3%80%E6%B5%8Bstr1%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%98%AF%E5%90%A6%E5%8C%85%E5%90%AB%E5%9C%A8str%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%AD%EF%BC%8C%E5%8F%AF%E4%BB%A5%E6%8C%87%E5%AE%9A%E8%8C%83%E5%9B%B4%E3%80%82%E5%BE%97%E5%88%B0%E7%9A%84%E7%BB%93%E6%9E%9C%E6%98%AF%E7%AC%AC%E4%B8%80%E6%AC%A1%E5%87%BA%E7%8E%B0str1%E7%9A%84%E4%B8%8B%E6%A0%87">str.find('str1',strat,end)   从左往右检测str1字符串是否包含在str字符串中，可以指定范围。得到的结果是第一次出现str1的下标</h3>
+
+<pre class="has">
+<code class="language-html">print("good a man real".find('a',8,14))</code></pre>
+
+<p><img alt="" class="has" height="31" src="https://img-blog.csdnimg.cn/20190502195853403.png" width="269" /></p>
+
+<p><span style="color:#f33b45;"><strong>str.rfind('str1',strat,end)   从右往左</strong></span></p>
+
+<h3 id="str.index(str1%2Cstart%2Cend)%C2%A0%20%C2%A0%E5%92%8Cfind%E6%96%B9%E6%B3%95%E4%B8%80%E6%A0%B7%EF%BC%8C%E5%8C%BA%E5%88%AB%E6%98%AFstr1%E4%B8%8D%E5%AD%98%E5%9C%A8%E6%97%B6%E4%BC%9A%E6%8A%A5%E9%94%99">str.index(str1,start,end)   和find方法一样，区别是str1不存在时会报错</h3>
+
+<pre class="has">
+<code class="language-html">print("goa man real".find('mxn',0,14))         
+</code></pre>
+
+<p><img alt="" class="has" height="36" src="https://img-blog.csdnimg.cn/20190502200528948.png" width="203" /></p>
+
+<pre class="has">
+<code class="language-html">print("goa man real".index('mxn',0,14))           </code></pre>
+
+<p><img alt="" class="has" height="100" src="https://img-blog.csdnimg.cn/20190502200455229.png" width="482" /></p>
+
+<h3 id="str.lstrip()%C2%A0%20%C2%A0%E6%88%AA%E5%8F%96%E6%8E%89%E5%B7%A6%E4%BE%A7%E6%8C%87%E5%AE%9A%E7%9A%84%E5%AD%97%E7%AC%A6%EF%BC%8C%E9%BB%98%E8%AE%A4%E4%BD%8D%E7%A9%BA%E6%A0%BC">str.lstrip()   截取掉左侧指定的字符，默认位空格</h3>
+
+<pre class="has">
+<code class="language-html">print("    goa man real".lstrip())</code></pre>
+
+<p><img alt="" class="has" height="38" src="https://img-blog.csdnimg.cn/2019050220083651.png" width="234" /></p>
+
+<p><span style="color:#f33b45;"><strong>str.rstrip()   截取掉右侧指定的字符，默认位空格</strong></span></p>
+
+<h3 id="str.strip()%C2%A0%20%E6%88%AA%E5%8F%96%E6%8E%89%E4%B8%A4%E4%BE%A7%E6%8C%87%E5%AE%9A%E7%9A%84%E5%AD%97%E7%AC%A6%EF%BC%8C%E9%BB%98%E8%AE%A4%E4%B8%BA%E7%A9%BA%E6%A0%BC"><strong>str.strip()  截取掉两侧指定的字符，默认为空格</strong></h3>
+
+<pre class="has">
+<code class="language-html">print("********goa man ***real****".strip('*'))</code></pre>
+
+<p><img alt="" class="has" height="40" src="https://img-blog.csdnimg.cn/20190502201100166.png" width="262" /></p>
+
+<h3 id="split%EF%BC%88str%3D%22%22%EF%BC%89%E6%88%AA%E5%8F%96%E5%AD%97%E7%AC%A6%E4%B8%B2">split（str=""）截取字符串</h3>
+
+<p>以str为分隔符截取字符串</p>
+
+<pre class="has">
+<code class="language-python">str = "a man is   ajjfl kk"
+print(str.split(" "))</code></pre>
+
+<p><img alt="" class="has" height="31" src="https://img-blog.csdnimg.cn/20190506180347889.png" width="364" /></p>
+
+<h3 id="splitlines()%20%E6%8C%89%E7%85%A7('%5Ct'%2C'%5Ct%5Cn'%2C'%5Cn')%E5%88%86%E9%9A%94">splitlines() 按照('\t','\t\n','\n')分隔</h3>
+
+<pre class="has">
+<code class="language-python">str = """ajsadjajsk
+gdggjij
+asfijijjimr
+"""
+print(str.splitlines())</code></pre>
+
+<p><img alt="" class="has" height="32" src="https://img-blog.csdnimg.cn/20190506181506547.png" width="355" /></p>
+
+<h3 id="replace(oldstr%2Cnewstr%2Ccount)%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%9B%BF%E6%8D%A2">replace(oldstr,newstr,count)字符串替换</h3>
+
+<p><strong>用newstr去替换oldstr，默认是全部替换，如果输了count，就替换前面count个oldstr</strong></p>
+
+<pre class="has">
+<code class="language-python">str = "a good man old man"
+str1 =str.replace("man","woman",1)
+print(str1)</code></pre>
+
+<p><img alt="" class="has" height="33" src="https://img-blog.csdnimg.cn/20190506183717833.png" width="213" /></p>
+
+<h3 id="startswitch(str%2Cstart%3D0%2Cend%3Dlen(str))%20%E5%9C%A8%E7%BB%99%E5%AE%9A%E8%8C%83%E5%9B%B4%E5%86%85%E5%88%A4%E6%96%AD%E6%98%AF%E5%90%A6%E6%98%AF%E4%BB%A5%E7%BB%99%E5%AE%9Astr%E4%B8%BA%E5%BC%80%E5%A4%B4%E7%9A%84">startswitch(str,start=0,end=len(str)) 在给定范围内判断是否是以给定str为开头的</h3>
+
+<p>start默认是开头</p>
+
+<pre class="has">
+<code class="language-python">str = "a good man old man"
+print(str.startswith("a go"))</code></pre>
+
+<p><img alt="" class="has" height="31" src="https://img-blog.csdnimg.cn/20190506184559151.png" width="111" /></p>
+
+<h3 id="isalpha()%20%E5%A6%82%E6%9E%9C%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%AD%E8%87%B3%E5%B0%91%E6%9C%89%E4%B8%80%E4%B8%AA%E5%AD%97%E7%AC%A6%E4%B8%94%E6%89%80%E6%9C%89%E5%AD%97%E7%AC%A6%E9%83%BD%E6%98%AF%E5%AD%97%E6%AF%8D%E8%BF%94%E5%9B%9Etrue">isalpha() 如果字符串中至少有一个字符且所有字符都是字母返回true</h3>
+
+<pre class="has">
+<code class="language-python">str = "agoodmanoldman"
+print(str.isalpha())</code></pre>
+
+<p><img alt="" class="has" height="28" src="https://img-blog.csdnimg.cn/20190506185635243.png" width="126" /></p>
+
+<h3 id="isalnum()%C2%A0%E5%A6%82%E6%9E%9C%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%AD%E8%87%B3%E5%B0%91%E6%9C%89%E4%B8%80%E4%B8%AA%E5%AD%97%E7%AC%A6%E4%B8%94%E6%89%80%E6%9C%89%E5%AD%97%E7%AC%A6%E9%83%BD%E6%98%AF%E5%AD%97%E6%AF%8D%E6%88%96%E8%80%85%E6%95%B0%E5%AD%97%E8%BF%94%E5%9B%9Etrue">isalnum() 如果字符串中至少有一个字符且所有字符都是字母或者数字返回true</h3>
+
+<pre class="has">
+<code class="language-python">str = "a12b34"
+print(str.isalnum())</code></pre>
+
+<h3 id="isdigit()%C2%A0%20%E5%A6%82%E6%9E%9C%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%AD%E5%8F%AA%E5%8C%85%E5%90%AB%E6%95%B0%E5%AD%97%E5%88%99%E8%BF%94%E5%9B%9Etrue%C2%A0">isdigit()  如果字符串中只包含数字则返回true </h3>
+
+<h3 id="%E6%A0%BC%E5%BC%8F%E5%8C%96%E8%BE%93%E5%87%BA">格式化输出</h3>
+
+<pre class="has">
+<code class="language-python">a = 10
+print("the num =",a)
+print("the num = %d" %(a))</code></pre>
+
+<p><img alt="" class="has" height="58" src="https://img-blog.csdnimg.cn/20190501205249570.png" width="262" /></p>
+
+<pre class="has">
+<code class="language-python">a = 10
+b = "asijifjaij"
+c = 5.12
+print("the num = %s , the str = %s , the float = %.3f" %(a , b , c))</code></pre>
+
+<p><img alt="" class="has" height="33" src="https://img-blog.csdnimg.cn/20190501205616352.png" width="508" /></p>
+
+<p> </p>
+
+<h2 id="%E8%BD%AC%E4%B9%89%E5%AD%97%E7%AC%A6%5C">转义字符\</h2>
+
+<p><strong>将一些字符转换成有特殊含义的字符</strong></p>
+
+<h3 id="%E6%8D%A2%E8%A1%8C%E7%AC%A6%5Cn">换行符\n</h3>
+
+<p><strong>\n在内存中占一个字节</strong></p>
+
+<p><strong>\\n的话不会换行，会打印出\n</strong></p>
+
+<p><strong>如果在字符串中有很多换行，用\n写在一行里不好阅读，python中允许：</strong></p>
+
+<pre class="has">
+<code class="language-python">print('''
+ajjjj
+bkkkk
+cllll
+''')</code></pre>
+
+<p><img alt="" class="has" height="95" src="https://img-blog.csdnimg.cn/20190501210647111.png" width="195" /></p>
+
+<h3 id="%E5%88%B6%E8%A1%A8%E7%AC%A6%5Ct">制表符\t</h3>
+
+<h3 id="python%E5%85%81%E8%AE%B8%E7%94%A8r%E8%A1%A8%E7%A4%BA%E5%86%85%E9%83%A8%E7%9A%84%E5%AD%97%E7%AC%A6%E4%B8%B2%E9%BB%98%E8%AE%A4%E4%B8%8D%E8%BD%AC%E4%B9%89">python允许用r表示内部的字符串默认不转义</h3>
+
+<pre class="has">
+<code class="language-python">print(r"\\\n\n\n\n")</code></pre>
+
+<p> <img alt="" class="has" height="33" src="https://img-blog.csdnimg.cn/20190501210935300.png" width="150" /></p>
+
+<p> </p>
+
+<p> </p>
+
+<p><strong>一起学习，一起进步 -.- ，如有错误，可以发评论</strong> </p>
+</div><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">空城机</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://yoursite.com/2019/05/02/python%EF%BC%88%E4%BA%94%EF%BC%89%E2%80%94%E2%80%94%E8%BF%90%E7%AE%97%E7%AC%A6%E3%80%81%E5%AD%97%E7%AC%A6%E4%B8%B2%E3%80%81%E8%BD%AC%E4%B9%89%E5%AD%97%E7%AC%A6/">http://yoursite.com/2019/05/02/python%EF%BC%88%E4%BA%94%EF%BC%89%E2%80%94%E2%80%94%E8%BF%90%E7%AE%97%E7%AC%A6%E3%80%81%E5%AD%97%E7%AC%A6%E4%B8%B2%E3%80%81%E8%BD%AC%E4%B9%89%E5%AD%97%E7%AC%A6/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://yoursite.com" target="_blank">空城机</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/python/">python</a></div><div class="post_share"><div class="social-share" data-image="https://i.loli.net/2019/07/21/5d33d5dc1531213134.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css"/><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js"></script></div></div><div class="post-reward"><a class="reward-button button--primary button--animated"> <i class="fa fa-qrcode"></i> 打赏<div class="reward-main"><ul class="reward-all"><li class="reward-item"><img class="post-qr-code__img" src="/img/wechat.jpg" alt="微信"/><div class="post-qr-code__desc">微信</div></li><li class="reward-item"><img class="post-qr-code__img" src="/img/alipay.jpg" alt="支付寶"/><div class="post-qr-code__desc">支付寶</div></li></ul></div></a></div><nav class="pagination_post" id="pagination"><div class="prev-post pull_left"><a href="/2019/05/02/python%20%E4%B8%AD%E6%B2%A1%E6%9C%89i++%E6%88%96%E8%80%85i--/"><img class="prev_cover" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">python 中没有i++或者i--</div></div></a></div><div class="next-post pull_right"><a href="/2019/05/01/python%EF%BC%88%E5%9B%9B%EF%BC%89%E2%80%94%E2%80%94%E5%B8%B8%E9%87%8F%E5%92%8C%E5%8F%98%E9%87%8F%E3%80%81%E6%95%B0%E5%AD%A6%E5%87%BD%E6%95%B0%E3%80%81%E9%9A%8F%E6%9C%BA%E6%95%B0/"><img class="next_cover" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">python（四）——常量和变量、数学函数、随机数</div></div></a></div></nav><div class="relatedPosts"><div class="relatedPosts_headline"><i class="fa fa-fw fa-thumbs-up" aria-hidden="true"></i><span> 相关推荐</span></div><div class="relatedPosts_list"><div class="relatedPosts_item"><a href="/2019/06/06/python（十一）——递归、栈结构、队列、深度遍历、广度遍历/" title="python（十一）——递归、栈结构、队列、深度遍历、广度遍历"><img class="relatedPosts_cover" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg"><div class="relatedPosts_main is-center"><div class="relatedPosts_date"><i class="fa fa-calendar fa-fw" aria-hidden="true"></i> 2019-06-06</div><div class="relatedPosts_title">python（十一）——递归、栈结构、队列、深度遍历、广度遍历</div></div></a></div><div class="relatedPosts_item"><a href="/2019/05/02/python 中没有i++或者i--/" title="python 中没有i++或者i--"><img class="relatedPosts_cover" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg"><div class="relatedPosts_main is-center"><div class="relatedPosts_date"><i class="fa fa-calendar fa-fw" aria-hidden="true"></i> 2019-05-02</div><div class="relatedPosts_title">python 中没有i++或者i--</div></div></a></div><div class="relatedPosts_item"><a href="/2019/07/12/python（二十五）——JSON、抓取Ajas请求数据/" title="python（二十五）——JSON、抓取Ajas请求数据"><img class="relatedPosts_cover" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg"><div class="relatedPosts_main is-center"><div class="relatedPosts_date"><i class="fa fa-calendar fa-fw" aria-hidden="true"></i> 2019-07-12</div><div class="relatedPosts_title">python（二十五）——JSON、抓取Ajas请求数据</div></div></a></div><div class="relatedPosts_item"><a href="/2019/08/03/python（三十）——从数据库查询应用、MongoDB数据库/" title="python（三十）——从数据库查询应用、MongoDB数据库"><img class="relatedPosts_cover" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg"><div class="relatedPosts_main is-center"><div class="relatedPosts_date"><i class="fa fa-calendar fa-fw" aria-hidden="true"></i> 2019-08-03</div><div class="relatedPosts_title">python（三十）——从数据库查询应用、MongoDB数据库</div></div></a></div><div class="relatedPosts_item"><a href="/2019/04/20/python（二）——python安装与配置/" title="python（二）——python安装与配置"><img class="relatedPosts_cover" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg"><div class="relatedPosts_main is-center"><div class="relatedPosts_date"><i class="fa fa-calendar fa-fw" aria-hidden="true"></i> 2019-04-20</div><div class="relatedPosts_title">python（二）——python安装与配置</div></div></a></div><div class="relatedPosts_item"><a href="/2019/06/08/python（十三）——模块二（模块概述、模块优点、__name__属性）/" title="python（十三）——模块二（模块概述、模块优点、__name__属性）"><img class="relatedPosts_cover" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg"><div class="relatedPosts_main is-center"><div class="relatedPosts_date"><i class="fa fa-calendar fa-fw" aria-hidden="true"></i> 2019-06-08</div><div class="relatedPosts_title">python（十三）——模块二（模块概述、模块优点、__name__属性）</div></div></a></div></div><div class="clear_both"></div></div></article></main><footer id="footer" data-type="color"><div id="footer-wrap"><div class="copyright">&copy;2018 - 2020 By 空城机</div><div class="framework-info"><span>驱动 </span><a href="https://hexo.io" target="_blank" rel="noopener"><span>Hexo</span></a><span class="footer-separator">|</span><span>主题 </span><a href="https://github.com/jerryc127/hexo-theme-butterfly" target="_blank" rel="noopener"><span>Butterfly</span></a></div></div></footer></div><section class="rightside" id="rightside"><div id="rightside-config-hide"><i class="fa fa-book" id="readmode" title="阅读模式"></i><i class="fa fa-plus" id="font_plus" title="放大字体"></i><i class="fa fa-minus" id="font_minus" title="缩小字体"></i><a class="translate_chn_to_cht" id="translateLink" href="javascript:translatePage();" title="简繁转换" target="_self">繁</a><i class="darkmode fa fa-moon-o" id="darkmode" title="夜间模式"></i></div><div id="rightside-config-show"><div id="rightside_config" title="设置"><i class="fa fa-cog" aria-hidden="true"></i></div><i class="fa fa-list-ul close" id="mobile-toc-button" title="目录" aria-hidden="true"></i><i class="fa fa-arrow-up" id="go-up" title="回到顶部" aria-hidden="true"></i></div></section><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page@latest/instantpage.min.js" type="module"></script></body></html>

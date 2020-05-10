@@ -1,0 +1,414 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>C语言内存管理 | 空城机</title><meta name="description" content="版权声明：如需转载，请注明出处                    https:&#x2F;&#x2F;blog.csdn.net&#x2F;qq_36260974&#x2F;article&#x2F;details&#x2F;85043267                                     **  本"><meta name="author" content="空城机"><meta name="copyright" content="空城机"><meta name="format-detection" content="telephone=no"><link rel="shortcut icon" href="/img/favicon.png"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="dns-prefetch" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="https://fonts.googleapis.com" crossorigin="crossorigin"/><link rel="dns-prefetch" href="https://fonts.googleapis.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="dns-prefetch" href="//busuanzi.ibruce.info"/><meta name="twitter:card" content="summary"><meta name="twitter:title" content="C语言内存管理"><meta name="twitter:description" content="版权声明：如需转载，请注明出处                    https:&#x2F;&#x2F;blog.csdn.net&#x2F;qq_36260974&#x2F;article&#x2F;details&#x2F;85043267                                     **  本"><meta name="twitter:image" content="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg"><meta property="og:type" content="article"><meta property="og:title" content="C语言内存管理"><meta property="og:url" content="http://yoursite.com/2018/12/18/C%E8%AF%AD%E8%A8%80%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/"><meta property="og:site_name" content="空城机"><meta property="og:description" content="版权声明：如需转载，请注明出处                    https:&#x2F;&#x2F;blog.csdn.net&#x2F;qq_36260974&#x2F;article&#x2F;details&#x2F;85043267                                     **  本"><meta property="og:image" content="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg"><meta property="article:published_time" content="2018-12-18T06:51:49.000Z"><meta property="article:modified_time" content="2020-05-10T11:29:20.540Z"><script src="https://cdn.jsdelivr.net/npm/js-cookie/dist/js.cookie.min.js"></script><script>var autoChangeMode = '1'
+var t = Cookies.get("theme")
+if (autoChangeMode == '1'){
+  var isDarkMode = window.matchMedia("(prefers-color-scheme: dark)").matches
+  var isLightMode = window.matchMedia("(prefers-color-scheme: light)").matches
+  var isNotSpecified = window.matchMedia("(prefers-color-scheme: no-preference)").matches
+  var hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+  if (t === undefined){
+    if (isLightMode) activateLightMode()
+    else if (isDarkMode) activateDarkMode()
+    else if (isNotSpecified || hasNoSupport){
+      console.log('You specified no preference for a color scheme or your browser does not support it. I Schedule dark mode during night time.')
+      var now = new Date()
+      var hour = now.getHours()
+      var isNight = hour < 6 || hour >= 18
+      isNight ? activateDarkMode() : activateLightMode()
+  }
+  } else if (t == 'light') activateLightMode()
+  else activateDarkMode()
+
+} else if (autoChangeMode == '2'){
+  now = new Date();
+  hour = now.getHours();
+  isNight = hour < 6 || hour >= 18
+  if(t === undefined) isNight? activateDarkMode() : activateLightMode()
+  else if (t === 'light') activateLightMode()
+  else activateDarkMode() 
+} else {
+  if ( t == 'dark' ) activateDarkMode()
+  else if ( t == 'light') activateLightMode()
+}
+
+function activateDarkMode(){
+  document.documentElement.setAttribute('data-theme', 'dark')
+  if (document.querySelector('meta[name="theme-color"]') !== null){
+    document.querySelector('meta[name="theme-color"]').setAttribute('content','#000')
+  }
+}
+function activateLightMode(){
+  document.documentElement.setAttribute('data-theme', 'light')
+  if (document.querySelector('meta[name="theme-color"]') !== null){
+  document.querySelector('meta[name="theme-color"]').setAttribute('content','#fff')
+  }
+}</script><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@latest/css/font-awesome.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css"><link rel="canonical" href="http://yoursite.com/2018/12/18/C%E8%AF%AD%E8%A8%80%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/"><link rel="prev" title="SQL数据库学习之路（练习）---游标操作、动态SQL语句" href="http://yoursite.com/2018/12/20/SQL%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%B7%AF%EF%BC%88%E7%BB%83%E4%B9%A0%EF%BC%89---%E6%B8%B8%E6%A0%87%E6%93%8D%E4%BD%9C%E3%80%81%E5%8A%A8%E6%80%81SQL%E8%AF%AD%E5%8F%A5/"><link rel="next" title="C语言算法竞赛入门（二）---数组元素移动 、排序问题 、猴子选大王问题" href="http://yoursite.com/2018/12/08/C%E8%AF%AD%E8%A8%80%E7%AE%97%E6%B3%95%E7%AB%9E%E8%B5%9B%E5%85%A5%E9%97%A8%EF%BC%88%E4%BA%8C%EF%BC%89---%E6%95%B0%E7%BB%84%E5%85%83%E7%B4%A0%E7%A7%BB%E5%8A%A8%20%E3%80%81%E6%8E%92%E5%BA%8F%E9%97%AE%E9%A2%98%20%E3%80%81%E7%8C%B4%E5%AD%90%E9%80%89%E5%A4%A7%E7%8E%8B%E9%97%AE%E9%A2%98/"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Titillium+Web"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: {"defaultEncoding":2,"translateDelay":0,"cookieDomain":"https://xxx/","msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"簡"},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  bookmark: {
+    message_prev: '按',
+    message_next: '键将本页加入书签'
+  },
+  runtime_unit: '天',
+  runtime: true,
+  copyright: undefined,
+  ClickShowText: undefined,
+  medium_zoom: false,
+  fancybox: true,
+  Snackbar: undefined,
+  baiduPush: false,
+  highlightCopy: true,
+  highlightLang: true,
+  highlightShrink: 'false',
+  isFontAwesomeV5: false,
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+  
+}</script><script>var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isSidebar: true  
+  }</script><noscript><style>
+#page-header {
+  opacity: 1
+}
+.justified-gallery img{
+  opacity: 1
+}
+</style></noscript><meta name="generator" content="Hexo 4.2.0"></head><body><div id="mobile-sidebar"><div id="menu_mask"></div><div id="mobile-sidebar-menus"><div class="mobile_author_icon"><img class="avatar-img" src="/img/avatar.png" onerror="onerror=null;src='/img/tou5.jpg'" alt="avatar"/></div><div class="mobile_post_data"><div class="mobile_data_item is-center"><div class="mobile_data_link"><a href="/archives/"><div class="headline">文章</div><div class="length_num">154</div></a></div></div><div class="mobile_data_item is-center">      <div class="mobile_data_link"><a href="/tags/"><div class="headline">标签</div><div class="length_num">45</div></a></div></div><div class="mobile_data_item is-center">     <div class="mobile_data_link"><a href="/categories/"><div class="headline">分类</div><div class="length_num">15</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fa fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fa fa-heart"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page"><i class="fa-fw fa fa-list" aria-hidden="true"></i><span> 清单</span><i class="fa fa-chevron-down menus-expand" aria-hidden="true"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/music/"><i class="fa-fw fa fa-music"></i><span> 音乐</span></a></li><li><a class="site-page" href="/movies/"><i class="fa-fw fa fa-film"></i><span> 电影</span></a></li></ul></div></div></div></div><i class="fa fa-arrow-right on" id="toggle-sidebar" aria-hidden="true">     </i><div id="sidebar"><div class="sidebar-toc"><div class="sidebar-toc__title">目录</div><div class="sidebar-toc__progress"><span class="progress-notice">你已经读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar">     </div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#本博客转载于https-blog-csdn-net-qq-36260974-article-details-85043267"><span class="toc-number">1.</span> <span class="toc-text">本博客转载于https:&#x2F;&#x2F;blog.csdn.net&#x2F;qq_36260974&#x2F;article&#x2F;details&#x2F;85043267</span></a></li></ol></div></div></div><div id="body-wrap"><div class="post-bg" id="nav" style="background-image: url(https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg)"><div id="page-header"><span class="pull_left" id="blog_name"><a class="blog_title" id="site-name" href="/">空城机</a></span><span class="pull_right menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fa fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fa fa-heart"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page"><i class="fa-fw fa fa-list" aria-hidden="true"></i><span> 清单</span><i class="fa fa-chevron-down menus-expand" aria-hidden="true"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/music/"><i class="fa-fw fa fa-music"></i><span> 音乐</span></a></li><li><a class="site-page" href="/movies/"><i class="fa-fw fa fa-film"></i><span> 电影</span></a></li></ul></div></div><span class="toggle-menu close"><a class="site-page"><i class="fa fa-bars fa-fw" aria-hidden="true"></i></a></span></span></div><div id="post-info"><div id="post-title"><div class="posttitle">C语言内存管理</div></div><div id="post-meta"><div class="meta-firstline"><time class="post-meta__date"><span class="post-meta__date-created" title="发表于 2018-12-18 14:51:49"><i class="fa fa-calendar" aria-hidden="true"></i> 发表于 2018-12-18</span><span class="post-meta__separator">|</span><span class="post-meta__date-updated" title="更新于 2020-05-10 19:29:20"><i class="fa fa-history" aria-hidden="true"></i> 更新于 2020-05-10</span></time><span class="post-meta__categories"><span class="post-meta__separator">|</span><i class="fa fa-inbox post-meta__icon" aria-hidden="true"></i><a class="post-meta__categories" href="/categories/work/">work</a></span></div><div class="meta-secondline"> </div><div class="meta-thirdline"><span class="post-meta-pv-cv"><i class="fa fa-eye post-meta__icon" aria-hidden="true"> </i><span>阅读量:</span><span id="busuanzi_value_page_pv"></span></span><span class="post-meta-commentcount"></span></div></div></div></div><main class="layout_post" id="content-inner"><article id="post"><div class="post-content" id="article-container"><a id="more"></a>
+
+<article class="baidu_pl">
+        <div id="article_content" class="article_content clearfix csdn-tracking-statistics" data-pid="blog" data-mod="popu_307" data-dsm="post">
+                                <div class="article-copyright">
+                    版权声明：如需转载，请注明出处                    https://blog.csdn.net/qq_36260974/article/details/85043267                </div>
+                    <div>**
+
+<h2 id="本博客转载于https-blog-csdn-net-qq-36260974-article-details-85043267"><a href="#本博客转载于https-blog-csdn-net-qq-36260974-article-details-85043267" class="headerlink" title="本博客转载于https://blog.csdn.net/qq_36260974/article/details/85043267"></a>本博客转载于<a href="https://blog.csdn.net/qq_36260974/article/details/85043267" target="_blank" rel="noopener">https://blog.csdn.net/qq_36260974/article/details/85043267</a></h2><p>**</div><br>        <div id="content_views" class="markdown_views prism-atom-one-light"></p>
+<pre><code>                        &lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; style=&quot;display: none;&quot;&gt;&lt;path stroke-linecap=&quot;round&quot; d=&quot;M5,0 0,2.5 5,5z&quot; id=&quot;raphael-marker-block&quot; style=&quot;-webkit-tap-highlight-color: rgba(0, 0, 0, 0);&quot;&gt;&lt;/path&gt;&lt;/svg&gt;
+                        &lt;h2&gt;&lt;a id=&quot;_0&quot; target=&quot;_blank&quot;&gt;&lt;/a&gt;内存管理&lt;/h2&gt;</code></pre><p>设计程序模拟内存的动态分区内存管理方法。内存空闲区使用空闲分区表进行管理，采用最先适应算法从空闲分区表中寻找空闲区进行分配，内存回收时不考虑与相邻空闲区的合并。<br>
+假定系统的内存共640K，初始状态为操作系统本身占用40K。</p>
+<p>t1 时刻，为作业A、B、C分配80K、60K、100K、的内存空间；<br>
+t2 时刻作业B完成；<br>
+t3 时刻为作业D分配50K的内存空间；<br>
+t4 时刻作业C、A完成；<br>
+t5 时刻作业D完成。</p>
+<p>要求编程序分别输出t1、t2、t3、t4、t5时刻内存的空闲区的状态。</p>
+<p>流程图：<br>
+<img src="https://img-blog.csdnimg.cn/20181217021300457.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2MjYwOTc0,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<p><strong>数据结构定义：</strong><br>
+//进程PCB类型的描述<br>
+struct PCB<br>
+{<br>
+char name;    //进程名<br>
+int address;   //进程分区起止<br>
+int len;      //进程所占分区长度<br>
+};<br>
+struct PCB PCBelem[maxPCB];//进程占用内存表<br>
+//分区类型的描述<br>
+struct Part<br>
+{<br>
+int address;    //空闲分区起始地址<br>
+int len;        //空闲分区大小<br>
+};<br>
+struct Part Partelem[maxPart]; //空闲分区表</p>
+<p><strong>主要变量说明：</strong><br>
+int length = 640 ;    //系统有 640 KB 的空闲<br>
+int fnum = 0;            //记录总的分区数量<br>
+int jnum = 0;            //记录总的进程数量<br>
+int leng = 0;            //临时变量</p>
+<p><strong>函数说明：</strong><br>
+void init4IOS(int tem)         //为操作系统分配40k内存<br>
+int getTagByPcb(char name)     //判定输入的进程是否存在以及位置<br>
+void request()                //进程分配请求<br>
+void getPrint()                //打印空闲分区<br>
+void jcPrintf()                //打印进程<br>
+void release()                //回收指定进程内存</p>
+<p><strong>关键点叙述：</strong></p>
+<p><strong>（1）    内存结构的建立及表示</strong><br>
+<img src="https://img-blog.csdnimg.cn/20181217021448574.png" alt="在这里插入图片描述">    <br>
+分别建立进程占用内存表和空闲分区表，由于进程和空闲分区的所有属性值不一样，所以需要分别建表，它们之间起始地址是连续的，逻辑上形成一整块内存。</p>
+<p><strong>（2）    进程请求分配</strong><br>
+<img src="https://img-blog.csdnimg.cn/20181217021523503.png" alt="在这里插入图片描述"><br>
+当进程提出内存分配请求以后，首先需要做的是在空闲分区表当中寻找一个单独的，足够请求进程分配的内存空间。注意，寻求该空间需要从内存低址开始寻找，这样有利于保护高址大块内存，当然，缺点就是会产生较多的碎片内存，这些内存难以被利用。（本程序未涉及相邻空闲空间的合并，以及内存空间的紧凑）若存在这样一个空间，则从该空间当中划出请求进程所需的内存大小，将该内存块（含有起始地址等信息的结构体结点）存入进程占用内存表当中，同时，对于被划分的内存空间，需要修改其起始地址，达到逻辑上的合理。值得一提的是，若内存分配以后，被划分内存空间大小为0，则需要除去该条记录（移除（覆盖）空闲分区表）。</p>
+<p><strong>（3）回收进程</strong><br>
+当对指定进程提出回收要求时，会产生两个反应，一是会对空闲分区表插入一块内存，用以表示被回收内存的空闲已空闲出来；二是对于被回收的进程，不应该出现在进程占用表当中，所以应当将其移除进程占用表。<br>
+对于以上两个操作的实现：对空闲分区表插入空闲内存时，需要从高址内存空间开始对比插入内存空间的大小，当出现内存空间的起始地址小于插入内存空间的起始地址时停止对比查找，将其后的内存空间均向后移动一位，以腾出一个位置用于插入需要插入的空闲内存空间，这样在物理结构上也就合理了。除去被回收的进程，思想与上类似，找到该进程以后，将该进程以后的结点均向前移动一位，末尾指向相应减一，除去被回收的进程目的在于避免对同一进程进行重复回收。</p>
+<p><strong>存在问题</strong>：<br>
+模拟内存管理所实现效果简单，与真实内存分配存在很大差异。</p>
+<p><strong>改进：</strong><br>
+（1）    实现相邻空闲空间的合并<br>
+（2）    内存空间紧凑<br>
+（3）    其他优化</p>
+<p><strong>个人总结：</strong><br>
+1、    本程序编写完成以后，初步理解内存管理过程。程序实现的功能较为简单，没有考虑相邻空闲分区的合并，以及碎片空间的紧凑整理等操作。<br>
+2、越努力，越幸运！<sup>_</sup></p>
+<p><strong>程序效果图(部分)：</strong><br>
+<img src="https://img-blog.csdnimg.cn/20181217022449410.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2MjYwOTc0,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>
+<img src="https://img-blog.csdnimg.cn/20181217022458877.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2MjYwOTc0,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>
+<img src="https://img-blog.csdnimg.cn/20181217022508385.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2MjYwOTc0,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>
+<img src="https://img-blog.csdnimg.cn/20181217022516677.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2MjYwOTc0,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<p><strong>完整代码：</strong></p>
+
+
+<pre><code>#include &quot;stdio.h&quot;
+#include &quot;Windows.h&quot;
+
+#define  maxPCB 100   //定义最大PCB结点数
+#define  maxPart 100  //定义最大分区
+
+//进程PCB类型的描述
+struct PCB
+{
+    char name;    //进程名
+    int address;  //进程分区起止
+    int len;      //进程所占分区长度
+};
+struct PCB PCBelem[maxPCB];//进程占用内存表
+
+//分区类型的描述
+struct Part
+{
+    int address;    //空闲分区起始地址
+    int len;        //空闲分区大小
+};
+struct Part Partelem[maxPart];//空闲分区表
+
+int length = 640 ;    //系统有 640 KB 的空闲
+int fnum = 0;        //记录总的分区数量
+int jnum = 0;        //记录总的进程数量
+
+struct Part part;    //公共使用临时结点（分区）
+struct PCB pcb;        //公共使用临时结点（进程）
+
+//为操作系统分配40k内存
+void init4IOS(int tem)
+{
+    length = length - tem;    //剩余系统空闲空间减少
+    part.address = 0 + 40;    //操作系统占用，空闲内存从40开始
+    part.len = length;        //空闲内存大小
+    Partelem[fnum] = part;    //存入空闲分区表
+    fnum ++;                //分区数增加
+}
+
+//判定输入的进程是否存在以及位置
+int getTagByPcb(char name)
+{
+    int i;
+    for(i = 0; i &amp;lt; jnum; i ++)
+    {
+        if(name == PCBelem[i].name)
+        {
+            return i;
+        }    
+    }
+    printf(&quot;\n\t\t找不到进程名%c,请重新输入!\n&quot;,name);     
+    return -1;
+}
+
+//进程分配请求
+void request()
+{
+    char c = 0;
+    while(true)
+    {
+        printf(&quot;\n\t\t请输入请求内存进程 名称:&quot;);
+        fflush(stdin);//清空缓冲区
+        scanf(&quot;%c&quot;,&amp;amp;pcb.name);
+        //检查是否已存在进程
+        for(int j = 0; j &amp;lt; jnum; j++)
+        {
+            if(PCBelem[j].name == pcb.name)
+            {
+                printf(&quot;\n\t\t进程 %c 已存在，可尝试输入其他名称，也可以先回收该进程！\n&quot;,pcb.name);
+                return;
+            }
+        }
+        printf(&quot;\n\t\t\t\t   长度:&quot;);
+        fflush(stdin);//清空缓冲区
+        scanf(&quot;%d&quot;,&amp;amp;pcb.len);
+        length = length - pcb.len;    //减去相对应的操作系统剩余空闲空间    
+        if(length &amp;lt;= 0)
+        {
+            if(length == 0)
+            {
+                printf(&quot;\n\t\t警告：系统资源已经全部分配！\n&quot;);            
+            }
+            else
+            {
+                length = length + pcb.len;    //分配失败将内存换回去，以免溢出
+                printf(&quot;\n\t\t未找到合适空间或者系统资源不足！\n&quot;);    return;
+            }
+        }
+        //如果符合分配条件，进行分配
+        for(int i = 0; i &amp;lt; fnum; i++)
+        {
+            //寻找一个可以分配的空间
+            if(pcb.len &amp;lt;= Partelem[i].len)
+            {
+                //改变进程占用地址
+                pcb.address = Partelem[i].address;
+                //保存该进程
+                PCBelem[jnum++] = pcb;
+
+                //对空闲分区进行划分
+                Partelem[i].address = Partelem[i].address + pcb.len;
+                Partelem[i].len = Partelem[i].len - pcb.len;
+                break;//关键作用（从低址找到一个空间就可以了，没必要再往后找了）
+            }            
+        }
+        //除去分配后空闲空间为0的记录
+        if(Partelem[i].len == 0)
+        {
+            int leng = i;
+            //进行前移覆盖
+            while(leng != fnum)
+            {
+                part.address = Partelem[leng+1].address;
+                part.len = Partelem[leng+1].len;
+                Partelem[leng] = part;
+                leng++;
+            }
+            //分区数减少
+            fnum--;
+        }
+        printf(&quot;\n\t\t是否要继续输入进程？(Y/y) 是/(N/n) 否：&quot;);
+        fflush(stdin);
+        c = getchar(); 
+        fflush(stdin);
+        if(c==&#39;N&#39;||c==&#39;n&#39;)
+        {
+            break;
+        }
+    }
+}
+
+//打印空闲分区
+void getPrint()
+{
+    printf(&quot;\t\t----------------------空闲分区 begin----------------------\n&quot;);
+    int j = 1;
+    for (int i = 0;i &amp;lt; fnum; i ++)
+    {
+       printf(&quot;\n\t\t第%d块空闲内存 起始地址为%d,容量为%d\n&quot;,j,Partelem[i].address,Partelem[i].len);
+       j ++;
+    }
+    printf(&quot;\n\t\t----------------------空闲分区  end ----------------------\n&quot;); 
+}
+
+//打印进程
+void jcPrintf()
+{
+    printf(&quot;\n\t\t名称\t起始地址\t大小\n&quot;);
+    for(int i = 0 ; i &amp;lt; jnum; i++)
+    {
+        printf(&quot;\n\t\t%2c\t%4d\t\t%d KB\n&quot;,PCBelem[i].name,PCBelem[i].address,PCBelem[i].len);
+    }
+}
+
+//回收指定进程内存
+void release()
+{
+    int i = 0;
+    char name;
+    printf(&quot;\n\t\t请输入想要回收的进程名称:&quot;);
+    fflush(stdin);//清空缓冲区
+    scanf(&quot;%c&quot;,&amp;amp;name);
+    if(getTagByPcb(name) == -1)
+    {
+        printf(&quot;\n\t\t该进程不存在或者已经被回收！\n&quot;);
+        return;
+    }
+
+    printf(&quot;\n\t\t正在回收%c的内存：&quot;,name);
+    for(int j = 0; j &amp;lt; 15; j++)
+    {
+        printf(&quot;▊&quot;);
+        Sleep(200);
+    }
+    printf(&quot; 完成 \n&quot;);
+
+    //for循环寻找该进程
+    for(i = fnum; i &amp;gt;= 0; i --)
+    {
+        int leng = fnum;
+        if(PCBelem[getTagByPcb(name)].address &amp;gt; Partelem[i-1].address || i == 0)
+        {
+            //while循环为该进程腾出一个位置
+            while(leng != i)
+            {
+                part.address = Partelem[leng-1].address;
+                part.len = Partelem[leng-1].len;
+                Partelem[leng] = part;
+                leng--;
+            }
+            break;//关键（从高址往前找到一个空间就可以了，没必要再往前找了）
+        }        
+    }
+    //系统空闲空间对应增加
+    length = length + PCBelem[getTagByPcb(name)].len;
+    //使用公共的结点记录即将产生的空闲空间
+    part.address = PCBelem[getTagByPcb(name)].address; 
+    part.len = PCBelem[getTagByPcb(name)].len;
+    //将该结点存入之前腾出的位置
+    Partelem[i] = part;
+    //分区数增加
+    fnum ++;
+
+    //对进程占用内存表进行调整，除去被回收进程
+    int leng = getTagByPcb(name);
+    //进行前移覆盖
+    while(leng != jnum)
+    {
+        pcb.name = PCBelem[leng+1].name;
+        pcb.address = PCBelem[leng+1].address;
+        pcb.len = PCBelem[leng+1].len;
+        PCBelem[leng] = pcb;
+        leng++;
+    }
+    //进程数减少
+    jnum--;
+}
+
+void main()
+{
+    char tem = 0;
+    int OSsize = 40;
+    int b = 1, k;
+    //为操作系统分配内存
+    init4IOS(OSsize);
+    while (b)
+    {
+        system(&quot;cls&quot;);
+        printf(&quot;\n\n\t\t操作系统内存分配\n\n&quot;);
+        printf(&quot;\t\t已为操作系统分配了 40 KB 内存\n&quot;,tem);
+        printf(&quot;\n\t\t ----------------------------\n&quot;);
+        printf(&quot;\t\t|1.... 请求分配内存           |\n&quot;);
+        printf(&quot;\t\t|2.... 输出空闲分区           |\n&quot;);
+        printf(&quot;\t\t|3.... 强制进程结束           |\n&quot;);
+        printf(&quot;\t\t|4.... 输出进程信息           |\n&quot;);
+        printf(&quot;\t\t|0.... 退出                   |\n&quot;);
+        printf(&quot;\t\t ----------------------------\n\n&quot;);
+        printf(&quot;\t\t当前操作系统空闲内存：%d KB\n&quot;,length);        
+        printf(&quot;\n\t\t请选择：&quot;);
+        scanf(&quot;%d&quot;, &amp;amp;k);
+        switch (k)
+        {    
+            case 1: request();       break;
+            case 2: getPrint();         break;
+            case 3: release();       break;
+            case 4: jcPrintf();      break;
+            case 0:    b = 0;           break;
+        }
+        if (b != 0)  { printf(&quot;\n\t\t&quot;); system(&quot;pause&quot;); }
+    }
+}</code></pre><p>如有错误，欢迎指正！</p>
+
+</div><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">空城机</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://yoursite.com/2018/12/18/C%E8%AF%AD%E8%A8%80%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/">http://yoursite.com/2018/12/18/C%E8%AF%AD%E8%A8%80%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://yoursite.com" target="_blank">空城机</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="https://i.loli.net/2019/07/21/5d33d5dc1531213134.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css"/><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js"></script></div></div><div class="post-reward"><a class="reward-button button--primary button--animated"> <i class="fa fa-qrcode"></i> 打赏<div class="reward-main"><ul class="reward-all"><li class="reward-item"><img class="post-qr-code__img" src="/img/wechat.jpg" alt="微信"/><div class="post-qr-code__desc">微信</div></li><li class="reward-item"><img class="post-qr-code__img" src="/img/alipay.jpg" alt="支付寶"/><div class="post-qr-code__desc">支付寶</div></li></ul></div></a></div><nav class="pagination_post" id="pagination"><div class="prev-post pull_left"><a href="/2018/12/20/SQL%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%B7%AF%EF%BC%88%E7%BB%83%E4%B9%A0%EF%BC%89---%E6%B8%B8%E6%A0%87%E6%93%8D%E4%BD%9C%E3%80%81%E5%8A%A8%E6%80%81SQL%E8%AF%AD%E5%8F%A5/"><img class="prev_cover" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">SQL数据库学习之路（练习）---游标操作、动态SQL语句</div></div></a></div><div class="next-post pull_right"><a href="/2018/12/08/C%E8%AF%AD%E8%A8%80%E7%AE%97%E6%B3%95%E7%AB%9E%E8%B5%9B%E5%85%A5%E9%97%A8%EF%BC%88%E4%BA%8C%EF%BC%89---%E6%95%B0%E7%BB%84%E5%85%83%E7%B4%A0%E7%A7%BB%E5%8A%A8%20%E3%80%81%E6%8E%92%E5%BA%8F%E9%97%AE%E9%A2%98%20%E3%80%81%E7%8C%B4%E5%AD%90%E9%80%89%E5%A4%A7%E7%8E%8B%E9%97%AE%E9%A2%98/"><img class="next_cover" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">C语言算法竞赛入门（二）---数组元素移动 、排序问题 、猴子选大王问题</div></div></a></div></nav></article></main><footer id="footer" data-type="color"><div id="footer-wrap"><div class="copyright">&copy;2018 - 2020 By 空城机</div><div class="framework-info"><span>驱动 </span><a href="https://hexo.io" target="_blank" rel="noopener"><span>Hexo</span></a><span class="footer-separator">|</span><span>主题 </span><a href="https://github.com/jerryc127/hexo-theme-butterfly" target="_blank" rel="noopener"><span>Butterfly</span></a></div></div></footer></div><section class="rightside" id="rightside"><div id="rightside-config-hide"><i class="fa fa-book" id="readmode" title="阅读模式"></i><i class="fa fa-plus" id="font_plus" title="放大字体"></i><i class="fa fa-minus" id="font_minus" title="缩小字体"></i><a class="translate_chn_to_cht" id="translateLink" href="javascript:translatePage();" title="简繁转换" target="_self">繁</a><i class="darkmode fa fa-moon-o" id="darkmode" title="夜间模式"></i></div><div id="rightside-config-show"><div id="rightside_config" title="设置"><i class="fa fa-cog" aria-hidden="true"></i></div><i class="fa fa-list-ul close" id="mobile-toc-button" title="目录" aria-hidden="true"></i><i class="fa fa-arrow-up" id="go-up" title="回到顶部" aria-hidden="true"></i></div></section><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page@latest/instantpage.min.js" type="module"></script></body></html>

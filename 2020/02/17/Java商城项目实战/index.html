@@ -1,0 +1,216 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Java商城项目实战 | 空城机</title><meta name="description" content="项目背景编写目的明确业务背景、业务范围、基本业务逻辑和业务框架，期望读者包括：项目发起人、最终用户、项目投资方、项目管理团队、项目执行团队，以及其他项目干系人。 参考文档“ESMS3.x 详细设计说明设计文档.doc”: 详细设计说明书模板。 名称解释ESMS：电子商城系统（Electronic Shopping Mall System）。B&#x2F;S：Browser&#x2F;Server（浏览器&#x2F;服务器）"><meta name="keywords" content="java 项目架构"><meta name="author" content="空城机"><meta name="copyright" content="空城机"><meta name="format-detection" content="telephone=no"><link rel="shortcut icon" href="/img/favicon.png"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="dns-prefetch" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="https://fonts.googleapis.com" crossorigin="crossorigin"/><link rel="dns-prefetch" href="https://fonts.googleapis.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="dns-prefetch" href="//busuanzi.ibruce.info"/><meta name="twitter:card" content="summary"><meta name="twitter:title" content="Java商城项目实战"><meta name="twitter:description" content="项目背景编写目的明确业务背景、业务范围、基本业务逻辑和业务框架，期望读者包括：项目发起人、最终用户、项目投资方、项目管理团队、项目执行团队，以及其他项目干系人。 参考文档“ESMS3.x 详细设计说明设计文档.doc”: 详细设计说明书模板。 名称解释ESMS：电子商城系统（Electronic Shopping Mall System）。B&#x2F;S：Browser&#x2F;Server（浏览器&#x2F;服务器）"><meta name="twitter:image" content="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg"><meta property="og:type" content="article"><meta property="og:title" content="Java商城项目实战"><meta property="og:url" content="http://yoursite.com/2020/02/17/Java%E5%95%86%E5%9F%8E%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98/"><meta property="og:site_name" content="空城机"><meta property="og:description" content="项目背景编写目的明确业务背景、业务范围、基本业务逻辑和业务框架，期望读者包括：项目发起人、最终用户、项目投资方、项目管理团队、项目执行团队，以及其他项目干系人。 参考文档“ESMS3.x 详细设计说明设计文档.doc”: 详细设计说明书模板。 名称解释ESMS：电子商城系统（Electronic Shopping Mall System）。B&#x2F;S：Browser&#x2F;Server（浏览器&#x2F;服务器）"><meta property="og:image" content="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg"><meta property="article:published_time" content="2020-02-17T07:45:06.000Z"><meta property="article:modified_time" content="2020-05-10T11:05:27.643Z"><script src="https://cdn.jsdelivr.net/npm/js-cookie/dist/js.cookie.min.js"></script><script>var autoChangeMode = '1'
+var t = Cookies.get("theme")
+if (autoChangeMode == '1'){
+  var isDarkMode = window.matchMedia("(prefers-color-scheme: dark)").matches
+  var isLightMode = window.matchMedia("(prefers-color-scheme: light)").matches
+  var isNotSpecified = window.matchMedia("(prefers-color-scheme: no-preference)").matches
+  var hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+  if (t === undefined){
+    if (isLightMode) activateLightMode()
+    else if (isDarkMode) activateDarkMode()
+    else if (isNotSpecified || hasNoSupport){
+      console.log('You specified no preference for a color scheme or your browser does not support it. I Schedule dark mode during night time.')
+      var now = new Date()
+      var hour = now.getHours()
+      var isNight = hour < 6 || hour >= 18
+      isNight ? activateDarkMode() : activateLightMode()
+  }
+  } else if (t == 'light') activateLightMode()
+  else activateDarkMode()
+
+} else if (autoChangeMode == '2'){
+  now = new Date();
+  hour = now.getHours();
+  isNight = hour < 6 || hour >= 18
+  if(t === undefined) isNight? activateDarkMode() : activateLightMode()
+  else if (t === 'light') activateLightMode()
+  else activateDarkMode() 
+} else {
+  if ( t == 'dark' ) activateDarkMode()
+  else if ( t == 'light') activateLightMode()
+}
+
+function activateDarkMode(){
+  document.documentElement.setAttribute('data-theme', 'dark')
+  if (document.querySelector('meta[name="theme-color"]') !== null){
+    document.querySelector('meta[name="theme-color"]').setAttribute('content','#000')
+  }
+}
+function activateLightMode(){
+  document.documentElement.setAttribute('data-theme', 'light')
+  if (document.querySelector('meta[name="theme-color"]') !== null){
+  document.querySelector('meta[name="theme-color"]').setAttribute('content','#fff')
+  }
+}</script><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@latest/css/font-awesome.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css"><link rel="canonical" href="http://yoursite.com/2020/02/17/Java%E5%95%86%E5%9F%8E%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98/"><link rel="prev" title="去了解一下区块链" href="http://yoursite.com/2020/02/18/%E5%8E%BB%E4%BA%86%E8%A7%A3%E4%B8%80%E4%B8%8B%E5%8C%BA%E5%9D%97%E9%93%BE/"><link rel="next" title="Java设置Filter过滤了CSS等静态文件的问题" href="http://yoursite.com/2020/02/07/Java%E8%AE%BE%E7%BD%AEFilter%E8%BF%87%E6%BB%A4%E4%BA%86CSS%E7%AD%89%E9%9D%99%E6%80%81%E6%96%87%E4%BB%B6%E7%9A%84%E9%97%AE%E9%A2%98/"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Titillium+Web"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: {"defaultEncoding":2,"translateDelay":0,"cookieDomain":"https://xxx/","msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"簡"},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  bookmark: {
+    message_prev: '按',
+    message_next: '键将本页加入书签'
+  },
+  runtime_unit: '天',
+  runtime: true,
+  copyright: undefined,
+  ClickShowText: undefined,
+  medium_zoom: false,
+  fancybox: true,
+  Snackbar: undefined,
+  baiduPush: false,
+  highlightCopy: true,
+  highlightLang: true,
+  highlightShrink: 'false',
+  isFontAwesomeV5: false,
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+  
+}</script><script>var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isSidebar: true  
+  }</script><noscript><style>
+#page-header {
+  opacity: 1
+}
+.justified-gallery img{
+  opacity: 1
+}
+</style></noscript><meta name="generator" content="Hexo 4.2.0"></head><body><div id="mobile-sidebar"><div id="menu_mask"></div><div id="mobile-sidebar-menus"><div class="mobile_author_icon"><img class="avatar-img" src="/img/avatar.png" onerror="onerror=null;src='/img/tou5.jpg'" alt="avatar"/></div><div class="mobile_post_data"><div class="mobile_data_item is-center"><div class="mobile_data_link"><a href="/archives/"><div class="headline">文章</div><div class="length_num">154</div></a></div></div><div class="mobile_data_item is-center">      <div class="mobile_data_link"><a href="/tags/"><div class="headline">标签</div><div class="length_num">45</div></a></div></div><div class="mobile_data_item is-center">     <div class="mobile_data_link"><a href="/categories/"><div class="headline">分类</div><div class="length_num">15</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fa fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fa fa-heart"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page"><i class="fa-fw fa fa-list" aria-hidden="true"></i><span> 清单</span><i class="fa fa-chevron-down menus-expand" aria-hidden="true"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/music/"><i class="fa-fw fa fa-music"></i><span> 音乐</span></a></li><li><a class="site-page" href="/movies/"><i class="fa-fw fa fa-film"></i><span> 电影</span></a></li></ul></div></div></div></div><i class="fa fa-arrow-right on" id="toggle-sidebar" aria-hidden="true">     </i><div id="sidebar"><div class="sidebar-toc"><div class="sidebar-toc__title">目录</div><div class="sidebar-toc__progress"><span class="progress-notice">你已经读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar">     </div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#项目背景"><span class="toc-number">1.</span> <span class="toc-text">项目背景</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#编写目的"><span class="toc-number">1.1.</span> <span class="toc-text">编写目的</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考文档"><span class="toc-number">1.2.</span> <span class="toc-text">参考文档</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#名称解释"><span class="toc-number">1.3.</span> <span class="toc-text">名称解释</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#项目背景-1"><span class="toc-number">1.4.</span> <span class="toc-text">项目背景</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#设计背景"><span class="toc-number">1.4.1.</span> <span class="toc-text">设计背景</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#功能概述"><span class="toc-number">1.5.</span> <span class="toc-text">功能概述</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#功能结构"><span class="toc-number">1.5.1.</span> <span class="toc-text">功能结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#功能描述"><span class="toc-number">1.5.2.</span> <span class="toc-text">功能描述</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#需要的工具：eclipse-java-jre-mysql-tomacat"><span class="toc-number">2.</span> <span class="toc-text">需要的工具：eclipse + java jre + mysql + tomacat</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#项目的视频"><span class="toc-number">3.</span> <span class="toc-text">项目的视频</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#项目的材料和源码"><span class="toc-number">4.</span> <span class="toc-text">项目的材料和源码</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#步骤"><span class="toc-number">5.</span> <span class="toc-text">步骤</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#一、先从用户模块开始"><span class="toc-number">5.1.</span> <span class="toc-text">一、先从用户模块开始</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-用户表设计"><span class="toc-number">5.1.1.</span> <span class="toc-text">1.用户表设计</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-新建数据库"><span class="toc-number">5.1.2.</span> <span class="toc-text">2.新建数据库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-做成一个用户实体"><span class="toc-number">5.1.3.</span> <span class="toc-text">3.做成一个用户实体</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-后台页面规划"><span class="toc-number">5.1.4.</span> <span class="toc-text">4.后台页面规划</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#后面的一些实战过程我博客就不一一写下去了"><span class="toc-number">6.</span> <span class="toc-text">后面的一些实战过程我博客就不一一写下去了</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#写不动了-╯’-‘-╯︵-┻━┻"><span class="toc-number">7.</span> <span class="toc-text">写不动了    (╯’ - ‘)╯︵ ┻━┻</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#最后的项目实现效果"><span class="toc-number">8.</span> <span class="toc-text">最后的项目实现效果</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#正常用户登录和购物"><span class="toc-number">8.1.</span> <span class="toc-text">正常用户登录和购物</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#管理员登录控制"><span class="toc-number">8.2.</span> <span class="toc-text">管理员登录控制</span></a></li></ol></li></ol></div></div></div><div id="body-wrap"><div class="post-bg" id="nav" style="background-image: url(https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg)"><div id="page-header"><span class="pull_left" id="blog_name"><a class="blog_title" id="site-name" href="/">空城机</a></span><span class="pull_right menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fa fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fa fa-heart"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page"><i class="fa-fw fa fa-list" aria-hidden="true"></i><span> 清单</span><i class="fa fa-chevron-down menus-expand" aria-hidden="true"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/music/"><i class="fa-fw fa fa-music"></i><span> 音乐</span></a></li><li><a class="site-page" href="/movies/"><i class="fa-fw fa fa-film"></i><span> 电影</span></a></li></ul></div></div><span class="toggle-menu close"><a class="site-page"><i class="fa fa-bars fa-fw" aria-hidden="true"></i></a></span></span></div><div id="post-info"><div id="post-title"><div class="posttitle">Java商城项目实战</div></div><div id="post-meta"><div class="meta-firstline"><time class="post-meta__date"><span class="post-meta__date-created" title="发表于 2020-02-17 15:45:06"><i class="fa fa-calendar" aria-hidden="true"></i> 发表于 2020-02-17</span><span class="post-meta__separator">|</span><span class="post-meta__date-updated" title="更新于 2020-05-10 19:05:27"><i class="fa fa-history" aria-hidden="true"></i> 更新于 2020-05-10</span></time><span class="post-meta__categories"><span class="post-meta__separator">|</span><i class="fa fa-inbox post-meta__icon" aria-hidden="true"></i><a class="post-meta__categories" href="/categories/Java/">Java</a></span></div><div class="meta-secondline"> </div><div class="meta-thirdline"><span class="post-meta-pv-cv"><i class="fa fa-eye post-meta__icon" aria-hidden="true"> </i><span>阅读量:</span><span id="busuanzi_value_page_pv"></span></span><span class="post-meta-commentcount"></span></div></div></div></div><main class="layout_post" id="content-inner"><article id="post"><div class="post-content" id="article-container"><a id="more"></a>
+
+<h1 id="项目背景"><a href="#项目背景" class="headerlink" title="项目背景"></a>项目背景</h1><h2 id="编写目的"><a href="#编写目的" class="headerlink" title="编写目的"></a>编写目的</h2><p>明确业务背景、业务范围、基本业务逻辑和业务框架，期望读者包括：项目发起人、最终用户、项目投资方、项目管理团队、项目执行团队，以及其他项目干系人。</p>
+<h2 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h2><p>“ESMS3.x 详细设计说明设计文档.doc”: 详细设计说明书模板。</p>
+<h2 id="名称解释"><a href="#名称解释" class="headerlink" title="名称解释"></a>名称解释</h2><p>ESMS：电子商城系统（Electronic Shopping Mall System）。<br>B/S：Browser/Server（浏览器/服务器）。<br>C/S：Client/Server（客户端/服务器）。<br>B2B：Service to Service 商家对商家，电子商务的一种业务形式。<br>B2C：Service to Consumer 商家对顾客，电子商务的一种业务形式。<br>C2C：Consumer to Consumer 顾客对顾客，电子商务的一种业务形式。<br>CSS：是Cascading Style Sheets(层叠样式表)的简称，CSS语言是一种标记语言,它不需要编译可以直接由浏览器执行。<br>HTML：Hypertext Markup Language  超文字标记语言。<br>JAVASCRIPT：一种由 Sun Microsystems 所开发的程序脚本语言(它是一种严密的物件导向的语言,适合在网际网络上发展主从架构的应用程序)，常常简称JS。<br>MVC：MVC就是 模型 、视图 、控制器 的缩写，视图和用户交互  通过事件导致控制器改变  控制器改变导致模型改变 。<br>连接池：用于管理数据库连接Connection对象的工具，例如dbcp、c3p0等<br>Ajax：全称为“Asynchronous JavaScript and XML” (异步JavaScript和XML),是指一种创建交互式网页应用的网页开发技术。</p>
+<h2 id="项目背景-1"><a href="#项目背景-1" class="headerlink" title="项目背景"></a>项目背景</h2><h3 id="设计背景"><a href="#设计背景" class="headerlink" title="设计背景"></a>设计背景</h3><p>随着科技不断发展，网上阅读者越来越多，为了给用户提供更好的图书资源，有必要在现有信息化成果的基础上建立学习电子商务系统，为用户提供更便捷的信息交流工具和平台。</p>
+<h2 id="功能概述"><a href="#功能概述" class="headerlink" title="功能概述"></a>功能概述</h2><h3 id="功能结构"><a href="#功能结构" class="headerlink" title="功能结构"></a>功能结构</h3><h3 id="功能描述"><a href="#功能描述" class="headerlink" title="功能描述"></a>功能描述</h3><p>学习猿地电子商务平台，主要包括:图书展示、购物车管理、交易管理、用户管理、应用管理五个功能模块。<br>电子商务系统功能描述<br>图书展示：实现图书预览、图书详情、图书检索功能。<br>购  物 车：实现商品添加、数量修改、删除商品、清空购物车、结算功能。<br>交易管理：实现订单列表、订单详情、查询明细、评价功能。<br>用户管理：实现登录、注册、修改密码、修改个人信息功能。<br>应用管理：实现新增收货地址、收货地址维护、删除收货地址、收藏夹。</p>
+<h1 id="需要的工具：eclipse-java-jre-mysql-tomacat"><a href="#需要的工具：eclipse-java-jre-mysql-tomacat" class="headerlink" title="需要的工具：eclipse + java jre + mysql + tomacat"></a>需要的工具：eclipse + java jre + mysql + tomacat</h1><h1 id="项目的视频"><a href="#项目的视频" class="headerlink" title="项目的视频"></a>项目的视频</h1><p><a href="https://www.bilibili.com/video/av75248265?p=45" target="_blank" rel="noopener">哔哩哔哩上面的视频</a><br><a href="https://www.lmonkey.com/courses/MpErdJLdv" target="_blank" rel="noopener">学习猿地上面的视频</a></p>
+<h1 id="项目的材料和源码"><a href="#项目的材料和源码" class="headerlink" title="项目的材料和源码"></a>项目的材料和源码</h1><p>我整理了一下，放到GitHub上面了，也可以从视频下面去下载<br>GitHub：<a href="https://github.com/kongchengji/JavaStoreProject" target="_blank" rel="noopener">https://github.com/kongchengji/JavaStoreProject</a><br><img src="https://img-blog.csdnimg.cn/2020021715194042.png" alt="在这里插入图片描述"></p>
+<h1 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h1><h2 id="一、先从用户模块开始"><a href="#一、先从用户模块开始" class="headerlink" title="一、先从用户模块开始"></a>一、先从用户模块开始</h2><h3 id="1-用户表设计"><a href="#1-用户表设计" class="headerlink" title="1.用户表设计"></a>1.用户表设计</h3><p>用户表（Monkey_user)<br>|字段名称|类型  | 约束| 描述|<br>|–|–|–|–|<br>| USER_ID | varchar(32) |  not null primary key| 用户ID |<br>| USER_NAME | varchar(20) |  not null | 用户名称 |<br>| USER_PASSWORD | varchar(20) |  not null | 用户密码 |<br>| USER_SEX | varchar(1) |  not null | 用户性别 |<br>| USER_BIRTHDAY | datetime |  DEFAULT null | 出生日期|<br>| USER_IDENITY_CODE | varchar(60) |  DEFAULT null | 扩展字段 |<br>| USER_EMAIL |  varchar(60)|  DEFAULT null | 电子邮箱|<br>| USER_MOBILE |  varchar(11)|  DEFAULT null | 电话|<br>| USER_ADDRESS | varchar(200) |  not null | 地址 |<br>| USER_STATUS | decimal(6,0) |  not null | 状态 1or2 管理员 |</p>
+<h3 id="2-新建数据库"><a href="#2-新建数据库" class="headerlink" title="2.新建数据库"></a>2.新建数据库</h3><p><img src="https://img-blog.csdnimg.cn/20200112144238933.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2MTcxMjg3,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br><img src="https://img-blog.csdnimg.cn/20200112144255933.png" alt="在这里插入图片描述"><br>创建SQL表的语句</p>
+<pre><code class="sql">删除存在的lmonkey_user表
+drop table if exists `lmonkey_user`;
+
+创建lmonkey_user表
+create table `lmonkey_user`(
+    USER_ID varchar(32) not null,
+    USER_NAME varchar(20) not null,
+    USER_PASSWORD varchar(20) not null,
+    USER_SEX varchar(1) not null,
+    USER_BIRTHDAY datetime default null,
+    USER_IDENITY_CODE varchar(60) default null,
+    USER_EMAIL varchar(60) default null,
+    USER_MOBILE varchar(11) default null,
+    USER_ADDRESS varchar(200)    not null,
+    USER_STATUS decimal(6,0) not null,
+    primary key(`USER_ID`)
+)ENGINE=InnoDB default charset=utf8;</code></pre>
+<p>运行效果：<br><img src="https://img-blog.csdnimg.cn/20200112151423858.png" alt="在这里插入图片描述"><br><img src="https://img-blog.csdnimg.cn/20200112151459794.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2MTcxMjg3,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br><img src="https://img-blog.csdnimg.cn/20200112151540367.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2MTcxMjg3,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<h3 id="3-做成一个用户实体"><a href="#3-做成一个用户实体" class="headerlink" title="3.做成一个用户实体"></a>3.做成一个用户实体</h3><p><img src="https://img-blog.csdnimg.cn/20200112152520807.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2MTcxMjg3,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>代码：</p>
+<pre><code class="java">package com.lmonkey.entity;
+
+public class LMONKEY_USER {
+    private String USER_ID ;
+    private String USER_NAME ;
+    private String USER_PASSWORD ;
+    private String USER_SEX ;
+    private String USER_BIRTHDAY;
+    private String USER_IDENITY_CODE ;
+    private String USER_EMAIL;
+    private String USER_MOBILE;
+    private String USER_ADDRESS ;
+    private int USER_STATUS ;
+    public LMONKEY_USER(String uSER_ID, String uSER_NAME, String uSER_PASSWORD, String uSER_SEX, String uSER_BIRTHDAY,
+            String uSER_IDENITY_CODE, String uSER_EMAIL, String uSER_MOBILE, String uSER_ADDRESS, int uSER_STATUS) {
+        super();
+        USER_ID = uSER_ID;
+        USER_NAME = uSER_NAME;
+        USER_PASSWORD = uSER_PASSWORD;
+        USER_SEX = uSER_SEX;
+        USER_BIRTHDAY = uSER_BIRTHDAY;
+        USER_IDENITY_CODE = uSER_IDENITY_CODE;
+        USER_EMAIL = uSER_EMAIL;
+        USER_MOBILE = uSER_MOBILE;
+        USER_ADDRESS = uSER_ADDRESS;
+        USER_STATUS = uSER_STATUS;
+    }
+    public String getUSER_ID() {
+        return USER_ID;
+    }
+    public void setUSER_ID(String uSER_ID) {
+        USER_ID = uSER_ID;
+    }
+    public String getUSER_NAME() {
+        return USER_NAME;
+    }
+    public void setUSER_NAME(String uSER_NAME) {
+        USER_NAME = uSER_NAME;
+    }
+    public String getUSER_PASSWORD() {
+        return USER_PASSWORD;
+    }
+    public void setUSER_PASSWORD(String uSER_PASSWORD) {
+        USER_PASSWORD = uSER_PASSWORD;
+    }
+    public String getUSER_SEX() {
+        return USER_SEX;
+    }
+    public void setUSER_SEX(String uSER_SEX) {
+        USER_SEX = uSER_SEX;
+    }
+    public String getUSER_BIRTHDAY() {
+        return USER_BIRTHDAY;
+    }
+    public void setUSER_BIRTHDAY(String uSER_BIRTHDAY) {
+        USER_BIRTHDAY = uSER_BIRTHDAY;
+    }
+    public String getUSER_IDENITY_CODE() {
+        return USER_IDENITY_CODE;
+    }
+    public void setUSER_IDENITY_CODE(String uSER_IDENITY_CODE) {
+        USER_IDENITY_CODE = uSER_IDENITY_CODE;
+    }
+    public String getUSER_EMAIL() {
+        return USER_EMAIL;
+    }
+    public void setUSER_EMAIL(String uSER_EMAIL) {
+        USER_EMAIL = uSER_EMAIL;
+    }
+    public String getUSER_MOBILE() {
+        return USER_MOBILE;
+    }
+    public void setUSER_MOBILE(String uSER_MOBILE) {
+        USER_MOBILE = uSER_MOBILE;
+    }
+    public String getUSER_ADDRESS() {
+        return USER_ADDRESS;
+    }
+    public void setUSER_ADDRESS(String uSER_ADDRESS) {
+        USER_ADDRESS = uSER_ADDRESS;
+    }
+    public int getUSER_STATUS() {
+        return USER_STATUS;
+    }
+    public void setUSER_STATUS(int uSER_STATUS) {
+        USER_STATUS = uSER_STATUS;
+    }
+
+
+}
+</code></pre>
+<h3 id="4-后台页面规划"><a href="#4-后台页面规划" class="headerlink" title="4.后台页面规划"></a>4.后台页面规划</h3><p>在manage文件夹下新建一个admin_index.jsp文件<br><img src="https://img-blog.csdnimg.cn/20200112200152401.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2MTcxMjg3,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br><img src="https://img-blog.csdnimg.cn/20200112200315690.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2MTcxMjg3,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>同样的可以将用户管理页面和用户添加页面HTML相应复制到jsp文件中<br><img src="https://img-blog.csdnimg.cn/20200112201121105.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2MTcxMjg3,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br><img src="https://img-blog.csdnimg.cn/20200112201519382.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2MTcxMjg3,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br><img src="https://img-blog.csdnimg.cn/20200112201617384.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2MTcxMjg3,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br><img src="https://img-blog.csdnimg.cn/20200112202603124.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2MTcxMjg3,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>地址：<a href="http://localhost:8080/MonkeyShop/manage/admin_index.jsp" target="_blank" rel="noopener">http://localhost:8080/MonkeyShop/manage/admin_index.jsp</a></p>
+<p><img src="https://img-blog.csdnimg.cn/20200112203123203.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2MTcxMjg3,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br><img src="https://img-blog.csdnimg.cn/20200112203155990.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2MTcxMjg3,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>此时地址也发生了改变，变成了<a href="http://localhost:8080/MonkeyShop/manage/admin_user.jsp" target="_blank" rel="noopener">http://localhost:8080/MonkeyShop/manage/admin_user.jsp</a></p>
+<p>之后对用户添加界面也进行修改。</p>
+<h1 id="后面的一些实战过程我博客就不一一写下去了"><a href="#后面的一些实战过程我博客就不一一写下去了" class="headerlink" title="后面的一些实战过程我博客就不一一写下去了"></a>后面的一些实战过程我博客就不一一写下去了</h1><h1 id="写不动了-╯’-‘-╯︵-┻━┻"><a href="#写不动了-╯’-‘-╯︵-┻━┻" class="headerlink" title="写不动了    (╯’ - ‘)╯︵ ┻━┻"></a>写不动了    (╯’ - ‘)╯︵ ┻━┻</h1><h1 id="最后的项目实现效果"><a href="#最后的项目实现效果" class="headerlink" title="最后的项目实现效果"></a>最后的项目实现效果</h1><h2 id="正常用户登录和购物"><a href="#正常用户登录和购物" class="headerlink" title="正常用户登录和购物"></a>正常用户登录和购物</h2><p><img src="https://img-blog.csdnimg.cn/20200217152927204.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2MTcxMjg3,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br><img src="https://img-blog.csdnimg.cn/20200217153642978.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2MTcxMjg3,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br><img src="https://img-blog.csdnimg.cn/2020021715372735.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2MTcxMjg3,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br><img src="https://img-blog.csdnimg.cn/20200217153826649.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2MTcxMjg3,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br><img src="https://img-blog.csdnimg.cn/20200217153915416.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2MTcxMjg3,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br><img src="https://img-blog.csdnimg.cn/20200217153952529.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2MTcxMjg3,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br><img src="https://img-blog.csdnimg.cn/20200217154016233.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2MTcxMjg3,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<h2 id="管理员登录控制"><a href="#管理员登录控制" class="headerlink" title="管理员登录控制"></a>管理员登录控制</h2><p><img src="https://img-blog.csdnimg.cn/20200217154113694.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2MTcxMjg3,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br><img src="https://img-blog.csdnimg.cn/2020021715413927.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2MTcxMjg3,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br><img src="https://img-blog.csdnimg.cn/20200217154207198.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2MTcxMjg3,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br><img src="https://img-blog.csdnimg.cn/20200217154220404.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2MTcxMjg3,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br><img src="https://img-blog.csdnimg.cn/2020021715423549.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2MTcxMjg3,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<hr>
+<hr>
+<hr>
+<p>一起学习，一起进步 -.- ，如有错误，可以发评论</p>
+</div><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">空城机</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://yoursite.com/2020/02/17/Java%E5%95%86%E5%9F%8E%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98/">http://yoursite.com/2020/02/17/Java%E5%95%86%E5%9F%8E%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://yoursite.com" target="_blank">空城机</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/java-%E9%A1%B9%E7%9B%AE%E6%9E%B6%E6%9E%84/">java 项目架构</a></div><div class="post_share"><div class="social-share" data-image="https://i.loli.net/2019/07/21/5d33d5dc1531213134.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css"/><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js"></script></div></div><div class="post-reward"><a class="reward-button button--primary button--animated"> <i class="fa fa-qrcode"></i> 打赏<div class="reward-main"><ul class="reward-all"><li class="reward-item"><img class="post-qr-code__img" src="/img/wechat.jpg" alt="微信"/><div class="post-qr-code__desc">微信</div></li><li class="reward-item"><img class="post-qr-code__img" src="/img/alipay.jpg" alt="支付寶"/><div class="post-qr-code__desc">支付寶</div></li></ul></div></a></div><nav class="pagination_post" id="pagination"><div class="prev-post pull_left"><a href="/2020/02/18/%E5%8E%BB%E4%BA%86%E8%A7%A3%E4%B8%80%E4%B8%8B%E5%8C%BA%E5%9D%97%E9%93%BE/"><img class="prev_cover" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">去了解一下区块链</div></div></a></div><div class="next-post pull_right"><a href="/2020/02/07/Java%E8%AE%BE%E7%BD%AEFilter%E8%BF%87%E6%BB%A4%E4%BA%86CSS%E7%AD%89%E9%9D%99%E6%80%81%E6%96%87%E4%BB%B6%E7%9A%84%E9%97%AE%E9%A2%98/"><img class="next_cover" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Java设置Filter过滤了CSS等静态文件的问题</div></div></a></div></nav></article></main><footer id="footer" data-type="color"><div id="footer-wrap"><div class="copyright">&copy;2018 - 2020 By 空城机</div><div class="framework-info"><span>驱动 </span><a href="https://hexo.io" target="_blank" rel="noopener"><span>Hexo</span></a><span class="footer-separator">|</span><span>主题 </span><a href="https://github.com/jerryc127/hexo-theme-butterfly" target="_blank" rel="noopener"><span>Butterfly</span></a></div></div></footer></div><section class="rightside" id="rightside"><div id="rightside-config-hide"><i class="fa fa-book" id="readmode" title="阅读模式"></i><i class="fa fa-plus" id="font_plus" title="放大字体"></i><i class="fa fa-minus" id="font_minus" title="缩小字体"></i><a class="translate_chn_to_cht" id="translateLink" href="javascript:translatePage();" title="简繁转换" target="_self">繁</a><i class="darkmode fa fa-moon-o" id="darkmode" title="夜间模式"></i></div><div id="rightside-config-show"><div id="rightside_config" title="设置"><i class="fa fa-cog" aria-hidden="true"></i></div><i class="fa fa-list-ul close" id="mobile-toc-button" title="目录" aria-hidden="true"></i><i class="fa fa-arrow-up" id="go-up" title="回到顶部" aria-hidden="true"></i></div></section><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page@latest/instantpage.min.js" type="module"></script></body></html>

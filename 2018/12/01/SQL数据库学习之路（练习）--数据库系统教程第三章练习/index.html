@@ -1,0 +1,493 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>SQL数据库学习之路（练习）--数据库系统教程第三章练习 | 空城机</title><meta name="description" content="目录     实验要求  利用SQL语句创建数据库Lesson  通过SQL语句创建以下基本表  通过SQL语句实现以下操作：  撤销索引IDX_CLASSID及IDX_S#_C#  在学生关系中增加班级号属性列CLASSID  撤销学生关系中的班级号属性列CLASSID  撤销班级关系CLASS  利用实验1创建的数据库Lesson，分别在各表中插入以下记录，要求至少有一个表为单元组、至少有"><meta name="author" content="空城机"><meta name="copyright" content="空城机"><meta name="format-detection" content="telephone=no"><link rel="shortcut icon" href="/img/favicon.png"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="dns-prefetch" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="https://fonts.googleapis.com" crossorigin="crossorigin"/><link rel="dns-prefetch" href="https://fonts.googleapis.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="dns-prefetch" href="//busuanzi.ibruce.info"/><meta name="twitter:card" content="summary"><meta name="twitter:title" content="SQL数据库学习之路（练习）--数据库系统教程第三章练习"><meta name="twitter:description" content="目录     实验要求  利用SQL语句创建数据库Lesson  通过SQL语句创建以下基本表  通过SQL语句实现以下操作：  撤销索引IDX_CLASSID及IDX_S#_C#  在学生关系中增加班级号属性列CLASSID  撤销学生关系中的班级号属性列CLASSID  撤销班级关系CLASS  利用实验1创建的数据库Lesson，分别在各表中插入以下记录，要求至少有一个表为单元组、至少有"><meta name="twitter:image" content="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg"><meta property="og:type" content="article"><meta property="og:title" content="SQL数据库学习之路（练习）--数据库系统教程第三章练习"><meta property="og:url" content="http://yoursite.com/2018/12/01/SQL%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%B7%AF%EF%BC%88%E7%BB%83%E4%B9%A0%EF%BC%89--%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B3%BB%E7%BB%9F%E6%95%99%E7%A8%8B%E7%AC%AC%E4%B8%89%E7%AB%A0%E7%BB%83%E4%B9%A0/"><meta property="og:site_name" content="空城机"><meta property="og:description" content="目录     实验要求  利用SQL语句创建数据库Lesson  通过SQL语句创建以下基本表  通过SQL语句实现以下操作：  撤销索引IDX_CLASSID及IDX_S#_C#  在学生关系中增加班级号属性列CLASSID  撤销学生关系中的班级号属性列CLASSID  撤销班级关系CLASS  利用实验1创建的数据库Lesson，分别在各表中插入以下记录，要求至少有一个表为单元组、至少有"><meta property="og:image" content="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg"><meta property="article:published_time" content="2018-12-01T05:04:47.000Z"><meta property="article:modified_time" content="2020-05-10T11:05:27.843Z"><script src="https://cdn.jsdelivr.net/npm/js-cookie/dist/js.cookie.min.js"></script><script>var autoChangeMode = '1'
+var t = Cookies.get("theme")
+if (autoChangeMode == '1'){
+  var isDarkMode = window.matchMedia("(prefers-color-scheme: dark)").matches
+  var isLightMode = window.matchMedia("(prefers-color-scheme: light)").matches
+  var isNotSpecified = window.matchMedia("(prefers-color-scheme: no-preference)").matches
+  var hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+  if (t === undefined){
+    if (isLightMode) activateLightMode()
+    else if (isDarkMode) activateDarkMode()
+    else if (isNotSpecified || hasNoSupport){
+      console.log('You specified no preference for a color scheme or your browser does not support it. I Schedule dark mode during night time.')
+      var now = new Date()
+      var hour = now.getHours()
+      var isNight = hour < 6 || hour >= 18
+      isNight ? activateDarkMode() : activateLightMode()
+  }
+  } else if (t == 'light') activateLightMode()
+  else activateDarkMode()
+
+} else if (autoChangeMode == '2'){
+  now = new Date();
+  hour = now.getHours();
+  isNight = hour < 6 || hour >= 18
+  if(t === undefined) isNight? activateDarkMode() : activateLightMode()
+  else if (t === 'light') activateLightMode()
+  else activateDarkMode() 
+} else {
+  if ( t == 'dark' ) activateDarkMode()
+  else if ( t == 'light') activateLightMode()
+}
+
+function activateDarkMode(){
+  document.documentElement.setAttribute('data-theme', 'dark')
+  if (document.querySelector('meta[name="theme-color"]') !== null){
+    document.querySelector('meta[name="theme-color"]').setAttribute('content','#000')
+  }
+}
+function activateLightMode(){
+  document.documentElement.setAttribute('data-theme', 'light')
+  if (document.querySelector('meta[name="theme-color"]') !== null){
+  document.querySelector('meta[name="theme-color"]').setAttribute('content','#fff')
+  }
+}</script><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@latest/css/font-awesome.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css"><link rel="canonical" href="http://yoursite.com/2018/12/01/SQL%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%B7%AF%EF%BC%88%E7%BB%83%E4%B9%A0%EF%BC%89--%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B3%BB%E7%BB%9F%E6%95%99%E7%A8%8B%E7%AC%AC%E4%B8%89%E7%AB%A0%E7%BB%83%E4%B9%A0/"><link rel="prev" title="JavaScript学习（十五）----程序调试与错误处理" href="http://yoursite.com/2018/12/03/JavaScript%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%8D%81%E4%BA%94%EF%BC%89----%E7%A8%8B%E5%BA%8F%E8%B0%83%E8%AF%95%E4%B8%8E%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86/"><link rel="next" title="Unity3D 物体运动小游戏后续" href="http://yoursite.com/2018/11/25/Unity3D%20%E7%89%A9%E4%BD%93%E8%BF%90%E5%8A%A8%E5%B0%8F%E6%B8%B8%E6%88%8F%E5%90%8E%E7%BB%AD/"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Titillium+Web"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: {"defaultEncoding":2,"translateDelay":0,"cookieDomain":"https://xxx/","msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"簡"},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  bookmark: {
+    message_prev: '按',
+    message_next: '键将本页加入书签'
+  },
+  runtime_unit: '天',
+  runtime: true,
+  copyright: undefined,
+  ClickShowText: undefined,
+  medium_zoom: false,
+  fancybox: true,
+  Snackbar: undefined,
+  baiduPush: false,
+  highlightCopy: true,
+  highlightLang: true,
+  highlightShrink: 'false',
+  isFontAwesomeV5: false,
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+  
+}</script><script>var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isSidebar: true  
+  }</script><noscript><style>
+#page-header {
+  opacity: 1
+}
+.justified-gallery img{
+  opacity: 1
+}
+</style></noscript><meta name="generator" content="Hexo 4.2.0"></head><body><div id="mobile-sidebar"><div id="menu_mask"></div><div id="mobile-sidebar-menus"><div class="mobile_author_icon"><img class="avatar-img" src="/img/avatar.png" onerror="onerror=null;src='/img/tou5.jpg'" alt="avatar"/></div><div class="mobile_post_data"><div class="mobile_data_item is-center"><div class="mobile_data_link"><a href="/archives/"><div class="headline">文章</div><div class="length_num">154</div></a></div></div><div class="mobile_data_item is-center">      <div class="mobile_data_link"><a href="/tags/"><div class="headline">标签</div><div class="length_num">45</div></a></div></div><div class="mobile_data_item is-center">     <div class="mobile_data_link"><a href="/categories/"><div class="headline">分类</div><div class="length_num">15</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fa fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fa fa-heart"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page"><i class="fa-fw fa fa-list" aria-hidden="true"></i><span> 清单</span><i class="fa fa-chevron-down menus-expand" aria-hidden="true"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/music/"><i class="fa-fw fa fa-music"></i><span> 音乐</span></a></li><li><a class="site-page" href="/movies/"><i class="fa-fw fa fa-film"></i><span> 电影</span></a></li></ul></div></div></div></div><i class="fa fa-arrow-right on" id="toggle-sidebar" aria-hidden="true">     </i><div id="sidebar"><div class="sidebar-toc"><div class="sidebar-toc__title">目录</div><div class="sidebar-toc__progress"><span class="progress-notice">你已经读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar">     </div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E9%AA%8C%E8%A6%81%E6%B1%82"><span class="toc-number">1.</span> <span class="toc-text">实验要求</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%A9%E7%94%A8SQL%E8%AF%AD%E5%8F%A5%E5%88%9B%E5%BB%BA%E6%95%B0%E6%8D%AE%E5%BA%93Lesson"><span class="toc-number">1.1.</span> <span class="toc-text">利用SQL语句创建数据库Lesson</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%9A%E8%BF%87SQL%E8%AF%AD%E5%8F%A5%E5%88%9B%E5%BB%BA%E4%BB%A5%E4%B8%8B%E5%9F%BA%E6%9C%AC%E8%A1%A8"><span class="toc-number">1.2.</span> <span class="toc-text">通过SQL语句创建以下基本表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%9A%E8%BF%87SQL%E8%AF%AD%E5%8F%A5%E5%AE%9E%E7%8E%B0%E4%BB%A5%E4%B8%8B%E6%93%8D%E4%BD%9C%EF%BC%9A"><span class="toc-number">1.3.</span> <span class="toc-text">通过SQL语句实现以下操作：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%92%A4%E9%94%80%E7%B4%A2%E5%BC%95IDX_CLASSID%E5%8F%8AIDX_S%23_C%23"><span class="toc-number">1.4.</span> <span class="toc-text">撤销索引IDX_CLASSID及IDX_S#_C#</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9C%A8%E5%AD%A6%E7%94%9F%E5%85%B3%E7%B3%BB%E4%B8%AD%E5%A2%9E%E5%8A%A0%E7%8F%AD%E7%BA%A7%E5%8F%B7%E5%B1%9E%E6%80%A7%E5%88%97CLASSID"><span class="toc-number">1.5.</span> <span class="toc-text">在学生关系中增加班级号属性列CLASSID</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%92%A4%E9%94%80%E5%AD%A6%E7%94%9F%E5%85%B3%E7%B3%BB%E4%B8%AD%E7%9A%84%E7%8F%AD%E7%BA%A7%E5%8F%B7%E5%B1%9E%E6%80%A7%E5%88%97CLASSID"><span class="toc-number">1.6.</span> <span class="toc-text">撤销学生关系中的班级号属性列CLASSID</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%92%A4%E9%94%80%E7%8F%AD%E7%BA%A7%E5%85%B3%E7%B3%BBCLASS"><span class="toc-number">1.7.</span> <span class="toc-text">撤销班级关系CLASS</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%A9%E7%94%A8%E5%AE%9E%E9%AA%8C1%E5%88%9B%E5%BB%BA%E7%9A%84%E6%95%B0%E6%8D%AE%E5%BA%93Lesson%EF%BC%8C%E5%88%86%E5%88%AB%E5%9C%A8%E5%90%84%E8%A1%A8%E4%B8%AD%E6%8F%92%E5%85%A5%E4%BB%A5%E4%B8%8B%E8%AE%B0%E5%BD%95%EF%BC%8C%E8%A6%81%E6%B1%82%E8%87%B3%E5%B0%91%E6%9C%89%E4%B8%80%E4%B8%AA%E8%A1%A8%E4%B8%BA%E5%8D%95%E5%85%83%E7%BB%84%E3%80%81%E8%87%B3%E5%B0%91%E6%9C%89%E4%B8%80%E4%B8%AA%E8%A1%A8%E4%B8%BA%E5%A4%9A%E5%85%83%E7%BB%84%E7%9A%84%E6%96%B9%E5%BC%8F%E6%8F%92%E5%85%A5%EF%BC%9A"><span class="toc-number">1.8.</span> <span class="toc-text">利用实验1创建的数据库Lesson，分别在各表中插入以下记录，要求至少有一个表为单元组、至少有一个表为多元组的方式插入：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%9A%E8%BF%87select%20into%E8%AF%AD%E5%8F%A5%E5%B0%86SC%E8%A1%A8%E7%9A%84%E8%A1%A8%E7%BB%93%E6%9E%84%E5%A4%8D%E5%88%B6%E4%B8%BASC_TEMP%E8%A1%A8%EF%BC%8C%E7%84%B6%E5%90%8E%E6%9F%A5%E8%AF%A2%E6%89%80%E6%9C%89%E6%80%A7%E5%88%AB%E9%9D%9E%E7%A9%BA%E7%9A%84%E5%AD%A6%E7%94%9F%E7%9A%84%E9%80%89%E8%AF%BE%E8%AE%B0%E5%BD%95%E5%B9%B6%E5%B0%86%E4%B9%8B%E6%8F%92%E5%85%A5%E5%88%B0SC_TEMP%E8%A1%A8%E3%80%82"><span class="toc-number">1.9.</span> <span class="toc-text">通过select into语句将SC表的表结构复制为SC_TEMP表，然后查询所有性别非空的学生的选课记录并将之插入到SC_TEMP表。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%A0%E9%99%A4SC_TEMP%E8%A1%A8%E4%B8%AD%E6%97%A0%E6%88%90%E7%BB%A9%E7%9A%84%E5%85%83%E7%BB%84%E3%80%82"><span class="toc-number">1.10.</span> <span class="toc-text">删除SC_TEMP表中无成绩的元组。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B0%86SC_TEMP%E8%A1%A8%E4%B8%ADS3%E7%9A%84%E4%BD%8E%E4%BA%8ES3%E5%B9%B3%E5%9D%87%E6%88%90%E7%BB%A9%E7%9A%84%E6%88%90%E7%BB%A9%E6%8F%90%E9%AB%9810%25"><span class="toc-number">1.11.</span> <span class="toc-text">将SC_TEMP表中S3的低于S3平均成绩的成绩提高10%</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%A0%E9%99%A4SC_TEMP%E8%A1%A8%E4%B8%ADS3%E7%9A%84%E5%B0%8F%E4%BA%8E%E8%AF%A5%E7%94%9F%E5%B9%B3%E5%9D%87%E6%88%90%E7%BB%A9%E7%9A%84%E6%88%90%E7%BB%A9%E5%85%83%E7%BB%84%E3%80%82"><span class="toc-number">1.12.</span> <span class="toc-text">删除SC_TEMP表中S3的小于该生平均成绩的成绩元组。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B0%86S%E8%A1%A8%E4%B8%AD%E6%80%A7%E5%88%AB%E4%B8%BA%E7%A9%BA%E7%9A%84%E5%AD%A6%E7%94%9F%E7%9A%84%E6%80%A7%E5%88%AB%E4%BF%AE%E6%94%B9%E4%B8%BA%E5%A5%B3%EF%BC%8C%E5%B9%B6%E5%B0%86%E5%B9%B4%E9%BE%84%E4%BF%AE%E6%94%B9%E4%B8%BA25%E5%B2%81"><span class="toc-number">1.13.</span> <span class="toc-text">将S表中性别为空的学生的性别修改为女，并将年龄修改为25岁</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E8%A7%86%E5%9B%BEV_M_STUDENT%2C%20%E8%A6%81%E6%B1%82%E6%98%BE%E7%A4%BA%E7%94%B7%E5%AD%A6%E7%94%9F%E7%9A%84%E5%AD%A6%E5%8F%B7%E3%80%81%E5%A7%93%E5%90%8D%E3%80%81%E8%AF%BE%E7%A8%8B%E5%90%8D%E3%80%81%E6%95%99%E5%B8%88%E5%90%8D%E3%80%81%E6%88%90%E7%BB%A9%E7%AD%89%E5%88%97"><span class="toc-number">1.14.</span> <span class="toc-text">创建视图V_M_STUDENT, 要求显示男学生的学号、姓名、课程名、教师名、成绩等列</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%80%8B%E6%A3%80%E7%B4%A2%E5%AD%A6%E4%B9%A0C3%E8%AF%BE%E7%A8%8B%E7%9A%84%E6%89%80%E6%9C%89%E5%AD%A6%E7%94%9F%E5%A7%93%E5%90%8D%E5%92%8C%E5%B9%B4%E9%BE%84"><span class="toc-number">1.15.</span> <span class="toc-text">检索学习C3课程的所有学生姓名和年龄</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A3%80%E7%B4%A2%E5%AD%A6%E4%B9%A0%E7%94%B1%E6%95%99%E6%8E%88%E8%AE%B2%E6%8E%88%E7%9A%84%E8%AF%BE%E7%A8%8B%E7%9A%84%E5%AD%A6%E7%94%9F%E5%AD%A6%E5%8F%B7%E5%92%8C%E5%A7%93%E5%90%8D"><span class="toc-number">1.16.</span> <span class="toc-text">检索学习由教授讲授的课程的学生学号和姓名</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A3%80%E7%B4%A2%E6%B2%A1%E9%80%89%E4%BF%AE%E4%BB%BB%E4%BD%95%E8%AF%BE%E7%A8%8B%E7%9A%84%E5%AD%A6%E7%94%9F%E5%AD%A6%E5%8F%B7"><span class="toc-number">1.17.</span> <span class="toc-text">检索没选修任何课程的学生学号</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A3%80%E7%B4%A2%E5%B9%B4%E9%BE%84%E5%9C%A818%E5%88%B020%E5%B2%81%E4%B9%8B%E9%97%B4%E7%9A%84%E5%A5%B3%E5%AD%A6%E7%94%9F%E5%AD%A6%E4%B9%A0%E7%9A%84%E8%AF%BE%E7%A8%8B%E5%8F%B7%E5%92%8C%E8%AF%BE%E7%A8%8B%E5%90%8D"><span class="toc-number">1.18.</span> <span class="toc-text">检索年龄在18到20岁之间的女学生学习的课程号和课程名</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%80%8B%E6%A3%80%E7%B4%A2%E5%AD%A6%E4%B9%A0%E4%BA%86C1%E6%88%96C3%E8%AF%BE%E7%A8%8B%E7%9A%84%E5%AD%A6%E7%94%9F%E5%AD%A6%E5%8F%B7"><span class="toc-number">1.19.</span> <span class="toc-text">检索学习了C1或C3课程的学生学号</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%80%8B%E6%A3%80%E7%B4%A2Hu%E5%90%8C%E5%AD%A6%E4%B8%8D%E5%AD%A6%E7%9A%84%E8%AF%BE%E7%A8%8B%E5%8F%B7"><span class="toc-number">1.20.</span> <span class="toc-text">检索Hu同学不学的课程号</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A3%80%E7%B4%A2%E6%88%90%E7%BB%A9%E4%B8%BA%E7%A9%BA%E7%9A%84%E8%AF%BE%E7%A8%8B%E5%AF%B9%E5%BA%94%E7%9A%84%E6%95%99%E5%B8%88%E5%8F%B7%E5%92%8C%E6%95%99%E5%B8%88%E5%A7%93%E5%90%8D"><span class="toc-number">1.21.</span> <span class="toc-text">检索成绩为空的课程对应的教师号和教师姓名</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A3%80%E7%B4%A2%E8%87%B3%E5%B0%91%E6%9C%89S2%E5%92%8CS4%E5%AD%A6%E4%B9%A0%E7%9A%84%E8%AF%BE%E7%A8%8B%E5%8F%B7"><span class="toc-number">1.22.</span> <span class="toc-text">检索至少有S2和S4学习的课程号</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%80%8B%E6%A3%80%E7%B4%A2%E9%80%89%E4%BF%AE%E4%BA%86S3%E5%AD%A6%E4%B9%A0%E7%9A%84%E5%85%A8%E9%83%A8%E8%AF%BE%E7%A8%8B%E7%9A%84%E5%AD%A6%E7%94%9F%E5%AD%A6%E5%8F%B7"><span class="toc-number">1.23.</span> <span class="toc-text">检索选修了S3学习的全部课程的学生学号</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A3%80%E7%B4%A2%E6%AF%8F%E4%B8%AA%E5%AD%A6%E7%94%9F%E7%9A%84%E5%A7%93%E5%90%8D%E5%92%8C%E5%87%BA%E7%94%9F%E5%B9%B4%E4%BB%BD%EF%BC%8C%E5%B9%B6%E5%B0%86%E5%87%BA%E7%94%9F%E5%B9%B4%E4%BB%BD%E5%88%97%E9%87%8D%E5%91%BD%E5%90%8D%E4%B8%BABirth_Year"><span class="toc-number">1.24.</span> <span class="toc-text">检索每个学生的姓名和出生年份，并将出生年份列重命名为Birth_Year</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A3%80%E7%B4%A2%E9%80%89%E4%BF%AE%E4%BA%86%E8%AF%BE%E7%A8%8B%E7%9A%84%E6%89%80%E6%9C%89%E5%AD%A6%E7%94%9F%E7%9A%84%E5%AD%A6%E5%8F%B7%EF%BC%8C%E8%A6%81%E6%B1%82%E4%B8%8D%E6%98%BE%E7%A4%BA%E9%87%8D%E5%A4%8D%E7%BB%93%E6%9E%9C"><span class="toc-number">1.25.</span> <span class="toc-text">检索选修了课程的所有学生的学号，要求不显示重复结果</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A3%80%E7%B4%A2LIU%E8%80%81%E5%B8%88%E6%89%80%E6%8E%88%E8%AF%BE%E7%A8%8B%E7%9A%84%E6%AF%8F%E9%97%A8%E8%AF%BE%E7%A8%8B%E7%9A%84%E4%BA%BA%E6%95%B0%E5%92%8C%E5%B9%B3%E5%9D%87%E6%88%90%E7%BB%A9"><span class="toc-number">1.26.</span> <span class="toc-text">检索LIU老师所授课程的每门课程的人数和平均成绩</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%9F%E8%AE%A1%E5%90%84%E9%97%A8%E8%AF%BE%E7%A8%8B%E7%9A%84%E6%9C%80%E9%AB%98%E5%88%86"><span class="toc-number">1.27.</span> <span class="toc-text">统计各门课程的最高分</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%9F%E8%AE%A1%E6%AF%8F%E9%97%A8%E8%AF%BE%E7%A8%8B%E7%9A%84%E5%AD%A6%E7%94%9F%E9%80%89%E4%BF%AE%E4%BA%BA%E6%95%B0%EF%BC%8C%EF%BC%88%E8%B6%85%E8%BF%873%E4%BA%BA%E7%9A%84%E8%AF%BE%E7%A8%8B%E6%89%8D%E7%BB%9F%E8%AE%A1)%EF%BC%8C%E8%A6%81%E6%B1%82%E6%98%BE%E7%A4%BA%E8%AF%BE%E7%A8%8B%E5%8F%B7%E5%92%8C%E4%BA%BA%E6%95%B0%EF%BC%8C%E6%9F%A5%E8%AF%A2%E7%BB%93%E6%9E%84%E6%8C%89%E4%BA%BA%E6%95%B0%E5%8D%87%E5%BA%8F%E6%8E%92%E5%BA%8F%EF%BC%8C%E8%8B%A5%E4%BA%BA%E6%95%B0%E7%9B%B8%E5%90%8C%EF%BC%8C%E6%8C%89%E8%AF%BE%E7%A8%8B%E5%8F%B7%E9%99%8D%E5%BA%8F%E6%8E%92%E5%BA%8F"><span class="toc-number">1.28.</span> <span class="toc-text">统计每门课程的学生选修人数，（超过3人的课程才统计)，要求显示课程号和人数，查询结构按人数升序排序，若人数相同，按课程号降序排序</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9F%A5%E8%AF%A2%E6%AF%8F%E4%B8%AA%E5%AD%A6%E7%94%9F%E8%B6%85%E8%BF%87%E4%BB%96%E8%87%AA%E5%B7%B1%E9%80%89%E4%BF%AE%E8%AF%BE%E7%A8%8B%E5%B9%B3%E5%9D%87%E6%88%90%E7%BB%A9%E7%9A%84%E5%AD%A6%E5%8F%B7%E5%8F%8A%E8%AF%BE%E7%A8%8B%E5%8F%B7"><span class="toc-number">1.29.</span> <span class="toc-text">查询每个学生超过他自己选修课程平均成绩的学号及课程号</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8A%8A%E4%BD%8E%E4%BA%8E%E6%89%80%E6%9C%89%E8%AF%BE%E7%A8%8B%E6%80%BB%E5%B9%B3%E5%9D%87%E6%88%90%E7%BB%A9%E7%9A%84%E5%A5%B3%E5%90%8C%E5%AD%A6%E7%9A%84%E6%88%90%E7%BB%A9%E6%8F%90%E9%AB%983%25"><span class="toc-number">1.30.</span> <span class="toc-text">把低于所有课程总平均成绩的女同学的成绩提高3%</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%86%E5%88%AB%E7%94%A8INNER%20JOIN%20%E5%92%8CLEFT%20OUTER%20JOIN%20%E8%BF%9E%E6%8E%A5S%E5%92%8CSC%E8%A1%A8"><span class="toc-number">1.31.</span> <span class="toc-text">分别用INNER JOIN 和LEFT OUTER JOIN 连接S和SC表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A3%80%E7%B4%A2%E5%A7%93%E5%90%8D%E4%B8%AD%E7%AC%AC%E4%B8%89%E4%B8%AA%E5%AD%97%E6%AF%8D%E4%B8%BA%E2%80%9CN%E2%80%9D%E7%9A%84%E5%AD%A6%E7%94%9F%E7%9A%84%E5%A7%93%E5%90%8D%E5%92%8C%E5%B9%B4%E9%BE%84"><span class="toc-number">1.32.</span> <span class="toc-text">检索姓名中第三个字母为“N”的学生的姓名和年龄</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%C2%A0%E9%80%89%E6%8B%A9C1%E8%AF%BE%E7%A8%8B%E7%9A%84%E5%89%8D3%E5%90%8D%E7%9A%84%E5%AD%A6%E7%94%9F%E5%AD%A6%E5%8F%B7%E5%92%8C%E6%88%90%E7%BB%A9"><span class="toc-number">1.33.</span> <span class="toc-text"> 选择C1课程的前3名的学生学号和成绩</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%C2%A0%E6%A3%80%E7%B4%A2%E5%B9%B3%E5%9D%87%E6%88%90%E7%BB%A9%E5%A4%A7%E4%BA%8E85%E7%9A%84%E5%AD%A6%E7%94%9F%E5%AD%A6%E5%8F%B7"><span class="toc-number">1.34.</span> <span class="toc-text"> 检索平均成绩大于85的学生学号</span></a></li></ol></li></ol></div></div></div><div id="body-wrap"><div class="post-bg" id="nav" style="background-image: url(https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg)"><div id="page-header"><span class="pull_left" id="blog_name"><a class="blog_title" id="site-name" href="/">空城机</a></span><span class="pull_right menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fa fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fa fa-heart"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page"><i class="fa-fw fa fa-list" aria-hidden="true"></i><span> 清单</span><i class="fa fa-chevron-down menus-expand" aria-hidden="true"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/music/"><i class="fa-fw fa fa-music"></i><span> 音乐</span></a></li><li><a class="site-page" href="/movies/"><i class="fa-fw fa fa-film"></i><span> 电影</span></a></li></ul></div></div><span class="toggle-menu close"><a class="site-page"><i class="fa fa-bars fa-fw" aria-hidden="true"></i></a></span></span></div><div id="post-info"><div id="post-title"><div class="posttitle">SQL数据库学习之路（练习）--数据库系统教程第三章练习</div></div><div id="post-meta"><div class="meta-firstline"><time class="post-meta__date"><span class="post-meta__date-created" title="发表于 2018-12-01 13:04:47"><i class="fa fa-calendar" aria-hidden="true"></i> 发表于 2018-12-01</span><span class="post-meta__separator">|</span><span class="post-meta__date-updated" title="更新于 2020-05-10 19:05:27"><i class="fa fa-history" aria-hidden="true"></i> 更新于 2020-05-10</span></time><span class="post-meta__categories"><span class="post-meta__separator">|</span><i class="fa fa-inbox post-meta__icon" aria-hidden="true"></i><a class="post-meta__categories" href="/categories/SQL%E6%95%B0%E6%8D%AE%E5%BA%93/">SQL数据库</a></span></div><div class="meta-secondline"> </div><div class="meta-thirdline"><span class="post-meta-pv-cv"><i class="fa fa-eye post-meta__icon" aria-hidden="true"> </i><span>阅读量:</span><span id="busuanzi_value_page_pv"></span></span><span class="post-meta-commentcount"></span></div></div></div></div><main class="layout_post" id="content-inner"><article id="post"><div class="post-content" id="article-container"><a id="more"></a>
+
+<p id="main-toc"><strong>目录</strong></p>
+
+<p id="-toc" style="margin-left:40px;"> </p>
+
+<p id="%E5%AE%9E%E9%AA%8C%E8%A6%81%E6%B1%82-toc" style="margin-left:40px;"><a href="#%E5%AE%9E%E9%AA%8C%E8%A6%81%E6%B1%82">实验要求</a></p>
+
+<p id="%E5%88%A9%E7%94%A8SQL%E8%AF%AD%E5%8F%A5%E5%88%9B%E5%BB%BA%E6%95%B0%E6%8D%AE%E5%BA%93Lesson-toc" style="margin-left:80px;"><a href="#%E5%88%A9%E7%94%A8SQL%E8%AF%AD%E5%8F%A5%E5%88%9B%E5%BB%BA%E6%95%B0%E6%8D%AE%E5%BA%93Lesson">利用SQL语句创建数据库Lesson</a></p>
+
+<p id="%E9%80%9A%E8%BF%87SQL%E8%AF%AD%E5%8F%A5%E5%88%9B%E5%BB%BA%E4%BB%A5%E4%B8%8B%E5%9F%BA%E6%9C%AC%E8%A1%A8-toc" style="margin-left:80px;"><a href="#%E9%80%9A%E8%BF%87SQL%E8%AF%AD%E5%8F%A5%E5%88%9B%E5%BB%BA%E4%BB%A5%E4%B8%8B%E5%9F%BA%E6%9C%AC%E8%A1%A8">通过SQL语句创建以下基本表</a></p>
+
+<p id="%E9%80%9A%E8%BF%87SQL%E8%AF%AD%E5%8F%A5%E5%AE%9E%E7%8E%B0%E4%BB%A5%E4%B8%8B%E6%93%8D%E4%BD%9C%EF%BC%9A-toc" style="margin-left:80px;"><a href="#%E9%80%9A%E8%BF%87SQL%E8%AF%AD%E5%8F%A5%E5%AE%9E%E7%8E%B0%E4%BB%A5%E4%B8%8B%E6%93%8D%E4%BD%9C%EF%BC%9A">通过SQL语句实现以下操作：</a></p>
+
+<p id="%E6%92%A4%E9%94%80%E7%B4%A2%E5%BC%95IDX_CLASSID%E5%8F%8AIDX_S%23_C%23-toc" style="margin-left:80px;"><a href="#%E6%92%A4%E9%94%80%E7%B4%A2%E5%BC%95IDX_CLASSID%E5%8F%8AIDX_S%23_C%23">撤销索引IDX_CLASSID及IDX_S#_C#</a></p>
+
+<p id="%E5%9C%A8%E5%AD%A6%E7%94%9F%E5%85%B3%E7%B3%BB%E4%B8%AD%E5%A2%9E%E5%8A%A0%E7%8F%AD%E7%BA%A7%E5%8F%B7%E5%B1%9E%E6%80%A7%E5%88%97CLASSID-toc" style="margin-left:80px;"><a href="#%E5%9C%A8%E5%AD%A6%E7%94%9F%E5%85%B3%E7%B3%BB%E4%B8%AD%E5%A2%9E%E5%8A%A0%E7%8F%AD%E7%BA%A7%E5%8F%B7%E5%B1%9E%E6%80%A7%E5%88%97CLASSID">在学生关系中增加班级号属性列CLASSID</a></p>
+
+<p id="%E6%92%A4%E9%94%80%E5%AD%A6%E7%94%9F%E5%85%B3%E7%B3%BB%E4%B8%AD%E7%9A%84%E7%8F%AD%E7%BA%A7%E5%8F%B7%E5%B1%9E%E6%80%A7%E5%88%97CLASSID-toc" style="margin-left:80px;"><a href="#%E6%92%A4%E9%94%80%E5%AD%A6%E7%94%9F%E5%85%B3%E7%B3%BB%E4%B8%AD%E7%9A%84%E7%8F%AD%E7%BA%A7%E5%8F%B7%E5%B1%9E%E6%80%A7%E5%88%97CLASSID">撤销学生关系中的班级号属性列CLASSID</a></p>
+
+<p id="%E6%92%A4%E9%94%80%E7%8F%AD%E7%BA%A7%E5%85%B3%E7%B3%BBCLASS-toc" style="margin-left:80px;"><a href="#%E6%92%A4%E9%94%80%E7%8F%AD%E7%BA%A7%E5%85%B3%E7%B3%BBCLASS">撤销班级关系CLASS</a></p>
+
+<p id="%E5%88%A9%E7%94%A8%E5%AE%9E%E9%AA%8C1%E5%88%9B%E5%BB%BA%E7%9A%84%E6%95%B0%E6%8D%AE%E5%BA%93Lesson%EF%BC%8C%E5%88%86%E5%88%AB%E5%9C%A8%E5%90%84%E8%A1%A8%E4%B8%AD%E6%8F%92%E5%85%A5%E4%BB%A5%E4%B8%8B%E8%AE%B0%E5%BD%95%EF%BC%8C%E8%A6%81%E6%B1%82%E8%87%B3%E5%B0%91%E6%9C%89%E4%B8%80%E4%B8%AA%E8%A1%A8%E4%B8%BA%E5%8D%95%E5%85%83%E7%BB%84%E3%80%81%E8%87%B3%E5%B0%91%E6%9C%89%E4%B8%80%E4%B8%AA%E8%A1%A8%E4%B8%BA%E5%A4%9A%E5%85%83%E7%BB%84%E7%9A%84%E6%96%B9%E5%BC%8F%E6%8F%92%E5%85%A5%EF%BC%9A-toc" style="margin-left:80px;"><a href="#%E5%88%A9%E7%94%A8%E5%AE%9E%E9%AA%8C1%E5%88%9B%E5%BB%BA%E7%9A%84%E6%95%B0%E6%8D%AE%E5%BA%93Lesson%EF%BC%8C%E5%88%86%E5%88%AB%E5%9C%A8%E5%90%84%E8%A1%A8%E4%B8%AD%E6%8F%92%E5%85%A5%E4%BB%A5%E4%B8%8B%E8%AE%B0%E5%BD%95%EF%BC%8C%E8%A6%81%E6%B1%82%E8%87%B3%E5%B0%91%E6%9C%89%E4%B8%80%E4%B8%AA%E8%A1%A8%E4%B8%BA%E5%8D%95%E5%85%83%E7%BB%84%E3%80%81%E8%87%B3%E5%B0%91%E6%9C%89%E4%B8%80%E4%B8%AA%E8%A1%A8%E4%B8%BA%E5%A4%9A%E5%85%83%E7%BB%84%E7%9A%84%E6%96%B9%E5%BC%8F%E6%8F%92%E5%85%A5%EF%BC%9A">利用实验1创建的数据库Lesson，分别在各表中插入以下记录，要求至少有一个表为单元组、至少有一个表为多元组的方式插入：</a></p>
+
+<p id="%E9%80%9A%E8%BF%87select%20into%E8%AF%AD%E5%8F%A5%E5%B0%86SC%E8%A1%A8%E7%9A%84%E8%A1%A8%E7%BB%93%E6%9E%84%E5%A4%8D%E5%88%B6%E4%B8%BASC_TEMP%E8%A1%A8%EF%BC%8C%E7%84%B6%E5%90%8E%E6%9F%A5%E8%AF%A2%E6%89%80%E6%9C%89%E6%80%A7%E5%88%AB%E9%9D%9E%E7%A9%BA%E7%9A%84%E5%AD%A6%E7%94%9F%E7%9A%84%E9%80%89%E8%AF%BE%E8%AE%B0%E5%BD%95%E5%B9%B6%E5%B0%86%E4%B9%8B%E6%8F%92%E5%85%A5%E5%88%B0SC_TEMP%E8%A1%A8%E3%80%82-toc" style="margin-left:80px;"><a href="#%E9%80%9A%E8%BF%87select%20into%E8%AF%AD%E5%8F%A5%E5%B0%86SC%E8%A1%A8%E7%9A%84%E8%A1%A8%E7%BB%93%E6%9E%84%E5%A4%8D%E5%88%B6%E4%B8%BASC_TEMP%E8%A1%A8%EF%BC%8C%E7%84%B6%E5%90%8E%E6%9F%A5%E8%AF%A2%E6%89%80%E6%9C%89%E6%80%A7%E5%88%AB%E9%9D%9E%E7%A9%BA%E7%9A%84%E5%AD%A6%E7%94%9F%E7%9A%84%E9%80%89%E8%AF%BE%E8%AE%B0%E5%BD%95%E5%B9%B6%E5%B0%86%E4%B9%8B%E6%8F%92%E5%85%A5%E5%88%B0SC_TEMP%E8%A1%A8%E3%80%82">通过select into语句将SC表的表结构复制为SC_TEMP表，然后查询所有性别非空的学生的选课记录并将之插入到SC_TEMP表。</a></p>
+
+<p id="%E5%88%A0%E9%99%A4SC_TEMP%E8%A1%A8%E4%B8%AD%E6%97%A0%E6%88%90%E7%BB%A9%E7%9A%84%E5%85%83%E7%BB%84%E3%80%82-toc" style="margin-left:80px;"><a href="#%E5%88%A0%E9%99%A4SC_TEMP%E8%A1%A8%E4%B8%AD%E6%97%A0%E6%88%90%E7%BB%A9%E7%9A%84%E5%85%83%E7%BB%84%E3%80%82">删除SC_TEMP表中无成绩的元组。</a></p>
+
+<p id="%E5%B0%86SC_TEMP%E8%A1%A8%E4%B8%ADS3%E7%9A%84%E4%BD%8E%E4%BA%8ES3%E5%B9%B3%E5%9D%87%E6%88%90%E7%BB%A9%E7%9A%84%E6%88%90%E7%BB%A9%E6%8F%90%E9%AB%9810%25-toc" style="margin-left:80px;"><a href="#%E5%B0%86SC_TEMP%E8%A1%A8%E4%B8%ADS3%E7%9A%84%E4%BD%8E%E4%BA%8ES3%E5%B9%B3%E5%9D%87%E6%88%90%E7%BB%A9%E7%9A%84%E6%88%90%E7%BB%A9%E6%8F%90%E9%AB%9810%25">将SC_TEMP表中S3的低于S3平均成绩的成绩提高10%</a></p>
+
+<p id="%E5%88%A0%E9%99%A4SC_TEMP%E8%A1%A8%E4%B8%ADS3%E7%9A%84%E5%B0%8F%E4%BA%8E%E8%AF%A5%E7%94%9F%E5%B9%B3%E5%9D%87%E6%88%90%E7%BB%A9%E7%9A%84%E6%88%90%E7%BB%A9%E5%85%83%E7%BB%84%E3%80%82-toc" style="margin-left:80px;"><a href="#%E5%88%A0%E9%99%A4SC_TEMP%E8%A1%A8%E4%B8%ADS3%E7%9A%84%E5%B0%8F%E4%BA%8E%E8%AF%A5%E7%94%9F%E5%B9%B3%E5%9D%87%E6%88%90%E7%BB%A9%E7%9A%84%E6%88%90%E7%BB%A9%E5%85%83%E7%BB%84%E3%80%82">删除SC_TEMP表中S3的小于该生平均成绩的成绩元组。</a></p>
+
+<p id="%E5%B0%86S%E8%A1%A8%E4%B8%AD%E6%80%A7%E5%88%AB%E4%B8%BA%E7%A9%BA%E7%9A%84%E5%AD%A6%E7%94%9F%E7%9A%84%E6%80%A7%E5%88%AB%E4%BF%AE%E6%94%B9%E4%B8%BA%E5%A5%B3%EF%BC%8C%E5%B9%B6%E5%B0%86%E5%B9%B4%E9%BE%84%E4%BF%AE%E6%94%B9%E4%B8%BA25%E5%B2%81-toc" style="margin-left:80px;"><a href="#%E5%B0%86S%E8%A1%A8%E4%B8%AD%E6%80%A7%E5%88%AB%E4%B8%BA%E7%A9%BA%E7%9A%84%E5%AD%A6%E7%94%9F%E7%9A%84%E6%80%A7%E5%88%AB%E4%BF%AE%E6%94%B9%E4%B8%BA%E5%A5%B3%EF%BC%8C%E5%B9%B6%E5%B0%86%E5%B9%B4%E9%BE%84%E4%BF%AE%E6%94%B9%E4%B8%BA25%E5%B2%81">将S表中性别为空的学生的性别修改为女，并将年龄修改为25岁</a></p>
+
+<p id="%E5%88%9B%E5%BB%BA%E8%A7%86%E5%9B%BEV_M_STUDENT%2C%20%E8%A6%81%E6%B1%82%E6%98%BE%E7%A4%BA%E7%94%B7%E5%AD%A6%E7%94%9F%E7%9A%84%E5%AD%A6%E5%8F%B7%E3%80%81%E5%A7%93%E5%90%8D%E3%80%81%E8%AF%BE%E7%A8%8B%E5%90%8D%E3%80%81%E6%95%99%E5%B8%88%E5%90%8D%E3%80%81%E6%88%90%E7%BB%A9%E7%AD%89%E5%88%97-toc" style="margin-left:80px;"><a href="#%E5%88%9B%E5%BB%BA%E8%A7%86%E5%9B%BEV_M_STUDENT%2C%20%E8%A6%81%E6%B1%82%E6%98%BE%E7%A4%BA%E7%94%B7%E5%AD%A6%E7%94%9F%E7%9A%84%E5%AD%A6%E5%8F%B7%E3%80%81%E5%A7%93%E5%90%8D%E3%80%81%E8%AF%BE%E7%A8%8B%E5%90%8D%E3%80%81%E6%95%99%E5%B8%88%E5%90%8D%E3%80%81%E6%88%90%E7%BB%A9%E7%AD%89%E5%88%97">创建视图V_M_STUDENT, 要求显示男学生的学号、姓名、课程名、教师名、成绩等列</a></p>
+
+<p id="%E2%80%8B%E6%A3%80%E7%B4%A2%E5%AD%A6%E4%B9%A0C3%E8%AF%BE%E7%A8%8B%E7%9A%84%E6%89%80%E6%9C%89%E5%AD%A6%E7%94%9F%E5%A7%93%E5%90%8D%E5%92%8C%E5%B9%B4%E9%BE%84-toc" style="margin-left:80px;"><a href="#%E2%80%8B%E6%A3%80%E7%B4%A2%E5%AD%A6%E4%B9%A0C3%E8%AF%BE%E7%A8%8B%E7%9A%84%E6%89%80%E6%9C%89%E5%AD%A6%E7%94%9F%E5%A7%93%E5%90%8D%E5%92%8C%E5%B9%B4%E9%BE%84">​检索学习C3课程的所有学生姓名和年龄</a></p>
+
+<p id="%E6%A3%80%E7%B4%A2%E5%AD%A6%E4%B9%A0%E7%94%B1%E6%95%99%E6%8E%88%E8%AE%B2%E6%8E%88%E7%9A%84%E8%AF%BE%E7%A8%8B%E7%9A%84%E5%AD%A6%E7%94%9F%E5%AD%A6%E5%8F%B7%E5%92%8C%E5%A7%93%E5%90%8D-toc" style="margin-left:80px;"><a href="#%E6%A3%80%E7%B4%A2%E5%AD%A6%E4%B9%A0%E7%94%B1%E6%95%99%E6%8E%88%E8%AE%B2%E6%8E%88%E7%9A%84%E8%AF%BE%E7%A8%8B%E7%9A%84%E5%AD%A6%E7%94%9F%E5%AD%A6%E5%8F%B7%E5%92%8C%E5%A7%93%E5%90%8D">检索学习由教授讲授的课程的学生学号和姓名</a></p>
+
+<p id="%E6%A3%80%E7%B4%A2%E6%B2%A1%E9%80%89%E4%BF%AE%E4%BB%BB%E4%BD%95%E8%AF%BE%E7%A8%8B%E7%9A%84%E5%AD%A6%E7%94%9F%E5%AD%A6%E5%8F%B7-toc" style="margin-left:80px;"><a href="#%E6%A3%80%E7%B4%A2%E6%B2%A1%E9%80%89%E4%BF%AE%E4%BB%BB%E4%BD%95%E8%AF%BE%E7%A8%8B%E7%9A%84%E5%AD%A6%E7%94%9F%E5%AD%A6%E5%8F%B7">检索没选修任何课程的学生学号</a></p>
+
+<p id="%E6%A3%80%E7%B4%A2%E5%B9%B4%E9%BE%84%E5%9C%A818%E5%88%B020%E5%B2%81%E4%B9%8B%E9%97%B4%E7%9A%84%E5%A5%B3%E5%AD%A6%E7%94%9F%E5%AD%A6%E4%B9%A0%E7%9A%84%E8%AF%BE%E7%A8%8B%E5%8F%B7%E5%92%8C%E8%AF%BE%E7%A8%8B%E5%90%8D-toc" style="margin-left:80px;"><a href="#%E6%A3%80%E7%B4%A2%E5%B9%B4%E9%BE%84%E5%9C%A818%E5%88%B020%E5%B2%81%E4%B9%8B%E9%97%B4%E7%9A%84%E5%A5%B3%E5%AD%A6%E7%94%9F%E5%AD%A6%E4%B9%A0%E7%9A%84%E8%AF%BE%E7%A8%8B%E5%8F%B7%E5%92%8C%E8%AF%BE%E7%A8%8B%E5%90%8D">检索年龄在18到20岁之间的女学生学习的课程号和课程名</a></p>
+
+<p id="%E2%80%8B%E6%A3%80%E7%B4%A2%E5%AD%A6%E4%B9%A0%E4%BA%86C1%E6%88%96C3%E8%AF%BE%E7%A8%8B%E7%9A%84%E5%AD%A6%E7%94%9F%E5%AD%A6%E5%8F%B7-toc" style="margin-left:80px;"><a href="#%E2%80%8B%E6%A3%80%E7%B4%A2%E5%AD%A6%E4%B9%A0%E4%BA%86C1%E6%88%96C3%E8%AF%BE%E7%A8%8B%E7%9A%84%E5%AD%A6%E7%94%9F%E5%AD%A6%E5%8F%B7">​检索学习了C1或C3课程的学生学号</a></p>
+
+<p id="%E2%80%8B%E6%A3%80%E7%B4%A2Hu%E5%90%8C%E5%AD%A6%E4%B8%8D%E5%AD%A6%E7%9A%84%E8%AF%BE%E7%A8%8B%E5%8F%B7-toc" style="margin-left:80px;"><a href="#%E2%80%8B%E6%A3%80%E7%B4%A2Hu%E5%90%8C%E5%AD%A6%E4%B8%8D%E5%AD%A6%E7%9A%84%E8%AF%BE%E7%A8%8B%E5%8F%B7">​检索Hu同学不学的课程号</a></p>
+
+<p id="%E6%A3%80%E7%B4%A2%E6%88%90%E7%BB%A9%E4%B8%BA%E7%A9%BA%E7%9A%84%E8%AF%BE%E7%A8%8B%E5%AF%B9%E5%BA%94%E7%9A%84%E6%95%99%E5%B8%88%E5%8F%B7%E5%92%8C%E6%95%99%E5%B8%88%E5%A7%93%E5%90%8D-toc" style="margin-left:80px;"><a href="#%E6%A3%80%E7%B4%A2%E6%88%90%E7%BB%A9%E4%B8%BA%E7%A9%BA%E7%9A%84%E8%AF%BE%E7%A8%8B%E5%AF%B9%E5%BA%94%E7%9A%84%E6%95%99%E5%B8%88%E5%8F%B7%E5%92%8C%E6%95%99%E5%B8%88%E5%A7%93%E5%90%8D">检索成绩为空的课程对应的教师号和教师姓名</a></p>
+
+<p id="%E6%A3%80%E7%B4%A2%E8%87%B3%E5%B0%91%E6%9C%89S2%E5%92%8CS4%E5%AD%A6%E4%B9%A0%E7%9A%84%E8%AF%BE%E7%A8%8B%E5%8F%B7-toc" style="margin-left:80px;"><a href="#%E6%A3%80%E7%B4%A2%E8%87%B3%E5%B0%91%E6%9C%89S2%E5%92%8CS4%E5%AD%A6%E4%B9%A0%E7%9A%84%E8%AF%BE%E7%A8%8B%E5%8F%B7">检索至少有S2和S4学习的课程号</a></p>
+
+<p id="%E2%80%8B%E6%A3%80%E7%B4%A2%E9%80%89%E4%BF%AE%E4%BA%86S3%E5%AD%A6%E4%B9%A0%E7%9A%84%E5%85%A8%E9%83%A8%E8%AF%BE%E7%A8%8B%E7%9A%84%E5%AD%A6%E7%94%9F%E5%AD%A6%E5%8F%B7-toc" style="margin-left:80px;"><a href="#%E2%80%8B%E6%A3%80%E7%B4%A2%E9%80%89%E4%BF%AE%E4%BA%86S3%E5%AD%A6%E4%B9%A0%E7%9A%84%E5%85%A8%E9%83%A8%E8%AF%BE%E7%A8%8B%E7%9A%84%E5%AD%A6%E7%94%9F%E5%AD%A6%E5%8F%B7">​检索选修了S3学习的全部课程的学生学号</a></p>
+
+<p id="%E6%A3%80%E7%B4%A2%E6%AF%8F%E4%B8%AA%E5%AD%A6%E7%94%9F%E7%9A%84%E5%A7%93%E5%90%8D%E5%92%8C%E5%87%BA%E7%94%9F%E5%B9%B4%E4%BB%BD%EF%BC%8C%E5%B9%B6%E5%B0%86%E5%87%BA%E7%94%9F%E5%B9%B4%E4%BB%BD%E5%88%97%E9%87%8D%E5%91%BD%E5%90%8D%E4%B8%BABirth_Year-toc" style="margin-left:80px;"><a href="#%E6%A3%80%E7%B4%A2%E6%AF%8F%E4%B8%AA%E5%AD%A6%E7%94%9F%E7%9A%84%E5%A7%93%E5%90%8D%E5%92%8C%E5%87%BA%E7%94%9F%E5%B9%B4%E4%BB%BD%EF%BC%8C%E5%B9%B6%E5%B0%86%E5%87%BA%E7%94%9F%E5%B9%B4%E4%BB%BD%E5%88%97%E9%87%8D%E5%91%BD%E5%90%8D%E4%B8%BABirth_Year">检索每个学生的姓名和出生年份，并将出生年份列重命名为Birth_Year</a></p>
+
+<p id="%E6%A3%80%E7%B4%A2%E9%80%89%E4%BF%AE%E4%BA%86%E8%AF%BE%E7%A8%8B%E7%9A%84%E6%89%80%E6%9C%89%E5%AD%A6%E7%94%9F%E7%9A%84%E5%AD%A6%E5%8F%B7%EF%BC%8C%E8%A6%81%E6%B1%82%E4%B8%8D%E6%98%BE%E7%A4%BA%E9%87%8D%E5%A4%8D%E7%BB%93%E6%9E%9C-toc" style="margin-left:80px;"><a href="#%E6%A3%80%E7%B4%A2%E9%80%89%E4%BF%AE%E4%BA%86%E8%AF%BE%E7%A8%8B%E7%9A%84%E6%89%80%E6%9C%89%E5%AD%A6%E7%94%9F%E7%9A%84%E5%AD%A6%E5%8F%B7%EF%BC%8C%E8%A6%81%E6%B1%82%E4%B8%8D%E6%98%BE%E7%A4%BA%E9%87%8D%E5%A4%8D%E7%BB%93%E6%9E%9C">检索选修了课程的所有学生的学号，要求不显示重复结果</a></p>
+
+<p id="%E6%A3%80%E7%B4%A2LIU%E8%80%81%E5%B8%88%E6%89%80%E6%8E%88%E8%AF%BE%E7%A8%8B%E7%9A%84%E6%AF%8F%E9%97%A8%E8%AF%BE%E7%A8%8B%E7%9A%84%E4%BA%BA%E6%95%B0%E5%92%8C%E5%B9%B3%E5%9D%87%E6%88%90%E7%BB%A9-toc" style="margin-left:80px;"><a href="#%E6%A3%80%E7%B4%A2LIU%E8%80%81%E5%B8%88%E6%89%80%E6%8E%88%E8%AF%BE%E7%A8%8B%E7%9A%84%E6%AF%8F%E9%97%A8%E8%AF%BE%E7%A8%8B%E7%9A%84%E4%BA%BA%E6%95%B0%E5%92%8C%E5%B9%B3%E5%9D%87%E6%88%90%E7%BB%A9">检索LIU老师所授课程的每门课程的人数和平均成绩</a></p>
+
+<p id="%E7%BB%9F%E8%AE%A1%E5%90%84%E9%97%A8%E8%AF%BE%E7%A8%8B%E7%9A%84%E6%9C%80%E9%AB%98%E5%88%86-toc" style="margin-left:80px;"><a href="#%E7%BB%9F%E8%AE%A1%E5%90%84%E9%97%A8%E8%AF%BE%E7%A8%8B%E7%9A%84%E6%9C%80%E9%AB%98%E5%88%86">统计各门课程的最高分</a></p>
+
+<p id="%E7%BB%9F%E8%AE%A1%E6%AF%8F%E9%97%A8%E8%AF%BE%E7%A8%8B%E7%9A%84%E5%AD%A6%E7%94%9F%E9%80%89%E4%BF%AE%E4%BA%BA%E6%95%B0%EF%BC%8C%EF%BC%88%E8%B6%85%E8%BF%873%E4%BA%BA%E7%9A%84%E8%AF%BE%E7%A8%8B%E6%89%8D%E7%BB%9F%E8%AE%A1)%EF%BC%8C%E8%A6%81%E6%B1%82%E6%98%BE%E7%A4%BA%E8%AF%BE%E7%A8%8B%E5%8F%B7%E5%92%8C%E4%BA%BA%E6%95%B0%EF%BC%8C%E6%9F%A5%E8%AF%A2%E7%BB%93%E6%9E%84%E6%8C%89%E4%BA%BA%E6%95%B0%E5%8D%87%E5%BA%8F%E6%8E%92%E5%BA%8F%EF%BC%8C%E8%8B%A5%E4%BA%BA%E6%95%B0%E7%9B%B8%E5%90%8C%EF%BC%8C%E6%8C%89%E8%AF%BE%E7%A8%8B%E5%8F%B7%E9%99%8D%E5%BA%8F%E6%8E%92%E5%BA%8F-toc" style="margin-left:80px;"><a href="#%E7%BB%9F%E8%AE%A1%E6%AF%8F%E9%97%A8%E8%AF%BE%E7%A8%8B%E7%9A%84%E5%AD%A6%E7%94%9F%E9%80%89%E4%BF%AE%E4%BA%BA%E6%95%B0%EF%BC%8C%EF%BC%88%E8%B6%85%E8%BF%873%E4%BA%BA%E7%9A%84%E8%AF%BE%E7%A8%8B%E6%89%8D%E7%BB%9F%E8%AE%A1)%EF%BC%8C%E8%A6%81%E6%B1%82%E6%98%BE%E7%A4%BA%E8%AF%BE%E7%A8%8B%E5%8F%B7%E5%92%8C%E4%BA%BA%E6%95%B0%EF%BC%8C%E6%9F%A5%E8%AF%A2%E7%BB%93%E6%9E%84%E6%8C%89%E4%BA%BA%E6%95%B0%E5%8D%87%E5%BA%8F%E6%8E%92%E5%BA%8F%EF%BC%8C%E8%8B%A5%E4%BA%BA%E6%95%B0%E7%9B%B8%E5%90%8C%EF%BC%8C%E6%8C%89%E8%AF%BE%E7%A8%8B%E5%8F%B7%E9%99%8D%E5%BA%8F%E6%8E%92%E5%BA%8F">统计每门课程的学生选修人数，（超过3人的课程才统计)，要求显示课程号和人数，查询结构按人数升序排序，若人数相同，按课程号降序排序</a></p>
+
+<p id="%E6%9F%A5%E8%AF%A2%E6%AF%8F%E4%B8%AA%E5%AD%A6%E7%94%9F%E8%B6%85%E8%BF%87%E4%BB%96%E8%87%AA%E5%B7%B1%E9%80%89%E4%BF%AE%E8%AF%BE%E7%A8%8B%E5%B9%B3%E5%9D%87%E6%88%90%E7%BB%A9%E7%9A%84%E5%AD%A6%E5%8F%B7%E5%8F%8A%E8%AF%BE%E7%A8%8B%E5%8F%B7-toc" style="margin-left:80px;"><a href="#%E6%9F%A5%E8%AF%A2%E6%AF%8F%E4%B8%AA%E5%AD%A6%E7%94%9F%E8%B6%85%E8%BF%87%E4%BB%96%E8%87%AA%E5%B7%B1%E9%80%89%E4%BF%AE%E8%AF%BE%E7%A8%8B%E5%B9%B3%E5%9D%87%E6%88%90%E7%BB%A9%E7%9A%84%E5%AD%A6%E5%8F%B7%E5%8F%8A%E8%AF%BE%E7%A8%8B%E5%8F%B7">查询每个学生超过他自己选修课程平均成绩的学号及课程号</a></p>
+
+<p id="%E6%8A%8A%E4%BD%8E%E4%BA%8E%E6%89%80%E6%9C%89%E8%AF%BE%E7%A8%8B%E6%80%BB%E5%B9%B3%E5%9D%87%E6%88%90%E7%BB%A9%E7%9A%84%E5%A5%B3%E5%90%8C%E5%AD%A6%E7%9A%84%E6%88%90%E7%BB%A9%E6%8F%90%E9%AB%983%25-toc" style="margin-left:80px;"><a href="#%E6%8A%8A%E4%BD%8E%E4%BA%8E%E6%89%80%E6%9C%89%E8%AF%BE%E7%A8%8B%E6%80%BB%E5%B9%B3%E5%9D%87%E6%88%90%E7%BB%A9%E7%9A%84%E5%A5%B3%E5%90%8C%E5%AD%A6%E7%9A%84%E6%88%90%E7%BB%A9%E6%8F%90%E9%AB%983%25">把低于所有课程总平均成绩的女同学的成绩提高3%</a></p>
+
+<p id="%E5%88%86%E5%88%AB%E7%94%A8INNER%20JOIN%20%E5%92%8CLEFT%20OUTER%20JOIN%20%E8%BF%9E%E6%8E%A5S%E5%92%8CSC%E8%A1%A8-toc" style="margin-left:80px;"><a href="#%E5%88%86%E5%88%AB%E7%94%A8INNER%20JOIN%20%E5%92%8CLEFT%20OUTER%20JOIN%20%E8%BF%9E%E6%8E%A5S%E5%92%8CSC%E8%A1%A8">分别用INNER JOIN 和LEFT OUTER JOIN 连接S和SC表</a></p>
+
+<p id="%E6%A3%80%E7%B4%A2%E5%A7%93%E5%90%8D%E4%B8%AD%E7%AC%AC%E4%B8%89%E4%B8%AA%E5%AD%97%E6%AF%8D%E4%B8%BA%E2%80%9CN%E2%80%9D%E7%9A%84%E5%AD%A6%E7%94%9F%E7%9A%84%E5%A7%93%E5%90%8D%E5%92%8C%E5%B9%B4%E9%BE%84-toc" style="margin-left:80px;"><a href="#%E6%A3%80%E7%B4%A2%E5%A7%93%E5%90%8D%E4%B8%AD%E7%AC%AC%E4%B8%89%E4%B8%AA%E5%AD%97%E6%AF%8D%E4%B8%BA%E2%80%9CN%E2%80%9D%E7%9A%84%E5%AD%A6%E7%94%9F%E7%9A%84%E5%A7%93%E5%90%8D%E5%92%8C%E5%B9%B4%E9%BE%84">检索姓名中第三个字母为“N”的学生的姓名和年龄</a></p>
+
+<p id="%C2%A0%E9%80%89%E6%8B%A9C1%E8%AF%BE%E7%A8%8B%E7%9A%84%E5%89%8D3%E5%90%8D%E7%9A%84%E5%AD%A6%E7%94%9F%E5%AD%A6%E5%8F%B7%E5%92%8C%E6%88%90%E7%BB%A9-toc" style="margin-left:80px;"><a href="#%C2%A0%E9%80%89%E6%8B%A9C1%E8%AF%BE%E7%A8%8B%E7%9A%84%E5%89%8D3%E5%90%8D%E7%9A%84%E5%AD%A6%E7%94%9F%E5%AD%A6%E5%8F%B7%E5%92%8C%E6%88%90%E7%BB%A9"> 选择C1课程的前3名的学生学号和成绩</a></p>
+
+<p id="%C2%A0%E6%A3%80%E7%B4%A2%E5%B9%B3%E5%9D%87%E6%88%90%E7%BB%A9%E5%A4%A7%E4%BA%8E85%E7%9A%84%E5%AD%A6%E7%94%9F%E5%AD%A6%E5%8F%B7-toc" style="margin-left:80px;"><a href="#%C2%A0%E6%A3%80%E7%B4%A2%E5%B9%B3%E5%9D%87%E6%88%90%E7%BB%A9%E5%A4%A7%E4%BA%8E85%E7%9A%84%E5%AD%A6%E7%94%9F%E5%AD%A6%E5%8F%B7"> 检索平均成绩大于85的学生学号</a></p>
+
+<hr id="hr-toc" /><h2 id="%E5%AE%9E%E9%AA%8C%E8%A6%81%E6%B1%82" style="margin-left:0pt;">实验要求</h2>
+
+<h3 id="%E5%88%A9%E7%94%A8SQL%E8%AF%AD%E5%8F%A5%E5%88%9B%E5%BB%BA%E6%95%B0%E6%8D%AE%E5%BA%93Lesson" style="margin-left:0pt;">利用SQL语句创建数据库Lesson</h3>
+
+<pre class="has">
+<code class="language-sql">create database work
+on primary(
+    name='work',  --主数据文件的逻辑名称
+    filename='F:\SQL\work1\work.mdf',   --主数据文件的物理名称
+    size=10mb,        --主数据文件的初始大小
+    filegrowth=10mb                --主数据文件的增长率
+)
+
+log on(
+    name='work_log',  --日志文件的逻辑名称
+    filename='F:\SQL\work1\work_log.ldf',    --日志文件的物理名称
+    size=5mb,        --日志文件的初始大小
+    filegrowth=10%                --日志文件的增长率
+)</code></pre>
+
+<h3 id="%E9%80%9A%E8%BF%87SQL%E8%AF%AD%E5%8F%A5%E5%88%9B%E5%BB%BA%E4%BB%A5%E4%B8%8B%E5%9F%BA%E6%9C%AC%E8%A1%A8" style="margin-left:0pt;">通过SQL语句创建以下基本表</h3>
+
+<p style="margin-left:0pt;">教师关系 T(<strong><span style="color:#ff0000;"><strong>T#</strong></span></strong>, TNAME,TITLE)</p>
+
+<p style="margin-left:0pt;">课程关系 C(<strong><span style="color:#ff0000;"><strong>C#</strong></span></strong>,CNAME,<span style="color:#000000;">T#</span>)</p>
+
+<p style="margin-left:0pt;">学生关系 S(<strong><span style="color:#ff0000;"><strong>S#</strong></span></strong>,SNAME,AGE,SEX)</p>
+
+<p style="margin-left:0pt;">选课关系SC(<strong><span style="color:#ff0000;"><strong>S#,C#</strong></span></strong>,SCORE)</p>
+
+<p style="margin-left:0pt;">班级关系CLASS(CLASSID,CLASSNAME)</p>
+
+<p style="margin-left:0pt;">其中红色粗体为主键，带下划线的属性为外键。</p>
+
+<p style="margin-left:0pt;">通过SQL语句在CLASS表的CLASSID列上创建聚集索引IDX_CLASSID</p>
+
+<p style="margin-left:0pt;">通过SQL语句创建在<strong><span style="color:#000000;"><strong>S#</strong></span></strong><span style="color:#000000;">和</span><strong><span style="color:#000000;"><strong>C#</strong></span></strong>两个列上创建索引IDX_S#_C#，并指定索引按S#降序，C#升序有序。</p>
+
+<pre class="has">
+<code class="language-sql">create table T    --创建表教师关系T
+(T# char(4) not null,        
+ TNAME char(8) not null,
+ TITLE char(10),
+ PRIMARY KEY(T#)    --设置主键为T#
+);
+create table C   --创建表课程关系T
+(C# char(4),
+ CNAME char(10) not null,
+ T# char(4),
+ PRIMARY KEY(C#),   --设置主键为C#
+ FOREIGN KEY(T#)REFERENCES T(T#)    --设置外键为T#
+);
+create table S        --创建表学生关系S
+(S# char(4) not null,
+ SNAME char(8) not null,
+ AEG char(1),
+ PRIMARY KEY(S#)    --设置主键为S#
+);
+create table SC        --创建表选课关系SC
+(S# char(4),
+ C# char(4),
+ SCORE SMALLINT,
+ PRIMARY KEY(S#,C#),  --设置主键为S#,C#
+ FOREIGN KEY(S#)REFERENCES S(S#), ----设置外键为S#
+ FOREIGN KEY(C#)REFERENCES C(C#)  ----设置外键为C#
+);
+create table class  --创建表班级关系class
+(
+    CLASSID char(4),
+    CLASSNAME char(8)
+);</code></pre>
+
+<h3 id="%E9%80%9A%E8%BF%87SQL%E8%AF%AD%E5%8F%A5%E5%AE%9E%E7%8E%B0%E4%BB%A5%E4%B8%8B%E6%93%8D%E4%BD%9C%EF%BC%9A" style="margin-left:0pt;">通过SQL语句实现以下操作：</h3>
+
+<h3 id="%E6%92%A4%E9%94%80%E7%B4%A2%E5%BC%95IDX_CLASSID%E5%8F%8AIDX_S%23_C%23" style="margin-left:0pt;">撤销索引IDX_CLASSID及IDX_S#_C#</h3>
+
+<pre class="has">
+<code class="language-sql">create unique index IDX_CLASSID on class(CLASSID);  
+--在CLASS表的CLASSID列上创建聚集索引IDX_CLASSID
+create unique index IDX_S#_C# on SC(S# DESC,C# ASC);
+--创建在S#和C#两个列上创建索引IDX_S#_C#，并指定索引按S#降序，C#升序有序</code></pre>
+
+<pre class="has">
+<code class="language-sql">DROP INDEX IDX_CLASSID on class; --撤销索引IDX_CLASSID
+DROP INDEX IDX_S#_C# on SC;        --撤销索引IDX_S#_C#</code></pre>
+
+<h3 id="%E5%9C%A8%E5%AD%A6%E7%94%9F%E5%85%B3%E7%B3%BB%E4%B8%AD%E5%A2%9E%E5%8A%A0%E7%8F%AD%E7%BA%A7%E5%8F%B7%E5%B1%9E%E6%80%A7%E5%88%97CLASSID" style="margin-left:0pt;">在学生关系中增加班级号属性列CLASSID</h3>
+
+<pre class="has">
+<code class="language-sql">alter table S add CLASSID char(4); --在学生关系中增加班级号属性列CLASSID</code></pre>
+
+<h3 id="%E6%92%A4%E9%94%80%E5%AD%A6%E7%94%9F%E5%85%B3%E7%B3%BB%E4%B8%AD%E7%9A%84%E7%8F%AD%E7%BA%A7%E5%8F%B7%E5%B1%9E%E6%80%A7%E5%88%97CLASSID">撤销学生关系中的班级号属性列CLASSID</h3>
+
+<pre class="has">
+<code class="language-sql">alter table S drop column CLASSID;      --撤销学生关系中的班级号属性列CLASSID</code></pre>
+
+<h3 id="%E6%92%A4%E9%94%80%E7%8F%AD%E7%BA%A7%E5%85%B3%E7%B3%BBCLASS" style="margin-left:0pt;">撤销班级关系CLASS</h3>
+
+<pre class="has">
+<code class="language-sql">drop table class ;        --撤销班级关系CLASS</code></pre>
+
+<h3 id="%E5%88%A9%E7%94%A8%E5%AE%9E%E9%AA%8C1%E5%88%9B%E5%BB%BA%E7%9A%84%E6%95%B0%E6%8D%AE%E5%BA%93Lesson%EF%BC%8C%E5%88%86%E5%88%AB%E5%9C%A8%E5%90%84%E8%A1%A8%E4%B8%AD%E6%8F%92%E5%85%A5%E4%BB%A5%E4%B8%8B%E8%AE%B0%E5%BD%95%EF%BC%8C%E8%A6%81%E6%B1%82%E8%87%B3%E5%B0%91%E6%9C%89%E4%B8%80%E4%B8%AA%E8%A1%A8%E4%B8%BA%E5%8D%95%E5%85%83%E7%BB%84%E3%80%81%E8%87%B3%E5%B0%91%E6%9C%89%E4%B8%80%E4%B8%AA%E8%A1%A8%E4%B8%BA%E5%A4%9A%E5%85%83%E7%BB%84%E7%9A%84%E6%96%B9%E5%BC%8F%E6%8F%92%E5%85%A5%EF%BC%9A" style="margin-left:0pt;">利用实验1创建的数据库Lesson，分别在各表中插入以下记录，要求至少有一个表为单元组、至少有一个表为多元组的方式插入：</h3>
+
+<p style="margin-left:0pt;">S表</p>
+
+<p style="text-align:center;"><img alt="" class="has" src="https://img-blog.csdnimg.cn/20181201115813565.png" /></p>
+
+<p style="margin-left:0pt;"> </p>
+
+<p style="margin-left:0pt;">C表</p>
+
+<p style="text-align:center;"><img alt="" class="has" src="https://img-blog.csdnimg.cn/20181201115838126.png" /></p>
+
+<p style="margin-left:0pt;"> </p>
+
+<p style="margin-left:0pt;">SC表</p>
+
+<p style="text-align:center;"><img alt="" class="has" src="https://img-blog.csdnimg.cn/20181201115900832.png" /></p>
+
+<p>T表</p>
+
+<p style="text-align:center;"><img alt="" class="has" src="https://img-blog.csdnimg.cn/20181201115923544.png" /></p>
+
+<pre class="has">
+<code class="language-sql">insert S(S#,SNAME,AEG,sex) 
+values('s1','WANG','20','男'),
+      ('s2','LIU','18','女'),
+      ('s3','HU','17','男'),
+      ('s4','XIA','19',NULL),
+      ('s5','SUN','20','男'),
+      ('s6','ZHAO',NULL,'男'),
+      ('s7','DENG',NULL,'女')
+
+insert C(C#,CNAME,T#) values ('c1','OS','t2')
+insert C(C#,CNAME,T#) values ('c2','java','t1')
+insert C(C#,CNAME,T#) values ('c3','C++','t1')
+insert C(C#,CNAME,T#) values ('c4','C','t3')
+
+insert SC(S#,C#,SCORE) 
+values('s1','c1','80'),
+      ('s1','c2','53'),
+      ('s1','c3',NULL),
+      ('s1','c4','68'),
+      ('s2','c1','85'),
+      ('s3','c1','85'),
+      ('s3','c3','83'),
+      ('s3','c4','75'),
+      ('s4','c1','79'),
+      ('s4','c2','92'),
+      ('s5','c1',NULL),
+      ('s5','c2','45')
+
+insert T(T#,TNAME,TITLE) 
+values('t1','LIU','教授'),
+      ('t2','ZHANG','副教授'),
+      ('t3','LI','教授'),
+      ('t4','ZHAO','讲师')</code></pre>
+
+<h3 id="%E9%80%9A%E8%BF%87select%20into%E8%AF%AD%E5%8F%A5%E5%B0%86SC%E8%A1%A8%E7%9A%84%E8%A1%A8%E7%BB%93%E6%9E%84%E5%A4%8D%E5%88%B6%E4%B8%BASC_TEMP%E8%A1%A8%EF%BC%8C%E7%84%B6%E5%90%8E%E6%9F%A5%E8%AF%A2%E6%89%80%E6%9C%89%E6%80%A7%E5%88%AB%E9%9D%9E%E7%A9%BA%E7%9A%84%E5%AD%A6%E7%94%9F%E7%9A%84%E9%80%89%E8%AF%BE%E8%AE%B0%E5%BD%95%E5%B9%B6%E5%B0%86%E4%B9%8B%E6%8F%92%E5%85%A5%E5%88%B0SC_TEMP%E8%A1%A8%E3%80%82" style="margin-left:0pt;">通过select into语句将SC表的表结构复制为SC_TEMP表，然后查询所有<span style="color:#ff0000;">性别非空</span>的学生的选课记录并将之插入到SC_TEMP表。</h3>
+
+<pre class="has">
+<code class="language-sql">select *into SC_TEMP from SC where 1=2
+insert into SC_TEMP select *from SC where S# in(select S# from S where sex is not NULL)</code></pre>
+
+<h3 id="%E5%88%A0%E9%99%A4SC_TEMP%E8%A1%A8%E4%B8%AD%E6%97%A0%E6%88%90%E7%BB%A9%E7%9A%84%E5%85%83%E7%BB%84%E3%80%82" style="margin-left:0pt;">删除SC_TEMP表中无成绩的元组。</h3>
+
+<pre class="has">
+<code class="language-sql">delete from SC_TEMP where SCORE is NULL  --删除SC_TEMP表中成绩为NULL的元组</code></pre>
+
+<h3 id="%E5%B0%86SC_TEMP%E8%A1%A8%E4%B8%ADS3%E7%9A%84%E4%BD%8E%E4%BA%8ES3%E5%B9%B3%E5%9D%87%E6%88%90%E7%BB%A9%E7%9A%84%E6%88%90%E7%BB%A9%E6%8F%90%E9%AB%9810%25" style="margin-left:0pt;">将SC_TEMP表中S3的低于S3平均成绩的成绩提高10%</h3>
+
+<pre class="has">
+<code class="language-sql">--将SC_TEMP表中S3的低于S3平均成绩的成绩提高10% 
+update SC_TEMP set SCORE =1.1*SCORE where SCORE &lt;(select AVG(SCORE) from SC_TEMP where S#='s3') and S#='s3'</code></pre>
+
+<h3 id="%E5%88%A0%E9%99%A4SC_TEMP%E8%A1%A8%E4%B8%ADS3%E7%9A%84%E5%B0%8F%E4%BA%8E%E8%AF%A5%E7%94%9F%E5%B9%B3%E5%9D%87%E6%88%90%E7%BB%A9%E7%9A%84%E6%88%90%E7%BB%A9%E5%85%83%E7%BB%84%E3%80%82" style="margin-left:0pt;">删除SC_TEMP表中S3的小于该生平均成绩的成绩元组。</h3>
+
+<pre class="has">
+<code class="language-sql">--删除SC_TEMP表中S3的小于该生平均成绩的成绩元组。
+delete from SC_TEMP where SCORE &lt;(select AVG(SCORE) from SC_TEMP where S#='s3') and S#='s3'</code></pre>
+
+<h3 id="%E5%B0%86S%E8%A1%A8%E4%B8%AD%E6%80%A7%E5%88%AB%E4%B8%BA%E7%A9%BA%E7%9A%84%E5%AD%A6%E7%94%9F%E7%9A%84%E6%80%A7%E5%88%AB%E4%BF%AE%E6%94%B9%E4%B8%BA%E5%A5%B3%EF%BC%8C%E5%B9%B6%E5%B0%86%E5%B9%B4%E9%BE%84%E4%BF%AE%E6%94%B9%E4%B8%BA25%E5%B2%81" style="margin-left:0pt;">将S表中性别为空的学生的性别修改为女，并将年龄修改为25岁</h3>
+
+<pre class="has">
+<code class="language-sql">update S set [sex]='女', [AEG]='25' where sex is NULL</code></pre>
+
+<h3 id="%E5%88%9B%E5%BB%BA%E8%A7%86%E5%9B%BEV_M_STUDENT%2C%20%E8%A6%81%E6%B1%82%E6%98%BE%E7%A4%BA%E7%94%B7%E5%AD%A6%E7%94%9F%E7%9A%84%E5%AD%A6%E5%8F%B7%E3%80%81%E5%A7%93%E5%90%8D%E3%80%81%E8%AF%BE%E7%A8%8B%E5%90%8D%E3%80%81%E6%95%99%E5%B8%88%E5%90%8D%E3%80%81%E6%88%90%E7%BB%A9%E7%AD%89%E5%88%97" style="margin-left:0pt;">创建视图V_M_STUDENT, 要求显示男学生的学号、姓名、课程名、教师名、成绩等列</h3>
+
+<pre class="has">
+<code class="language-sql">create view V_M_STUDENT(S#,SNAME,CNAME,TNAME,SCORE) 
+as select S.S#,SNAME,CNAME,TNAME,SCORE from S,C,T,SC
+where S.S#=SC.S# AND SC.C#=C.C# AND C.T#=T.T#</code></pre>
+
+<h3 id="%E2%80%8B%E6%A3%80%E7%B4%A2%E5%AD%A6%E4%B9%A0C3%E8%AF%BE%E7%A8%8B%E7%9A%84%E6%89%80%E6%9C%89%E5%AD%A6%E7%94%9F%E5%A7%93%E5%90%8D%E5%92%8C%E5%B9%B4%E9%BE%84">检索学习C3课程的所有学生姓名和年龄</h3>
+
+<pre class="has">
+<code class="language-sql">--1）检索学习C3课程的所有学生姓名和年龄
+select S.SNAME,S.AEG from S,SC where S.S#=SC.S# and SC.C#='c3'</code></pre>
+
+<h3 id="%E6%A3%80%E7%B4%A2%E5%AD%A6%E4%B9%A0%E7%94%B1%E6%95%99%E6%8E%88%E8%AE%B2%E6%8E%88%E7%9A%84%E8%AF%BE%E7%A8%8B%E7%9A%84%E5%AD%A6%E7%94%9F%E5%AD%A6%E5%8F%B7%E5%92%8C%E5%A7%93%E5%90%8D">检索学习由教授讲授的课程的学生学号和姓名</h3>
+
+<pre class="has">
+<code class="language-sql">--2）检索学习由教授讲授的课程的学生学号和姓名
+Select DISTINCT S.S#,S.SNAME from S,SC,C,T where 
+T.TITLE='教授' AND T.T#=C.T# AND C.C#=SC.C# 
+AND SC.S#=S.S#</code></pre>
+
+<h3 id="%E6%A3%80%E7%B4%A2%E6%B2%A1%E9%80%89%E4%BF%AE%E4%BB%BB%E4%BD%95%E8%AF%BE%E7%A8%8B%E7%9A%84%E5%AD%A6%E7%94%9F%E5%AD%A6%E5%8F%B7">检索没选修任何课程的学生学号</h3>
+
+<pre class="has">
+<code class="language-sql">--3）检索没选修任何课程的学生学号
+select S.S# from S where S.S# NOT IN (SELECT S# FROM SC) </code></pre>
+
+<h3 id="%E6%A3%80%E7%B4%A2%E5%B9%B4%E9%BE%84%E5%9C%A818%E5%88%B020%E5%B2%81%E4%B9%8B%E9%97%B4%E7%9A%84%E5%A5%B3%E5%AD%A6%E7%94%9F%E5%AD%A6%E4%B9%A0%E7%9A%84%E8%AF%BE%E7%A8%8B%E5%8F%B7%E5%92%8C%E8%AF%BE%E7%A8%8B%E5%90%8D">检索年龄在18到20岁之间的女学生学习的课程号和课程名</h3>
+
+<pre class="has">
+<code class="language-sql">--4）检索年龄在18到20岁之间的女学生学习的课程号和课程名
+SELECT DISTINCT C.C#,C.CNAME FROM C,SC WHERE C.C#=SC.C# AND SC.S# IN(SELECT S# FROM S WHERE S.AEG BETWEEN 18 AND 20)</code></pre>
+
+<h3 id="%E2%80%8B%E6%A3%80%E7%B4%A2%E5%AD%A6%E4%B9%A0%E4%BA%86C1%E6%88%96C3%E8%AF%BE%E7%A8%8B%E7%9A%84%E5%AD%A6%E7%94%9F%E5%AD%A6%E5%8F%B7">检索学习了C1或C3课程的学生学号</h3>
+
+<pre class="has">
+<code class="language-sql">--5）检索学习了C1或C3课程的学生学号
+SELECT DISTINCT S.S# FROM S,SC WHERE S.S# LIKE SC.S# AND (SC.C#='c1' or SC.C#='c3')</code></pre>
+
+<h3 id="%E2%80%8B%E6%A3%80%E7%B4%A2Hu%E5%90%8C%E5%AD%A6%E4%B8%8D%E5%AD%A6%E7%9A%84%E8%AF%BE%E7%A8%8B%E5%8F%B7">检索Hu同学不学的课程号</h3>
+
+<pre class="has">
+<code class="language-sql">--6）检索Hu同学不学的课程号
+SELECT C.C# FROM C WHERE C.C# NOT IN (SELECT C# FROM SC,S WHERE SC.S# LIKE S.S# AND S.SNAME='HU') </code></pre>
+
+<h3 id="%E6%A3%80%E7%B4%A2%E6%88%90%E7%BB%A9%E4%B8%BA%E7%A9%BA%E7%9A%84%E8%AF%BE%E7%A8%8B%E5%AF%B9%E5%BA%94%E7%9A%84%E6%95%99%E5%B8%88%E5%8F%B7%E5%92%8C%E6%95%99%E5%B8%88%E5%A7%93%E5%90%8D">检索成绩为空的课程对应的教师号和教师姓名</h3>
+
+<pre class="has">
+<code class="language-sql">--7）检索成绩为空的课程对应的教师号和教师姓名
+SELECT T.T#,T.TNAME 
+FROM T 
+WHERE T.T# IN 
+(SELECT C.T# FROM C,SC WHERE C.C# LIKE SC.C# AND SC.SCORE IS NULL)</code></pre>
+
+<h3 id="%E6%A3%80%E7%B4%A2%E8%87%B3%E5%B0%91%E6%9C%89S2%E5%92%8CS4%E5%AD%A6%E4%B9%A0%E7%9A%84%E8%AF%BE%E7%A8%8B%E5%8F%B7">检索至少有S2和S4学习的课程号</h3>
+
+<pre class="has">
+<code class="language-sql">--8）检索至少有S2和S4学习的课程号
+SELECT DISTINCT SC.C# FROM SC 
+WHERE SC.C# IN 
+((SELECT SC.C# FROM SC WHERE SC.S# like 's2') INTERSECT (SELECT SC.C# FROM SC WHERE SC.S# like 's4'))</code></pre>
+
+<h3 id="%E2%80%8B%E6%A3%80%E7%B4%A2%E9%80%89%E4%BF%AE%E4%BA%86S3%E5%AD%A6%E4%B9%A0%E7%9A%84%E5%85%A8%E9%83%A8%E8%AF%BE%E7%A8%8B%E7%9A%84%E5%AD%A6%E7%94%9F%E5%AD%A6%E5%8F%B7">检索选修了S3学习的全部课程的学生学号</h3>
+
+<pre class="has">
+<code class="language-sql">--9）检索选修了S3学习的全部课程的学生学号
+SELECT DISTINCT SC.S# FROM SC WHERE SC.C# IN (SELECT SC.C# FROM SC WHERE SC.S# LIKE 's3')</code></pre>
+
+<h3 id="%E6%A3%80%E7%B4%A2%E6%AF%8F%E4%B8%AA%E5%AD%A6%E7%94%9F%E7%9A%84%E5%A7%93%E5%90%8D%E5%92%8C%E5%87%BA%E7%94%9F%E5%B9%B4%E4%BB%BD%EF%BC%8C%E5%B9%B6%E5%B0%86%E5%87%BA%E7%94%9F%E5%B9%B4%E4%BB%BD%E5%88%97%E9%87%8D%E5%91%BD%E5%90%8D%E4%B8%BABirth_Year">检索每个学生的姓名和出生年份，并将出生年份列重命名为Birth_Year</h3>
+
+<pre class="has">
+<code class="language-sql">--10)检索每个学生的姓名和出生年份，并将出生年份列重命名为Birth_Year
+SELECT S.SNAME,2018-S.AEG AS Birth_Year FROM S</code></pre>
+
+<h3 id="%E6%A3%80%E7%B4%A2%E9%80%89%E4%BF%AE%E4%BA%86%E8%AF%BE%E7%A8%8B%E7%9A%84%E6%89%80%E6%9C%89%E5%AD%A6%E7%94%9F%E7%9A%84%E5%AD%A6%E5%8F%B7%EF%BC%8C%E8%A6%81%E6%B1%82%E4%B8%8D%E6%98%BE%E7%A4%BA%E9%87%8D%E5%A4%8D%E7%BB%93%E6%9E%9C">检索选修了课程的所有学生的学号，要求不显示重复结果</h3>
+
+<pre class="has">
+<code class="language-sql">--1)检索选修了课程的所有学生的学号，要求不显示重复结果
+SELECT DISTINCT SC.S# FROM SC </code></pre>
+
+<h3 id="%E6%A3%80%E7%B4%A2LIU%E8%80%81%E5%B8%88%E6%89%80%E6%8E%88%E8%AF%BE%E7%A8%8B%E7%9A%84%E6%AF%8F%E9%97%A8%E8%AF%BE%E7%A8%8B%E7%9A%84%E4%BA%BA%E6%95%B0%E5%92%8C%E5%B9%B3%E5%9D%87%E6%88%90%E7%BB%A9">检索LIU老师所授课程的每门课程的人数和平均成绩</h3>
+
+<pre class="has">
+<code class="language-sql">--2)检索LIU老师所授课程的每门课程的人数和平均成绩。
+SELECT C.C#,COUNT(DISTINCT SC.S#),AVG(SC.SCORE)
+FROM C,T,SC
+WHERE C.T#=T.T# AND C.C#=SC.C# AND TNAME='LIU'
+GROUP BY C.C#;</code></pre>
+
+<h3 id="%E7%BB%9F%E8%AE%A1%E5%90%84%E9%97%A8%E8%AF%BE%E7%A8%8B%E7%9A%84%E6%9C%80%E9%AB%98%E5%88%86">统计各门课程的最高分</h3>
+
+<pre class="has">
+<code class="language-sql">--3)统计各门课程的最高分。
+SELECT SC.C#,MAX(SC.SCORE) FROM SC GROUP BY SC.C#</code></pre>
+
+<h3 id="%E7%BB%9F%E8%AE%A1%E6%AF%8F%E9%97%A8%E8%AF%BE%E7%A8%8B%E7%9A%84%E5%AD%A6%E7%94%9F%E9%80%89%E4%BF%AE%E4%BA%BA%E6%95%B0%EF%BC%8C%EF%BC%88%E8%B6%85%E8%BF%873%E4%BA%BA%E7%9A%84%E8%AF%BE%E7%A8%8B%E6%89%8D%E7%BB%9F%E8%AE%A1)%EF%BC%8C%E8%A6%81%E6%B1%82%E6%98%BE%E7%A4%BA%E8%AF%BE%E7%A8%8B%E5%8F%B7%E5%92%8C%E4%BA%BA%E6%95%B0%EF%BC%8C%E6%9F%A5%E8%AF%A2%E7%BB%93%E6%9E%84%E6%8C%89%E4%BA%BA%E6%95%B0%E5%8D%87%E5%BA%8F%E6%8E%92%E5%BA%8F%EF%BC%8C%E8%8B%A5%E4%BA%BA%E6%95%B0%E7%9B%B8%E5%90%8C%EF%BC%8C%E6%8C%89%E8%AF%BE%E7%A8%8B%E5%8F%B7%E9%99%8D%E5%BA%8F%E6%8E%92%E5%BA%8F">统计每门课程的学生选修人数，（超过3人的课程才统计)，要求显示课程号和人数，查询结构按人数升序排序，若人数相同，按课程号降序排序</h3>
+
+<pre class="has">
+<code class="language-sql">--4)统计每门课程的学生选修人数，（超过3人的课程才统计)，要求显示课程号和人数，查询结构按人数升序排序，若人数相同，按课程号降序排序。
+SELECT DISTINCT C#,COUNT(DISTINCT S#) AS 人数
+FROM SC
+GROUP BY C#
+HAVING COUNT(S#)&gt;3
+ORDER BY COUNT(DISTINCT S#) asc,C#</code></pre>
+
+<h3 id="%E6%9F%A5%E8%AF%A2%E6%AF%8F%E4%B8%AA%E5%AD%A6%E7%94%9F%E8%B6%85%E8%BF%87%E4%BB%96%E8%87%AA%E5%B7%B1%E9%80%89%E4%BF%AE%E8%AF%BE%E7%A8%8B%E5%B9%B3%E5%9D%87%E6%88%90%E7%BB%A9%E7%9A%84%E5%AD%A6%E5%8F%B7%E5%8F%8A%E8%AF%BE%E7%A8%8B%E5%8F%B7">查询每个学生超过他自己选修课程平均成绩的学号及课程号</h3>
+
+<pre class="has">
+<code class="language-sql">--5)查询每个学生超过他自己选修课程平均成绩的学号及课程号。
+SELECT X.S#,X.C#
+FROM SC AS X 
+WHERE X.SCORE &gt;(SELECT AVG(Y.SCORE) FROM SC AS Y WHERE X.S# =Y.S# )</code></pre>
+
+<h3 id="%E6%8A%8A%E4%BD%8E%E4%BA%8E%E6%89%80%E6%9C%89%E8%AF%BE%E7%A8%8B%E6%80%BB%E5%B9%B3%E5%9D%87%E6%88%90%E7%BB%A9%E7%9A%84%E5%A5%B3%E5%90%8C%E5%AD%A6%E7%9A%84%E6%88%90%E7%BB%A9%E6%8F%90%E9%AB%983%25">把低于所有课程总平均成绩的女同学的成绩提高3%</h3>
+
+<pre class="has">
+<code class="language-sql">--6)把低于所有课程总平均成绩的女同学的成绩提高3%
+--SELECT SC.SCORE FROM SC,S WHERE SC.S# LIKE S.S# AND S.sex='女' AND SC.SCORE&gt;(SELECT AVG(SC.SCORE) FROM SC)
+UPDATE SC SET SC.SCORE=SC.SCORE*1.03 WHERE SC.SCORE LIKE (SELECT SC.SCORE FROM SC,S WHERE SC.S# LIKE S.S# AND S.sex='女' AND SC.SCORE&lt;(SELECT AVG(SC.SCORE) FROM SC))</code></pre>
+
+<h3 id="%E5%88%86%E5%88%AB%E7%94%A8INNER%20JOIN%20%E5%92%8CLEFT%20OUTER%20JOIN%20%E8%BF%9E%E6%8E%A5S%E5%92%8CSC%E8%A1%A8">分别用INNER JOIN 和LEFT OUTER JOIN 连接S和SC表</h3>
+
+<pre class="has">
+<code class="language-sql">--INNER JOIN   仅对满足连接条件的CROSS中的列        LEFT OUTER JOIN    一个表满足条件的行，和另一个表的所有行
+SELECT *FROM S INNER JOIN SC on S.S#=SC.S# 
+SELECT *FROM S LEFT OUTER JOIN SC on S.S#=SC.S# </code></pre>
+
+<h3 id="%E6%A3%80%E7%B4%A2%E5%A7%93%E5%90%8D%E4%B8%AD%E7%AC%AC%E4%B8%89%E4%B8%AA%E5%AD%97%E6%AF%8D%E4%B8%BA%E2%80%9CN%E2%80%9D%E7%9A%84%E5%AD%A6%E7%94%9F%E7%9A%84%E5%A7%93%E5%90%8D%E5%92%8C%E5%B9%B4%E9%BE%84">检索姓名中第三个字母为“N”的学生的姓名和年龄</h3>
+
+<pre class="has">
+<code class="language-sql">--8)检索姓名中第三个字母为“N”的学生的姓名和年龄。
+SELECT S.SNAME,S.AEG FROM S WHERE S.SNAME LIKE '__N%'</code></pre>
+
+<h3 id="%C2%A0%E9%80%89%E6%8B%A9C1%E8%AF%BE%E7%A8%8B%E7%9A%84%E5%89%8D3%E5%90%8D%E7%9A%84%E5%AD%A6%E7%94%9F%E5%AD%A6%E5%8F%B7%E5%92%8C%E6%88%90%E7%BB%A9"> 选择C1课程的前3名的学生学号和成绩</h3>
+
+<pre class="has">
+<code class="language-sql">--9) 选择C1课程的前3名的学生学号和成绩。
+SELECT TOP(3) SC.S#,SC.SCORE FROM SC WHERE SC.C# LIKE 'c1' ORDER BY SC.SCORE DESC</code></pre>
+
+<h3 id="%C2%A0%E6%A3%80%E7%B4%A2%E5%B9%B3%E5%9D%87%E6%88%90%E7%BB%A9%E5%A4%A7%E4%BA%8E85%E7%9A%84%E5%AD%A6%E7%94%9F%E5%AD%A6%E5%8F%B7"> 检索平均成绩大于85的学生学号</h3>
+
+<pre class="has">
+<code class="language-sql">--10) 检索平均成绩大于85的学生学号。
+SELECT DISTINCT X.S# FROM SC AS X WHERE 85&lt;= ALL(SELECT AVG(Y.SCORE) FROM SC AS Y WHERE Y.S#=X.S# GROUP BY Y.S#)</code></pre>
+
+<p> </p></div><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">空城机</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://yoursite.com/2018/12/01/SQL%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%B7%AF%EF%BC%88%E7%BB%83%E4%B9%A0%EF%BC%89--%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B3%BB%E7%BB%9F%E6%95%99%E7%A8%8B%E7%AC%AC%E4%B8%89%E7%AB%A0%E7%BB%83%E4%B9%A0/">http://yoursite.com/2018/12/01/SQL%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%B7%AF%EF%BC%88%E7%BB%83%E4%B9%A0%EF%BC%89--%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B3%BB%E7%BB%9F%E6%95%99%E7%A8%8B%E7%AC%AC%E4%B8%89%E7%AB%A0%E7%BB%83%E4%B9%A0/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://yoursite.com" target="_blank">空城机</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="https://i.loli.net/2019/07/21/5d33d5dc1531213134.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css"/><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js"></script></div></div><div class="post-reward"><a class="reward-button button--primary button--animated"> <i class="fa fa-qrcode"></i> 打赏<div class="reward-main"><ul class="reward-all"><li class="reward-item"><img class="post-qr-code__img" src="/img/wechat.jpg" alt="微信"/><div class="post-qr-code__desc">微信</div></li><li class="reward-item"><img class="post-qr-code__img" src="/img/alipay.jpg" alt="支付寶"/><div class="post-qr-code__desc">支付寶</div></li></ul></div></a></div><nav class="pagination_post" id="pagination"><div class="prev-post pull_left"><a href="/2018/12/03/JavaScript%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%8D%81%E4%BA%94%EF%BC%89----%E7%A8%8B%E5%BA%8F%E8%B0%83%E8%AF%95%E4%B8%8E%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86/"><img class="prev_cover" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">JavaScript学习（十五）----程序调试与错误处理</div></div></a></div><div class="next-post pull_right"><a href="/2018/11/25/Unity3D%20%E7%89%A9%E4%BD%93%E8%BF%90%E5%8A%A8%E5%B0%8F%E6%B8%B8%E6%88%8F%E5%90%8E%E7%BB%AD/"><img class="next_cover" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Unity3D 物体运动小游戏后续</div></div></a></div></nav></article></main><footer id="footer" data-type="color"><div id="footer-wrap"><div class="copyright">&copy;2018 - 2020 By 空城机</div><div class="framework-info"><span>驱动 </span><a href="https://hexo.io" target="_blank" rel="noopener"><span>Hexo</span></a><span class="footer-separator">|</span><span>主题 </span><a href="https://github.com/jerryc127/hexo-theme-butterfly" target="_blank" rel="noopener"><span>Butterfly</span></a></div></div></footer></div><section class="rightside" id="rightside"><div id="rightside-config-hide"><i class="fa fa-book" id="readmode" title="阅读模式"></i><i class="fa fa-plus" id="font_plus" title="放大字体"></i><i class="fa fa-minus" id="font_minus" title="缩小字体"></i><a class="translate_chn_to_cht" id="translateLink" href="javascript:translatePage();" title="简繁转换" target="_self">繁</a><i class="darkmode fa fa-moon-o" id="darkmode" title="夜间模式"></i></div><div id="rightside-config-show"><div id="rightside_config" title="设置"><i class="fa fa-cog" aria-hidden="true"></i></div><i class="fa fa-list-ul close" id="mobile-toc-button" title="目录" aria-hidden="true"></i><i class="fa fa-arrow-up" id="go-up" title="回到顶部" aria-hidden="true"></i></div></section><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page@latest/instantpage.min.js" type="module"></script></body></html>

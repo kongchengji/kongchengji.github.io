@@ -1,0 +1,294 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>JavaScript学习（十三）---RegExp对象 | 空城机</title><meta name="description" content="目录  创建RegExp对象  1.使用RegExp的显式构造函数  2.使用RegExp的隐式构造函数，采用纯文本格式  RegExp对象的属性  静态属性：  index属性：  input属性：  lastIndex属性：  lastMath属性：  lastParen属性：  leftContext属性：  rightContext属性：  $1...$9属性：  实例属性：  glo"><meta name="author" content="空城机"><meta name="copyright" content="空城机"><meta name="format-detection" content="telephone=no"><link rel="shortcut icon" href="/img/favicon.png"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="dns-prefetch" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="https://fonts.googleapis.com" crossorigin="crossorigin"/><link rel="dns-prefetch" href="https://fonts.googleapis.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="dns-prefetch" href="//busuanzi.ibruce.info"/><meta name="twitter:card" content="summary"><meta name="twitter:title" content="JavaScript学习（十三）---RegExp对象"><meta name="twitter:description" content="目录  创建RegExp对象  1.使用RegExp的显式构造函数  2.使用RegExp的隐式构造函数，采用纯文本格式  RegExp对象的属性  静态属性：  index属性：  input属性：  lastIndex属性：  lastMath属性：  lastParen属性：  leftContext属性：  rightContext属性：  $1...$9属性：  实例属性：  glo"><meta name="twitter:image" content="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg"><meta property="og:type" content="article"><meta property="og:title" content="JavaScript学习（十三）---RegExp对象"><meta property="og:url" content="http://yoursite.com/2018/11/18/JavaScript%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%8D%81%E4%B8%89%EF%BC%89---RegExp%E5%AF%B9%E8%B1%A1/"><meta property="og:site_name" content="空城机"><meta property="og:description" content="目录  创建RegExp对象  1.使用RegExp的显式构造函数  2.使用RegExp的隐式构造函数，采用纯文本格式  RegExp对象的属性  静态属性：  index属性：  input属性：  lastIndex属性：  lastMath属性：  lastParen属性：  leftContext属性：  rightContext属性：  $1...$9属性：  实例属性：  glo"><meta property="og:image" content="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg"><meta property="article:published_time" content="2018-11-18T09:10:28.000Z"><meta property="article:modified_time" content="2020-05-10T11:33:41.771Z"><script src="https://cdn.jsdelivr.net/npm/js-cookie/dist/js.cookie.min.js"></script><script>var autoChangeMode = '1'
+var t = Cookies.get("theme")
+if (autoChangeMode == '1'){
+  var isDarkMode = window.matchMedia("(prefers-color-scheme: dark)").matches
+  var isLightMode = window.matchMedia("(prefers-color-scheme: light)").matches
+  var isNotSpecified = window.matchMedia("(prefers-color-scheme: no-preference)").matches
+  var hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+  if (t === undefined){
+    if (isLightMode) activateLightMode()
+    else if (isDarkMode) activateDarkMode()
+    else if (isNotSpecified || hasNoSupport){
+      console.log('You specified no preference for a color scheme or your browser does not support it. I Schedule dark mode during night time.')
+      var now = new Date()
+      var hour = now.getHours()
+      var isNight = hour < 6 || hour >= 18
+      isNight ? activateDarkMode() : activateLightMode()
+  }
+  } else if (t == 'light') activateLightMode()
+  else activateDarkMode()
+
+} else if (autoChangeMode == '2'){
+  now = new Date();
+  hour = now.getHours();
+  isNight = hour < 6 || hour >= 18
+  if(t === undefined) isNight? activateDarkMode() : activateLightMode()
+  else if (t === 'light') activateLightMode()
+  else activateDarkMode() 
+} else {
+  if ( t == 'dark' ) activateDarkMode()
+  else if ( t == 'light') activateLightMode()
+}
+
+function activateDarkMode(){
+  document.documentElement.setAttribute('data-theme', 'dark')
+  if (document.querySelector('meta[name="theme-color"]') !== null){
+    document.querySelector('meta[name="theme-color"]').setAttribute('content','#000')
+  }
+}
+function activateLightMode(){
+  document.documentElement.setAttribute('data-theme', 'light')
+  if (document.querySelector('meta[name="theme-color"]') !== null){
+  document.querySelector('meta[name="theme-color"]').setAttribute('content','#fff')
+  }
+}</script><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@latest/css/font-awesome.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css"><link rel="canonical" href="http://yoursite.com/2018/11/18/JavaScript%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%8D%81%E4%B8%89%EF%BC%89---RegExp%E5%AF%B9%E8%B1%A1/"><link rel="prev" title="JavaScript学习（十四）---String对象中的模式匹配方法" href="http://yoursite.com/2018/11/20/JavaScript%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%8D%81%E5%9B%9B%EF%BC%89---String%E5%AF%B9%E8%B1%A1%E4%B8%AD%E7%9A%84%E6%A8%A1%E5%BC%8F%E5%8C%B9%E9%85%8D%E6%96%B9%E6%B3%95/"><link rel="next" title="Unity3D 物体运动小游戏" href="http://yoursite.com/2018/11/16/Unity3D%20%E7%89%A9%E4%BD%93%E8%BF%90%E5%8A%A8%E5%B0%8F%E6%B8%B8%E6%88%8F/"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Titillium+Web"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: {"defaultEncoding":2,"translateDelay":0,"cookieDomain":"https://xxx/","msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"簡"},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  bookmark: {
+    message_prev: '按',
+    message_next: '键将本页加入书签'
+  },
+  runtime_unit: '天',
+  runtime: true,
+  copyright: undefined,
+  ClickShowText: undefined,
+  medium_zoom: false,
+  fancybox: true,
+  Snackbar: undefined,
+  baiduPush: false,
+  highlightCopy: true,
+  highlightLang: true,
+  highlightShrink: 'false',
+  isFontAwesomeV5: false,
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+  
+}</script><script>var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isSidebar: true  
+  }</script><noscript><style>
+#page-header {
+  opacity: 1
+}
+.justified-gallery img{
+  opacity: 1
+}
+</style></noscript><meta name="generator" content="Hexo 4.2.0"></head><body><div id="mobile-sidebar"><div id="menu_mask"></div><div id="mobile-sidebar-menus"><div class="mobile_author_icon"><img class="avatar-img" src="/img/avatar.png" onerror="onerror=null;src='/img/tou5.jpg'" alt="avatar"/></div><div class="mobile_post_data"><div class="mobile_data_item is-center"><div class="mobile_data_link"><a href="/archives/"><div class="headline">文章</div><div class="length_num">154</div></a></div></div><div class="mobile_data_item is-center">      <div class="mobile_data_link"><a href="/tags/"><div class="headline">标签</div><div class="length_num">45</div></a></div></div><div class="mobile_data_item is-center">     <div class="mobile_data_link"><a href="/categories/"><div class="headline">分类</div><div class="length_num">15</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fa fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fa fa-heart"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page"><i class="fa-fw fa fa-list" aria-hidden="true"></i><span> 清单</span><i class="fa fa-chevron-down menus-expand" aria-hidden="true"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/music/"><i class="fa-fw fa fa-music"></i><span> 音乐</span></a></li><li><a class="site-page" href="/movies/"><i class="fa-fw fa fa-film"></i><span> 电影</span></a></li></ul></div></div></div></div><i class="fa fa-arrow-right on" id="toggle-sidebar" aria-hidden="true">     </i><div id="sidebar"><div class="sidebar-toc"><div class="sidebar-toc__title">目录</div><div class="sidebar-toc__progress"><span class="progress-notice">你已经读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar">     </div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#"><span class="toc-number">1.</span> <span class="toc-text">创建RegExp对象</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1.%E4%BD%BF%E7%94%A8RegExp%E7%9A%84%E6%98%BE%E5%BC%8F%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0"><span class="toc-number">1.1.</span> <span class="toc-text">1.使用RegExp的显式构造函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2.%E4%BD%BF%E7%94%A8RegExp%E7%9A%84%E9%9A%90%E5%BC%8F%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%EF%BC%8C%E9%87%87%E7%94%A8%E7%BA%AF%E6%96%87%E6%9C%AC%E6%A0%BC%E5%BC%8F"><span class="toc-number">1.2.</span> <span class="toc-text">2.使用RegExp的隐式构造函数，采用纯文本格式</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#RegExp%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%B1%9E%E6%80%A7"><span class="toc-number">2.</span> <span class="toc-text">RegExp对象的属性</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9D%99%E6%80%81%E5%B1%9E%E6%80%A7%EF%BC%9A"><span class="toc-number">2.1.</span> <span class="toc-text">静态属性：</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#index%E5%B1%9E%E6%80%A7%EF%BC%9A"><span class="toc-number">2.1.1.</span> <span class="toc-text">index属性：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#input%E5%B1%9E%E6%80%A7%EF%BC%9A"><span class="toc-number">2.1.2.</span> <span class="toc-text">input属性：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#lastIndex%E5%B1%9E%E6%80%A7%EF%BC%9A"><span class="toc-number">2.1.3.</span> <span class="toc-text">lastIndex属性：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#lastMath%E5%B1%9E%E6%80%A7%EF%BC%9A"><span class="toc-number">2.1.4.</span> <span class="toc-text">lastMath属性：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#lastParen%E5%B1%9E%E6%80%A7%EF%BC%9A"><span class="toc-number">2.1.5.</span> <span class="toc-text">lastParen属性：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#leftContext%E5%B1%9E%E6%80%A7%EF%BC%9A"><span class="toc-number">2.1.6.</span> <span class="toc-text">leftContext属性：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#rightContext%E5%B1%9E%E6%80%A7%EF%BC%9A"><span class="toc-number">2.1.7.</span> <span class="toc-text">rightContext属性：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%241...%249%E5%B1%9E%E6%80%A7%EF%BC%9A"><span class="toc-number">2.2.</span> <span class="toc-text">$1...$9属性：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E4%BE%8B%E5%B1%9E%E6%80%A7%EF%BC%9A"><span class="toc-number">2.3.</span> <span class="toc-text">实例属性：</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#global%E5%B1%9E%E6%80%A7%EF%BC%9A"><span class="toc-number">2.3.1.</span> <span class="toc-text">global属性：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ignoreCase%E5%B1%9E%E6%80%A7%EF%BC%9A"><span class="toc-number">2.3.2.</span> <span class="toc-text">ignoreCase属性：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#multiline%E5%B1%9E%E6%80%A7%3A"><span class="toc-number">2.3.3.</span> <span class="toc-text">multiline属性:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#source%E5%B1%9E%E6%80%A7%EF%BC%9A"><span class="toc-number">2.3.4.</span> <span class="toc-text">source属性：</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#"><span class="toc-number">3.</span> <span class="toc-text"> </span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#RegExp%E5%AF%B9%E8%B1%A1%E7%9A%84%E6%96%B9%E6%B3%95"><span class="toc-number">4.</span> <span class="toc-text">RegExp对象的方法</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1.exec()%E6%96%B9%E6%B3%95"><span class="toc-number">4.1.</span> <span class="toc-text">1.exec()方法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%AD%E6%B3%95%EF%BC%9ArgExp.exec(str)"><span class="toc-number">4.1.1.</span> <span class="toc-text">语法：rgExp.exec(str)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#rgExp%3A"><span class="toc-number">4.1.2.</span> <span class="toc-text">rgExp:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#str%3A"><span class="toc-number">4.1.3.</span> <span class="toc-text">str:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BE%8B%E5%AD%90%EF%BC%9A"><span class="toc-number">4.1.4.</span> <span class="toc-text">例子：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2.test()%E6%96%B9%E6%B3%95"><span class="toc-number">4.2.</span> <span class="toc-text">2.test()方法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%AD%E6%B3%95%EF%BC%9Argexp.test(str)"><span class="toc-number">4.2.1.</span> <span class="toc-text">语法：rgexp.test(str)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#"><span class="toc-number">4.2.2.</span> <span class="toc-text">例子：</span></a></li></ol></li></ol></li></ol></div></div></div><div id="body-wrap"><div class="post-bg" id="nav" style="background-image: url(https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg)"><div id="page-header"><span class="pull_left" id="blog_name"><a class="blog_title" id="site-name" href="/">空城机</a></span><span class="pull_right menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fa fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fa fa-heart"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page"><i class="fa-fw fa fa-list" aria-hidden="true"></i><span> 清单</span><i class="fa fa-chevron-down menus-expand" aria-hidden="true"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/music/"><i class="fa-fw fa fa-music"></i><span> 音乐</span></a></li><li><a class="site-page" href="/movies/"><i class="fa-fw fa fa-film"></i><span> 电影</span></a></li></ul></div></div><span class="toggle-menu close"><a class="site-page"><i class="fa fa-bars fa-fw" aria-hidden="true"></i></a></span></span></div><div id="post-info"><div id="post-title"><div class="posttitle">JavaScript学习（十三）---RegExp对象</div></div><div id="post-meta"><div class="meta-firstline"><time class="post-meta__date"><span class="post-meta__date-created" title="发表于 2018-11-18 17:10:28"><i class="fa fa-calendar" aria-hidden="true"></i> 发表于 2018-11-18</span><span class="post-meta__separator">|</span><span class="post-meta__date-updated" title="更新于 2020-05-10 19:33:41"><i class="fa fa-history" aria-hidden="true"></i> 更新于 2020-05-10</span></time><span class="post-meta__categories"><span class="post-meta__separator">|</span><i class="fa fa-inbox post-meta__icon" aria-hidden="true"></i><a class="post-meta__categories" href="/categories/JavaScript/">JavaScript</a></span></div><div class="meta-secondline"> </div><div class="meta-thirdline"><span class="post-meta-pv-cv"><i class="fa fa-eye post-meta__icon" aria-hidden="true"> </i><span>阅读量:</span><span id="busuanzi_value_page_pv"></span></span><span class="post-meta-commentcount"></span></div></div></div></div><main class="layout_post" id="content-inner"><article id="post"><div class="post-content" id="article-container"><a id="more"></a>
+
+<p id="main-toc"><strong>目录</strong></p>
+
+<p id="%E5%88%9B%E5%BB%BARegExp%E5%AF%B9%E8%B1%A1-toc" style="margin-left:0px;"><a href="#%E5%88%9B%E5%BB%BARegExp%E5%AF%B9%E8%B1%A1">创建RegExp对象</a></p>
+
+<p id="1.%E4%BD%BF%E7%94%A8RegExp%E7%9A%84%E6%98%BE%E5%BC%8F%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0-toc" style="margin-left:40px;"><a href="#1.%E4%BD%BF%E7%94%A8RegExp%E7%9A%84%E6%98%BE%E5%BC%8F%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0">1.使用RegExp的显式构造函数</a></p>
+
+<p id="2.%E4%BD%BF%E7%94%A8RegExp%E7%9A%84%E9%9A%90%E5%BC%8F%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%EF%BC%8C%E9%87%87%E7%94%A8%E7%BA%AF%E6%96%87%E6%9C%AC%E6%A0%BC%E5%BC%8F-toc" style="margin-left:40px;"><a href="#2.%E4%BD%BF%E7%94%A8RegExp%E7%9A%84%E9%9A%90%E5%BC%8F%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%EF%BC%8C%E9%87%87%E7%94%A8%E7%BA%AF%E6%96%87%E6%9C%AC%E6%A0%BC%E5%BC%8F">2.使用RegExp的隐式构造函数，采用纯文本格式</a></p>
+
+<p id="RegExp%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%B1%9E%E6%80%A7-toc" style="margin-left:0px;"><a href="#RegExp%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%B1%9E%E6%80%A7">RegExp对象的属性</a></p>
+
+<p id="%E9%9D%99%E6%80%81%E5%B1%9E%E6%80%A7%EF%BC%9A-toc" style="margin-left:40px;"><a href="#%E9%9D%99%E6%80%81%E5%B1%9E%E6%80%A7%EF%BC%9A">静态属性：</a></p>
+
+<p id="index%E5%B1%9E%E6%80%A7%EF%BC%9A-toc" style="margin-left:80px;"><a href="#index%E5%B1%9E%E6%80%A7%EF%BC%9A">index属性：</a></p>
+
+<p id="input%E5%B1%9E%E6%80%A7%EF%BC%9A-toc" style="margin-left:80px;"><a href="#input%E5%B1%9E%E6%80%A7%EF%BC%9A">input属性：</a></p>
+
+<p id="lastIndex%E5%B1%9E%E6%80%A7%EF%BC%9A-toc" style="margin-left:80px;"><a href="#lastIndex%E5%B1%9E%E6%80%A7%EF%BC%9A">lastIndex属性：</a></p>
+
+<p id="lastMath%E5%B1%9E%E6%80%A7%EF%BC%9A-toc" style="margin-left:80px;"><a href="#lastMath%E5%B1%9E%E6%80%A7%EF%BC%9A">lastMath属性：</a></p>
+
+<p id="lastParen%E5%B1%9E%E6%80%A7%EF%BC%9A-toc" style="margin-left:80px;"><a href="#lastParen%E5%B1%9E%E6%80%A7%EF%BC%9A">lastParen属性：</a></p>
+
+<p id="leftContext%E5%B1%9E%E6%80%A7%EF%BC%9A-toc" style="margin-left:80px;"><a href="#leftContext%E5%B1%9E%E6%80%A7%EF%BC%9A">leftContext属性：</a></p>
+
+<p id="rightContext%E5%B1%9E%E6%80%A7%EF%BC%9A-toc" style="margin-left:80px;"><a href="#rightContext%E5%B1%9E%E6%80%A7%EF%BC%9A">rightContext属性：</a></p>
+
+<p id="%241...%249%E5%B1%9E%E6%80%A7%EF%BC%9A-toc" style="margin-left:40px;"><a href="#%241...%249%E5%B1%9E%E6%80%A7%EF%BC%9A">$1...$9属性：</a></p>
+
+<p id="%E5%AE%9E%E4%BE%8B%E5%B1%9E%E6%80%A7%EF%BC%9A-toc" style="margin-left:40px;"><a href="#%E5%AE%9E%E4%BE%8B%E5%B1%9E%E6%80%A7%EF%BC%9A">实例属性：</a></p>
+
+<p id="global%E5%B1%9E%E6%80%A7%EF%BC%9A-toc" style="margin-left:80px;"><a href="#global%E5%B1%9E%E6%80%A7%EF%BC%9A">global属性：</a></p>
+
+<p id="ignoreCase%E5%B1%9E%E6%80%A7%EF%BC%9A-toc" style="margin-left:80px;"><a href="#ignoreCase%E5%B1%9E%E6%80%A7%EF%BC%9A">ignoreCase属性：</a></p>
+
+<p id="multiline%E5%B1%9E%E6%80%A7%3A-toc" style="margin-left:80px;"><a href="#multiline%E5%B1%9E%E6%80%A7%3A">multiline属性:</a></p>
+
+<p id="source%E5%B1%9E%E6%80%A7%EF%BC%9A-toc" style="margin-left:80px;"><a href="#source%E5%B1%9E%E6%80%A7%EF%BC%9A">source属性：</a></p>
+
+<p id="-toc" style="margin-left:0px;"> </p>
+
+<p id="RegExp%E5%AF%B9%E8%B1%A1%E7%9A%84%E6%96%B9%E6%B3%95-toc" style="margin-left:0px;"><a href="#RegExp%E5%AF%B9%E8%B1%A1%E7%9A%84%E6%96%B9%E6%B3%95">RegExp对象的方法</a></p>
+
+<p id="1.exec()%E6%96%B9%E6%B3%95-toc" style="margin-left:40px;"><a href="#1.exec()%E6%96%B9%E6%B3%95">1.exec()方法</a></p>
+
+<p id="%E8%AF%AD%E6%B3%95%EF%BC%9ArgExp.exec(str)-toc" style="margin-left:80px;"><a href="#%E8%AF%AD%E6%B3%95%EF%BC%9ArgExp.exec(str)">语法：rgExp.exec(str)</a></p>
+
+<p id="rgExp%3A-toc" style="margin-left:80px;"><a href="#rgExp%3A">rgExp:</a></p>
+
+<p id="str%3A-toc" style="margin-left:80px;"><a href="#str%3A">str:</a></p>
+
+<p id="%E4%BE%8B%E5%AD%90%EF%BC%9A-toc" style="margin-left:80px;"><a href="#%E4%BE%8B%E5%AD%90%EF%BC%9A">例子：</a></p>
+
+<p id="2.test()%E6%96%B9%E6%B3%95-toc" style="margin-left:40px;"><a href="#2.test()%E6%96%B9%E6%B3%95">2.test()方法</a></p>
+
+<p id="%E8%AF%AD%E6%B3%95%EF%BC%9Argexp.test(str)-toc" style="margin-left:80px;"><a href="#%E8%AF%AD%E6%B3%95%EF%BC%9Argexp.test(str)">语法：rgexp.test(str)</a></p>
+
+<p style="margin-left:80px;"><a href="#%E4%BE%8B%E5%AD%90%EF%BC%9A">例子：</a></p>
+
+<hr id="hr-toc" /><h1>创建RegExp对象</h1>
+
+<p>每一条正则表达式模式对应一个RegExp实例，有两种方式可以创建RegExp对象的实例。</p>
+
+<h2 id="1.%E4%BD%BF%E7%94%A8RegExp%E7%9A%84%E6%98%BE%E5%BC%8F%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0">1.使用RegExp的显式构造函数</h2>
+
+<p>语法：new RegExp("pattern"[,"flags"])    //即new RegExp(" 模式 "[," 标记 "])</p>
+
+<h2 id="2.%E4%BD%BF%E7%94%A8RegExp%E7%9A%84%E9%9A%90%E5%BC%8F%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%EF%BC%8C%E9%87%87%E7%94%A8%E7%BA%AF%E6%96%87%E6%9C%AC%E6%A0%BC%E5%BC%8F">2.使用RegExp的隐式构造函数，采用纯文本格式</h2>
+
+<p>语法：/pattern/[flags]</p>
+
+<p>pattern部分为要使用的正则表达式模式文本，是必选项。</p>
+
+<p>flags部分设置正则表达式的标志信息，是可选项。如果设置flags部分，在第一种方式中，以字符串形式存在；在第二种方式中，以文本的形式紧接在最后一个‘/’字符之后。flags可以是一下标志字符的组合。</p>
+
+<p>g是全局标志。如果设置了这个标志，对某个文本执行搜索和替换操作时，将对文本中所有匹配的部分起作用。如果不设置这个标志，则仅搜索和替换最早匹配的文本内容。</p>
+
+<p>i是忽略大小写标志。如果设置了这个标志，进行匹配时将忽略大小写。</p>
+
+<p>m是多行标志。如果不设置这个标志，那么元字符‘^’只与整个被搜索字符串的开始位置相匹配。而元字符‘$’只与整个被搜索字符串的结束位置相匹配。</p>
+
+<p> </p>
+
+<h1 id="RegExp%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%B1%9E%E6%80%A7">RegExp对象的属性</h1>
+
+<p>RegExp对象的属性分为静态属性和实例属性。</p>
+
+<h2 id="%E9%9D%99%E6%80%81%E5%B1%9E%E6%80%A7%EF%BC%9A">静态属性：</h2>
+
+<p>RegExp对象的静态属性包括index、input、lastIndex、lastMath、lastParen、leftContext、rightContext以及$1...$9。</p>
+
+<h3 id="index%E5%B1%9E%E6%80%A7%EF%BC%9A">index属性：</h3>
+
+<p>是当前表达式模式首次匹配内容的开始位置，从0开始计数。其初始值为-1，每次匹配成功，index属性都会随之改变。</p>
+
+<h3 id="input%E5%B1%9E%E6%80%A7%EF%BC%9A">input属性：</h3>
+
+<p>返回当前所作用的字符串，可以简写为$_，初始值为空字符串。</p>
+
+<h3 id="lastIndex%E5%B1%9E%E6%80%A7%EF%BC%9A">lastIndex属性：</h3>
+
+<p>是当前表达式模式首次匹配内容中最后一个字符的下 一个位置，从0 开始计数，常被作为继续搜索时的起始位置，初始值为1,表示从起始位置开始搜索，每次成功匹配时，lastIndex属性值都会随之改变。</p>
+
+<h3 id="lastMath%E5%B1%9E%E6%80%A7%EF%BC%9A">lastMath属性：</h3>
+
+<p>是当前表达式模式的最后一个匹配字符串，可以简写为$&amp;。其初始值为空字符串("")。在每次成功匹配时，lastMatch 属性值都会随之改变。</p>
+
+<h3 id="lastParen%E5%B1%9E%E6%80%A7%EF%BC%9A">lastParen属性：</h3>
+
+<p>如果表达式模式中有括起来的子匹配，是当前表达式模式中最后的子匹配所匹配到的子字符串，可以简写为$+。其初始值为空字符串("")。每次成功匹配时，lastParen 属性值都会随之改变。</p>
+
+<h3 id="leftContext%E5%B1%9E%E6%80%A7%EF%BC%9A">leftContext属性：</h3>
+
+<p>是当前表达式模式最后一个匹配字符串左边的所有内容，可以简写为$’(其中'`'为键盘上Esc键下边的反单引号)。初始值为空字符串("")。每次成功匹配时，其属性值都会随之改变。</p>
+
+<h3 id="rightContext%E5%B1%9E%E6%80%A7%EF%BC%9A">rightContext属性：</h3>
+
+<p>是当前表达式模式最后一个匹配字符串右边的所有内容，可以简写为$’(其中'`'为键盘上Esc键下边的反单引号)。初始值为空字符串("")。每次成功匹配时，其属性值都会随之改变。</p>
+
+<h2 id="%241...%249%E5%B1%9E%E6%80%A7%EF%BC%9A">$1...$9属性：</h2>
+
+<p>这些属性是只读的。如果表达式模式中有括起来的子匹配，$1..$9 属性值分别是第1~9个子匹配所捕获到的内容。如果有超过9个以上的子匹配，$1..$9属性分别对应级后的9个子匹配。在一个表达式模式中，可以指定任意多个带括号的子匹配，但RegExp对象只能存储最后的9个子匹配的结果。在RegExp实例对象的一些方法所返回的结果数组中， 可以获得所有圆括号内的子匹配结果。</p>
+
+<h2 id="%E5%AE%9E%E4%BE%8B%E5%B1%9E%E6%80%A7%EF%BC%9A">实例属性：</h2>
+
+<p>RegExp的实例有几个只读的属性，其中global表示是否为全局匹配，ignoreCase 表示是否忽略大小写，mutiline表示是否为多行匹配，source 是正则式的源文本，如“/[ab]/g"”的源文本就是“[ab]"。另外还有“ 个可写的属性是lastIndex, 表示下次执行匹配时的起始位置。下面对这几种属性进行详细说明。</p>
+
+<h3 id="global%E5%B1%9E%E6%80%A7%EF%BC%9A">global属性：</h3>
+
+<p>返回创建RegExp对象实例时指定的global标志(g) 的状态。如果创建RegExp对象实例时设置了g标志，该属性返回true,  否则返回false,默认值为false.</p>
+
+<h3 id="ignoreCase%E5%B1%9E%E6%80%A7%EF%BC%9A">ignoreCase属性：</h3>
+
+<p>返回创建RegExp对象实例时指定的ignoreCase标志(i)的状态。如果创建RegExp对象实例时设置了i标志，该属性返回true,否则返回false,默认值为false.</p>
+
+<h3 id="multiline%E5%B1%9E%E6%80%A7%3A">multiline属性:</h3>
+
+<p>返回创建RegExp对象实例时指定的multiline 标志( m)的状态。如果创建RegExp对象实例时设置了m标志，该属性返回tnue,否则返回false, 默认值为false.</p>
+
+<h3 id="source%E5%B1%9E%E6%80%A7%EF%BC%9A">source属性：</h3>
+
+<p>返回创建RegExp对象实例时指定的表达式文本字符串。</p>
+
+<h1> </h1>
+
+<h1 id="RegExp%E5%AF%B9%E8%B1%A1%E7%9A%84%E6%96%B9%E6%B3%95">RegExp对象的方法</h1>
+
+<h2 id="1.exec()%E6%96%B9%E6%B3%95">1.exec()方法</h2>
+
+<p>exec()方法用正则表达式模式在字符串中运行查找，并返回包含该查询结果的一个数组。</p>
+
+<h3 id="%E8%AF%AD%E6%B3%95%EF%BC%9ArgExp.exec(str)">语法：rgExp.exec(str)</h3>
+
+<h3 id="rgExp%3A">rgExp:</h3>
+
+<p>必选项。包含正则表达式模式和可用标志的正则表达式对象。</p>
+
+<h3 id="str%3A">str:</h3>
+
+<p>必选项。要在其中执行查找的Sring对象或字符串文字。如果exec()方法没有找到匹配，则返回null;如果找到匹配，则exec()方法返回一个数组， 并且更新全局RegExp对象的属性，以反映匹配结果。数组的0元素包含了完整的匹配，而第1~n元素中包合的是匹配中出现的任意一个子匹配。这相当于没有设置全局标志(g) 的match()方法。</p>
+
+<p>如果为正则表达式设置了全局标志，exec()方法从以lastIndex的值指示的位置开始查找:如果没有设置全局标志，exec()方法忽略lastIndex的值，从字符串的起始位置开始搜索。<br />
+exec()方法返回的数组有3个属性，分别是input、index和lastIndex。input属性包含了整个被查找的字符串。index属性中包含了整个被查找字符串中匹配的子字符串的位置。lastIndex属性包含了匹配中最后一个字符串的下一个位置。</p>
+
+<h3 id="%E4%BE%8B%E5%AD%90%EF%BC%9A">例子：</h3>
+
+<pre class="has">
+<code class="language-javascript">        &lt;script language="JavaScript"&gt;
+            function RegExpTest(){
+
+                    var src="I'm a good man";
+                    //创建正则表达式模式
+                    var re=/\w+/g;    
+                    var arr;
+                    while((arr=re.exec(src))!=null)
+                    {
+                        document.write(arr.index+"-"+arr.lastIndex+arr+"\t");
+                    }
+
+            }
+            document.write(RegExpTest());
+        &lt;/script&gt;    </code></pre>
+
+<h2 id="2.test()%E6%96%B9%E6%B3%95">2.test()方法</h2>
+
+<p>test()方法返回一个Boolean值，指出在被查找的字符串中是否存在模式。</p>
+
+<h3 id="%E8%AF%AD%E6%B3%95%EF%BC%9Argexp.test(str)">语法：rgexp.test(str)</h3>
+
+<h3>例子：</h3>
+
+<pre class="has">
+<code class="language-javascript">        &lt;script language="JavaScript"&gt;
+            function TestDemo(re,s){
+                var s1; //声明变量
+                //检查字符串是否存在正则表达式
+                if(re.test(s)){   //测试是否存在
+                    s1 = "包含";  //s包含模式
+                }else{
+                    s1="不包含";  //s不包含模式
+                }
+                return("'"+s+"'"+s1+"'"+re.source+"'");
+            }
+
+            document.write(TestDemo(/boy/,"I am a good boy"));
+        &lt;/script&gt;    </code></pre>
+
+<p><img alt="" class="has" height="134" src="https://img-blog.csdnimg.cn/20181118171019203.png" width="309" /></p></div><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">空城机</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://yoursite.com/2018/11/18/JavaScript%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%8D%81%E4%B8%89%EF%BC%89---RegExp%E5%AF%B9%E8%B1%A1/">http://yoursite.com/2018/11/18/JavaScript%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%8D%81%E4%B8%89%EF%BC%89---RegExp%E5%AF%B9%E8%B1%A1/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://yoursite.com" target="_blank">空城机</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="https://i.loli.net/2019/07/21/5d33d5dc1531213134.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css"/><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js"></script></div></div><div class="post-reward"><a class="reward-button button--primary button--animated"> <i class="fa fa-qrcode"></i> 打赏<div class="reward-main"><ul class="reward-all"><li class="reward-item"><img class="post-qr-code__img" src="/img/wechat.jpg" alt="微信"/><div class="post-qr-code__desc">微信</div></li><li class="reward-item"><img class="post-qr-code__img" src="/img/alipay.jpg" alt="支付寶"/><div class="post-qr-code__desc">支付寶</div></li></ul></div></a></div><nav class="pagination_post" id="pagination"><div class="prev-post pull_left"><a href="/2018/11/20/JavaScript%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%8D%81%E5%9B%9B%EF%BC%89---String%E5%AF%B9%E8%B1%A1%E4%B8%AD%E7%9A%84%E6%A8%A1%E5%BC%8F%E5%8C%B9%E9%85%8D%E6%96%B9%E6%B3%95/"><img class="prev_cover" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">JavaScript学习（十四）---String对象中的模式匹配方法</div></div></a></div><div class="next-post pull_right"><a href="/2018/11/16/Unity3D%20%E7%89%A9%E4%BD%93%E8%BF%90%E5%8A%A8%E5%B0%8F%E6%B8%B8%E6%88%8F/"><img class="next_cover" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Unity3D 物体运动小游戏</div></div></a></div></nav></article></main><footer id="footer" data-type="color"><div id="footer-wrap"><div class="copyright">&copy;2018 - 2020 By 空城机</div><div class="framework-info"><span>驱动 </span><a href="https://hexo.io" target="_blank" rel="noopener"><span>Hexo</span></a><span class="footer-separator">|</span><span>主题 </span><a href="https://github.com/jerryc127/hexo-theme-butterfly" target="_blank" rel="noopener"><span>Butterfly</span></a></div></div></footer></div><section class="rightside" id="rightside"><div id="rightside-config-hide"><i class="fa fa-book" id="readmode" title="阅读模式"></i><i class="fa fa-plus" id="font_plus" title="放大字体"></i><i class="fa fa-minus" id="font_minus" title="缩小字体"></i><a class="translate_chn_to_cht" id="translateLink" href="javascript:translatePage();" title="简繁转换" target="_self">繁</a><i class="darkmode fa fa-moon-o" id="darkmode" title="夜间模式"></i></div><div id="rightside-config-show"><div id="rightside_config" title="设置"><i class="fa fa-cog" aria-hidden="true"></i></div><i class="fa fa-list-ul close" id="mobile-toc-button" title="目录" aria-hidden="true"></i><i class="fa fa-arrow-up" id="go-up" title="回到顶部" aria-hidden="true"></i></div></section><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page@latest/instantpage.min.js" type="module"></script></body></html>

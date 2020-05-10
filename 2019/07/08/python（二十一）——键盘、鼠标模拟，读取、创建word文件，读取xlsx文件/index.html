@@ -1,0 +1,308 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>python（二十一）——键盘、鼠标模拟，读取、创建word文件，读取xlsx文件 | 空城机</title><meta name="description" content="目录     键盘模拟  鼠标模拟  读取doc文件和docx文件  创建word文件  读取xlsx文件  键盘模拟     例子：模拟按下左下角的Windows   import win32con import win32api import time  # 按出win控制键 win32api.keybd_event(91,0,0,0) time.sleep(0.1) win32api.k"><meta name="keywords" content="python"><meta name="author" content="空城机"><meta name="copyright" content="空城机"><meta name="format-detection" content="telephone=no"><link rel="shortcut icon" href="/img/favicon.png"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="dns-prefetch" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="https://fonts.googleapis.com" crossorigin="crossorigin"/><link rel="dns-prefetch" href="https://fonts.googleapis.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="dns-prefetch" href="//busuanzi.ibruce.info"/><meta name="twitter:card" content="summary"><meta name="twitter:title" content="python（二十一）——键盘、鼠标模拟，读取、创建word文件，读取xlsx文件"><meta name="twitter:description" content="目录     键盘模拟  鼠标模拟  读取doc文件和docx文件  创建word文件  读取xlsx文件  键盘模拟     例子：模拟按下左下角的Windows   import win32con import win32api import time  # 按出win控制键 win32api.keybd_event(91,0,0,0) time.sleep(0.1) win32api.k"><meta name="twitter:image" content="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg"><meta property="og:type" content="article"><meta property="og:title" content="python（二十一）——键盘、鼠标模拟，读取、创建word文件，读取xlsx文件"><meta property="og:url" content="http://yoursite.com/2019/07/08/python%EF%BC%88%E4%BA%8C%E5%8D%81%E4%B8%80%EF%BC%89%E2%80%94%E2%80%94%E9%94%AE%E7%9B%98%E3%80%81%E9%BC%A0%E6%A0%87%E6%A8%A1%E6%8B%9F%EF%BC%8C%E8%AF%BB%E5%8F%96%E3%80%81%E5%88%9B%E5%BB%BAword%E6%96%87%E4%BB%B6%EF%BC%8C%E8%AF%BB%E5%8F%96xlsx%E6%96%87%E4%BB%B6/"><meta property="og:site_name" content="空城机"><meta property="og:description" content="目录     键盘模拟  鼠标模拟  读取doc文件和docx文件  创建word文件  读取xlsx文件  键盘模拟     例子：模拟按下左下角的Windows   import win32con import win32api import time  # 按出win控制键 win32api.keybd_event(91,0,0,0) time.sleep(0.1) win32api.k"><meta property="og:image" content="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg"><meta property="article:published_time" content="2019-07-08T08:51:17.000Z"><meta property="article:modified_time" content="2020-05-10T11:05:27.641Z"><script src="https://cdn.jsdelivr.net/npm/js-cookie/dist/js.cookie.min.js"></script><script>var autoChangeMode = '1'
+var t = Cookies.get("theme")
+if (autoChangeMode == '1'){
+  var isDarkMode = window.matchMedia("(prefers-color-scheme: dark)").matches
+  var isLightMode = window.matchMedia("(prefers-color-scheme: light)").matches
+  var isNotSpecified = window.matchMedia("(prefers-color-scheme: no-preference)").matches
+  var hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+  if (t === undefined){
+    if (isLightMode) activateLightMode()
+    else if (isDarkMode) activateDarkMode()
+    else if (isNotSpecified || hasNoSupport){
+      console.log('You specified no preference for a color scheme or your browser does not support it. I Schedule dark mode during night time.')
+      var now = new Date()
+      var hour = now.getHours()
+      var isNight = hour < 6 || hour >= 18
+      isNight ? activateDarkMode() : activateLightMode()
+  }
+  } else if (t == 'light') activateLightMode()
+  else activateDarkMode()
+
+} else if (autoChangeMode == '2'){
+  now = new Date();
+  hour = now.getHours();
+  isNight = hour < 6 || hour >= 18
+  if(t === undefined) isNight? activateDarkMode() : activateLightMode()
+  else if (t === 'light') activateLightMode()
+  else activateDarkMode() 
+} else {
+  if ( t == 'dark' ) activateDarkMode()
+  else if ( t == 'light') activateLightMode()
+}
+
+function activateDarkMode(){
+  document.documentElement.setAttribute('data-theme', 'dark')
+  if (document.querySelector('meta[name="theme-color"]') !== null){
+    document.querySelector('meta[name="theme-color"]').setAttribute('content','#000')
+  }
+}
+function activateLightMode(){
+  document.documentElement.setAttribute('data-theme', 'light')
+  if (document.querySelector('meta[name="theme-color"]') !== null){
+  document.querySelector('meta[name="theme-color"]').setAttribute('content','#fff')
+  }
+}</script><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@latest/css/font-awesome.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css"><link rel="canonical" href="http://yoursite.com/2019/07/08/python%EF%BC%88%E4%BA%8C%E5%8D%81%E4%B8%80%EF%BC%89%E2%80%94%E2%80%94%E9%94%AE%E7%9B%98%E3%80%81%E9%BC%A0%E6%A0%87%E6%A8%A1%E6%8B%9F%EF%BC%8C%E8%AF%BB%E5%8F%96%E3%80%81%E5%88%9B%E5%BB%BAword%E6%96%87%E4%BB%B6%EF%BC%8C%E8%AF%BB%E5%8F%96xlsx%E6%96%87%E4%BB%B6/"><link rel="prev" title="python（二十二）——python2、3区别，函数map、reduce、sorted，单元测试，远程链接" href="http://yoursite.com/2019/07/09/python%EF%BC%88%E4%BA%8C%E5%8D%81%E4%BA%8C%EF%BC%89%E2%80%94%E2%80%94python2%E3%80%813%E5%8C%BA%E5%88%AB%EF%BC%8C%E5%87%BD%E6%95%B0map%E3%80%81reduce%E3%80%81sorted%EF%BC%8C%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95%EF%BC%8C%E8%BF%9C%E7%A8%8B%E9%93%BE%E6%8E%A5/"><link rel="next" title="CSS回顾总结（四）——列表、属性选择器、文本标签、样式的继承" href="http://yoursite.com/2019/06/30/CSS%E5%9B%9E%E9%A1%BE%E6%80%BB%E7%BB%93%EF%BC%88%E5%9B%9B%EF%BC%89%E2%80%94%E2%80%94%E5%88%97%E8%A1%A8%E3%80%81%E5%B1%9E%E6%80%A7%E9%80%89%E6%8B%A9%E5%99%A8%E3%80%81%E6%96%87%E6%9C%AC%E6%A0%87%E7%AD%BE%E3%80%81%E6%A0%B7%E5%BC%8F%E7%9A%84%E7%BB%A7%E6%89%BF/"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Titillium+Web"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: {"defaultEncoding":2,"translateDelay":0,"cookieDomain":"https://xxx/","msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"簡"},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  bookmark: {
+    message_prev: '按',
+    message_next: '键将本页加入书签'
+  },
+  runtime_unit: '天',
+  runtime: true,
+  copyright: undefined,
+  ClickShowText: undefined,
+  medium_zoom: false,
+  fancybox: true,
+  Snackbar: undefined,
+  baiduPush: false,
+  highlightCopy: true,
+  highlightLang: true,
+  highlightShrink: 'false',
+  isFontAwesomeV5: false,
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+  
+}</script><script>var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isSidebar: true  
+  }</script><noscript><style>
+#page-header {
+  opacity: 1
+}
+.justified-gallery img{
+  opacity: 1
+}
+</style></noscript><meta name="generator" content="Hexo 4.2.0"></head><body><div id="mobile-sidebar"><div id="menu_mask"></div><div id="mobile-sidebar-menus"><div class="mobile_author_icon"><img class="avatar-img" src="/img/avatar.png" onerror="onerror=null;src='/img/tou5.jpg'" alt="avatar"/></div><div class="mobile_post_data"><div class="mobile_data_item is-center"><div class="mobile_data_link"><a href="/archives/"><div class="headline">文章</div><div class="length_num">154</div></a></div></div><div class="mobile_data_item is-center">      <div class="mobile_data_link"><a href="/tags/"><div class="headline">标签</div><div class="length_num">45</div></a></div></div><div class="mobile_data_item is-center">     <div class="mobile_data_link"><a href="/categories/"><div class="headline">分类</div><div class="length_num">15</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fa fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fa fa-heart"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page"><i class="fa-fw fa fa-list" aria-hidden="true"></i><span> 清单</span><i class="fa fa-chevron-down menus-expand" aria-hidden="true"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/music/"><i class="fa-fw fa fa-music"></i><span> 音乐</span></a></li><li><a class="site-page" href="/movies/"><i class="fa-fw fa fa-film"></i><span> 电影</span></a></li></ul></div></div></div></div><i class="fa fa-arrow-right on" id="toggle-sidebar" aria-hidden="true">     </i><div id="sidebar"><div class="sidebar-toc"><div class="sidebar-toc__title">目录</div><div class="sidebar-toc__progress"><span class="progress-notice">你已经读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar">     </div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%94%AE%E7%9B%98%E6%A8%A1%E6%8B%9F"><span class="toc-number">1.</span> <span class="toc-text">键盘模拟</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%BC%A0%E6%A0%87%E6%A8%A1%E6%8B%9F"><span class="toc-number">2.</span> <span class="toc-text">鼠标模拟</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%BB%E5%8F%96doc%E6%96%87%E4%BB%B6%E5%92%8Cdocx%E6%96%87%E4%BB%B6"><span class="toc-number">3.</span> <span class="toc-text">读取doc文件和docx文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%9B%E5%BB%BAword%E6%96%87%E4%BB%B6"><span class="toc-number">4.</span> <span class="toc-text">创建word文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%BB%E5%8F%96xlsx%E6%96%87%E4%BB%B6"><span class="toc-number">5.</span> <span class="toc-text">读取xlsx文件</span></a></li></ol></div></div></div><div id="body-wrap"><div class="post-bg" id="nav" style="background-image: url(https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg)"><div id="page-header"><span class="pull_left" id="blog_name"><a class="blog_title" id="site-name" href="/">空城机</a></span><span class="pull_right menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fa fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fa fa-heart"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page"><i class="fa-fw fa fa-list" aria-hidden="true"></i><span> 清单</span><i class="fa fa-chevron-down menus-expand" aria-hidden="true"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/music/"><i class="fa-fw fa fa-music"></i><span> 音乐</span></a></li><li><a class="site-page" href="/movies/"><i class="fa-fw fa fa-film"></i><span> 电影</span></a></li></ul></div></div><span class="toggle-menu close"><a class="site-page"><i class="fa fa-bars fa-fw" aria-hidden="true"></i></a></span></span></div><div id="post-info"><div id="post-title"><div class="posttitle">python（二十一）——键盘、鼠标模拟，读取、创建word文件，读取xlsx文件</div></div><div id="post-meta"><div class="meta-firstline"><time class="post-meta__date"><span class="post-meta__date-created" title="发表于 2019-07-08 16:51:17"><i class="fa fa-calendar" aria-hidden="true"></i> 发表于 2019-07-08</span><span class="post-meta__separator">|</span><span class="post-meta__date-updated" title="更新于 2020-05-10 19:05:27"><i class="fa fa-history" aria-hidden="true"></i> 更新于 2020-05-10</span></time><span class="post-meta__categories"><span class="post-meta__separator">|</span><i class="fa fa-inbox post-meta__icon" aria-hidden="true"></i><a class="post-meta__categories" href="/categories/python/">python</a></span></div><div class="meta-secondline"> </div><div class="meta-thirdline"><span class="post-meta-pv-cv"><i class="fa fa-eye post-meta__icon" aria-hidden="true"> </i><span>阅读量:</span><span id="busuanzi_value_page_pv"></span></span><span class="post-meta-commentcount"></span></div></div></div></div><main class="layout_post" id="content-inner"><article id="post"><div class="post-content" id="article-container"><a id="more"></a>
+
+<p id="main-toc"><strong>目录</strong></p>
+
+<p id="-toc" style="margin-left:40px;"> </p>
+
+<p id="%E9%94%AE%E7%9B%98%E6%A8%A1%E6%8B%9F-toc" style="margin-left:40px;"><a href="#%E9%94%AE%E7%9B%98%E6%A8%A1%E6%8B%9F">键盘模拟</a></p>
+
+<p id="%E9%BC%A0%E6%A0%87%E6%A8%A1%E6%8B%9F-toc" style="margin-left:40px;"><a href="#%E9%BC%A0%E6%A0%87%E6%A8%A1%E6%8B%9F">鼠标模拟</a></p>
+
+<p id="%E8%AF%BB%E5%8F%96doc%E6%96%87%E4%BB%B6%E5%92%8Cdocx%E6%96%87%E4%BB%B6-toc" style="margin-left:40px;"><a href="#%E8%AF%BB%E5%8F%96doc%E6%96%87%E4%BB%B6%E5%92%8Cdocx%E6%96%87%E4%BB%B6">读取doc文件和docx文件</a></p>
+
+<p id="%E5%88%9B%E5%BB%BAword%E6%96%87%E4%BB%B6-toc" style="margin-left:40px;"><a href="#%E5%88%9B%E5%BB%BAword%E6%96%87%E4%BB%B6">创建word文件</a></p>
+
+<p id="%E8%AF%BB%E5%8F%96xlsx%E6%96%87%E4%BB%B6-toc" style="margin-left:40px;"><a href="#%E8%AF%BB%E5%8F%96xlsx%E6%96%87%E4%BB%B6">读取xlsx文件</a></p>
+
+<hr id="hr-toc" /><h2 id="%E9%94%AE%E7%9B%98%E6%A8%A1%E6%8B%9F">键盘模拟</h2>
+
+<p> </p>
+
+<p>例子：模拟按下左下角的Windows</p>
+
+<pre class="has">
+<code class="language-python">import win32con
+import win32api
+import time
+
+# 按出win控制键
+win32api.keybd_event(91,0,0,0)
+time.sleep(0.1)
+win32api.keybd_event(91,0,win32con.KEYEVENTF_KEYUP,0)</code></pre>
+
+<p>运行结果：</p>
+
+<p style="text-align:center;"><img alt="" class="has" height="579" src="https://img-blog.csdnimg.cn/20190702213600664.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2MTcxMjg3,size_16,color_FFFFFF,t_70" width="374" /></p>
+
+<p>例子：最小化所有显示的窗口</p>
+
+<pre class="has">
+<code class="language-python"># 最小化所有显示的项目
+while True:
+    win32api.keybd_event(91,0,0,0)
+    time.sleep(0.1)
+    win32api.keybd_event(77, 0, 0, 0)
+    time.sleep(0.1)
+    win32api.keybd_event(77, 0, win32con.KEYEVENTF_KEYUP, 0)
+    win32api.keybd_event(91, 0, win32con.KEYEVENTF_KEYUP, 0)
+    time.sleep(3)</code></pre>
+
+<p> </p>
+
+<h2 id="%E9%BC%A0%E6%A0%87%E6%A8%A1%E6%8B%9F">鼠标模拟</h2>
+
+<p>例子：相当于在界面的（30，40）位置上连续按下两次</p>
+
+<pre class="has">
+<code class="language-python">import win32api
+import win32con
+import time
+
+#设置鼠标的位置
+win32api.SetCursorPos([30,40])
+time.sleep(0.1)
+#鼠标左键按下
+win32api.mouse_event(win32con.MOUSEEVENTF_LEFTDOWN,0,0,0)
+#鼠标左键抬起
+win32api.mouse_event(win32con.MOUSEEVENTF_LEFTUP,0,0,0)
+
+win32api.mouse_event(win32con.MOUSEEVENTF_LEFTDOWN,0,0,0)
+win32api.mouse_event(win32con.MOUSEEVENTF_LEFTUP,0,0,0)</code></pre>
+
+<p>运行结果： </p>
+
+<p><img alt="" class="has" height="155" src="https://img-blog.csdnimg.cn/20190708150147983.png" width="207" /> <img alt="" class="has" height="362" src="https://img-blog.csdnimg.cn/20190708150134869.png" width="284" /></p>
+
+<p> </p>
+
+<h2 id="%E8%AF%BB%E5%8F%96doc%E6%96%87%E4%BB%B6%E5%92%8Cdocx%E6%96%87%E4%BB%B6">读取doc文件和docx文件</h2>
+
+<p>例子：读取doc文件</p>
+
+<pre class="has">
+<code class="language-python">import win32com
+import win32com.client
+
+def readWordFile(path):
+    #调用系统word功能，可以处理doc和docxl两种文件
+    mw = win32com.client.Dispatch('Word.Application')
+    #打开文件
+    doc = mw.Documents.Open(path)
+    #从文件里取出每一段
+    for paragraph in doc.Paragraphs:
+        line = paragraph.Range.Text
+        print(line)
+    #关闭文件
+    doc.Close()
+    #退出word
+    mw.Quit()
+
+path = r'C:\Users\asus\Desktop\a.doc'
+readWordFile(path)</code></pre>
+
+<p>运行结果： </p>
+
+<p><img alt="" class="has" height="413" src="https://img-blog.csdnimg.cn/20190708151238593.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2MTcxMjg3,size_16,color_FFFFFF,t_70" width="1091" /></p>
+
+<p style="text-align:center;"><img alt="" class="has" height="174" src="https://img-blog.csdnimg.cn/20190708151250470.png" width="324" /></p>
+
+<p> </p>
+
+<h2 id="%E5%88%9B%E5%BB%BAword%E6%96%87%E4%BB%B6">创建word文件</h2>
+
+<p>例子：创建三个word文件</p>
+
+<pre class="has">
+<code class="language-python">import win32com
+import win32com.client
+import os
+
+def makeWordFile(filename,name):
+    word = win32com.client.Dispatch('Word.Application')
+    #让文档可见
+    word.Visible = True
+    #创建文档
+    doc = word.Documents.Add()
+    #写内容
+    #从头开始写
+    r = doc.Range(0,0)
+    r.InsertAfter('你好'+name + '\n')
+    r.InsertAfter('      则哇如多。。。\n')
+    #存储文件
+    doc.SaveAs(filename)
+    #关闭文件
+    doc.Close()
+    # 退出word
+    word.Quit()
+
+filenames = ['张三','李四','王五']
+for name in filenames:
+    filename = os.path.join(os.getcwd(),name)
+    makeWordFile(filename,name)</code></pre>
+
+<p>运行结果： </p>
+
+<p style="text-align:center;"><img alt="" class="has" height="92" src="https://img-blog.csdnimg.cn/20190708153037858.png" width="158" /></p>
+
+<p style="text-align:center;"><img alt="" class="has" height="90" src="https://img-blog.csdnimg.cn/20190708153117347.png" width="757" /></p>
+
+<p style="text-align:center;"><img alt="" class="has" height="355" src="https://img-blog.csdnimg.cn/20190708153138244.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2MTcxMjg3,size_16,color_FFFFFF,t_70" width="749" /></p>
+
+<p> </p>
+
+<h2 id="%E8%AF%BB%E5%8F%96xlsx%E6%96%87%E4%BB%B6">读取xlsx文件</h2>
+
+<p>要读取xlsx文件，需要先安装一个openpyxl包</p>
+
+<p style="text-align:center;"><img alt="" class="has" height="103" src="https://img-blog.csdnimg.cn/20190708154124165.png" width="545" /></p>
+
+<p>要准备读取的表格文件</p>
+
+<p style="text-align:center;"><img alt="" class="has" height="671" src="https://img-blog.csdnimg.cn/20190708154415601.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2MTcxMjg3,size_16,color_FFFFFF,t_70" width="751" /></p>
+
+<p><strong>例子：显示所有表格的名称</strong></p>
+
+<pre class="has">
+<code class="language-python">from openpyxl.reader.excel import load_workbook
+
+def readXlsx(path):
+    #打开文件
+    file = load_workbook(filename=path)
+    #所有表格的名称
+    print(file.sheetnames)
+
+path = r'C:\Users\asus\Desktop\e.xlsx'
+readXlsx(path)</code></pre>
+
+<p>运行结果： </p>
+
+<p style="text-align:center;"><img alt="" class="has" height="102" src="https://img-blog.csdnimg.cn/20190708161458821.png" width="296" /></p>
+
+<p><strong>例子：读取一张表格</strong></p>
+
+<pre class="has">
+<code class="language-python">from openpyxl.reader.excel import load_workbook
+
+def readXlsx(path):
+    #打开文件
+    file = load_workbook(filename=path)
+
+    # 拿出一个表格
+    sheet = file.worksheets[0]
+    #最大行数
+    print(sheet.max_row)
+    #最大列数
+    print(sheet.max_column)
+    #表名
+    print(sheet.title)
+
+    #读行号
+    for lineNum in range(1,sheet.max_row + 1):
+        lineList = []
+        for columnNum in range(1,sheet.max_column + 1):
+            #拿数据
+            value = sheet.cell(row=lineNum,column=columnNum).value
+            if value != None:
+                lineList.append(value)
+        print(lineList)
+
+path = r'C:\Users\asus\Desktop\e.xlsx'
+readXlsx(path)</code></pre>
+
+<p>运行结果： </p>
+
+<p style="text-align:center;"><img alt="" class="has" height="362" src="https://img-blog.csdnimg.cn/20190708163049424.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2MTcxMjg3,size_16,color_FFFFFF,t_70" width="506" /></p>
+
+<p> </p>
+
+<p> </p>
+
+<p> </p>
+
+<p><strong>一起学习，一起进步 -.- ，如有错误，可以发评论</strong> </p>
+</div><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">空城机</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://yoursite.com/2019/07/08/python%EF%BC%88%E4%BA%8C%E5%8D%81%E4%B8%80%EF%BC%89%E2%80%94%E2%80%94%E9%94%AE%E7%9B%98%E3%80%81%E9%BC%A0%E6%A0%87%E6%A8%A1%E6%8B%9F%EF%BC%8C%E8%AF%BB%E5%8F%96%E3%80%81%E5%88%9B%E5%BB%BAword%E6%96%87%E4%BB%B6%EF%BC%8C%E8%AF%BB%E5%8F%96xlsx%E6%96%87%E4%BB%B6/">http://yoursite.com/2019/07/08/python%EF%BC%88%E4%BA%8C%E5%8D%81%E4%B8%80%EF%BC%89%E2%80%94%E2%80%94%E9%94%AE%E7%9B%98%E3%80%81%E9%BC%A0%E6%A0%87%E6%A8%A1%E6%8B%9F%EF%BC%8C%E8%AF%BB%E5%8F%96%E3%80%81%E5%88%9B%E5%BB%BAword%E6%96%87%E4%BB%B6%EF%BC%8C%E8%AF%BB%E5%8F%96xlsx%E6%96%87%E4%BB%B6/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://yoursite.com" target="_blank">空城机</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/python/">python</a></div><div class="post_share"><div class="social-share" data-image="https://i.loli.net/2019/07/21/5d33d5dc1531213134.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css"/><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js"></script></div></div><div class="post-reward"><a class="reward-button button--primary button--animated"> <i class="fa fa-qrcode"></i> 打赏<div class="reward-main"><ul class="reward-all"><li class="reward-item"><img class="post-qr-code__img" src="/img/wechat.jpg" alt="微信"/><div class="post-qr-code__desc">微信</div></li><li class="reward-item"><img class="post-qr-code__img" src="/img/alipay.jpg" alt="支付寶"/><div class="post-qr-code__desc">支付寶</div></li></ul></div></a></div><nav class="pagination_post" id="pagination"><div class="prev-post pull_left"><a href="/2019/07/09/python%EF%BC%88%E4%BA%8C%E5%8D%81%E4%BA%8C%EF%BC%89%E2%80%94%E2%80%94python2%E3%80%813%E5%8C%BA%E5%88%AB%EF%BC%8C%E5%87%BD%E6%95%B0map%E3%80%81reduce%E3%80%81sorted%EF%BC%8C%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95%EF%BC%8C%E8%BF%9C%E7%A8%8B%E9%93%BE%E6%8E%A5/"><img class="prev_cover" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">python（二十二）——python2、3区别，函数map、reduce、sorted，单元测试，远程链接</div></div></a></div><div class="next-post pull_right"><a href="/2019/06/30/CSS%E5%9B%9E%E9%A1%BE%E6%80%BB%E7%BB%93%EF%BC%88%E5%9B%9B%EF%BC%89%E2%80%94%E2%80%94%E5%88%97%E8%A1%A8%E3%80%81%E5%B1%9E%E6%80%A7%E9%80%89%E6%8B%A9%E5%99%A8%E3%80%81%E6%96%87%E6%9C%AC%E6%A0%87%E7%AD%BE%E3%80%81%E6%A0%B7%E5%BC%8F%E7%9A%84%E7%BB%A7%E6%89%BF/"><img class="next_cover" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">CSS回顾总结（四）——列表、属性选择器、文本标签、样式的继承</div></div></a></div></nav><div class="relatedPosts"><div class="relatedPosts_headline"><i class="fa fa-fw fa-thumbs-up" aria-hidden="true"></i><span> 相关推荐</span></div><div class="relatedPosts_list"><div class="relatedPosts_item"><a href="/2019/06/16/python（十六）——对象属性与类属性，运算符重载，发送邮件程序/" title="python（十六）——对象属性与类属性，运算符重载，发送邮件程序"><img class="relatedPosts_cover" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg"><div class="relatedPosts_main is-center"><div class="relatedPosts_date"><i class="fa fa-calendar fa-fw" aria-hidden="true"></i> 2019-06-16</div><div class="relatedPosts_title">python（十六）——对象属性与类属性，运算符重载，发送邮件程序</div></div></a></div><div class="relatedPosts_item"><a href="/2019/05/02/python 中没有i++或者i--/" title="python 中没有i++或者i--"><img class="relatedPosts_cover" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg"><div class="relatedPosts_main is-center"><div class="relatedPosts_date"><i class="fa fa-calendar fa-fw" aria-hidden="true"></i> 2019-05-02</div><div class="relatedPosts_title">python 中没有i++或者i--</div></div></a></div><div class="relatedPosts_item"><a href="/2019/08/03/python（三十）——从数据库查询应用、MongoDB数据库/" title="python（三十）——从数据库查询应用、MongoDB数据库"><img class="relatedPosts_cover" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg"><div class="relatedPosts_main is-center"><div class="relatedPosts_date"><i class="fa fa-calendar fa-fw" aria-hidden="true"></i> 2019-08-03</div><div class="relatedPosts_title">python（三十）——从数据库查询应用、MongoDB数据库</div></div></a></div><div class="relatedPosts_item"><a href="/2019/04/20/python（二）——python安装与配置/" title="python（二）——python安装与配置"><img class="relatedPosts_cover" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg"><div class="relatedPosts_main is-center"><div class="relatedPosts_date"><i class="fa fa-calendar fa-fw" aria-hidden="true"></i> 2019-04-20</div><div class="relatedPosts_title">python（二）——python安装与配置</div></div></a></div><div class="relatedPosts_item"><a href="/2019/06/08/python（十三）——模块二（模块概述、模块优点、__name__属性）/" title="python（十三）——模块二（模块概述、模块优点、__name__属性）"><img class="relatedPosts_cover" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg"><div class="relatedPosts_main is-center"><div class="relatedPosts_date"><i class="fa fa-calendar fa-fw" aria-hidden="true"></i> 2019-06-08</div><div class="relatedPosts_title">python（十三）——模块二（模块概述、模块优点、__name__属性）</div></div></a></div><div class="relatedPosts_item"><a href="/2019/07/12/python（二十六）——爬虫练习（爬取图片，爬取QQ号）/" title="python（二十六）——爬虫练习（爬取图片，爬取QQ号）"><img class="relatedPosts_cover" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg"><div class="relatedPosts_main is-center"><div class="relatedPosts_date"><i class="fa fa-calendar fa-fw" aria-hidden="true"></i> 2019-07-12</div><div class="relatedPosts_title">python（二十六）——爬虫练习（爬取图片，爬取QQ号）</div></div></a></div></div><div class="clear_both"></div></div></article></main><footer id="footer" data-type="color"><div id="footer-wrap"><div class="copyright">&copy;2018 - 2020 By 空城机</div><div class="framework-info"><span>驱动 </span><a href="https://hexo.io" target="_blank" rel="noopener"><span>Hexo</span></a><span class="footer-separator">|</span><span>主题 </span><a href="https://github.com/jerryc127/hexo-theme-butterfly" target="_blank" rel="noopener"><span>Butterfly</span></a></div></div></footer></div><section class="rightside" id="rightside"><div id="rightside-config-hide"><i class="fa fa-book" id="readmode" title="阅读模式"></i><i class="fa fa-plus" id="font_plus" title="放大字体"></i><i class="fa fa-minus" id="font_minus" title="缩小字体"></i><a class="translate_chn_to_cht" id="translateLink" href="javascript:translatePage();" title="简繁转换" target="_self">繁</a><i class="darkmode fa fa-moon-o" id="darkmode" title="夜间模式"></i></div><div id="rightside-config-show"><div id="rightside_config" title="设置"><i class="fa fa-cog" aria-hidden="true"></i></div><i class="fa fa-list-ul close" id="mobile-toc-button" title="目录" aria-hidden="true"></i><i class="fa fa-arrow-up" id="go-up" title="回到顶部" aria-hidden="true"></i></div></section><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page@latest/instantpage.min.js" type="module"></script></body></html>

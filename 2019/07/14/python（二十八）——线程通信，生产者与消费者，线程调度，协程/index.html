@@ -1,0 +1,432 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>python（二十八）——线程通信，生产者与消费者，线程调度，协程 | 空城机</title><meta name="description" content="目录  线程  线程通信  生产者与消费者  线程调度  计算密集型和IO密集型   协程  线程   在一个进程内部要同时干多件事，就需要同时运行多个‘子任务’，我们把这些子任务称为线程  线程通常叫做轻型的线程。线程是共享内存空间的并发执行的多任务，每一个线程都共享一个进程的资源 线程是最小的执行单元，而进程至少要有一个线程。 如何调度进程和线程，完全由操作系统决定，程序不能决定什么时候执"><meta name="keywords" content="python 线程 协程"><meta name="author" content="空城机"><meta name="copyright" content="空城机"><meta name="format-detection" content="telephone=no"><link rel="shortcut icon" href="/img/favicon.png"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="dns-prefetch" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="https://fonts.googleapis.com" crossorigin="crossorigin"/><link rel="dns-prefetch" href="https://fonts.googleapis.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="dns-prefetch" href="//busuanzi.ibruce.info"/><meta name="twitter:card" content="summary"><meta name="twitter:title" content="python（二十八）——线程通信，生产者与消费者，线程调度，协程"><meta name="twitter:description" content="目录  线程  线程通信  生产者与消费者  线程调度  计算密集型和IO密集型   协程  线程   在一个进程内部要同时干多件事，就需要同时运行多个‘子任务’，我们把这些子任务称为线程  线程通常叫做轻型的线程。线程是共享内存空间的并发执行的多任务，每一个线程都共享一个进程的资源 线程是最小的执行单元，而进程至少要有一个线程。 如何调度进程和线程，完全由操作系统决定，程序不能决定什么时候执"><meta name="twitter:image" content="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg"><meta property="og:type" content="article"><meta property="og:title" content="python（二十八）——线程通信，生产者与消费者，线程调度，协程"><meta property="og:url" content="http://yoursite.com/2019/07/14/python%EF%BC%88%E4%BA%8C%E5%8D%81%E5%85%AB%EF%BC%89%E2%80%94%E2%80%94%E7%BA%BF%E7%A8%8B%E9%80%9A%E4%BF%A1%EF%BC%8C%E7%94%9F%E4%BA%A7%E8%80%85%E4%B8%8E%E6%B6%88%E8%B4%B9%E8%80%85%EF%BC%8C%E7%BA%BF%E7%A8%8B%E8%B0%83%E5%BA%A6%EF%BC%8C%E5%8D%8F%E7%A8%8B/"><meta property="og:site_name" content="空城机"><meta property="og:description" content="目录  线程  线程通信  生产者与消费者  线程调度  计算密集型和IO密集型   协程  线程   在一个进程内部要同时干多件事，就需要同时运行多个‘子任务’，我们把这些子任务称为线程  线程通常叫做轻型的线程。线程是共享内存空间的并发执行的多任务，每一个线程都共享一个进程的资源 线程是最小的执行单元，而进程至少要有一个线程。 如何调度进程和线程，完全由操作系统决定，程序不能决定什么时候执"><meta property="og:image" content="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg"><meta property="article:published_time" content="2019-07-14T15:01:50.000Z"><meta property="article:modified_time" content="2020-05-10T11:05:27.866Z"><script src="https://cdn.jsdelivr.net/npm/js-cookie/dist/js.cookie.min.js"></script><script>var autoChangeMode = '1'
+var t = Cookies.get("theme")
+if (autoChangeMode == '1'){
+  var isDarkMode = window.matchMedia("(prefers-color-scheme: dark)").matches
+  var isLightMode = window.matchMedia("(prefers-color-scheme: light)").matches
+  var isNotSpecified = window.matchMedia("(prefers-color-scheme: no-preference)").matches
+  var hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+  if (t === undefined){
+    if (isLightMode) activateLightMode()
+    else if (isDarkMode) activateDarkMode()
+    else if (isNotSpecified || hasNoSupport){
+      console.log('You specified no preference for a color scheme or your browser does not support it. I Schedule dark mode during night time.')
+      var now = new Date()
+      var hour = now.getHours()
+      var isNight = hour < 6 || hour >= 18
+      isNight ? activateDarkMode() : activateLightMode()
+  }
+  } else if (t == 'light') activateLightMode()
+  else activateDarkMode()
+
+} else if (autoChangeMode == '2'){
+  now = new Date();
+  hour = now.getHours();
+  isNight = hour < 6 || hour >= 18
+  if(t === undefined) isNight? activateDarkMode() : activateLightMode()
+  else if (t === 'light') activateLightMode()
+  else activateDarkMode() 
+} else {
+  if ( t == 'dark' ) activateDarkMode()
+  else if ( t == 'light') activateLightMode()
+}
+
+function activateDarkMode(){
+  document.documentElement.setAttribute('data-theme', 'dark')
+  if (document.querySelector('meta[name="theme-color"]') !== null){
+    document.querySelector('meta[name="theme-color"]').setAttribute('content','#000')
+  }
+}
+function activateLightMode(){
+  document.documentElement.setAttribute('data-theme', 'light')
+  if (document.querySelector('meta[name="theme-color"]') !== null){
+  document.querySelector('meta[name="theme-color"]').setAttribute('content','#fff')
+  }
+}</script><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@latest/css/font-awesome.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css"><link rel="canonical" href="http://yoursite.com/2019/07/14/python%EF%BC%88%E4%BA%8C%E5%8D%81%E5%85%AB%EF%BC%89%E2%80%94%E2%80%94%E7%BA%BF%E7%A8%8B%E9%80%9A%E4%BF%A1%EF%BC%8C%E7%94%9F%E4%BA%A7%E8%80%85%E4%B8%8E%E6%B6%88%E8%B4%B9%E8%80%85%EF%BC%8C%E7%BA%BF%E7%A8%8B%E8%B0%83%E5%BA%A6%EF%BC%8C%E5%8D%8F%E7%A8%8B/"><link rel="prev" title="python（二十九）——MySQL安装、python连接MySQL数据库" href="http://yoursite.com/2019/07/15/python%EF%BC%88%E4%BA%8C%E5%8D%81%E4%B9%9D%EF%BC%89%E2%80%94%E2%80%94MySQL%E5%AE%89%E8%A3%85%E3%80%81python%E8%BF%9E%E6%8E%A5MySQL%E6%95%B0%E6%8D%AE%E5%BA%93/"><link rel="next" title="python（二十七）——网络编程（TCP/UDP编程，客户端与服务器信息传输，多任务原理，进程间通信）" href="http://yoursite.com/2019/07/13/python%EF%BC%88%E4%BA%8C%E5%8D%81%E4%B8%83%EF%BC%89%E2%80%94%E2%80%94%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B%EF%BC%88TCP!UDP%E7%BC%96%E7%A8%8B%EF%BC%8C%E5%AE%A2%E6%88%B7%E7%AB%AF%E4%B8%8E%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BF%A1%E6%81%AF%E4%BC%A0%E8%BE%93%EF%BC%8C%E5%A4%9A%E4%BB%BB%E5%8A%A1%E5%8E%9F%E7%90%86%EF%BC%8C%E8%BF%9B%E7%A8%8B%E9%97%B4%E9%80%9A%E4%BF%A1%EF%BC%89/"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Titillium+Web"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: {"defaultEncoding":2,"translateDelay":0,"cookieDomain":"https://xxx/","msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"簡"},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  bookmark: {
+    message_prev: '按',
+    message_next: '键将本页加入书签'
+  },
+  runtime_unit: '天',
+  runtime: true,
+  copyright: undefined,
+  ClickShowText: undefined,
+  medium_zoom: false,
+  fancybox: true,
+  Snackbar: undefined,
+  baiduPush: false,
+  highlightCopy: true,
+  highlightLang: true,
+  highlightShrink: 'false',
+  isFontAwesomeV5: false,
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+  
+}</script><script>var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isSidebar: true  
+  }</script><noscript><style>
+#page-header {
+  opacity: 1
+}
+.justified-gallery img{
+  opacity: 1
+}
+</style></noscript><meta name="generator" content="Hexo 4.2.0"></head><body><div id="mobile-sidebar"><div id="menu_mask"></div><div id="mobile-sidebar-menus"><div class="mobile_author_icon"><img class="avatar-img" src="/img/avatar.png" onerror="onerror=null;src='/img/tou5.jpg'" alt="avatar"/></div><div class="mobile_post_data"><div class="mobile_data_item is-center"><div class="mobile_data_link"><a href="/archives/"><div class="headline">文章</div><div class="length_num">154</div></a></div></div><div class="mobile_data_item is-center">      <div class="mobile_data_link"><a href="/tags/"><div class="headline">标签</div><div class="length_num">45</div></a></div></div><div class="mobile_data_item is-center">     <div class="mobile_data_link"><a href="/categories/"><div class="headline">分类</div><div class="length_num">15</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fa fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fa fa-heart"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page"><i class="fa-fw fa fa-list" aria-hidden="true"></i><span> 清单</span><i class="fa fa-chevron-down menus-expand" aria-hidden="true"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/music/"><i class="fa-fw fa fa-music"></i><span> 音乐</span></a></li><li><a class="site-page" href="/movies/"><i class="fa-fw fa fa-film"></i><span> 电影</span></a></li></ul></div></div></div></div><i class="fa fa-arrow-right on" id="toggle-sidebar" aria-hidden="true">     </i><div id="sidebar"><div class="sidebar-toc"><div class="sidebar-toc__title">目录</div><div class="sidebar-toc__progress"><span class="progress-notice">你已经读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar">     </div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BA%BF%E7%A8%8B"><span class="toc-number">1.</span> <span class="toc-text">线程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BA%BF%E7%A8%8B%E9%80%9A%E4%BF%A1"><span class="toc-number">2.</span> <span class="toc-text">线程通信</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%9F%E4%BA%A7%E8%80%85%E4%B8%8E%E6%B6%88%E8%B4%B9%E8%80%85"><span class="toc-number">2.1.</span> <span class="toc-text">生产者与消费者</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BA%BF%E7%A8%8B%E8%B0%83%E5%BA%A6"><span class="toc-number">3.</span> <span class="toc-text">线程调度</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%A1%E7%AE%97%E5%AF%86%E9%9B%86%E5%9E%8B%E5%92%8CIO%E5%AF%86%E9%9B%86%E5%9E%8B%C2%A0"><span class="toc-number">4.</span> <span class="toc-text">计算密集型和IO密集型 </span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%8F%E7%A8%8B"><span class="toc-number">5.</span> <span class="toc-text">协程</span></a></li></ol></div></div></div><div id="body-wrap"><div class="post-bg" id="nav" style="background-image: url(https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg)"><div id="page-header"><span class="pull_left" id="blog_name"><a class="blog_title" id="site-name" href="/">空城机</a></span><span class="pull_right menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fa fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fa fa-heart"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page"><i class="fa-fw fa fa-list" aria-hidden="true"></i><span> 清单</span><i class="fa fa-chevron-down menus-expand" aria-hidden="true"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/music/"><i class="fa-fw fa fa-music"></i><span> 音乐</span></a></li><li><a class="site-page" href="/movies/"><i class="fa-fw fa fa-film"></i><span> 电影</span></a></li></ul></div></div><span class="toggle-menu close"><a class="site-page"><i class="fa fa-bars fa-fw" aria-hidden="true"></i></a></span></span></div><div id="post-info"><div id="post-title"><div class="posttitle">python（二十八）——线程通信，生产者与消费者，线程调度，协程</div></div><div id="post-meta"><div class="meta-firstline"><time class="post-meta__date"><span class="post-meta__date-created" title="发表于 2019-07-14 23:01:50"><i class="fa fa-calendar" aria-hidden="true"></i> 发表于 2019-07-14</span><span class="post-meta__separator">|</span><span class="post-meta__date-updated" title="更新于 2020-05-10 19:05:27"><i class="fa fa-history" aria-hidden="true"></i> 更新于 2020-05-10</span></time><span class="post-meta__categories"><span class="post-meta__separator">|</span><i class="fa fa-inbox post-meta__icon" aria-hidden="true"></i><a class="post-meta__categories" href="/categories/python/">python</a></span></div><div class="meta-secondline"> </div><div class="meta-thirdline"><span class="post-meta-pv-cv"><i class="fa fa-eye post-meta__icon" aria-hidden="true"> </i><span>阅读量:</span><span id="busuanzi_value_page_pv"></span></span><span class="post-meta-commentcount"></span></div></div></div></div><main class="layout_post" id="content-inner"><article id="post"><div class="post-content" id="article-container"><a id="more"></a>
+
+<p id="main-toc"><strong>目录</strong></p>
+
+<p id="%E7%BA%BF%E7%A8%8B-toc" style="margin-left:40px;"><a href="#%E7%BA%BF%E7%A8%8B">线程</a></p>
+
+<p id="%E7%BA%BF%E7%A8%8B%E9%80%9A%E4%BF%A1-toc" style="margin-left:40px;"><a href="#%E7%BA%BF%E7%A8%8B%E9%80%9A%E4%BF%A1">线程通信</a></p>
+
+<p id="%E7%94%9F%E4%BA%A7%E8%80%85%E4%B8%8E%E6%B6%88%E8%B4%B9%E8%80%85-toc" style="margin-left:80px;"><a href="#%E7%94%9F%E4%BA%A7%E8%80%85%E4%B8%8E%E6%B6%88%E8%B4%B9%E8%80%85">生产者与消费者</a></p>
+
+<p id="%E7%BA%BF%E7%A8%8B%E8%B0%83%E5%BA%A6-toc" style="margin-left:40px;"><a href="#%E7%BA%BF%E7%A8%8B%E8%B0%83%E5%BA%A6">线程调度</a></p>
+
+<p id="%E8%AE%A1%E7%AE%97%E5%AF%86%E9%9B%86%E5%9E%8B%E5%92%8CIO%E5%AF%86%E9%9B%86%E5%9E%8B%C2%A0-toc" style="margin-left:40px;"><a href="#%E8%AE%A1%E7%AE%97%E5%AF%86%E9%9B%86%E5%9E%8B%E5%92%8CIO%E5%AF%86%E9%9B%86%E5%9E%8B%C2%A0">计算密集型和IO密集型 </a></p>
+
+<p id="%E5%8D%8F%E7%A8%8B-toc" style="margin-left:40px;"><a href="#%E5%8D%8F%E7%A8%8B">协程</a></p>
+
+<hr id="hr-toc" /><h2 id="%E7%BA%BF%E7%A8%8B">线程</h2>
+
+<pre>
+<code class="language-html hljs">在一个进程内部要同时干多件事，就需要同时运行多个‘子任务’，我们把这些子任务称为线程
+
+线程通常叫做轻型的线程。线程是共享内存空间的并发执行的多任务，每一个线程都共享一个进程的资源
+线程是最小的执行单元，而进程至少要有一个线程。
+如何调度进程和线程，完全由操作系统决定，程序不能决定什么时候执行，执行多长时间
+
+模块
+1._thread模块  低级模块
+2.threading模块  高级模块，对_thread进行了封装</code></pre>
+
+<p><strong>例子：</strong></p>
+
+<pre class="has">
+<code class="language-python">import threading
+import time
+def run():
+    print('子线程%s启动' % (threading.current_thread().name))
+    #实现线程功能
+    print('打印')
+    time.sleep(1)
+
+    print('子线程%s结束' % (threading.current_thread().name))
+
+if __name__=='__main__':
+    #任何进程默认就会启动一个线程，称为主线程，主线程可以启动新的子线程
+    #current_thread()：返回当前线程的实例
+    print('主线程%s启动' %(threading.current_thread().name))
+
+    #创建子线程
+    t = threading.Thread(target=run,name='runthread')
+    t.start()
+    #等待线程结束
+    t.join()
+    print('主线程%s结束' % (threading.current_thread().name))</code></pre>
+
+<p><strong>运行结果：</strong></p>
+
+<p style="text-align:center;"><img alt="" class="has" height="174" src="https://img-blog.csdnimg.cn/20190714144235399.png" width="296" /></p>
+
+<pre>
+<code class="language-html hljs">多进程和多线程最大的不同在于：多进程中，同一个变量，各自有一份拷贝在每个进程中，互不影响。多线程中，所有变量都由所有线程共享。所以任何一个变量都可以被任意一个线程修改。因此线程之间最大的危险在于同时修改一个变量容易把内容改乱了。</code></pre>
+
+<p><strong>例子：</strong></p>
+
+<pre class="has">
+<code class="language-python">import threading
+import time
+n = 100
+def run():
+    global n
+    n = n + 20
+    print('run:',n)
+
+def fun():
+    global n
+    n = n /10
+    print('fun:',n)
+
+if __name__=='__main__':
+    #创建子线程
+    t = threading.Thread(target=run,name='runthread')
+    t.start()
+    t.join()
+    k = threading.Thread(target=fun, name='funthread')
+    k.start()</code></pre>
+
+<p><strong>运行结果：</strong></p>
+
+<p style="text-align:center;"><img alt="" class="has" height="96" src="https://img-blog.csdnimg.cn/2019071414494310.png" width="295" /></p>
+
+<pre>
+<code class="language-html hljs">线程锁解决数据混乱
+两个线程同时工作，一个存钱，一个取钱</code></pre>
+
+<p>可以给线程设置一个局部变量，使用threadLocal对象</p>
+
+<p><strong>例子：</strong></p>
+
+<pre class="has">
+<code class="language-python">import threading
+import time
+
+num = 0
+#创建一个全局的threadLocal对象
+#每个线程有独立的存储空间
+#每个线程对threadLocal对象都可以读写，但是互不影响
+local = threading.local()
+list = [num,num]
+def run(x,n):
+    x = x + n
+    x = x - n
+def fun(n):
+    #每个线程都有一个local.x，就是线程的局部变量
+    local.x = num
+    for i in range(100000):
+        run(local.x,n)
+    print('%s--%d' %(threading.current_thread().name,local.x))
+
+
+if __name__=='__main__':
+    #创建子线程
+    t = threading.Thread(target=fun,args=(6,))
+    t2 = threading.Thread(target=fun, args=(9,))
+    t.start()
+    t2.start()
+    t.join()
+    t2.join()
+    print('num = ',num)</code></pre>
+
+<p><strong>运行结果：</strong></p>
+
+<p style="text-align:center;"><img alt="" class="has" height="145" src="https://img-blog.csdnimg.cn/20190714152157814.png" width="281" /></p>
+
+<p> </p>
+
+<h2 id="%E7%BA%BF%E7%A8%8B%E9%80%9A%E4%BF%A1">线程通信</h2>
+
+<p>线程阻塞和触发事件</p>
+
+<p><strong>例子：如果不使用e.set()去触发事件，run()方法将不会被执行</strong></p>
+
+<pre class="has">
+<code class="language-python">import threading,time
+def fun():
+    #事件对象
+    event = threading.Event()
+    def run():
+        for i in range(5):
+            #阻塞，等待事件的触发
+            event.wait()
+            #重置
+            event.clear()
+            print('what happen ...%d' % i)
+    t = threading.Thread(target=run).start()
+    return event
+
+e = fun()
+#触发事件
+for i in range(5):
+    e.set()
+    time.sleep(1)</code></pre>
+
+<p><strong>运行结果：</strong></p>
+
+<p style="text-align:center;"><img alt="" class="has" height="169" src="https://img-blog.csdnimg.cn/2019071421391510.png" width="292" /></p>
+
+<p> </p>
+
+<h3 id="%E7%94%9F%E4%BA%A7%E8%80%85%E4%B8%8E%E6%B6%88%E8%B4%B9%E8%80%85">生产者与消费者</h3>
+
+<p>4个生产者在生产数据    3个消费者将生产的数据从队列中取出</p>
+
+<pre class="has">
+<code class="language-python">import threading,time,queue,random
+
+#生产者
+def product(id,q):
+    while True:
+        num = random.randint(0,10000)
+        q.put(num)
+        print('生产者%d生产了%d数据放入了队列' % (id,num))
+        time.sleep(3)
+    #任务完成
+    q.task_done()
+
+#消费者
+def customer(id,q):
+    while True:
+        item = q.get()
+        if item is None:
+            break
+        print('消费者%d消费了%d数据' % (id,item))
+        time.sleep(2)
+    # 任务完成
+    q.task_done()
+
+if __name__=='__main__':
+    #消息队列
+    q = queue.Queue()
+    #启动生产者  4
+    for i in range(4):
+        threading.Thread(target=product,args=(i,q)).start()
+    #启动消费者  3
+    for i in range(3):
+        threading.Thread(target=customer,args=(i,q)).start()</code></pre>
+
+<p><strong>运行结果：</strong></p>
+
+<p style="text-align:center;"><img alt="" class="has" height="214" src="https://img-blog.csdnimg.cn/20190714215241402.png" width="246" /></p>
+
+<p> </p>
+
+<h2 id="%E7%BA%BF%E7%A8%8B%E8%B0%83%E5%BA%A6">线程调度</h2>
+
+<p>调度两个线程之间的执行顺序</p>
+
+<pre class="has">
+<code class="language-python">import threading,time
+
+#线程条件变量
+cond = threading.Condition()
+
+def run1():
+    with cond:
+        for i in range(0,10,2):
+            print(threading.current_thread().name,i)
+            time.sleep(1)
+            #运行一次然后等待run2信息
+            cond.wait()
+            cond.notify()
+
+def run2():
+    with cond:
+        for i in range(1,10,2):
+            print(threading.current_thread().name,i)
+            time.sleep(1)
+            #给run1发送信息
+            cond.notify()
+            #等待
+            cond.wait()
+
+threading.Thread(target=run1).start()
+threading.Thread(target=run2).start()</code></pre>
+
+<p><strong>运行结果：</strong></p>
+
+<p style="text-align:center;"><img alt="" class="has" height="243" src="https://img-blog.csdnimg.cn/2019071422040861.png" width="212" /></p>
+
+<p> </p>
+
+<h2 id="%E8%AE%A1%E7%AE%97%E5%AF%86%E9%9B%86%E5%9E%8B%E5%92%8CIO%E5%AF%86%E9%9B%86%E5%9E%8B%C2%A0">计算密集型和IO密集型 </h2>
+
+<p>计算密集型</p>
+
+<p>要进行大量的计算，消耗CPU资源，比如计算圆周率、对视频进行高清解码等等，全靠CPU的运算能力。这种计算密集型任务虽然也可以用多任务完成，但是任务越多，花在任务切换的时间就越多，CPU执行任务的效率就越低，所以，要最高效地利用CPU,计算密集型任务同时进行的数量应当等于CPU的核心数</p>
+
+<p>IO密集型 </p>
+
+<p>    涉及到网络、磁盘IO的任务都是IO密集型任务，这类任务的特点是CPU消耗很少，任务的大部分 时间都在等待IO操作完成(因为IO的速度远远低于CPU和内存的速度)。对于IO密集型任务，任务越多，CPU效率越高，但也有一个限度。常见的大部分任务都是I0密集型任务，比如Web应用</p>
+
+<p> </p>
+
+<h2 id="%E5%8D%8F%E7%A8%8B">协程</h2>
+
+<p><span style="color:#f33b45;">子程序/函数</span>：在所有语音中都是层级调用，比如A调用B，在B执行的过程中又可以调用C，C执行完毕返回，B执行完毕返回，最后是A执行完毕一个线程就是执行一个子程序，子程序调用总是一个入口，一次返回，调用的顺序是明确的</p>
+
+<p><span style="color:#f33b45;">协程概述</span>：看上去也是子程序，但是在执行过程中，在子程序的内部可以中断，然后转而去执行别的子程序。那么不是函数调用，有点类似与CPU中断</p>
+
+<p><span style="color:#3399ea;">与线程相比，协程的执行效率极高。因为只有一个线程，不存在多个变量同时写，不存在变量冲突，在协程中资源共享不加锁，只需要判断状态</span></p>
+
+<p><strong>例子：子程序调用</strong></p>
+
+<pre class="has">
+<code class="language-python">def C():
+    print('C---START')
+    print('C---END')
+def B():
+    print('B---START')
+    C()
+    print('B---END')
+def A():
+    print('A---START')
+    B()
+    print('A---END')
+
+A()</code></pre>
+
+<p> <strong>运行结果：</strong></p>
+
+<p style="text-align:center;"><img alt="" class="has" height="187" src="https://img-blog.csdnimg.cn/20190714222206192.png" width="285" /></p>
+
+<pre>
+python对协程的支持是通过generator实现的</pre>
+
+<p><strong>例子：协程</strong></p>
+
+<pre class="has">
+<code class="language-python">def A():
+    print(1)
+    yield 10
+    print(2)
+    yield 20
+    print(3)
+    yield 30
+#协程的最简单风格，控制函数的阶段执行，节约线程或者进程的切换
+#返回值是一个生成器
+a = A()
+print(type(a))
+print(next(a))
+print(next(a))
+print(next(a))</code></pre>
+
+<p> <strong>运行结果：</strong></p>
+
+<p style="text-align:center;"><img alt="" class="has" height="218" src="https://img-blog.csdnimg.cn/20190714224342518.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2MTcxMjg3,size_16,color_FFFFFF,t_70" width="315" /></p>
+
+<p><strong>例子：</strong></p>
+
+<pre class="has">
+<code class="language-python">def A():
+    #空变量，存储的作用data始终为空
+    data = ''
+    r = yield data
+    print(1,r,data)
+    r = yield data
+    print(2,r,data)
+    r = yield data
+    print(3,r,data)
+    r = yield data
+
+a = A()
+#启动a
+print(a.send(None))
+print(a.send('a'))
+</code></pre>
+
+<p> <strong>运行结果：</strong></p>
+
+<p style="text-align:center;"><img alt="" class="has" height="115" src="https://img-blog.csdnimg.cn/20190714225048634.png" width="347" /></p>
+
+<p> </p>
+
+<p> </p>
+
+<p> </p>
+
+<p><strong>一起学习，一起进步 -.- ，如有错误，可以发评论</strong></p>
+</div><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">空城机</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://yoursite.com/2019/07/14/python%EF%BC%88%E4%BA%8C%E5%8D%81%E5%85%AB%EF%BC%89%E2%80%94%E2%80%94%E7%BA%BF%E7%A8%8B%E9%80%9A%E4%BF%A1%EF%BC%8C%E7%94%9F%E4%BA%A7%E8%80%85%E4%B8%8E%E6%B6%88%E8%B4%B9%E8%80%85%EF%BC%8C%E7%BA%BF%E7%A8%8B%E8%B0%83%E5%BA%A6%EF%BC%8C%E5%8D%8F%E7%A8%8B/">http://yoursite.com/2019/07/14/python%EF%BC%88%E4%BA%8C%E5%8D%81%E5%85%AB%EF%BC%89%E2%80%94%E2%80%94%E7%BA%BF%E7%A8%8B%E9%80%9A%E4%BF%A1%EF%BC%8C%E7%94%9F%E4%BA%A7%E8%80%85%E4%B8%8E%E6%B6%88%E8%B4%B9%E8%80%85%EF%BC%8C%E7%BA%BF%E7%A8%8B%E8%B0%83%E5%BA%A6%EF%BC%8C%E5%8D%8F%E7%A8%8B/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://yoursite.com" target="_blank">空城机</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/python-%E7%BA%BF%E7%A8%8B-%E5%8D%8F%E7%A8%8B/">python 线程 协程</a></div><div class="post_share"><div class="social-share" data-image="https://i.loli.net/2019/07/21/5d33d5dc1531213134.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css"/><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js"></script></div></div><div class="post-reward"><a class="reward-button button--primary button--animated"> <i class="fa fa-qrcode"></i> 打赏<div class="reward-main"><ul class="reward-all"><li class="reward-item"><img class="post-qr-code__img" src="/img/wechat.jpg" alt="微信"/><div class="post-qr-code__desc">微信</div></li><li class="reward-item"><img class="post-qr-code__img" src="/img/alipay.jpg" alt="支付寶"/><div class="post-qr-code__desc">支付寶</div></li></ul></div></a></div><nav class="pagination_post" id="pagination"><div class="prev-post pull_left"><a href="/2019/07/15/python%EF%BC%88%E4%BA%8C%E5%8D%81%E4%B9%9D%EF%BC%89%E2%80%94%E2%80%94MySQL%E5%AE%89%E8%A3%85%E3%80%81python%E8%BF%9E%E6%8E%A5MySQL%E6%95%B0%E6%8D%AE%E5%BA%93/"><img class="prev_cover" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">python（二十九）——MySQL安装、python连接MySQL数据库</div></div></a></div><div class="next-post pull_right"><a href="/2019/07/13/python%EF%BC%88%E4%BA%8C%E5%8D%81%E4%B8%83%EF%BC%89%E2%80%94%E2%80%94%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B%EF%BC%88TCP!UDP%E7%BC%96%E7%A8%8B%EF%BC%8C%E5%AE%A2%E6%88%B7%E7%AB%AF%E4%B8%8E%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BF%A1%E6%81%AF%E4%BC%A0%E8%BE%93%EF%BC%8C%E5%A4%9A%E4%BB%BB%E5%8A%A1%E5%8E%9F%E7%90%86%EF%BC%8C%E8%BF%9B%E7%A8%8B%E9%97%B4%E9%80%9A%E4%BF%A1%EF%BC%89/"><img class="next_cover" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">python（二十七）——网络编程（TCP/UDP编程，客户端与服务器信息传输，多任务原理，进程间通信）</div></div></a></div></nav></article></main><footer id="footer" data-type="color"><div id="footer-wrap"><div class="copyright">&copy;2018 - 2020 By 空城机</div><div class="framework-info"><span>驱动 </span><a href="https://hexo.io" target="_blank" rel="noopener"><span>Hexo</span></a><span class="footer-separator">|</span><span>主题 </span><a href="https://github.com/jerryc127/hexo-theme-butterfly" target="_blank" rel="noopener"><span>Butterfly</span></a></div></div></footer></div><section class="rightside" id="rightside"><div id="rightside-config-hide"><i class="fa fa-book" id="readmode" title="阅读模式"></i><i class="fa fa-plus" id="font_plus" title="放大字体"></i><i class="fa fa-minus" id="font_minus" title="缩小字体"></i><a class="translate_chn_to_cht" id="translateLink" href="javascript:translatePage();" title="简繁转换" target="_self">繁</a><i class="darkmode fa fa-moon-o" id="darkmode" title="夜间模式"></i></div><div id="rightside-config-show"><div id="rightside_config" title="设置"><i class="fa fa-cog" aria-hidden="true"></i></div><i class="fa fa-list-ul close" id="mobile-toc-button" title="目录" aria-hidden="true"></i><i class="fa fa-arrow-up" id="go-up" title="回到顶部" aria-hidden="true"></i></div></section><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page@latest/instantpage.min.js" type="module"></script></body></html>

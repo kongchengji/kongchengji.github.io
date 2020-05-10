@@ -1,0 +1,303 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>空城机</title><meta name="description"><meta name="author" content="空城机"><meta name="copyright" content="空城机"><meta name="format-detection" content="telephone=no"><link rel="shortcut icon" href="/img/favicon.png"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="dns-prefetch" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="https://fonts.googleapis.com" crossorigin="crossorigin"/><link rel="dns-prefetch" href="https://fonts.googleapis.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="dns-prefetch" href="//busuanzi.ibruce.info"/><meta name="twitter:card" content="summary"><meta name="twitter:title" content="空城机"><meta name="twitter:description"><meta name="twitter:image" content="http://yoursite.com/img/avatar.png"><meta property="og:type" content="website"><meta property="og:title" content="空城机"><meta property="og:url" content="http://yoursite.com/page/9/"><meta property="og:site_name" content="空城机"><meta property="og:description"><meta property="og:image" content="http://yoursite.com/img/avatar.png"><meta property="article:published_time" content="2020-05-10T11:49:11.732Z"><meta property="article:modified_time" content="2020-05-10T11:49:11.732Z"><script src="https://cdn.jsdelivr.net/npm/js-cookie/dist/js.cookie.min.js"></script><script>var autoChangeMode = '1'
+var t = Cookies.get("theme")
+if (autoChangeMode == '1'){
+  var isDarkMode = window.matchMedia("(prefers-color-scheme: dark)").matches
+  var isLightMode = window.matchMedia("(prefers-color-scheme: light)").matches
+  var isNotSpecified = window.matchMedia("(prefers-color-scheme: no-preference)").matches
+  var hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+  if (t === undefined){
+    if (isLightMode) activateLightMode()
+    else if (isDarkMode) activateDarkMode()
+    else if (isNotSpecified || hasNoSupport){
+      console.log('You specified no preference for a color scheme or your browser does not support it. I Schedule dark mode during night time.')
+      var now = new Date()
+      var hour = now.getHours()
+      var isNight = hour < 6 || hour >= 18
+      isNight ? activateDarkMode() : activateLightMode()
+  }
+  } else if (t == 'light') activateLightMode()
+  else activateDarkMode()
+
+} else if (autoChangeMode == '2'){
+  now = new Date();
+  hour = now.getHours();
+  isNight = hour < 6 || hour >= 18
+  if(t === undefined) isNight? activateDarkMode() : activateLightMode()
+  else if (t === 'light') activateLightMode()
+  else activateDarkMode() 
+} else {
+  if ( t == 'dark' ) activateDarkMode()
+  else if ( t == 'light') activateLightMode()
+}
+
+function activateDarkMode(){
+  document.documentElement.setAttribute('data-theme', 'dark')
+  if (document.querySelector('meta[name="theme-color"]') !== null){
+    document.querySelector('meta[name="theme-color"]').setAttribute('content','#000')
+  }
+}
+function activateLightMode(){
+  document.documentElement.setAttribute('data-theme', 'light')
+  if (document.querySelector('meta[name="theme-color"]') !== null){
+  document.querySelector('meta[name="theme-color"]').setAttribute('content','#fff')
+  }
+}</script><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@latest/css/font-awesome.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css"><link rel="canonical" href="http://yoursite.com/page/9/"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Titillium+Web"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: {"defaultEncoding":2,"translateDelay":0,"cookieDomain":"https://xxx/","msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"簡"},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  bookmark: {
+    message_prev: '按',
+    message_next: '键将本页加入书签'
+  },
+  runtime_unit: '天',
+  runtime: true,
+  copyright: undefined,
+  ClickShowText: undefined,
+  medium_zoom: false,
+  fancybox: true,
+  Snackbar: undefined,
+  baiduPush: false,
+  highlightCopy: true,
+  highlightLang: true,
+  highlightShrink: 'false',
+  isFontAwesomeV5: false,
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+  
+}</script><script>var GLOBAL_CONFIG_SITE = { 
+  isPost: false,
+  isHome: true,
+  isSidebar: false  
+  }</script><noscript><style>
+#page-header {
+  opacity: 1
+}
+.justified-gallery img{
+  opacity: 1
+}
+</style></noscript><meta name="generator" content="Hexo 4.2.0"></head><body><div id="mobile-sidebar"><div id="menu_mask"></div><div id="mobile-sidebar-menus"><div class="mobile_author_icon"><img class="avatar-img" src="/img/avatar.png" onerror="onerror=null;src='/img/tou5.jpg'" alt="avatar"/></div><div class="mobile_post_data"><div class="mobile_data_item is-center"><div class="mobile_data_link"><a href="/archives/"><div class="headline">文章</div><div class="length_num">154</div></a></div></div><div class="mobile_data_item is-center">      <div class="mobile_data_link"><a href="/tags/"><div class="headline">标签</div><div class="length_num">45</div></a></div></div><div class="mobile_data_item is-center">     <div class="mobile_data_link"><a href="/categories/"><div class="headline">分类</div><div class="length_num">15</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fa fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fa fa-heart"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page"><i class="fa-fw fa fa-list" aria-hidden="true"></i><span> 清单</span><i class="fa fa-chevron-down menus-expand" aria-hidden="true"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/music/"><i class="fa-fw fa fa-music"></i><span> 音乐</span></a></li><li><a class="site-page" href="/movies/"><i class="fa-fw fa fa-film"></i><span> 电影</span></a></li></ul></div></div></div></div><div id="body-wrap"><div class="full_page" id="nav" style="background-image: url(/img/bg.jpg)"><div id="page-header"><span class="pull_left" id="blog_name"><a class="blog_title" id="site-name" href="/">空城机</a></span><span class="pull_right menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fa fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fa fa-heart"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page"><i class="fa-fw fa fa-list" aria-hidden="true"></i><span> 清单</span><i class="fa fa-chevron-down menus-expand" aria-hidden="true"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/music/"><i class="fa-fw fa fa-music"></i><span> 音乐</span></a></li><li><a class="site-page" href="/movies/"><i class="fa-fw fa fa-film"></i><span> 电影</span></a></li></ul></div></div><span class="toggle-menu close"><a class="site-page"><i class="fa fa-bars fa-fw" aria-hidden="true"></i></a></span></span></div><div id="site-info"><h1 id="site_title">空城机</h1><div id="site_subtitle"><span id="subtitle"></span></div><div id="site_social_icons"><a class="social-icon" href="https://github.com/kongchengji" target="_blank" title="Github"><i class="fa fa-github" aria-hidden="true"></i></a><a class="social-icon" href="mailto:xxxxxxx@gmail.com" target="_blank" title="Email"><i class="fa fa-envelope" aria-hidden="true"></i></a><a class="social-icon" href="/atom.xml" target="_blank" title="RSS"><i class="fa fa-rss" aria-hidden="true"></i></a></div></div><div id="scroll_down"><i class="fa fa-angle-down scroll-down-effects"></i></div></div><main class="layout_page" id="content-inner"><div class="recent-posts" id="recent-posts"><div class="recent-post-item"><div class="post_cover left_radius"><a href="/2019/05/29/python%EF%BC%88%E5%85%AB%EF%BC%89%E2%80%94%E2%80%94%E8%BF%AD%E4%BB%A3%E5%99%A8%EF%BC%8C%E5%87%BD%E6%95%B0%E7%9A%84%E5%8F%82%E6%95%B0%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95%EF%BC%88%E5%8F%82%E6%95%B0%E4%BC%A0%E9%80%92%EF%BC%8C%E5%85%B3%E9%94%AE%E5%AD%97%E5%8F%82%E6%95%B0%EF%BC%8C%E9%BB%98%E8%AE%A4%E5%8F%82%E6%95%B0%EF%BC%8C%E4%B8%8D%E5%AE%9A%E9%95%BF%E5%8F%82%E6%95%B0%EF%BC%8C%E5%8C%BF%E5%90%8D%E5%87%BD%E6%95%B0%EF%BC%89/" title="python（八）——迭代器，函数的参数使用方法（参数传递，关键字参数，默认参数，不定长参数，匿名函数）">     <img class="post_bg" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="python（八）——迭代器，函数的参数使用方法（参数传递，关键字参数，默认参数，不定长参数，匿名函数）"></a></div><div class="recent-post-info"><a class="article-title" href="/2019/05/29/python%EF%BC%88%E5%85%AB%EF%BC%89%E2%80%94%E2%80%94%E8%BF%AD%E4%BB%A3%E5%99%A8%EF%BC%8C%E5%87%BD%E6%95%B0%E7%9A%84%E5%8F%82%E6%95%B0%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95%EF%BC%88%E5%8F%82%E6%95%B0%E4%BC%A0%E9%80%92%EF%BC%8C%E5%85%B3%E9%94%AE%E5%AD%97%E5%8F%82%E6%95%B0%EF%BC%8C%E9%BB%98%E8%AE%A4%E5%8F%82%E6%95%B0%EF%BC%8C%E4%B8%8D%E5%AE%9A%E9%95%BF%E5%8F%82%E6%95%B0%EF%BC%8C%E5%8C%BF%E5%90%8D%E5%87%BD%E6%95%B0%EF%BC%89/" title="python（八）——迭代器，函数的参数使用方法（参数传递，关键字参数，默认参数，不定长参数，匿名函数）">python（八）——迭代器，函数的参数使用方法（参数传递，关键字参数，默认参数，不定长参数，匿名函数）</a><div class="article-meta-wrap"><time class="post-meta__date"><span class="post-meta__date-created" title="发表于 2019-05-29 23:45:19"><i class="fa fa-calendar" aria-hidden="true"></i>2019-05-29</span><span class="article-meta__separator">|</span><span class="post-meta__date-updated" title="更新于 2020-05-10 19:05:27"><i class="fa fa-history" aria-hidden="true"></i>2020-05-10</span></time><span class="article-meta"><span class="article-meta__separator">|</span><i class="fa fa-inbox article-meta__icon" aria-hidden="true"></i><a class="article-meta__categories" href="/categories/python/">python</a></span></div><div class="content">
+
+目录
+
+ 
+
+迭代器
+
+函数
+
+参数传递
+
+关键字参数
+
+默认参数
+
+不定长参数
+
+匿名函数
+
+迭代器
+
+可迭代对象：可以直接作用在for循环的对象都可以称为可迭代对象
+
+（Iterable) ： 可以使用isinstance()去判断一个对象是否为Iterable对象
+
+可以直接作用在for循 ...</div></div></div><div class="recent-post-item"><div class="post_cover right_radius"><a href="/2019/05/26/python%E7%88%AC%E8%99%AB%E7%BB%83%E4%B9%A0%E7%88%AC%E5%8F%96%E4%BF%A1%E6%81%AF/" title="python爬虫练习爬取信息">     <img class="post_bg" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="python爬虫练习爬取信息"></a></div><div class="recent-post-info"><a class="article-title" href="/2019/05/26/python%E7%88%AC%E8%99%AB%E7%BB%83%E4%B9%A0%E7%88%AC%E5%8F%96%E4%BF%A1%E6%81%AF/" title="python爬虫练习爬取信息">python爬虫练习爬取信息</a><div class="article-meta-wrap"><time class="post-meta__date"><span class="post-meta__date-created" title="发表于 2019-05-26 15:58:01"><i class="fa fa-calendar" aria-hidden="true"></i>2019-05-26</span><span class="article-meta__separator">|</span><span class="post-meta__date-updated" title="更新于 2020-05-10 19:05:27"><i class="fa fa-history" aria-hidden="true"></i>2020-05-10</span></time><span class="article-meta"><span class="article-meta__separator">|</span><i class="fa fa-inbox article-meta__icon" aria-hidden="true"></i><a class="article-meta__categories" href="/categories/python/">python</a></span></div><div class="content">
+
+爬起点小说中的一章 
+
+
+# -*- coding: utf-8 -*-
+import requests
+import re
+
+#下载一个网页
+url = 'https://read.qidian.com/chapter/pHCOMN5YAqETFqQ-idajwA2/NhXKjTTceCNOB ...</div></div></div><div class="recent-post-item"><div class="post_cover left_radius"><a href="/2019/05/26/python3.7%E4%B8%ADlxml%E7%9A%84%E5%AE%89%E8%A3%85/" title="python3.7中lxml的安装">     <img class="post_bg" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="python3.7中lxml的安装"></a></div><div class="recent-post-info"><a class="article-title" href="/2019/05/26/python3.7%E4%B8%ADlxml%E7%9A%84%E5%AE%89%E8%A3%85/" title="python3.7中lxml的安装">python3.7中lxml的安装</a><div class="article-meta-wrap"><time class="post-meta__date"><span class="post-meta__date-created" title="发表于 2019-05-26 15:18:31"><i class="fa fa-calendar" aria-hidden="true"></i>2019-05-26</span><span class="article-meta__separator">|</span><span class="post-meta__date-updated" title="更新于 2020-05-10 19:05:27"><i class="fa fa-history" aria-hidden="true"></i>2020-05-10</span></time><span class="article-meta"><span class="article-meta__separator">|</span><i class="fa fa-inbox article-meta__icon" aria-hidden="true"></i><a class="article-meta__categories" href="/categories/python/">python</a></span></div><div class="content">
+
+lxml是什么：
+
+lxml是个非常有用的python库，它可以灵活高效地解析xml，与BeautifulSoup、requests结合，是编写爬虫的标准姿势。
+
+方法1：
+
+打开cmd
+
+输入pip install lxml
+
+如果能够成功是最好的，可能现在打开pycharm还没有lxml,就 ...</div></div></div><div class="recent-post-item"><div class="post_cover right_radius"><a href="/2019/05/16/python%E7%88%AC%E8%99%AB%E7%88%AC%E7%BD%91%E7%BB%9C%E5%B0%8F%E8%AF%B4/" title="python爬虫爬网络小说">     <img class="post_bg" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="python爬虫爬网络小说"></a></div><div class="recent-post-info"><a class="article-title" href="/2019/05/16/python%E7%88%AC%E8%99%AB%E7%88%AC%E7%BD%91%E7%BB%9C%E5%B0%8F%E8%AF%B4/" title="python爬虫爬网络小说">python爬虫爬网络小说</a><div class="article-meta-wrap"><time class="post-meta__date"><span class="post-meta__date-created" title="发表于 2019-05-16 23:23:05"><i class="fa fa-calendar" aria-hidden="true"></i>2019-05-16</span><span class="article-meta__separator">|</span><span class="post-meta__date-updated" title="更新于 2020-05-10 19:05:27"><i class="fa fa-history" aria-hidden="true"></i>2020-05-10</span></time><span class="article-meta"><span class="article-meta__separator">|</span><i class="fa fa-inbox article-meta__icon" aria-hidden="true"></i><a class="article-meta__categories" href="/categories/python/">python</a></span></div><div class="content">
+
+网络爬虫定义：
+
+爬虫本质上是一段程序（一个脚本）
+    能帮我们自动批量采集我们需要的文本信息、图片等资源
+    模拟浏览器的自动浏览网页（99%）
+python是写爬虫的首选语言
+
+网络资源：网页、图片、视频、音频、文件
+
+url：统一资源定位符（网址）
+
+python环境安装和requ ...</div></div></div><div class="recent-post-item"><div class="post_cover left_radius"><a href="/2019/05/11/python%EF%BC%88%E4%B8%83%EF%BC%89%E2%80%94%E2%80%94%E5%85%83%E7%BB%84%E3%80%81%E5%AD%97%E5%85%B8%E3%80%81Set%E3%80%81/" title="python（七）——元组、字典、Set、">     <img class="post_bg" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="python（七）——元组、字典、Set、"></a></div><div class="recent-post-info"><a class="article-title" href="/2019/05/11/python%EF%BC%88%E4%B8%83%EF%BC%89%E2%80%94%E2%80%94%E5%85%83%E7%BB%84%E3%80%81%E5%AD%97%E5%85%B8%E3%80%81Set%E3%80%81/" title="python（七）——元组、字典、Set、">python（七）——元组、字典、Set、</a><div class="article-meta-wrap"><time class="post-meta__date"><span class="post-meta__date-created" title="发表于 2019-05-11 20:25:49"><i class="fa fa-calendar" aria-hidden="true"></i>2019-05-11</span><span class="article-meta__separator">|</span><span class="post-meta__date-updated" title="更新于 2020-05-10 19:05:27"><i class="fa fa-history" aria-hidden="true"></i>2020-05-10</span></time><span class="article-meta"><span class="article-meta__separator">|</span><i class="fa fa-inbox article-meta__icon" aria-hidden="true"></i><a class="article-meta__categories" href="/categories/python/">python</a></span></div><div class="content">
+
+目录
+
+ 
+
+元组
+
+元组的创建
+
+元组元素的访问
+
+获取最后一个元素可以使用下标为-1
+
+元组可以连接
+
+列表转元组
+
+dict字典
+
+key的特性
+
+字典元素的访问：     字典名[key]
+
+字典添加
+
+字典删除pop()
+
+遍历字典
+
+例子：输入一个时间，输出下一秒的时间
+
+Set
+
+ ...</div></div></div><div class="recent-post-item"><div class="post_cover right_radius"><a href="/2019/05/09/Linux%E8%99%9A%E6%8B%9F%E6%9C%BA%E4%B8%8Bmakefile%E7%9A%84%E7%BC%96%E5%86%99%E5%BA%94%E7%94%A8/" title="Linux虚拟机下makefile的编写应用">     <img class="post_bg" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Linux虚拟机下makefile的编写应用"></a></div><div class="recent-post-info"><a class="article-title" href="/2019/05/09/Linux%E8%99%9A%E6%8B%9F%E6%9C%BA%E4%B8%8Bmakefile%E7%9A%84%E7%BC%96%E5%86%99%E5%BA%94%E7%94%A8/" title="Linux虚拟机下makefile的编写应用">Linux虚拟机下makefile的编写应用</a><div class="article-meta-wrap"><time class="post-meta__date"><span class="post-meta__date-created" title="发表于 2019-05-09 16:17:18"><i class="fa fa-calendar" aria-hidden="true"></i>2019-05-09</span><span class="article-meta__separator">|</span><span class="post-meta__date-updated" title="更新于 2020-05-10 19:05:27"><i class="fa fa-history" aria-hidden="true"></i>2020-05-10</span></time></div><div class="content">
+
+目的：
+
+1. 熟悉嵌入式 Linux 开发基本过程及基本命令。
+
+2. 了解嵌入式 Linux 开发中各种工具的基本用途。
+
+3. 搭建好嵌入式 Linux 的开发环境。
+
+4. 通过对包含多文件的 Makefile 的编写，熟悉各种形式的Makefile 编写，加深对 Makefile 中用 ...</div></div></div><div class="recent-post-item"><div class="post_cover left_radius"><a href="/2019/05/04/python%EF%BC%88%E5%85%AD%EF%BC%89%E2%80%94%E2%80%94%E5%88%97%E8%A1%A8%EF%BC%8Cwhile%E5%BE%AA%E7%8E%AF%EF%BC%8Cfor%E5%BE%AA%E7%8E%AF%EF%BC%8Cturtle%E7%94%BB%E5%9B%BE%E5%B7%A5%E5%85%B7/" title="python（六）——列表，while循环，for循环，turtle画图工具">     <img class="post_bg" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="python（六）——列表，while循环，for循环，turtle画图工具"></a></div><div class="recent-post-info"><a class="article-title" href="/2019/05/04/python%EF%BC%88%E5%85%AD%EF%BC%89%E2%80%94%E2%80%94%E5%88%97%E8%A1%A8%EF%BC%8Cwhile%E5%BE%AA%E7%8E%AF%EF%BC%8Cfor%E5%BE%AA%E7%8E%AF%EF%BC%8Cturtle%E7%94%BB%E5%9B%BE%E5%B7%A5%E5%85%B7/" title="python（六）——列表，while循环，for循环，turtle画图工具">python（六）——列表，while循环，for循环，turtle画图工具</a><div class="article-meta-wrap"><time class="post-meta__date"><span class="post-meta__date-created" title="发表于 2019-05-04 17:41:57"><i class="fa fa-calendar" aria-hidden="true"></i>2019-05-04</span><span class="article-meta__separator">|</span><span class="post-meta__date-updated" title="更新于 2020-05-10 19:05:27"><i class="fa fa-history" aria-hidden="true"></i>2020-05-10</span></time><span class="article-meta"><span class="article-meta__separator">|</span><i class="fa fa-inbox article-meta__icon" aria-hidden="true"></i><a class="article-meta__categories" href="/categories/python/">python</a></span></div><div class="content">
+
+目录
+
+while循环
+
+列表
+
+列表元素的访问
+
+列表组合
+
+列表的重复
+
+判断元素是否在列表中
+
+列表截取
+
+二维列表
+
+列表末尾添加一个新数值append()和extend()
+
+列表插入insert()
+
+列表删除元素pop() 和 remove()
+
+清除列表所有元素clear()
+
+ ...</div></div></div><div class="recent-post-item"><div class="post_cover right_radius"><a href="/2019/05/02/python%20%E4%B8%AD%E6%B2%A1%E6%9C%89i++%E6%88%96%E8%80%85i--/" title="python 中没有i++或者i--">     <img class="post_bg" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="python 中没有i++或者i--"></a></div><div class="recent-post-info"><a class="article-title" href="/2019/05/02/python%20%E4%B8%AD%E6%B2%A1%E6%9C%89i++%E6%88%96%E8%80%85i--/" title="python 中没有i++或者i--">python 中没有i++或者i--</a><div class="article-meta-wrap"><time class="post-meta__date"><span class="post-meta__date-created" title="发表于 2019-05-02 20:30:55"><i class="fa fa-calendar" aria-hidden="true"></i>2019-05-02</span><span class="article-meta__separator">|</span><span class="post-meta__date-updated" title="更新于 2020-05-10 19:05:27"><i class="fa fa-history" aria-hidden="true"></i>2020-05-10</span></time><span class="article-meta"><span class="article-meta__separator">|</span><i class="fa fa-inbox article-meta__icon" aria-hidden="true"></i><a class="article-meta__categories" href="/categories/python/">python</a></span></div><div class="content">
+
+在python中是没有自增和自减的，但在python中存在 i = i + 1和 i = i -1 的情况。
+
+因为Python的模型规定，数值对象是不可改变的。 i = i + 1 相当于重新创建了一个变量 i ，而不是改变了 i 中的数值。
+
+下面是例子说明：
+
+
+a = 10
+b = 10 ...</div></div></div><div class="recent-post-item"><div class="post_cover left_radius"><a href="/2019/05/02/python%EF%BC%88%E4%BA%94%EF%BC%89%E2%80%94%E2%80%94%E8%BF%90%E7%AE%97%E7%AC%A6%E3%80%81%E5%AD%97%E7%AC%A6%E4%B8%B2%E3%80%81%E8%BD%AC%E4%B9%89%E5%AD%97%E7%AC%A6/" title="python（五）——运算符、字符串、转义字符">     <img class="post_bg" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="python（五）——运算符、字符串、转义字符"></a></div><div class="recent-post-info"><a class="article-title" href="/2019/05/02/python%EF%BC%88%E4%BA%94%EF%BC%89%E2%80%94%E2%80%94%E8%BF%90%E7%AE%97%E7%AC%A6%E3%80%81%E5%AD%97%E7%AC%A6%E4%B8%B2%E3%80%81%E8%BD%AC%E4%B9%89%E5%AD%97%E7%AC%A6/" title="python（五）——运算符、字符串、转义字符">python（五）——运算符、字符串、转义字符</a><div class="article-meta-wrap"><time class="post-meta__date"><span class="post-meta__date-created" title="发表于 2019-05-02 20:11:48"><i class="fa fa-calendar" aria-hidden="true"></i>2019-05-02</span><span class="article-meta__separator">|</span><span class="post-meta__date-updated" title="更新于 2020-05-10 19:05:27"><i class="fa fa-history" aria-hidden="true"></i>2020-05-10</span></time><span class="article-meta"><span class="article-meta__separator">|</span><i class="fa fa-inbox article-meta__icon" aria-hidden="true"></i><a class="article-meta__categories" href="/categories/python/">python</a></span></div><div class="content">
+
+ 
+
+目录
+
+ 
+
+运算符
+
+位运算符：
+
+逻辑与运算符 
+
+成员运算符   in  和 not in 
+
+身份运算符  is 和 is not
+
+运算符优先级
+
+字符串
+
+python中字符串可以进行乘法运算
+
+访问字符串中某一个字符
+
+截取字符串
+
+判断一个字符串是否在另一个字符串内
+
+判断 ...</div></div></div><div class="recent-post-item"><div class="post_cover right_radius"><a href="/2019/05/01/python%EF%BC%88%E5%9B%9B%EF%BC%89%E2%80%94%E2%80%94%E5%B8%B8%E9%87%8F%E5%92%8C%E5%8F%98%E9%87%8F%E3%80%81%E6%95%B0%E5%AD%A6%E5%87%BD%E6%95%B0%E3%80%81%E9%9A%8F%E6%9C%BA%E6%95%B0/" title="python（四）——常量和变量、数学函数、随机数">     <img class="post_bg" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="python（四）——常量和变量、数学函数、随机数"></a></div><div class="recent-post-info"><a class="article-title" href="/2019/05/01/python%EF%BC%88%E5%9B%9B%EF%BC%89%E2%80%94%E2%80%94%E5%B8%B8%E9%87%8F%E5%92%8C%E5%8F%98%E9%87%8F%E3%80%81%E6%95%B0%E5%AD%A6%E5%87%BD%E6%95%B0%E3%80%81%E9%9A%8F%E6%9C%BA%E6%95%B0/" title="python（四）——常量和变量、数学函数、随机数">python（四）——常量和变量、数学函数、随机数</a><div class="article-meta-wrap"><time class="post-meta__date"><span class="post-meta__date-created" title="发表于 2019-05-01 11:50:35"><i class="fa fa-calendar" aria-hidden="true"></i>2019-05-01</span><span class="article-meta__separator">|</span><span class="post-meta__date-updated" title="更新于 2020-05-10 19:05:27"><i class="fa fa-history" aria-hidden="true"></i>2020-05-10</span></time><span class="article-meta"><span class="article-meta__separator">|</span><i class="fa fa-inbox article-meta__icon" aria-hidden="true"></i><a class="article-meta__categories" href="/categories/python/">python</a></span></div><div class="content">
+
+目录
+
+ 
+
+定义变量和常量 
+
+打印变量类型
+
+查看变量地址
+
+删除变量
+
+数字类型转换
+
+数学函数
+
+绝对值abs()
+
+比较两个数的大小
+
+获取给定序列的最大值max()和最小值min()
+
+求X的Y次方pow()
+
+四舍五入round()
+
+向上取整math.ceil()和向下取整mat ...</div></div></div><nav id="pagination"><div class="pagination"><a class="extend prev" rel="prev" href="/page/8/"><i class="fa fa-fw fa-chevron-left" aria-hidden="true"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><span class="page-number current">9</span><a class="page-number" href="/page/10/">10</a><span class="space">&hellip;</span><a class="page-number" href="/page/16/">16</a><a class="extend next" rel="next" href="/page/10/"><i class="fa fa-fw fa-chevron-right" aria-hidden="true"></i></a></div></nav></div><div class="aside_content" id="aside_content"><div class="card-widget card-info"><div class="card-content"><div class="card-info-avatar is-center"><img class="avatar-img" src="/img/avatar.png" onerror="this.onerror=null;this.src='/img/tou5.jpg'" alt="avatar"/><div class="author-info__name">空城机</div><div class="author-info__description"></div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives"><div class="headline">文章</div><div class="length_num">154</div></a></div><div class="card-info-data-item is-center">      <a href="/tags"><div class="headline">标签</div><div class="length_num">45</div></a></div><div class="card-info-data-item is-center">     <a href="/categories"><div class="headline">分类</div><div class="length_num">15</div></a></div></div><div class="card-info-bookmark is-center"><a class="bookmark button--primary button--animated" id="bookmark-it" href="javascript:;" title="加入书签" target="_self"><i class="fa fa-bookmark" aria-hidden="true"></i><span>加入书签</span></a></div><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/kongchengji" target="_blank" title="Github"><i class="fa fa-github" aria-hidden="true"></i></a><a class="social-icon" href="mailto:xxxxxxx@gmail.com" target="_blank" title="Email"><i class="fa fa-envelope" aria-hidden="true"></i></a><a class="social-icon" href="/atom.xml" target="_blank" title="RSS"><i class="fa fa-rss" aria-hidden="true"></i></a></div></div></div><div class="card-widget card-announcement"><div class="card-content"><div class="item-headline"><i class="fa fa-bullhorn card-announcement-animation" aria-hidden="true"></i><span>公告</span></div><div class="announcement_content">这是我的公告</div></div></div><div class="card-widget card-recent-post"><div class="card-content"><div class="item-headline"><i class="fa fa-history" aria-hidden="true"></i><span>最新文章</span></div><div class="aside-recent-item"><div class="aside-recent-post"><a href="/2020/05/10/%E4%BD%BF%E7%94%A8Hexo%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/"><div class="aside-post-cover"><img class="aside-post-bg" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" title="使用Hexo搭建个人博客" alt="使用Hexo搭建个人博客"/></div><div class="aside-post-title"><div class="aside-post_title" href="/2020/05/10/%E4%BD%BF%E7%94%A8Hexo%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/" title="使用Hexo搭建个人博客">使用Hexo搭建个人博客</div><time class="aside-post_meta post-meta__date" title="发表于 2020-05-10 15:57:20">2020-05-10</time></div></a></div><div class="aside-recent-post"><a href="/2020/05/03/PY.html/"><div class="aside-post-cover"><img class="aside-post-bg" src="https://i.loli.net/2019/07/21/5d33d5dc1531213134.png" onerror="this.onerror=null;this.src='/img/404.jpg'" title="links" alt="links"/></div><div class="aside-post-title"><div class="aside-post_title" href="/2020/05/03/PY.html/" title="links">links</div><time class="aside-post_meta post-meta__date" title="发表于 2020-05-03 20:46:25">2020-05-03</time></div></a></div><div class="aside-recent-post"><a href="/2020/04/05/Java%E5%9F%BA%E7%A1%80%EF%BC%88%E5%8D%81%E4%BA%8C%EF%BC%89%E2%80%94%E2%80%94Cookie%E3%80%81Session%E3%80%81AJAX%E3%80%81JSON/"><div class="aside-post-cover"><img class="aside-post-bg" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" title="Java基础（十二）——Cookie、Session、AJAX、JSON" alt="Java基础（十二）——Cookie、Session、AJAX、JSON"/></div><div class="aside-post-title"><div class="aside-post_title" href="/2020/04/05/Java%E5%9F%BA%E7%A1%80%EF%BC%88%E5%8D%81%E4%BA%8C%EF%BC%89%E2%80%94%E2%80%94Cookie%E3%80%81Session%E3%80%81AJAX%E3%80%81JSON/" title="Java基础（十二）——Cookie、Session、AJAX、JSON">Java基础（十二）——Cookie、Session、AJAX、JSON</div><time class="aside-post_meta post-meta__date" title="发表于 2020-04-05 16:42:25">2020-04-05</time></div></a></div><div class="aside-recent-post"><a href="/2020/04/03/JSP%E4%B8%ADVue.js%E7%9A%84%E4%BD%BF%E7%94%A8%E5%8F%97%E9%99%90/"><div class="aside-post-cover"><img class="aside-post-bg" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" title="JSP中Vue.js的使用受限" alt="JSP中Vue.js的使用受限"/></div><div class="aside-post-title"><div class="aside-post_title" href="/2020/04/03/JSP%E4%B8%ADVue.js%E7%9A%84%E4%BD%BF%E7%94%A8%E5%8F%97%E9%99%90/" title="JSP中Vue.js的使用受限">JSP中Vue.js的使用受限</div><time class="aside-post_meta post-meta__date" title="发表于 2020-04-03 21:30:34">2020-04-03</time></div></a></div><div class="aside-recent-post"><a href="/2020/03/29/Java%E5%9F%BA%E7%A1%80%EF%BC%88%E5%8D%81%E4%B8%80%EF%BC%89%E2%80%94%E2%80%94%E7%B1%BB%E5%8A%A0%E8%BD%BD%E3%80%81%E5%8F%8D%E5%B0%84%E3%80%81XML%E6%A6%82%E8%BF%B0/"><div class="aside-post-cover"><img class="aside-post-bg" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" title="Java基础（十一）——类加载、反射、XML概述" alt="Java基础（十一）——类加载、反射、XML概述"/></div><div class="aside-post-title"><div class="aside-post_title" href="/2020/03/29/Java%E5%9F%BA%E7%A1%80%EF%BC%88%E5%8D%81%E4%B8%80%EF%BC%89%E2%80%94%E2%80%94%E7%B1%BB%E5%8A%A0%E8%BD%BD%E3%80%81%E5%8F%8D%E5%B0%84%E3%80%81XML%E6%A6%82%E8%BF%B0/" title="Java基础（十一）——类加载、反射、XML概述">Java基础（十一）——类加载、反射、XML概述</div><time class="aside-post_meta post-meta__date" title="发表于 2020-03-29 14:42:13">2020-03-29</time></div></a></div></div></div></div><div class="card-widget card-categories"><div class="card-content"><div class="item-headline"><i class="fa fa-folder-open" aria-hidden="true"></i><span>分类</span></div><ul class="card-category-list">
+            <li class="card-category-list-item"><a class="card-category-list-link" href="/categories/CSS/"><span class="card-category-list-name">CSS</span><span class="card-category-list-count">6</span></a></li><li class="card-category-list-item"><a class="card-category-list-link" href="/categories/Java/"><span class="card-category-list-name">Java</span><span class="card-category-list-count">23</span></a></li><li class="card-category-list-item"><a class="card-category-list-link" href="/categories/Java-Vue-Js/"><span class="card-category-list-name">Java Vue.Js</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item"><a class="card-category-list-link" href="/categories/JavaScript/"><span class="card-category-list-name">JavaScript</span><span class="card-category-list-count">45</span></a></li><li class="card-category-list-item"><a class="card-category-list-link" href="/categories/JavaScript-%E7%A8%8B%E5%BA%8F%E4%BA%BA%E7%94%9F/"><span class="card-category-list-name">JavaScript 程序人生</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item"><a class="card-category-list-link" href="/categories/JavaScript-%E7%AE%97%E6%B3%95%E7%BB%83%E4%B9%A0/"><span class="card-category-list-name">JavaScript 算法练习</span><span class="card-category-list-count">2</span></a></li><li class="card-category-list-item"><a class="card-category-list-link" href="/categories/SQL%E6%95%B0%E6%8D%AE%E5%BA%93/"><span class="card-category-list-name">SQL数据库</span><span class="card-category-list-count">13</span></a></li><li class="card-category-list-item"><a class="card-category-list-link" href="/categories/SQL%E6%95%B0%E6%8D%AE%E5%BA%93-python/"><span class="card-category-list-name">SQL数据库 python</span><span class="card-category-list-count">1</span></a></li>
+            <li class="card-category-list-item more is-center"><a class="card-category-list-link-more" href="/categories">
+                <span>查看更多</span><i class="fa fa-angle-right" aria-hidden="true"></i></a></li>           
+            </ul></div></div><div class="card-widget card-tags"><div class="card-content"><div class="item-headline"><i class="fa fa-tags" aria-hidden="true"></i><span>标签</span></div><div class="card-tag-cloud"><a href='/tags/Bootstrap/' style='font-size:21px; color:rgb(116, 151, 180)'>Bootstrap</a><a href='/tags/CSS/' style='font-size:18px; color:rgb(195, 43, 59)'>CSS</a><a href='/tags/CSS-HTML/' style='font-size:18px; color:rgb(66, 104, 5)'>CSS HTML</a><a href='/tags/CSS%E5%B8%83%E5%B1%80-BCF/' style='font-size:18px; color:rgb(74, 165, 27)'>CSS布局 BCF</a><a href='/tags/Git-GitHub/' style='font-size:18px; color:rgb(64, 106, 18)'>Git GitHub</a><a href='/tags/JSP-JAVA-EE/' style='font-size:19px; color:rgb(52, 20, 90)'>JSP JAVA EE</a><a href='/tags/Java/' style='font-size:21px; color:rgb(181, 91, 65)'>Java</a><a href='/tags/Java-servlet-filter/' style='font-size:21px; color:rgb(170, 173, 199)'>Java servlet filter</a><a href='/tags/JavaEE/' style='font-size:16px; color:rgb(156, 131, 41)'>JavaEE</a><a href='/tags/JavaScript/' style='font-size:19px; color:rgb(1, 23, 1)'>JavaScript</a><a href='/tags/JavaScript-%E9%A3%9E%E6%9C%BA%E5%A4%A7%E6%88%98/' style='font-size:19px; color:rgb(1, 119, 145)'>JavaScript 飞机大战</a><a href='/tags/Linux/' style='font-size:17px; color:rgb(107, 39, 93)'>Linux</a><a href='/tags/MySQL-python/' style='font-size:21px; color:rgb(193, 133, 174)'>MySQL python</a><a href='/tags/bootstrap/' style='font-size:17px; color:rgb(138, 152, 136)'>bootstrap</a><a href='/tags/git-GitHub/' style='font-size:20px; color:rgb(67, 119, 123)'>git GitHub</a><a href='/tags/github-git/' style='font-size:18px; color:rgb(145, 161, 138)'>github git</a><a href='/tags/jQuery/' style='font-size:19px; color:rgb(78, 165, 102)'>jQuery</a><a href='/tags/java/' style='font-size:21px; color:rgb(102, 49, 141)'>java</a><a href='/tags/java-intellij-idea/' style='font-size:19px; color:rgb(48, 10, 28)'>java intellij idea</a><a href='/tags/java-%E5%89%8D%E7%AB%AF/' style='font-size:21px; color:rgb(177, 92, 148)'>java 前端</a><a href='/tags/java-%E9%A1%B9%E7%9B%AE%E6%9E%B6%E6%9E%84/' style='font-size:18px; color:rgb(41, 96, 188)'>java 项目架构</a><a href='/tags/javaee/' style='font-size:17px; color:rgb(6, 122, 12)'>javaee</a><a href='/tags/javaee-j2e-javaweb/' style='font-size:17px; color:rgb(145, 191, 92)'>javaee j2e javaweb</a><a href='/tags/javaee-servlet-jsp-sql-server/' style='font-size:16px; color:rgb(103, 123, 185)'>javaee servlet jsp sql server</a><a href='/tags/javaee-web-jdbc/' style='font-size:19px; color:rgb(76, 117, 167)'>javaee web jdbc</a><a href='/tags/javascript/' style='font-size:18px; color:rgb(73, 167, 44)'>javascript</a><a href='/tags/javascript-%E5%89%8D%E7%AB%AF/' style='font-size:20px; color:rgb(183, 16, 175)'>javascript 前端</a><a href='/tags/links/' style='font-size:19px; color:rgb(196, 161, 167)'>links</a><a href='/tags/node-js/' style='font-size:19px; color:rgb(32, 44, 122)'>node.js</a><a href='/tags/python/' style='font-size:20px; color:rgb(52, 85, 144)'>python</a><a href='/tags/python-Tkinter/' style='font-size:20px; color:rgb(2, 47, 100)'>python Tkinter</a><a href='/tags/python-lxml/' style='font-size:18px; color:rgb(53, 4, 148)'>python lxml</a><a href='/tags/python-%E7%88%AC%E8%99%AB/' style='font-size:17px; color:rgb(8, 56, 145)'>python 爬虫</a><a href='/tags/python-%E7%BA%BF%E7%A8%8B-%E5%8D%8F%E7%A8%8B/' style='font-size:18px; color:rgb(117, 159, 0)'>python 线程 协程</a><a href='/tags/python-%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/' style='font-size:16px; color:rgb(111, 63, 130)'>python 网络编程</a><a href='/tags/vue-js/' style='font-size:20px; color:rgb(149, 167, 157)'>vue.js</a><a href='/tags/xml%E8%A7%A3%E6%9E%90/' style='font-size:21px; color:rgb(75, 86, 194)'>xml解析</a><a href='/tags/%E4%B8%AA%E4%BA%BA%E7%BD%91%E9%A1%B5%E5%88%9B%E5%BB%BA-%E6%9C%8D%E5%8A%A1%E5%99%A8-%E5%9F%9F%E5%90%8D/' style='font-size:21px; color:rgb(36, 177, 64)'>个人网页创建 服务器 域名</a><a href='/tags/%E5%89%8D%E7%AB%AF/' style='font-size:18px; color:rgb(183, 164, 17)'>前端</a><a href='/tags/%E5%89%8D%E7%AB%AF-HTML-%E5%9B%9E%E6%B5%81%E4%B8%8E%E9%87%8D%E7%BB%98/' style='font-size:21px; color:rgb(51, 174, 187)'>前端 HTML 回流与重绘</a></div></div></div><div class="card-widget card-archives"><div class="card-content"><div class="item-headline"><i class="fa fa-archive" aria-hidden="true"></i><span>归档</span></div><ul class="card-archive-list"><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2020/05/"><span class="card-archive-list-date">五月 2020</span><span class="card-archive-list-count">2</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2020/04/"><span class="card-archive-list-date">四月 2020</span><span class="card-archive-list-count">2</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2020/03/"><span class="card-archive-list-date">三月 2020</span><span class="card-archive-list-count">10</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2020/02/"><span class="card-archive-list-date">二月 2020</span><span class="card-archive-list-count">7</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2019/12/"><span class="card-archive-list-date">十二月 2019</span><span class="card-archive-list-count">2</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2019/10/"><span class="card-archive-list-date">十月 2019</span><span class="card-archive-list-count">5</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2019/09/"><span class="card-archive-list-date">九月 2019</span><span class="card-archive-list-count">3</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2019/08/"><span class="card-archive-list-date">八月 2019</span><span class="card-archive-list-count">14</span></a></li><li class="card-archive-list-item more is-center"><a class="card-archive-list-link-more" href="/archives">
+              <span>查看更多</span><i class="fa fa-angle-right" aria-hidden="true"></i></a></li></ul></div></div><div class="card-widget card-webinfo"><div class="card-content"><div class="item-headline"><i class="fa fa-line-chart" aria-hidden="true"></i><span>网站资讯</span></div><div class="webinfo"><div class="webinfo-item"><div class="webinfo-article-name">文章数目 :</div><div class="webinfo-article-count">154</div></div><div class="webinfo-item"><div class="webinfo-runtime-name">已运行时间 :</div><div class="webinfo-runtime-count" id="webinfo-runtime-count" start_date="6/7/2018 00:00:00">     </div></div><div class="webinfo-item">      <div class="webinfo-site-uv-name">本站访客数 :</div><div class="webinfo-site-uv-count" id="busuanzi_value_site_uv"></div></div><div class="webinfo-item"><div class="webinfo-site-name">本站总访问量 :</div><div class="webinfo-site-pv-count" id="busuanzi_value_site_pv"></div></div></div></div></div></div></main><footer id="footer" data-type="color"><div id="footer-wrap"><div class="copyright">&copy;2018 - 2020 By 空城机</div><div class="framework-info"><span>驱动 </span><a href="https://hexo.io" target="_blank" rel="noopener"><span>Hexo</span></a><span class="footer-separator">|</span><span>主题 </span><a href="https://github.com/jerryc127/hexo-theme-butterfly" target="_blank" rel="noopener"><span>Butterfly</span></a></div></div></footer></div><section class="rightside" id="rightside"><div id="rightside-config-hide"><a class="translate_chn_to_cht" id="translateLink" href="javascript:translatePage();" title="简繁转换" target="_self">繁</a><i class="darkmode fa fa-moon-o" id="darkmode" title="夜间模式"></i></div><div id="rightside-config-show"><div id="rightside_config" title="设置"><i class="fa fa-cog" aria-hidden="true"></i></div><i class="fa fa-arrow-up" id="go-up" title="回到顶部" aria-hidden="true"></i></div></section><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page@latest/instantpage.min.js" type="module"></script><script src="https://cdn.jsdelivr.net/npm/typed.js"></script><script>var subtitleEffect = true
+if (subtitleEffect) { 
+  var typed = new Typed("#subtitle", {
+    strings: '空城机来了，但是他又走了,人类是有极限的，所以要超越人类,这是空城机的个人博客网站'.split(","),
+    startDelay: 300,
+    typeSpeed: 150,
+    loop: false,
+    backSpeed: 50
+  })
+} else {
+  document.getElementById("subtitle").innerHTML = '空城机来了，但是他又走了'
+}</script></body></html>
